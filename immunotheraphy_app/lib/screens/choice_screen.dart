@@ -8,25 +8,25 @@ class ChoiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
-      title: const Padding(
-        padding: EdgeInsets.only(top: 20.0), // Add top padding to the title
-        child: Text(
-          'Koç Üniversitesi Hastanesi İmmünoterapi Takip Uygulaması',
-          maxLines: 3,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Inter',
+      appBar: AppBar(
+        title: const Padding(
+          padding: EdgeInsets.only(top: 20.0), // Add top padding to the title
+          child: Text(
+            'Koç Üniversitesi Hastanesi İmmünoterapi Takip Uygulaması',
+            maxLines: 3,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Inter',
+            ),
           ),
         ),
+        centerTitle: true, // Center the title horizontally
+        elevation: 0, // Remove elevation (shadow) from the app bar
+        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
       ),
-      centerTitle: true, // Center the title horizontally
-      elevation: 0, // Remove elevation (shadow) from the app bar
-      toolbarHeight: MediaQuery.of(context).size.height * 0.1,
-    ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -48,6 +48,12 @@ class ChoiceScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(20),
+                  boxShadow: [BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    spreadRadius: 4,
+                    blurRadius: 10,
+                    offset: Offset(10, 10),
+                  )],
                 ),
                 child: Column(
                   children: [
@@ -83,6 +89,12 @@ class ChoiceScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(20),
+                  boxShadow: [BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    spreadRadius: 4,
+                    blurRadius: 10,
+                    offset: Offset(10, 10), // changes position of shadow
+                  )],
                 ),
                 child: Column(
                   children: [
