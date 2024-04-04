@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "383268732137",
+    "project_id": "immunotheraphytracker",
+    "storage_bucket": "immunotheraphytracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383268732137:android:3a97a8f29663bf54374478",
+        "android_client_info": {
+          "package_name": "com.example.immunotheraphy_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi1J-X5Uq_ECmOFGunluT4lGnaFWTBGpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
