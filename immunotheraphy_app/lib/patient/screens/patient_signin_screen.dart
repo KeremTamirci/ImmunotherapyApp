@@ -61,18 +61,40 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                   height: 5,
                 ),
                 forgetPassword(context),
-                firebaseUIButton(context, "Sign In", () {
-                  FirebaseAuth.instance
-                      .signInWithEmailAndPassword(
-                      email: _emailTextController.text,
-                      password: _passwordTextController.text)
-                      .then((value) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => PatientHomeScreen()));
-                  }).onError((error, stackTrace) {
-                    print("Error ${error.toString()}");
-                  });
+                firebaseUIButton(context, "Sign In", () async {
+                  try {
+                    final userCredential = await FirebaseAuth.instance
+                        .signInWithEmailAndPassword(
+                            email: _emailTextController.text,
+                            password: _passwordTextController.text);
+                    // Sign-in successful, navigate to the next screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PatientHomeScreen()),
+                    );
+                  } catch (error) {
+                    print("Error: ${error.toString()}");
+                    // Handle the error gracefully, e.g., show a dialog or a snackbar
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content: Text("An error occurred: ${error.toString()}"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("OK"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 }),
+
                 signUpOption()
               ],
             ),
