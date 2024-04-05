@@ -4,9 +4,12 @@ import 'package:immunotheraphy_app/screens/choice_screen.dart';
 import 'package:immunotheraphy_app/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'api/firebase_api.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseApi().initNotifications();
   runApp(const MyApp());
 }
 
