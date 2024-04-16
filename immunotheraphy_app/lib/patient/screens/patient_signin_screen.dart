@@ -27,6 +27,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
             Navigator.pop(context); // Navigate back to the previous screen
           },
         ),
+        backgroundColor: hexStringToColor("6495ED"),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -36,10 +37,9 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
 //          hexStringToColor("CB2B93"),
 //          hexStringToColor("9546C4"),
 //          hexStringToColor("5E61F4")
-              hexStringToColor("6495ED"),
-              hexStringToColor("3DED97")
-
-            ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+          hexStringToColor("6495ED"),
+          hexStringToColor("3DED97")
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -70,7 +70,8 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                     // Sign-in successful, navigate to the next screen
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PatientHomeScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => PatientHomeScreen()),
                     );
                   } catch (error) {
                     print("Error: ${error.toString()}");
@@ -80,7 +81,8 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                       builder: (context) {
                         return AlertDialog(
                           title: Text("Error"),
-                          content: Text("An error occurred: ${error.toString()}"),
+                          content:
+                              Text("An error occurred: ${error.toString()}"),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -94,7 +96,6 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                     );
                   }
                 }),
-
                 signUpOption()
               ],
             ),
@@ -135,8 +136,8 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
           style: TextStyle(color: Colors.white70),
           textAlign: TextAlign.right,
         ),
-        onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PatientResetPassword())),
+        onPressed: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PatientResetPassword())),
       ),
     );
   }

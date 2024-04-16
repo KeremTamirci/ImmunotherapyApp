@@ -27,6 +27,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
             Navigator.pop(context); // Navigate back to the previous screen
           },
         ),
+        backgroundColor: hexStringToColor("6495ED"),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -36,10 +37,9 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
 //          hexStringToColor("CB2B93"),
 //          hexStringToColor("9546C4"),
 //          hexStringToColor("5E61F4")
-              hexStringToColor("6495ED"),
-              hexStringToColor("3DED97")
-
-            ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+          hexStringToColor("6495ED"),
+          hexStringToColor("3DED97")
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -61,7 +61,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                   height: 5,
                 ),
                 forgetPassword(context),
-               firebaseUIButton(context, "Sign In", () async {
+                firebaseUIButton(context, "Sign In", () async {
                   try {
                     final userCredential = await FirebaseAuth.instance
                         .signInWithEmailAndPassword(
@@ -70,7 +70,8 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                     // Sign-in successful, navigate to the next screen
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DoctorHomeScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => DoctorHomeScreen()),
                     );
                   } catch (error) {
                     print("Error: ${error.toString()}");
@@ -80,7 +81,8 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                       builder: (context) {
                         return AlertDialog(
                           title: Text("Error"),
-                          content: Text("An error occurred: ${error.toString()}"),
+                          content:
+                              Text("An error occurred: ${error.toString()}"),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -134,8 +136,8 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
           style: TextStyle(color: Colors.white70),
           textAlign: TextAlign.right,
         ),
-        onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => DoctorResetPassword())),
+        onPressed: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => DoctorResetPassword())),
       ),
     );
   }
