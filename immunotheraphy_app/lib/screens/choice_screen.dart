@@ -35,11 +35,15 @@ class ChoiceScreen extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => PatientSignInScreen(),
+                //   ),
+                // );
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => PatientSignInScreen(),
-                  ),
+                  _createRoute("Hasta"),
                 );
               },
               child: Container(
@@ -89,7 +93,7 @@ class ChoiceScreen extends StatelessWidget {
                 // );
                 Navigator.push(
                   context,
-                  _createRouteDoctor(),
+                  _createRoute("Doktor"),
                 );
               },
               child: Container(
@@ -135,29 +139,42 @@ class ChoiceScreen extends StatelessWidget {
   }
 }
 
-Route _createRouteDoctor() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        const DoctorSignInScreen(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(1.0, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.easeInOutCubic;
-      const ThreePointCubic fastEaseInToSlowEaseOut = ThreePointCubic(
-        Offset(0.056, 0.024),
-        Offset(0.108, 0.3085),
-        Offset(0.198, 0.541),
-        Offset(0.3655, 1.0),
-        Offset(0.5465, 0.989),
-      );
-
-      var tween = Tween(begin: begin, end: end)
-          .chain(CurveTween(curve: fastEaseInToSlowEaseOut));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
+Route _createRoute(String route) {
+  const begin = Offset(1.0, 0.0);
+  const end = Offset.zero;
+  const curve = Curves.easeInOutCubic;
+  const ThreePointCubic fastEaseInToSlowEaseOut = ThreePointCubic(
+    Offset(0.056, 0.024),
+    Offset(0.108, 0.3085),
+    Offset(0.198, 0.541),
+    Offset(0.3655, 1.0),
+    Offset(0.5465, 0.989),
   );
+
+  var tween = Tween(begin: begin, end: end)
+      .chain(CurveTween(curve: fastEaseInToSlowEaseOut));
+
+  if (route == "Doktor") {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const DoctorSignInScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  } else {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const PatientSignInScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 }
