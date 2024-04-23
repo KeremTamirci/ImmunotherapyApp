@@ -66,35 +66,39 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
             ), // sets the inactive color of the `BottomNavigationBar`
         child: SizedBox(
           height: 72,
-          child: BottomNavigationBar(
-            // backgroundColor: hexStringToColor("1A80E5"),
-            backgroundColor: hexStringToColor("E8EDF2"),
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Ana Sayfa',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.sick),
-                label: 'Yeni Hasta',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Ayarlar',
+          child: Wrap(
+            children: [
+              BottomNavigationBar(
+                // backgroundColor: hexStringToColor("1A80E5"),
+                backgroundColor: hexStringToColor("E8EDF2"),
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Ana Sayfa',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.sick),
+                    label: 'Yeni Hasta',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: 'Ayarlar',
+                  ),
+                ],
+                currentIndex: selectedIndex,
+                unselectedItemColor: Colors.black87,
+                showUnselectedLabels: true,
+                iconSize: 32,
+                unselectedLabelStyle: const TextStyle(fontSize: 14),
+                selectedLabelStyle: const TextStyle(fontSize: 16),
+                selectedItemColor: hexStringToColor("1A80E5"),
+                onTap: (value) {
+                  setState(() {
+                    selectedIndex = value;
+                  });
+                },
               ),
             ],
-            currentIndex: selectedIndex,
-            unselectedItemColor: Colors.black87,
-            showUnselectedLabels: true,
-            iconSize: 32,
-            unselectedLabelStyle: const TextStyle(fontSize: 14),
-            selectedLabelStyle: const TextStyle(fontSize: 16),
-            selectedItemColor: hexStringToColor("1A80E5"),
-            onTap: (value) {
-              setState(() {
-                selectedIndex = value;
-              });
-            },
           ),
         ),
       ),
