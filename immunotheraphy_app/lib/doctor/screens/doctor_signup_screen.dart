@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/doctor/screens/doctor_home_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/home_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
@@ -105,7 +106,7 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                       print("User added to Firestore");
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        MaterialPageRoute(builder: (context) => DoctorHomeScreen()),
                       );
                     }).catchError((error) {
                       print("Failed to add user to Firestore: $error");
