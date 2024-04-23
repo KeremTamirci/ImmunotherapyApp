@@ -3,14 +3,18 @@ import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:flutter/material.dart';
 
 class PatientHomeScreen extends StatefulWidget {
-  const PatientHomeScreen({Key? key}) : super(key: key);
+  const PatientHomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _PatientHomeScreenState createState() => _PatientHomeScreenState();
 }
 
 class _PatientHomeScreenState extends State<PatientHomeScreen> {
   late User _user;
+  final Text homeScreenTitle = const Text("Patient Home Screen");
+  final Text logOutText = const Text("Log Out");
+  final TextStyle style = const TextStyle(fontSize: 20);
 
   @override
   void initState() {
@@ -31,7 +35,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Patient Home Screen'),
+        title: homeScreenTitle,
       ),
       body: Center(
         child: Column(
@@ -39,17 +43,18 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
           children: [
             Text(
               'Welcome, ${_user.displayName ?? 'Guest'}!',
-              style: TextStyle(fontSize: 20),
+              style: style,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
-              child: Text("Logout"),
+              child: logOutText,
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => PatientSignInScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const PatientSignInScreen()),
                   );
                 });
               },
