@@ -68,11 +68,11 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                             email: _emailTextController.text,
                             password: _passwordTextController.text);
                     // Sign-in successful, navigate to the next screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DoctorHomeScreen()),
-                    );
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DoctorHomeScreen()),
+                        (_) => false);
                   } catch (error) {
                     print("Error: ${error.toString()}");
                     // Handle the error gracefully, e.g., show a dialog or a snackbar
