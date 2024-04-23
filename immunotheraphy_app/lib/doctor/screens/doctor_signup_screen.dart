@@ -12,9 +12,11 @@ class DoctorSignUpScreen extends StatefulWidget {
 }
 
 class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
-  TextEditingController _passwordTextController = TextEditingController();
+  TextEditingController _nameTextController = TextEditingController();
+  TextEditingController _surnameTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _userNameTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController();
+  TextEditingController _tokenTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,53 +51,67 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
               children: <Widget>[
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Enter UserName",
+                  "Name",
                   Icons.person_outline,
                   false,
-                  _userNameTextController,
+                  _nameTextController,
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Enter Email Id",
+                  "Surname",
                   Icons.person_outline,
+                  false,
+                  _surnameTextController,
+                ),
+                const SizedBox(height: 20),
+                reusableTextField(
+                  "Email",
+                  Icons.mail_outline,
                   false,
                   _emailTextController,
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Enter Password",
-                  Icons.lock_outlined,
+                  "Password",
+                  Icons.lock_outline,
                   true,
                   _passwordTextController,
+                ),
+                const SizedBox(height: 20),
+                reusableTextField(
+                  "Token",
+                  Icons.security_outlined,
+                  false,
+                  _tokenTextController,
                 ),
                 const SizedBox(height: 20),
                 firebaseUIButton(context, "Sign Up", () {
                   FirebaseAuth.instance
                       .createUserWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text,
-                      )
+                    email: _emailTextController.text,
+                    password: _passwordTextController.text,
+                  )
                       .then((value) {
-                        // Set the display name immediately after user creation
-                        value.user!.updateProfile(displayName: _userNameTextController.text).then((_) {
-                          print("Display name updated");
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()),
-                          );
-                        }).catchError((error) {
-                          print("Failed to update display name: $error");
-                          // If setting display name fails, still navigate to HomeScreen
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()),
-                          );
-                        });
-                      })
+                    // Set the display name immediately after user creation
+                    value.user!.updateProfile(displayName: _nameTextController.text).then((_) {
+                      print("Display name updated");
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                      );
+                    }).catchError((error) {
+                      print("Failed to update display name: $error");
+                      // If setting display name fails, still navigate to HomeScreen
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                      );
+                    });
+                  })
                       .catchError((error) {
-                        print("Error: $error");
-                        // Handle sign up errors if needed
-                      });
+                    print("Error: $error");
+                    // Handle sign up errors if needed
+                  });
                 })
               ],
             ),
