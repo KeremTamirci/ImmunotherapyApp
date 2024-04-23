@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/home_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
-import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart'; 
 
 class DoctorSignUpScreen extends StatefulWidget {
   const DoctorSignUpScreen({Key? key}) : super(key: key);
@@ -17,6 +18,9 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _tokenTextController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DoctorsFirestoreService _firestoreService = DoctorsFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -86,26 +90,26 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                 ),
                 const SizedBox(height: 20),
                 firebaseUIButton(context, "Sign Up", () {
-                  FirebaseAuth.instance
+                  _auth
                       .createUserWithEmailAndPassword(
                     email: _emailTextController.text,
                     password: _passwordTextController.text,
                   )
                       .then((value) {
-                    // Set the display name immediately after user creation
-                    value.user!.updateProfile(displayName: _nameTextController.text).then((_) {
-                      print("Display name updated");
+                    _firestoreService.addDoctor(
+                      _nameTextController.text,
+                      _surnameTextController.text,
+                      _tokenTextController.text,
+                      value.user!.uid,
+                    ).then((_) {
+                      print("User added to Firestore");
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomeScreen()),
                       );
                     }).catchError((error) {
-                      print("Failed to update display name: $error");
-                      // If setting display name fails, still navigate to HomeScreen
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
-                      );
+                      print("Failed to add user to Firestore: $error");
+                      // Handle Firestore errors if needed
                     });
                   })
                       .catchError((error) {
