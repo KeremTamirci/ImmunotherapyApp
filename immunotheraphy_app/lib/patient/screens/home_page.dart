@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  String _selectedItem = 'Option 1'; // Initial value for dropdown
+  String _selectedItem = 'Süt'; // Initial value for dropdown
   TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
 
   // Function to show the time picker
@@ -57,7 +57,7 @@ class HomePageState extends State<HomePage> {
                     _selectedItem = newValue!;
                   });
                 },
-                items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
+                items: <String>['Süt', 'Fındık', 'Option 3', 'Option 4']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
