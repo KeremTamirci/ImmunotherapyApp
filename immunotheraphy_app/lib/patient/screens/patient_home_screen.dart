@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_page.dart';
+import 'package:immunotheraphy_app/patient/screens/home_page.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/profile_page.dart';
+import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   const PatientHomeScreen({super.key});
@@ -39,7 +41,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = const DosePage();
+        page = const HomePage();
         break;
       case 1:
         page = const DosePage();
@@ -66,31 +68,38 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         data: Theme.of(context).copyWith(
             // sets the background color of the `BottomNavigationBar`
             ), // sets the inactive color of the `BottomNavigationBar`
-        child: BottomNavigationBar(
-          backgroundColor: const Color(0xFFFF9000),
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Ana Sayfa',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.auto_graph),
-              label: 'Dozaj',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Ayarlar',
-            ),
-          ],
-          currentIndex: selectedIndex,
-          unselectedItemColor: Colors.black87,
-          showUnselectedLabels: true,
-          selectedItemColor: Color.fromARGB(255, 255, 255, 255),
-          onTap: (value) {
-            setState(() {
-              selectedIndex = value;
-            });
-          },
+        child: SizedBox(
+          height: 80,
+          child: BottomNavigationBar(
+            // backgroundColor: hexStringToColor("1A80E5"),
+            backgroundColor: hexStringToColor("E8EDF2"),
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Ana Sayfa',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.auto_graph),
+                label: 'Dozaj',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Ayarlar',
+              ),
+            ],
+            currentIndex: selectedIndex,
+            unselectedItemColor: Colors.black87,
+            showUnselectedLabels: true,
+            iconSize: 36,
+            unselectedLabelStyle: const TextStyle(fontSize: 14),
+            selectedLabelStyle: const TextStyle(fontSize: 18),
+            selectedItemColor: hexStringToColor("1A80E5"),
+            onTap: (value) {
+              setState(() {
+                selectedIndex = value;
+              });
+            },
+          ),
         ),
       ),
       body: Center(
