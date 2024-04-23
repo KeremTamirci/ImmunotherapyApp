@@ -69,7 +69,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
             // sets the background color of the `BottomNavigationBar`
             ), // sets the inactive color of the `BottomNavigationBar`
         child: SizedBox(
-          height: 80,
+          height: 72,
           child: BottomNavigationBar(
             // backgroundColor: hexStringToColor("1A80E5"),
             backgroundColor: hexStringToColor("E8EDF2"),
@@ -90,9 +90,9 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
             currentIndex: selectedIndex,
             unselectedItemColor: Colors.black87,
             showUnselectedLabels: true,
-            iconSize: 36,
+            iconSize: 32,
             unselectedLabelStyle: const TextStyle(fontSize: 14),
-            selectedLabelStyle: const TextStyle(fontSize: 18),
+            selectedLabelStyle: const TextStyle(fontSize: 16),
             selectedItemColor: hexStringToColor("1A80E5"),
             onTap: (value) {
               setState(() {
