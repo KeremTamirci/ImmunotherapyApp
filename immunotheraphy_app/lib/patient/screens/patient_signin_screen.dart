@@ -68,10 +68,11 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                             email: _emailTextController.text,
                             password: _passwordTextController.text);
                     // Sign-in successful, navigate to the next screen
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                           builder: (context) => PatientHomeScreen()),
+                      (_) => false,
                     );
                   } catch (error) {
                     print("Error: ${error.toString()}");
