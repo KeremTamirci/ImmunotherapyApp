@@ -165,6 +165,17 @@ Route _createRoute(String route) {
         );
       },
     );
+  } else if (route == "Hasta") {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const PatientSignInScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
   } else {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
