@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
@@ -15,11 +16,12 @@ class HomePageState extends State<HomePage> {
   TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
   bool _isHospitalDosage = false; // Initial value for hospital dosage
   late DatabaseController _databaseController;
+    late User _user;
 
   @override
   void initState() {
     super.initState();
-    _databaseController = DatabaseController('vuVXXhsPjdRklyUJ9nK9AEDTyLu2');
+      _getUserData();
   }
 
   // Function to show the time picker
@@ -64,10 +66,21 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
+  
+    Future<void> _getUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _user = user;
+        _databaseController = DatabaseController(user.uid);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return 
+        Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -99,7 +112,7 @@ class HomePageState extends State<HomePage> {
                     _selectedItem = newValue!;
                   });
                 },
-                items: <int>[10, 20, 30, 40, 50] // Integers instead of strings
+                items: <int>[10, 20, 30, 40, 50]
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
@@ -131,7 +144,7 @@ class HomePageState extends State<HomePage> {
                   'Hospital Dosage:',
                   style: TextStyle(fontSize: 18),
                 ),
-                const SizedBox(width: 5), // Add some space between the title and checkbox
+                const SizedBox(width: 5),
                 Checkbox(
                   value: _isHospitalDosage,
                   onChanged: (newValue) {
