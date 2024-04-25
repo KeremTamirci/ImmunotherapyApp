@@ -92,7 +92,7 @@ class DoseChart extends StatelessWidget {
               spots: doses.asMap().entries.map((entry) {
                 return FlSpot(entry.key.toDouble(), entry.value.toDouble());
               }).toList(),
-              isCurved: true,
+              //isCurved: true,
               color: Colors.blue,
               barWidth: 4,
               isStrokeCapRound: true,
