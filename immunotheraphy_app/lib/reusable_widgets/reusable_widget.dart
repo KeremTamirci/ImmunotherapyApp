@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 Image logoWidget(String imageName) {
   return Image.asset(
@@ -65,4 +66,41 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
     ),
   );
+}
+
+class DoseChart extends StatelessWidget {
+  final List<int> doses;
+  final List<String> dates;
+  
+  DoseChart({required this.doses, required this.dates});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 300,
+      child: LineChart(
+        LineChartData(
+          titlesData: FlTitlesData(
+            bottomTitles: AxisTitles(
+            ),
+          ),
+          borderData: FlBorderData(
+            show: true,
+          ),
+          lineBarsData: [
+            LineChartBarData(
+              spots: doses.asMap().entries.map((entry) {
+                return FlSpot(entry.key.toDouble(), entry.value.toDouble());
+              }).toList(),
+              //isCurved: true,
+              color: Colors.blue,
+              barWidth: 4,
+              isStrokeCapRound: true,
+              belowBarData: BarAreaData(show: false),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
