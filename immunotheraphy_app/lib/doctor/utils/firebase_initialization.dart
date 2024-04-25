@@ -40,7 +40,7 @@ class Doctor {
 
 class PatientsFirestoreService {
   final CollectionReference _patientsCollection =
-      FirebaseFirestore.instance.collection('Patients');
+      FirebaseFirestore.instance.collection('Temp_Patients');
 
   Future<void> addPatient(String firstName, String lastName, String phoneNumber, DateTime birthDate, bool hasRhinits, bool hasAsthma, String uid, String otp) async {
     await _patientsCollection.add({

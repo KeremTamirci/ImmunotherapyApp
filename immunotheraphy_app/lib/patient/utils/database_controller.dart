@@ -44,6 +44,47 @@ class DatabaseController {
       return [];
     }
   }
+
+
+    
+  Future<void> processTempPatientRecord(String otp, String phoneNumber, String patientId) async {
+    try {
+      // Reference to the Temp_patients collection
+      CollectionReference tempPatientsCollection = FirebaseFirestore.instance.collection('Temp_Patients');
+
+      // Retrieve the record where OTP and phone number match
+      QuerySnapshot snapshot = await tempPatientsCollection
+          .where('otp', isEqualTo: otp)
+          .where('phone_number', isEqualTo: phoneNumber)
+          .limit(1)
+          .get();
+
+      // If there is a matching record, write it into the Patients collection
+      if (snapshot.docs.isNotEmpty) {
+        // Get the matching record and cast it to Map<String, dynamic>
+        Map<String, dynamic> tempPatientData = snapshot.docs.first.data() as Map<String, dynamic>;
+        
+        // Reference to the Patients collection
+        CollectionReference patientsCollection = FirebaseFirestore.instance.collection('Patients');
+
+        // Write the record into the Patients collection with the provided patientId
+        await patientsCollection.doc(patientId).set(tempPatientData);
+
+        // Delete the record from the Temp_patients collection
+        await snapshot.docs.first.reference.delete();
+
+        print("Record deleted from Temp_patients collection");
+      } else {
+        // If no matching record found
+        print('No matching record found in Temp_patients collection.');
+      }
+    } catch (e) {
+      print('Failed to process temp patient record: $e');
+      // Handle error
+    }
+  }
+
+
 }
 
 class DosageData {

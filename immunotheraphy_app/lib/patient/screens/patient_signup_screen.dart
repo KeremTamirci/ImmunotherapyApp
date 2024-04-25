@@ -81,7 +81,7 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
 
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('Patients')
+          .collection('Temp_Patients')
           .where('phone_number', isEqualTo: phoneNumber)
           .where('otp', isEqualTo: otp)
           .get();
@@ -114,7 +114,7 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
       // Navigate to HomeScreen after successful sign up
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PatientAuthenticationScreen()),
+        MaterialPageRoute(builder: (context) => PatientAuthenticationScreen(otp:_otpTextController.text, phoneNumber: _phoneNumberTextController.text,)),
       );
     } catch (e) {
       print('Error signing up patient: $e');

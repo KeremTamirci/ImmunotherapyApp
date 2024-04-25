@@ -30,7 +30,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference _patientsCollection =
-      FirebaseFirestore.instance.collection('Patients');
+      FirebaseFirestore.instance.collection('Temp_Patients');
 
   DateTime? _selectedDateOfBirth;
 
@@ -265,7 +265,7 @@ void _registerPatient() async {
   } else {
     print('User not logged in');
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('User not logged in. Please log in and try again.'),
       ),
     );

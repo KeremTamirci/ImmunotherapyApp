@@ -1,13 +1,19 @@
-import 'package:immunotheraphy_app/patient/screens/home_page.dart';
-import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
-
-import 'patient_home_screen.dart';
+import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
+import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
+import 'package:immunotheraphy_app/patient/screens/patient_home_screen.dart';
 
 class PatientAuthenticationScreen extends StatefulWidget {
-  const PatientAuthenticationScreen({Key? key}) : super(key: key);
+  final String otp;
+  final String phoneNumber;
+
+  const PatientAuthenticationScreen({
+    Key? key,
+    required this.otp,
+    required this.phoneNumber,
+  }) : super(key: key);
 
   @override
   _PatientAuthenticationScreenState createState() =>
@@ -20,6 +26,8 @@ class _PatientAuthenticationScreenState
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _confirmPasswordTextController =
       TextEditingController();
+
+  late DatabaseController _databaseController;
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +116,9 @@ class _PatientAuthenticationScreenState
 
       if (userCredential.user != null) {
         // Navigate to HomeScreen after successful sign up
+        print(userCredential.user!.uid);
+        _databaseController = DatabaseController(userCredential.user!.uid);
+        await _databaseController.processTempPatientRecord(widget.otp, widget.phoneNumber, userCredential.user!.uid);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PatientHomeScreen()),
