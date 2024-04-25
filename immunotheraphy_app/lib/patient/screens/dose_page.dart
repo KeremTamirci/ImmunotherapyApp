@@ -25,10 +25,10 @@ class _DosePageState extends State<DosePage> {
   Future<void> _getDosageData() async {
     try {
       // Call the method to retrieve dosage data from the database controller
-      List<DosageData> dosageData = await _databaseController.getDosageData();
+      List<DosageData> dosageData = await _databaseController.getSortedDosageData();
       setState(() {
         _dosageData = dosageData;
-        print( _dosageData.map((data) => data.date.toString()).toList());
+        print(_dosageData.map((data) => data.amount).toList());
       });
     } catch (e) {
       print('Failed to retrieve dosage data: $e');

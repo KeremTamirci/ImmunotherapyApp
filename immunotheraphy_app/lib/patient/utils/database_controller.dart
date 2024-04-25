@@ -19,14 +19,14 @@ class DatabaseController {
     }
   }
 
-   Future<List<DosageData>> getDosageData() async {
+  Future<List<DosageData>> getSortedDosageData() async {
     try {
       // Reference to the dosage collection for the current user
       CollectionReference dosageCollection =
           FirebaseFirestore.instance.collection('Patients').doc(userId).collection('Dosage Recordings');
 
       // Retrieve dosage data from Firestore
-      QuerySnapshot snapshot = await dosageCollection.get();
+      QuerySnapshot snapshot = await dosageCollection.orderBy("dosage_date").get();
 
       // Convert Firestore data to DosageData objects
       List<DosageData> dosageData = snapshot.docs.map((doc) {
