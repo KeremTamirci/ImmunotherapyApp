@@ -1,4 +1,5 @@
 import 'package:immunotheraphy_app/patient/screens/home_page.dart';
+import 'package:immunotheraphy_app/patient/screens/patient_authentiaction_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/home_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
@@ -113,7 +114,7 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
       // Navigate to HomeScreen after successful sign up
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => PatientAuthenticationScreen()),
       );
     } catch (e) {
       print('Error signing up patient: $e');
