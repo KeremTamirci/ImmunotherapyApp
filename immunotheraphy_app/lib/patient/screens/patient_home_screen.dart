@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_page.dart';
 import 'package:immunotheraphy_app/patient/screens/home_page.dart';
-import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
+// import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/profile_page.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
@@ -15,6 +15,7 @@ class PatientHomeScreen extends StatefulWidget {
 }
 
 class _PatientHomeScreenState extends State<PatientHomeScreen> {
+  // ignore: unused_field
   late User _user;
   final Text homeScreenTitle = const Text("Patient Home Screen");
   final Text logOutText = const Text("Log Out");

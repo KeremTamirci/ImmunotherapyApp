@@ -16,12 +16,12 @@ class HomePageState extends State<HomePage> {
   TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
   bool _isHospitalDosage = false; // Initial value for hospital dosage
   late DatabaseController _databaseController;
-    late User _user;
+  late User _user;
 
   @override
   void initState() {
     super.initState();
-      _getUserData();
+    _getUserData();
   }
 
   // Function to show the time picker
@@ -35,6 +35,37 @@ class HomePageState extends State<HomePage> {
         });
       },
     );
+  }
+
+  Future<void> _showTimePickerTest() async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      barrierLabel: "Test Label",
+      initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.inputOnly,
+      builder: (BuildContext context, Widget? child) {
+        // We just wrap these environmental changes around the
+        // child in this builder so that we can apply the
+        // options selected above. In regular usage, this is
+        // rarely necessary, because the default values are
+        // usually used as-is.
+        return Theme(
+          data: Theme.of(context),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                alwaysUse24HourFormat: true,
+              ),
+              child: child!,
+            ),
+          ),
+        );
+      },
+    );
+    setState(() {
+      _selectedTime = pickedTime!;
+    });
   }
 
   // Function to save dosage information to Firestore
@@ -66,8 +97,8 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
-  
-    Future<void> _getUserData() async {
+
+  Future<void> _getUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       setState(() {
@@ -79,8 +110,7 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return 
-        Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -127,7 +157,8 @@ class HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: _showTimePicker,
+            // onPressed: _showTimePicker, // ESKİ HALİ BU
+            onPressed: _showTimePickerTest,
             child: const Text('Select Time'),
           ),
           const SizedBox(height: 20),
@@ -161,7 +192,6 @@ class HomePageState extends State<HomePage> {
             child: const Text('Save Dosage Info'),
           ),
           const SizedBox(height: 20),
-
         ],
       ),
     );
