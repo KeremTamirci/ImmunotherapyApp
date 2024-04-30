@@ -40,7 +40,7 @@ class HomePageState extends State<HomePage> {
   Future<void> _showTimePickerTest() async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      barrierLabel: "Test Label",
+      helpText: "Dozu Aldığınız Zamanı Seçiniz",
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.inputOnly,
       builder: (BuildContext context, Widget? child) {
@@ -51,6 +51,9 @@ class HomePageState extends State<HomePage> {
         // usually used as-is.
         return Theme(
           data: Theme.of(context),
+          // .copyWith(
+          //   textTheme: const TextTheme(titleLarge: TextStyle(fontSize: 36)),
+          // )
           child: Directionality(
             textDirection: TextDirection.ltr,
             child: MediaQuery(
