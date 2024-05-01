@@ -32,6 +32,8 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                     print('Box 1 tapped');
                   },
                   icon: Icons.list,
+                  // color: hexStringToColor("34C759"),
+                  color: hexStringToColor("1A80E5"),
                 ),
                 InformationBox(
                   title: 'Semptom Girişi',
@@ -40,6 +42,8 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                     print('Box 2 tapped');
                   },
                   icon: Icons.sick,
+                  color: hexStringToColor("1A80E5"),
+                  // color: hexStringToColor("D90429"),
                 ),
               ],
             ),
@@ -84,12 +88,14 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
 class InformationBox extends StatelessWidget {
   final String title;
   final IconData icon;
+  final Color color;
   final void Function()? onTap;
 
   const InformationBox({
     super.key,
     required this.title,
     required this.icon,
+    required this.color,
     required this.onTap,
   });
 
@@ -101,19 +107,19 @@ class InformationBox extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.44,
         height: 210,
         decoration: BoxDecoration(
-          color: hexStringToColor("1A80E5"),
+          color: color,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Icon(
               icon,
-              size: 80,
+              size: 70,
               color: Colors.white,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 15),
             Text(
               title,
               style: const TextStyle(
@@ -122,6 +128,25 @@ class InformationBox extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 15),
+            const ElevatedButton(
+              onPressed: null,
+              style: ButtonStyle(
+                foregroundColor: MaterialStatePropertyAll(Colors.white),
+              ),
+              child: Text(
+                "Başla",
+                style: TextStyle(fontSize: 16),
+              ),
+            )
+            // const Text(
+            //   "Başla",
+            //   style: TextStyle(
+            //     color: Colors.white,
+            //     fontSize: 18,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
           ],
         ),
       ),

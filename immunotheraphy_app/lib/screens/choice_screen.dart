@@ -52,14 +52,14 @@ class ChoiceScreen extends StatelessWidget {
                 height: 271,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: hexStringToColor("6495ED"),
+                  color: hexStringToColor("2E5984"),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.3),
                       spreadRadius: 4,
                       blurRadius: 10,
-                      offset: Offset(10, 10),
+                      offset: const Offset(10, 10),
                     )
                   ],
                 ),
@@ -102,7 +102,8 @@ class ChoiceScreen extends StatelessWidget {
                 height: 271,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: hexStringToColor("1A80E5"),
+                  // color: hexStringToColor("4E5166"),
+                  color: hexStringToColor("2E5984"),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
