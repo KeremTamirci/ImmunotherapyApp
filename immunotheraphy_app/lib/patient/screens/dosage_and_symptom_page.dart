@@ -35,7 +35,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const DoseIntakePage(),
+                          builder: (context) => const FormPage(),
                         ));
                   },
                   icon: Icons.list,
@@ -50,11 +50,6 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                   onTap: () {
                     // Add your onTap logic for Box 2 here
                     print('Box 2 tapped');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FormPage(),
-                        ));
                   },
                   icon: Icons.sick,
                   // color: hexStringToColor("1A80E5"),
