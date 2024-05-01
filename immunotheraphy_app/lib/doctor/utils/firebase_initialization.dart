@@ -38,12 +38,12 @@ class Doctor {
   }
 }
 
-class PatientsFirestoreService {
-  final CollectionReference _patientsCollection =
+class TempPatientsFirestoreService {
+  final CollectionReference _tempPatientsCollection =
       FirebaseFirestore.instance.collection('Temp_Patients');
 
   Future<void> addPatient(String firstName, String lastName, String phoneNumber, DateTime birthDate, bool hasRhinits, bool hasAsthma, String uid, String otp) async {
-    await _patientsCollection.add({
+    await _tempPatientsCollection.add({
       'uid': uid,
       'first_name': firstName,
       'last_name': lastName,
@@ -56,10 +56,34 @@ class PatientsFirestoreService {
   }
 
   Stream<List<Patient>> getPatients() {
-    return _patientsCollection.snapshots().map((snapshot) =>
+    return _tempPatientsCollection.snapshots().map((snapshot) =>
         snapshot.docs.map((doc) => Patient.fromFirestore(doc)).toList());
   }
 }
+
+class PatientsFirestoreService {
+  final CollectionReference _PatientsCollection =
+      FirebaseFirestore.instance.collection('Patients');
+
+  Future<void> addPatient(String firstName, String lastName, String phoneNumber, DateTime birthDate, bool hasRhinits, bool hasAsthma, String uid, String otp) async {
+    await _PatientsCollection.add({
+      'uid': uid,
+      'first_name': firstName,
+      'last_name': lastName,
+      'phone_number': phoneNumber,
+      'birth_date': birthDate,
+      'has_allergic_rhinitis': hasRhinits,
+      'has_asthma': hasAsthma,
+      'otp':  otp
+    });
+  }
+
+  Stream<List<Patient>> getPatients() {
+    return _PatientsCollection.snapshots().map((snapshot) =>
+        snapshot.docs.map((doc) => Patient.fromFirestore(doc)).toList());
+  }
+}
+
 
 class Patient {
   final String firstName;
@@ -75,16 +99,18 @@ class Patient {
    required this.hasRhinits, required this.hasAsthma, required this.uid, required this.otp,});
 
   factory Patient.fromFirestore(DocumentSnapshot doc) {
-    Map data = doc.data() as Map<String, dynamic>;
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    Timestamp birthDateTimestamp = data['birth_date'];
+    DateTime birthDate = birthDateTimestamp.toDate(); // Convert Timestamp to DateTime
     return Patient(
       firstName: data['first_name'],
       lastName: data['last_name'],
       phoneNumber: data['phone_number'],
-      birthDate: data['birth_date'],
+      birthDate: birthDate, // Assign the converted birthDate
       hasRhinits: data['has_allergic_rhinitis'],
-      hasAsthma: data['hasAsthma'],
+      hasAsthma: data['has_asthma'],
       uid: data['uid'],
-      otp: data['name']
+      otp: data['otp']
     );
   }
 }
