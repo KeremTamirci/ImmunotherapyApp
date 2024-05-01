@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/screens/dosage_and_symptom_page.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_page.dart';
-import 'package:immunotheraphy_app/patient/screens/home_page.dart';
+import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 // import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/profile_page.dart';

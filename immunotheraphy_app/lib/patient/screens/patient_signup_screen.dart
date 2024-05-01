@@ -1,11 +1,10 @@
-import 'package:immunotheraphy_app/patient/screens/home_page.dart';
+import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_authentiaction_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/home_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 class PatientSignUpScreen extends StatefulWidget {
   const PatientSignUpScreen({Key? key}) : super(key: key);
@@ -114,7 +113,11 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
       // Navigate to HomeScreen after successful sign up
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PatientAuthenticationScreen(otp:_otpTextController.text, phoneNumber: _phoneNumberTextController.text,)),
+        MaterialPageRoute(
+            builder: (context) => PatientAuthenticationScreen(
+                  otp: _otpTextController.text,
+                  phoneNumber: _phoneNumberTextController.text,
+                )),
       );
     } catch (e) {
       print('Error signing up patient: $e');

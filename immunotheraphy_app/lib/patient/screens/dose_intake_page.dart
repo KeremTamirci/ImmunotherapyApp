@@ -113,93 +113,94 @@ class DoseIntakePageState extends State<DoseIntakePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Select Dosage:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    // return Scaffold(
+    // appBar: AppBar(),
+    // body:
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text(
+            'Select Dosage:',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            width: 350,
+            decoration: BoxDecoration(
+              color: hexStringToColor("E8EDF2"),
+              borderRadius: BorderRadius.circular(40),
             ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              width: 350,
-              decoration: BoxDecoration(
-                color: hexStringToColor("E8EDF2"),
-                borderRadius: BorderRadius.circular(40),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<int>(
+                value: _selectedItem,
+                isExpanded: true,
+                dropdownColor: hexStringToColor("E8EDF2"),
+                iconSize: 36,
+                style: TextStyle(
+                  color: hexStringToColor("4F7396"),
+                  fontSize: 18,
+                ),
+                borderRadius: BorderRadius.circular(30),
+                onChanged: (int? newValue) {
+                  setState(() {
+                    _selectedItem = newValue!;
+                  });
+                },
+                items: <int>[10, 20, 30, 40, 50]
+                    .map<DropdownMenuItem<int>>((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Text('$value'), // Convert integer to string
+                    ),
+                  );
+                }).toList(),
               ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<int>(
-                  value: _selectedItem,
-                  isExpanded: true,
-                  dropdownColor: hexStringToColor("E8EDF2"),
-                  iconSize: 36,
-                  style: TextStyle(
-                    color: hexStringToColor("4F7396"),
-                    fontSize: 18,
-                  ),
-                  borderRadius: BorderRadius.circular(30),
-                  onChanged: (int? newValue) {
+            ),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            // onPressed: _showTimePicker, // ESKİ HALİ BU
+            onPressed: _showTimePickerTest,
+            child: const Text('Select Time'),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            'Selected Time: ${_selectedTime.hour}:${_selectedTime.minute}',
+            style: const TextStyle(fontSize: 18),
+          ),
+          SizedBox(
+            width: 350,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Hospital Dosage:',
+                  style: TextStyle(fontSize: 18),
+                ),
+                const SizedBox(width: 5),
+                Checkbox(
+                  value: _isHospitalDosage,
+                  onChanged: (newValue) {
                     setState(() {
-                      _selectedItem = newValue!;
+                      _isHospitalDosage = newValue!;
                     });
                   },
-                  items: <int>[10, 20, 30, 40, 50]
-                      .map<DropdownMenuItem<int>>((int value) {
-                    return DropdownMenuItem<int>(
-                      value: value,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text('$value'), // Convert integer to string
-                      ),
-                    );
-                  }).toList(),
                 ),
-              ),
+              ],
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              // onPressed: _showTimePicker, // ESKİ HALİ BU
-              onPressed: _showTimePickerTest,
-              child: const Text('Select Time'),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Selected Time: ${_selectedTime.hour}:${_selectedTime.minute}',
-              style: const TextStyle(fontSize: 18),
-            ),
-            SizedBox(
-              width: 350,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Hospital Dosage:',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  const SizedBox(width: 5),
-                  Checkbox(
-                    value: _isHospitalDosage,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _isHospitalDosage = newValue!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ElevatedButton(
-              onPressed: _saveDosageInfo,
-              child: const Text('Save Dosage Info'),
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
+          ),
+          ElevatedButton(
+            onPressed: _saveDosageInfo,
+            child: const Text('Save Dosage Info'),
+          ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
+    // );
   }
 }
