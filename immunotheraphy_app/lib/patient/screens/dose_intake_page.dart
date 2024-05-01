@@ -16,6 +16,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
   TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
   bool _isHospitalDosage = false; // Initial value for hospital dosage
   late DatabaseController _databaseController;
+  // ignore: unused_field
   late User _user;
 
   @override
