@@ -1,13 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/doctor/screens/patient_detail_page.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 
 class PatientListScreen extends StatefulWidget {
+  const PatientListScreen({super.key});
+
   @override
-  _PatientListScreenState createState() => _PatientListScreenState();
+  PatientListScreenState createState() => PatientListScreenState();
 }
 
-class _PatientListScreenState extends State<PatientListScreen> {
+class PatientListScreenState extends State<PatientListScreen> {
   final PatientsFirestoreService _patientsFirestoreService =
       PatientsFirestoreService();
   late List<Patient> patients = [];
@@ -40,16 +43,16 @@ class _PatientListScreenState extends State<PatientListScreen> {
     if (patients.isEmpty) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Patient List'),
+          title: const Text('Patient List'),
         ),
-        body: Center(
+        body: const Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Patient List'),
+          title: const Text('Patient List'),
         ),
         body: ListView.builder(
           itemCount: patients.length,
@@ -57,33 +60,39 @@ class _PatientListScreenState extends State<PatientListScreen> {
             Patient patient = patients[index];
             return Card(
               elevation: 3,
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: ListTile(
-                leading: IconTheme(
+                leading: const IconTheme(
                   data: IconThemeData(size: 36), // Adjust the size here
                   child: Icon(Icons.person),
                 ),
                 title: Text(
                   '${patient.firstName} ${patient.lastName}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text('Phone: ${patient.phoneNumber}'),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Text('Birth Date: ${_formatDate(patient.birthDate)}'),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Text('Has Rhinitis: ${patient.hasRhinits ? 'Yes' : 'No'}'),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Text('Has Asthma: ${patient.hasAsthma ? 'Yes' : 'No'}'),
                   ],
                 ),
                 onTap: () {
-                  // Handle onTap event if needed
+                  // Navigate to PatientDetailScreen and pass the selected patient
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PatientDetailScreen(patient: patient),
+                    ),
+                  );
                 },
               ),
             );
