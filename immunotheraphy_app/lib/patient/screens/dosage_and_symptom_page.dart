@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class DosageAndSymptomPage extends StatefulWidget {
@@ -30,10 +31,20 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                   onTap: () {
                     // Add your onTap logic for Box 1 here
                     print('Box 1 tapped');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DoseIntakePage(),
+                        ));
                   },
                   icon: Icons.list,
                   // color: hexStringToColor("34C759"),
-                  color: hexStringToColor("1A80E5"),
+                  // color: hexStringToColor("1A80E5"), 18C872
+                  color: hexStringToColor("3DED97"),
+                  linearGradient: LinearGradient(colors: [
+                    hexStringToColor("3DED97"),
+                    hexStringToColor("18C872")
+                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                 ),
                 InformationBox(
                   title: 'Semptom Girişi',
@@ -43,6 +54,10 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                   },
                   icon: Icons.sick,
                   color: hexStringToColor("1A80E5"),
+                  linearGradient: LinearGradient(colors: [
+                    hexStringToColor("3FA5FF"),
+                    hexStringToColor("1A80E5")
+                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                   // color: hexStringToColor("D90429"),
                 ),
               ],
@@ -89,6 +104,7 @@ class InformationBox extends StatelessWidget {
   final String title;
   final IconData icon;
   final Color color;
+  final LinearGradient linearGradient;
   final void Function()? onTap;
 
   const InformationBox({
@@ -97,6 +113,7 @@ class InformationBox extends StatelessWidget {
     required this.icon,
     required this.color,
     required this.onTap,
+    required this.linearGradient,
   });
 
   @override
@@ -107,6 +124,7 @@ class InformationBox extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.44,
         height: 210,
         decoration: BoxDecoration(
+          gradient: linearGradient,
           color: color,
           borderRadius: BorderRadius.circular(15),
         ),
