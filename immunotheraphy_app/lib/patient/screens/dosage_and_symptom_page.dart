@@ -101,7 +101,7 @@ class InformationBox extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.44,
         height: 210,
         decoration: BoxDecoration(
-          color: hexStringToColor("6495ED"),
+          color: hexStringToColor("1A80E5"),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(

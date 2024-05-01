@@ -102,7 +102,7 @@ class ChoiceScreen extends StatelessWidget {
                 height: 271,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: hexStringToColor("6495ED"),
+                  color: hexStringToColor("1A80E5"),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
