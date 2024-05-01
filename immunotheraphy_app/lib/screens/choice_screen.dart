@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class ChoiceScreen extends StatelessWidget {
   const ChoiceScreen({Key? key}) : super(key: key);
@@ -51,7 +52,7 @@ class ChoiceScreen extends StatelessWidget {
                 height: 271,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: hexStringToColor("6495ED"),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -101,7 +102,7 @@ class ChoiceScreen extends StatelessWidget {
                 height: 271,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: hexStringToColor("6495ED"),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(

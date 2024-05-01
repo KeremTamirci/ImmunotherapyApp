@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:immunotheraphy_app/patient/screens/dosage_and_symptom_page.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_page.dart';
 import 'package:immunotheraphy_app/patient/screens/home_page.dart';
 // import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
@@ -42,7 +43,8 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = const HomePage();
+        // page = const HomePage();
+        page = const DosageAndSymptomPage();
         break;
       case 1:
         page = const DosePage();
