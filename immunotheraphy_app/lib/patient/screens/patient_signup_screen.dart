@@ -1,8 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:immunotheraphy_app/patient/screens/home_page.dart';
+import 'package:immunotheraphy_app/patient/screens/patient_authentiaction_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/home_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class PatientSignUpScreen extends StatefulWidget {
   const PatientSignUpScreen({Key? key}) : super(key: key);
@@ -12,9 +15,8 @@ class PatientSignUpScreen extends StatefulWidget {
 }
 
 class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _userNameTextController = TextEditingController();
+  TextEditingController _phoneNumberTextController = TextEditingController();
+  TextEditingController _otpTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,53 +51,21 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
               children: <Widget>[
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Enter UserName",
-                  Icons.person_outline,
+                  "Phone Number",
+                  Icons.phone,
                   false,
-                  _userNameTextController,
+                  _phoneNumberTextController,
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Enter Email Id",
-                  Icons.person_outline,
-                  false,
-                  _emailTextController,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter Password",
+                  "One Time Password",
                   Icons.lock_outlined,
                   true,
-                  _passwordTextController,
+                  _otpTextController,
                 ),
                 const SizedBox(height: 20),
                 firebaseUIButton(context, "Sign Up", () {
-                  FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text,
-                      )
-                      .then((value) {
-                        // Set the display name immediately after user creation
-                        value.user!.updateProfile(displayName: _userNameTextController.text).then((_) {
-                          print("Display name updated");
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()),
-                          );
-                        }).catchError((error) {
-                          print("Failed to update display name: $error");
-                          // If setting display name fails, still navigate to HomeScreen
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()),
-                          );
-                        });
-                      })
-                      .catchError((error) {
-                        print("Error: $error");
-                        // Handle sign up errors if needed
-                      });
+                  _checkPatientExists();
                 })
               ],
             ),
@@ -103,5 +73,56 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
         ),
       ),
     );
+  }
+
+  void _checkPatientExists() async {
+    String phoneNumber = _phoneNumberTextController.text;
+    String otp = _otpTextController.text;
+
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Temp_Patients')
+          .where('phone_number', isEqualTo: phoneNumber)
+          .where('otp', isEqualTo: otp)
+          .get();
+
+      if (querySnapshot.docs.isEmpty) {
+        // Patient with the same phone number and OTP exists
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Invalid entry.'),
+          ),
+        );
+      } else {
+        // No patient exists with the same phone number and OTP, proceed with sign up
+        _signUpPatient();
+      }
+    } catch (e) {
+      print('Error checking patient: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred. Please try again later.'),
+        ),
+      );
+    }
+  }
+
+  void _signUpPatient() async {
+    try {
+      // Sign up logic
+      // FirebaseAuth.instance.createUserWithEmailAndPassword...
+      // Navigate to HomeScreen after successful sign up
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => PatientAuthenticationScreen(otp:_otpTextController.text, phoneNumber: _phoneNumberTextController.text,)),
+      );
+    } catch (e) {
+      print('Error signing up patient: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred. Please try again later.'),
+        ),
+      );
+    }
   }
 }

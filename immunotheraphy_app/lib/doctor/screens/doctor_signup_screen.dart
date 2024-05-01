@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/doctor/screens/doctor_home_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/home_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
-import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart'; 
 
 class DoctorSignUpScreen extends StatefulWidget {
   const DoctorSignUpScreen({Key? key}) : super(key: key);
@@ -12,9 +14,14 @@ class DoctorSignUpScreen extends StatefulWidget {
 }
 
 class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
-  TextEditingController _passwordTextController = TextEditingController();
+  TextEditingController _nameTextController = TextEditingController();
+  TextEditingController _surnameTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _userNameTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController();
+  TextEditingController _tokenTextController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DoctorsFirestoreService _firestoreService = DoctorsFirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -49,53 +56,67 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
               children: <Widget>[
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Enter UserName",
+                  "Name",
                   Icons.person_outline,
                   false,
-                  _userNameTextController,
+                  _nameTextController,
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Enter Email Id",
+                  "Surname",
                   Icons.person_outline,
+                  false,
+                  _surnameTextController,
+                ),
+                const SizedBox(height: 20),
+                reusableTextField(
+                  "Email",
+                  Icons.mail_outline,
                   false,
                   _emailTextController,
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Enter Password",
-                  Icons.lock_outlined,
+                  "Password",
+                  Icons.lock_outline,
                   true,
                   _passwordTextController,
                 ),
                 const SizedBox(height: 20),
+                reusableTextField(
+                  "Token",
+                  Icons.security_outlined,
+                  false,
+                  _tokenTextController,
+                ),
+                const SizedBox(height: 20),
                 firebaseUIButton(context, "Sign Up", () {
-                  FirebaseAuth.instance
+                  _auth
                       .createUserWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text,
-                      )
+                    email: _emailTextController.text,
+                    password: _passwordTextController.text,
+                  )
                       .then((value) {
-                        // Set the display name immediately after user creation
-                        value.user!.updateProfile(displayName: _userNameTextController.text).then((_) {
-                          print("Display name updated");
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()),
-                          );
-                        }).catchError((error) {
-                          print("Failed to update display name: $error");
-                          // If setting display name fails, still navigate to HomeScreen
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()),
-                          );
-                        });
-                      })
+                    _firestoreService.addDoctor(
+                      _nameTextController.text,
+                      _surnameTextController.text,
+                      _tokenTextController.text,
+                      value.user!.uid,
+                    ).then((_) {
+                      print("User added to Firestore");
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => DoctorHomeScreen()),
+                      );
+                    }).catchError((error) {
+                      print("Failed to add user to Firestore: $error");
+                      // Handle Firestore errors if needed
+                    });
+                  })
                       .catchError((error) {
-                        print("Error: $error");
-                        // Handle sign up errors if needed
-                      });
+                    print("Error: $error");
+                    // Handle sign up errors if needed
+                  });
                 })
               ],
             ),
