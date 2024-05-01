@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/patient/screens/add_symptom_page.dart';
 // import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 import 'package:immunotheraphy_app/patient/screens/form_page.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
@@ -50,6 +51,11 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                   onTap: () {
                     // Add your onTap logic for Box 2 here
                     print('Box 2 tapped');
+                                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AddSymptomsPage(),
+                        ));
                   },
                   icon: Icons.sick,
                   // color: hexStringToColor("1A80E5"),

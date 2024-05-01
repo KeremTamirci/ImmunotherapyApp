@@ -36,9 +36,9 @@ class MyApp extends StatelessWidget {
           colorScheme: const ColorScheme(
               brightness: Brightness.light,
               primary: Color(0xff1a80e5),
-              onPrimary: Color.fromARGB(255, 255, 255, 255),
-              secondary: Color.fromARGB(255, 255, 255, 255),
-              onSecondary: Color.fromARGB(255, 0, 0, 0),
+              onPrimary: Color.fromARGB(255, 243, 240, 231),
+              secondary: Color(0xff2e5984),
+              onSecondary: Color.fromARGB(255, 243, 240, 231),
               error: Color(0xff1a80e5),
               onError: Color(0xff1a80e5),
               background: Color.fromARGB(255, 243, 240, 231),
