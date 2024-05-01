@@ -62,11 +62,11 @@ class TempPatientsFirestoreService {
 }
 
 class PatientsFirestoreService {
-  final CollectionReference _PatientsCollection =
+  final CollectionReference _patientsCollection =
       FirebaseFirestore.instance.collection('Patients');
 
   Future<void> addPatient(String firstName, String lastName, String phoneNumber, DateTime birthDate, bool hasRhinits, bool hasAsthma, String uid, String otp) async {
-    await _PatientsCollection.add({
+    await _patientsCollection.add({
       'uid': uid,
       'first_name': firstName,
       'last_name': lastName,
@@ -79,7 +79,7 @@ class PatientsFirestoreService {
   }
 
   Stream<List<Patient>> getPatients() {
-    return _PatientsCollection.snapshots().map((snapshot) =>
+    return _patientsCollection.snapshots().map((snapshot) =>
         snapshot.docs.map((doc) => Patient.fromFirestore(doc)).toList());
   }
 }

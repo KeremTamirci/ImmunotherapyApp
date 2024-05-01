@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 
@@ -7,7 +8,8 @@ class PatientListScreen extends StatefulWidget {
 }
 
 class _PatientListScreenState extends State<PatientListScreen> {
-  final PatientsFirestoreService _patientsFirestoreService = PatientsFirestoreService();
+  final PatientsFirestoreService _patientsFirestoreService =
+      PatientsFirestoreService();
   late List<Patient> patients = [];
 
   @override
@@ -17,7 +19,17 @@ class _PatientListScreenState extends State<PatientListScreen> {
   }
 
   Future<void> _fetchPatients() async {
-    List<Patient> fetchedPatients = await _patientsFirestoreService.getPatients().first;
+    // Get the current user (doctor) UID
+    String currentDoctorUID = FirebaseAuth.instance.currentUser?.uid ?? '';
+
+    // Fetch patients associated with the current doctor UID
+    List<Patient> fetchedPatients = await _patientsFirestoreService
+        .getPatients()
+        .first
+        .then((List<Patient> patients) => patients
+            .where((patient) => patient.uid == currentDoctorUID)
+            .toList());
+
     setState(() {
       patients = fetchedPatients;
     });
