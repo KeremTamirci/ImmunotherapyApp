@@ -118,7 +118,8 @@ class _PatientAuthenticationScreenState
         // Navigate to HomeScreen after successful sign up
         print(userCredential.user!.uid);
         _databaseController = DatabaseController(userCredential.user!.uid);
-        await _databaseController.processTempPatientRecord(widget.otp, widget.phoneNumber, userCredential.user!.uid);
+        await _databaseController.processTempPatientRecord(
+            widget.otp, widget.phoneNumber, userCredential.user!.uid);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PatientHomeScreen()),

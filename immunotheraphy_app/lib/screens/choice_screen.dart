@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class ChoiceScreen extends StatelessWidget {
   const ChoiceScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class ChoiceScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.black,
-              fontSize: 24,
+              fontSize: 26,
               fontWeight: FontWeight.bold,
               fontFamily: 'Inter',
             ),
@@ -26,13 +27,14 @@ class ChoiceScreen extends StatelessWidget {
         ),
         centerTitle: true, // Center the title horizontally
         elevation: 0, // Remove elevation (shadow) from the app bar
-        toolbarHeight: MediaQuery.of(context).size.height * 0.1,
+        toolbarHeight: MediaQuery.of(context).size.height * 0.15,
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 30),
             GestureDetector(
               onTap: () {
                 // Navigator.push(
@@ -49,16 +51,16 @@ class ChoiceScreen extends StatelessWidget {
               child: Container(
                 width: 271,
                 height: 271,
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: hexStringToColor("2E5984"),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.3),
                       spreadRadius: 4,
                       blurRadius: 10,
-                      offset: Offset(10, 10),
+                      offset: const Offset(5, 5),
                     )
                   ],
                 ),
@@ -68,7 +70,7 @@ class ChoiceScreen extends StatelessWidget {
                         width: 175,
                         height:
                             175), // Replace 'assets/patient_image.png' with your actual image path
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     const Text(
                       'Hasta Girişi',
                       style: TextStyle(
@@ -82,7 +84,7 @@ class ChoiceScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             GestureDetector(
               onTap: () {
                 // Navigator.push(
@@ -99,16 +101,17 @@ class ChoiceScreen extends StatelessWidget {
               child: Container(
                 width: 271,
                 height: 271,
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  // color: hexStringToColor("4E5166"),
+                  color: hexStringToColor("2E5984"),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.3),
                       spreadRadius: 4,
                       blurRadius: 10,
-                      offset: Offset(10, 10), // changes position of shadow
+                      offset: const Offset(5, 5), // changes position of shadow
                     )
                   ],
                 ),

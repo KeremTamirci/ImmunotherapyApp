@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/screens/new_patient_page.dart';
+import 'package:immunotheraphy_app/doctor/screens/patient_list_screen.dart';
+import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class DoctorHomeScreen extends StatefulWidget {
@@ -38,7 +40,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = const Placeholder();
+        page =  PatientListScreen();
         break;
       case 1:
         page = const NewPatientPage();
