@@ -68,9 +68,9 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
               ],
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          // const SizedBox(
+          //   height: 5,
+          // ),
           const Expanded(
               flex: 5,
               child: SingleChildScrollView(
@@ -107,19 +107,24 @@ class InfoCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        splashColor: Theme.of(context).colorScheme.primary.withAlpha(30),
-        onTap: () {
-          debugPrint('Card $title tapped.');
-        },
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.90,
-          height: MediaQuery.of(context).size.height * 0.22,
-          child: Center(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Card(
+        child: InkWell(
+          splashColor: Theme.of(context).colorScheme.primary.withAlpha(30),
+          onTap: () {
+            debugPrint('Card $title tapped.');
+          },
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.90,
+            height: MediaQuery.of(context).size.height * 0.22,
+            child: Center(
+              child: Text(
+                title,
+                // textAlign: TextAlign.start,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),
