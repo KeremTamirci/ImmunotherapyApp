@@ -71,22 +71,15 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
           const SizedBox(
             height: 10,
           ),
-          Expanded(
-            flex: 5,
-            child: ListView.builder(
-              itemCount: 10, // Change this to your actual list length
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text('Item $index'),
-                  subtitle: Text('Subtitle $index'),
-                  onTap: () {
-                    // Add your onTap logic for list items here
-                    print('List item $index tapped');
-                  },
-                );
-              },
-            ),
-          ),
+          const Expanded(
+              flex: 5,
+              child: Column(
+                children: [
+                  Card(
+                    child: Text("This is a card"),
+                  ),
+                ],
+              )),
         ],
       ),
     );
