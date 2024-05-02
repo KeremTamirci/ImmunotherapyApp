@@ -195,7 +195,10 @@ class DoseIntakePageState extends State<DoseIntakePage> {
             ),
           ),
           ElevatedButton(
-            onPressed: _saveDosageInfo,
+            onPressed: () {
+              _saveDosageInfo;
+              Navigator.pop(context);
+            },
             child: const Text('Save Dosage Info'),
           ),
           const SizedBox(height: 20),
