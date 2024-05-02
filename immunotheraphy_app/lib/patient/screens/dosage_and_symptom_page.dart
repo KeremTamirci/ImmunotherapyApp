@@ -75,7 +75,14 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
             ],
           ),
           const SizedBox(
-            height: 5,
+            height: 20,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 16, left: 16),
+            child: Text(
+              "Bilgilendirici İçerikler",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
           ),
           const Padding(
             padding: EdgeInsets.all(8.0),
