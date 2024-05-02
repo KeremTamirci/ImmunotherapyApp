@@ -71,54 +71,22 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
           const SizedBox(
             height: 10,
           ),
-          Expanded(
+          const Expanded(
               flex: 5,
-              child: Column(
-                children: [
-                  Card(
-                    child: InkWell(
-                      splashColor:
-                          Theme.of(context).colorScheme.primary.withAlpha(30),
-                      onTap: () {
-                        debugPrint('Card 1 tapped.');
-                      },
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.90,
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        child: const Center(
-                          child: Text(
-                            'A card that can be tapped',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    InfoCardWidget(
+                      title: 'A card that can be tapped',
                     ),
-                  ),
-                  Card(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.90,
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      child: const Center(
-                        child: Text(
-                          'Another card that cannot be tapped',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                    InfoCardWidget(
+                      title: 'Another card that can be tapped',
                     ),
-                  ),
-                  Card(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.90,
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      child: const Center(
-                        child: Text(
-                          'Another another card that cannot be tapped',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                    InfoCardWidget(
+                      title: 'Another another card that cannot be tapped',
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )),
         ],
       ),
@@ -127,6 +95,36 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
 
   int getPatientDoseNumber() {
     return 3;
+  }
+}
+
+class InfoCardWidget extends StatelessWidget {
+  final String title;
+  const InfoCardWidget({
+    super.key,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        splashColor: Theme.of(context).colorScheme.primary.withAlpha(30),
+        onTap: () {
+          debugPrint('Card $title tapped.');
+        },
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.90,
+          height: MediaQuery.of(context).size.height * 0.25,
+          child: Center(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
