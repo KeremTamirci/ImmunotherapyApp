@@ -82,9 +82,9 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                     InfoCardWidget(
                       title: 'Another card that can be tapped',
                     ),
-                    InfoCardWidget(
-                      title: 'Another another card that cannot be tapped',
-                    ),
+                    // InfoCardWidget(
+                    //   title: 'Another another card that cannot be tapped',
+                    // ),
                   ],
                 ),
               )),
@@ -115,7 +115,7 @@ class InfoCardWidget extends StatelessWidget {
         },
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.90,
-          height: MediaQuery.of(context).size.height * 0.25,
+          height: MediaQuery.of(context).size.height * 0.22,
           child: Center(
             child: Text(
               title,
@@ -158,7 +158,7 @@ class InformationBox extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.44,
-        height: 210,
+        height: MediaQuery.of(context).size.height * 0.25,
         decoration: BoxDecoration(
           gradient: linearGradient,
           // color: color,
@@ -170,7 +170,7 @@ class InformationBox extends StatelessWidget {
             const SizedBox(height: 20),
             Icon(
               icon,
-              size: 70,
+              size: MediaQuery.of(context).size.height * 0.08,
               color: Colors.white,
             ),
             const SizedBox(height: 15),
