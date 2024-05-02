@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:immunotheraphy_app/patient/screens/add_symptom_page.dart';
 // import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 import 'package:immunotheraphy_app/patient/screens/form_page.dart';
@@ -15,82 +17,86 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Information Page'),
-      // ),
-      body: Column(
+        // appBar: AppBar(
+        //   title: Text('Information Page'),
+        // ),
+        body: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           const SizedBox(
             height: 10,
           ),
-          Expanded(
-            flex: 3,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                InformationBox(
-                  title: 'Doz Girişi',
-                  onTap: () {
-                    // Add your onTap logic for Box 1 here
-                    print('Box 1 tapped');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FormPage(),
-                        ));
-                  },
-                  icon: Icons.list,
-                  // color: hexStringToColor("3DED97"),
-                  linearGradient: LinearGradient(colors: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              InformationBox(
+                title: 'Doz Girişi',
+                onTap: () {
+                  print('Box 1 tapped');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FormPage(),
+                    ),
+                  );
+                },
+                icon: Icons.list,
+                linearGradient: LinearGradient(
+                  colors: [
                     hexStringToColor("3DED97"),
                     hexStringToColor("18C872")
-                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
-                InformationBox(
-                  title: 'Semptom Girişi',
-                  onTap: () {
-                    // Add your onTap logic for Box 2 here
-                    print('Box 2 tapped');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AddSymptomsPage(),
-                        ));
-                  },
-                  icon: Icons.sick,
-                  // color: hexStringToColor("1A80E5"),
-                  linearGradient: LinearGradient(colors: [
+              ),
+              InformationBox(
+                title: 'Semptom Girişi',
+                onTap: () {
+                  print('Box 2 tapped');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddSymptomsPage(),
+                    ),
+                  );
+                },
+                icon: Icons.sick,
+                linearGradient: LinearGradient(
+                  colors: [
                     hexStringToColor("3FA5FF"),
                     hexStringToColor("1A80E5")
-                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-                  // color: hexStringToColor("D90429"),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                InfoCardWidget(
+                  title: 'A card that can be tapped',
+                ),
+                InfoCardWidget(
+                  title: 'Another card that can be tapped',
+                ),
+                InfoCardWidget(
+                  title: 'Another another card that cannot be tapped',
                 ),
               ],
             ),
           ),
-          // const SizedBox(
-          //   height: 5,
-          // ),
-          const Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    InfoCardWidget(
-                      title: 'A card that can be tapped',
-                    ),
-                    InfoCardWidget(
-                      title: 'Another card that can be tapped',
-                    ),
-                    // InfoCardWidget(
-                    //   title: 'Another another card that cannot be tapped',
-                    // ),
-                  ],
-                ),
-              )),
         ],
       ),
-    );
+    ));
   }
 
   int getPatientDoseNumber() {
@@ -110,14 +116,56 @@ class InfoCardWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Card(
+        color: Colors.white,
         child: InkWell(
           splashColor: Theme.of(context).colorScheme.primary.withAlpha(30),
           onTap: () {
             debugPrint('Card $title tapped.');
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(25.0),
+                  ),
+                ),
+                builder: (context) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.9,
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Yazı Başlığı",
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                                  style: TextStyle(fontSize: 18),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                });
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
-            height: MediaQuery.of(context).size.height * 0.22,
+            height: MediaQuery.of(context).size.height * 0.3,
             child: Center(
               child: Text(
                 title,
