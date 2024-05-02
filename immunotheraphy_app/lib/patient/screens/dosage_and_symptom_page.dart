@@ -90,7 +90,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 InfoCardWidget(
-                  title: 'Semptomlar ve Anaflaksi Hakkında',
+                  title: 'Semptomlar ve Anafilaksi Hakkında',
                   description:
                       "Çeşitli semptomlar ve anaflaktik şok anında  yapılacaklar",
                   imagePath: "assets/images/kalp_atisi.png",
