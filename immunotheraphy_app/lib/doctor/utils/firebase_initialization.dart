@@ -5,7 +5,7 @@ class DoctorsFirestoreService {
       FirebaseFirestore.instance.collection('Doctors');
 
   Future<void> addDoctor(String firstName, String lastName, String phoneNumber, String uid) async {
-    await _doctorsCollection.add({
+    await _doctorsCollection.doc(uid).set({
       'uid': uid,
       'first_name': firstName,
       'last_name': lastName,
