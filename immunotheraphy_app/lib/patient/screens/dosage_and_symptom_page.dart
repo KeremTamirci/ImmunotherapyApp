@@ -83,19 +83,19 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 InfoCardWidget(
-                  title: 'A card that can be tapped',
-                  description: "Bu bir description",
+                  title: 'Semptomlar ve Anaflaksi Hakkında',
+                  description: "Çeşitli semptomlar ve anaflaktik şok anında  yapılacaklar",
                   imagePath: "assets/images/kalp_atisi.png",
                 ),
                 InfoCardWidget(
-                  title: 'Another card that can be tapped',
-                  description: "Bu bir description",
-                  imagePath: "assets/images/asil_bu_kalp_atisi.png",
+                  title: 'Süt Merdiveni',
+                  description: "Süt bazlı ürünlerin süt proteini miktarları",
+                  imagePath: "assets/images/sut_ana_resim.png",
                 ),
                 InfoCardWidget(
-                  title: 'Another card that can be tapped',
-                  description: "Bu bir description",
-                  imagePath: "assets/images/kalp_atisi.png",
+                  title: 'Alerjik Besinler',
+                  description: "Yaygın besin alerjileri",
+                  imagePath: "assets/images/armut_yiyen_adam.png",
                 ),
               ],
             ),
@@ -175,7 +175,7 @@ class InfoCardWidget extends StatelessWidget {
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: MediaQuery.of(context).size.height * 0.35,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
