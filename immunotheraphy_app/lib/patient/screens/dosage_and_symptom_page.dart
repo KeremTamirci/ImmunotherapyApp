@@ -84,7 +84,8 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
               children: [
                 InfoCardWidget(
                   title: 'Semptomlar ve Anaflaksi Hakkında',
-                  description: "Çeşitli semptomlar ve anaflaktik şok anında  yapılacaklar",
+                  description:
+                      "Çeşitli semptomlar ve anaflaktik şok anında  yapılacaklar",
                   imagePath: "assets/images/kalp_atisi.png",
                 ),
                 InfoCardWidget(
@@ -135,10 +136,10 @@ class InfoCardWidget extends StatelessWidget {
                 context: context,
                 isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
-                    // borderRadius: BorderRadius.vertical(
-                    //   top: Radius.circular(25.0),
-                    // ),
-                    ),
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(25.0),
+                  ),
+                ),
                 builder: (context) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.9,
