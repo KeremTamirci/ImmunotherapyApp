@@ -84,12 +84,18 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
               children: [
                 InfoCardWidget(
                   title: 'A card that can be tapped',
+                  description: "Bu bir description",
+                  imagePath: "assets/images/kalp_atisi.png",
                 ),
                 InfoCardWidget(
                   title: 'Another card that can be tapped',
+                  description: "Bu bir description",
+                  imagePath: "assets/images/asil_bu_kalp_atisi.png",
                 ),
                 InfoCardWidget(
-                  title: 'Another another card that cannot be tapped',
+                  title: 'Another card that can be tapped',
+                  description: "Bu bir description",
+                  imagePath: "assets/images/kalp_atisi.png",
                 ),
               ],
             ),
@@ -106,9 +112,13 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
 
 class InfoCardWidget extends StatelessWidget {
   final String title;
+  final String description;
+  final String imagePath;
   const InfoCardWidget({
     super.key,
     required this.title,
+    required this.imagePath,
+    required this.description,
   });
 
   @override
@@ -125,10 +135,10 @@ class InfoCardWidget extends StatelessWidget {
                 context: context,
                 isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(25.0),
-                  ),
-                ),
+                    // borderRadius: BorderRadius.vertical(
+                    //   top: Radius.circular(25.0),
+                    // ),
+                    ),
                 builder: (context) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.9,
@@ -166,13 +176,42 @@ class InfoCardWidget extends StatelessWidget {
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
             height: MediaQuery.of(context).size.height * 0.3,
-            child: Center(
-              child: Text(
-                title,
-                // textAlign: TextAlign.start,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.cover,
+                    ),
+                  ), // Replace YourImageWidget with your image widget
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          description,
+                          style: const TextStyle(fontSize: 16),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
