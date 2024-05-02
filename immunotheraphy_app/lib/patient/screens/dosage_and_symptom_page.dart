@@ -71,12 +71,52 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
           const SizedBox(
             height: 10,
           ),
-          const Expanded(
+          Expanded(
               flex: 5,
               child: Column(
                 children: [
                   Card(
-                    child: Text("This is a card"),
+                    child: InkWell(
+                      splashColor:
+                          Theme.of(context).colorScheme.primary.withAlpha(30),
+                      onTap: () {
+                        debugPrint('Card 1 tapped.');
+                      },
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.90,
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        child: const Center(
+                          child: Text(
+                            'A card that can be tapped',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Card(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      child: const Center(
+                        child: Text(
+                          'Another card that cannot be tapped',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Card(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      child: const Center(
+                        child: Text(
+                          'Another another card that cannot be tapped',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               )),
