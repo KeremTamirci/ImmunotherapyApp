@@ -66,6 +66,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: homeScreenTitle,
+        surfaceTintColor: Theme.of(context).colorScheme.background,
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(

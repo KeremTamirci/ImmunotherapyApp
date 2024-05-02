@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
-import 'package:immunotheraphy_app/utils/color_utils.dart';
+// import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class FormPage extends StatefulWidget {
   const FormPage({super.key});
@@ -62,25 +62,37 @@ class FormPageState extends State<FormPage> {
           return (_currentStep == 2 && doseAllowed)
               ? Container()
               : Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
+                    TextButton(
+                      onPressed: details.onStepCancel,
+                      style: const ButtonStyle(
+                        textStyle:
+                            MaterialStatePropertyAll(TextStyle(fontSize: 18)),
+                        minimumSize: MaterialStatePropertyAll(Size(70, 50)),
+                        foregroundColor: MaterialStatePropertyAll(
+                          Color(0xff1a80e5),
+                        ),
+                      ),
+                      child: const Text('Geri Dön'),
+                    ),
                     (_currentStep != 2)
                         ? ElevatedButton(
                             onPressed: details.onStepContinue,
                             style: const ButtonStyle(
+                                textStyle: MaterialStatePropertyAll(
+                                    TextStyle(fontSize: 18)),
                                 backgroundColor:
                                     MaterialStatePropertyAll(Color(0xff1a80e5)),
                                 foregroundColor:
-                                    MaterialStatePropertyAll(Colors.white)),
+                                    MaterialStatePropertyAll(Colors.white),
+                                minimumSize:
+                                    MaterialStatePropertyAll(Size(70, 50))),
                             child: const Text('İlerle'),
                           )
                         : Container(),
-                    TextButton(
-                      onPressed: details.onStepCancel,
-                      style: const ButtonStyle(
-                        foregroundColor:
-                            MaterialStatePropertyAll(Color(0xff1a80e5)),
-                      ),
-                      child: const Text('Geri Dön'),
+                    const SizedBox(
+                      width: 10,
                     ),
                   ],
                 );
@@ -142,6 +154,7 @@ class FormPageState extends State<FormPage> {
                       });
                     },
                   ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -202,6 +215,7 @@ class FormPageState extends State<FormPage> {
                       });
                     },
                   ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -211,13 +225,17 @@ class FormPageState extends State<FormPage> {
             title: const Text('Adım 3'),
             content: (_currentStep == 2 && doseAllowed)
                 ? const DoseIntakePage()
-                : Container(
-                    child: const Center(
-                    child: Text(
-                      "Doz alımı yapmadan önce bütün hazırlıklarınızı tamamlamanız gerekiyor.",
-                      style: TextStyle(fontSize: 24),
+                : const Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Doz alımı yapmadan önce bütün hazırlıklarınızı tamamlamanız gerekiyor.",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        // SizedBox(height: 20),
+                      ],
                     ),
-                  )),
+                  ),
             isActive: _currentStep >= 2,
           ),
         ],

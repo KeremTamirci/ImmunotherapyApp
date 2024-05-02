@@ -3,7 +3,7 @@ import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_home_screen.dart';
 import 'package:immunotheraphy_app/patient/screens/reset_password.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_signup_screen.dart';
-import 'package:immunotheraphy_app/utils/color_utils.dart';
+// import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 
 class PatientSignInScreen extends StatefulWidget {
@@ -18,6 +18,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
   TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorSchemeContext = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Patient Sign In'),
@@ -41,9 +42,13 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
 
 //          hexStringToColor("6495ED"),
 //          hexStringToColor("3DED97")
+          // Color(0xffffffff),
+          // Color(0xffffffff),
           Color(0xff1a80e5),
           Color(0xff2e5984)
-        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)
+            // color: Color.fromARGB(255, 243, 240, 231),
+            ),
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -67,6 +72,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                 forgetPassword(context),
                 firebaseUIButton(context, "Sign In", () async {
                   try {
+                    // ignore: unused_local_variable
                     final userCredential = await FirebaseAuth.instance
                         .signInWithEmailAndPassword(
                             email: _emailTextController.text,
@@ -118,8 +124,10 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
             style: TextStyle(color: Colors.white70)),
         GestureDetector(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PatientSignUpScreen()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PatientSignUpScreen()));
           },
           child: const Text(
             " Sign Up",
@@ -141,8 +149,10 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
           style: TextStyle(color: Colors.white70),
           textAlign: TextAlign.right,
         ),
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const PatientResetPassword())),
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PatientResetPassword())),
       ),
     );
   }

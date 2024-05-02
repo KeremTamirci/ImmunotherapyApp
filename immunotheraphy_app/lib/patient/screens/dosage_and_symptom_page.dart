@@ -51,7 +51,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                   onTap: () {
                     // Add your onTap logic for Box 2 here
                     print('Box 2 tapped');
-                                        Navigator.push(
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const AddSymptomsPage(),

@@ -71,7 +71,7 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
 class DoseChart extends StatelessWidget {
   final List<int> doses;
   final List<String> dates;
-  
+
   DoseChart({required this.doses, required this.dates});
 
   @override
@@ -81,8 +81,7 @@ class DoseChart extends StatelessWidget {
       child: LineChart(
         LineChartData(
           titlesData: FlTitlesData(
-            bottomTitles: AxisTitles(
-            ),
+            bottomTitles: AxisTitles(),
           ),
           borderData: FlBorderData(
             show: true,
