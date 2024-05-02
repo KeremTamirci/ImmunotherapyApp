@@ -21,17 +21,24 @@ class DatabaseController {
 
   Future<List<DosageData>> getSortedDosageData() async {
     try {
-      CollectionReference dosageCollection =
-          FirebaseFirestore.instance.collection('Patients').doc(userId).collection('Dosage Recordings');
 
-      QuerySnapshot snapshot = await dosageCollection.orderBy("dosage_date").get();
+      // Reference to the dosage collection for the current user
+      CollectionReference dosageCollection = FirebaseFirestore.instance
+          .collection('Patients')
+          .doc(userId)
+          .collection('Dosage Recordings');
+
+      // Retrieve dosage data from Firestore
+      QuerySnapshot snapshot =
+          await dosageCollection.orderBy("dosage_date").get();
+
 
       List<DosageData> dosageData = snapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return DosageData(
-          date: (data['dosage_date'] as Timestamp).toDate(),
-          amount: data['dosage_amount'] as int,
-        );
+            date: (data['dosage_date'] as Timestamp).toDate(),
+            amount: data['dosage_amount'] as int,
+            isHospital: data['is_hospital_dosage']);
       }).toList();
 
       return dosageData;
@@ -40,6 +47,7 @@ class DatabaseController {
       return [];
     }
   }
+
 
   // Method to add symptoms to the symptoms table
   Future<void> addSymptoms(Map<String, dynamic> symptomDetails) async {
@@ -68,9 +76,11 @@ class DatabaseController {
           .get();
 
       if (snapshot.docs.isNotEmpty) {
+        
         Map<String, dynamic> tempPatientData = snapshot.docs.first.data() as Map<String, dynamic>;
         
         CollectionReference patientsCollection = FirebaseFirestore.instance.collection('Patients');
+
 
         await patientsCollection.doc(patientId).set(tempPatientData);
 
@@ -89,6 +99,7 @@ class DatabaseController {
 class DosageData {
   final DateTime date;
   final int amount;
-
-  DosageData({required this.date, required this.amount});
+  final bool isHospital;
+  DosageData(
+      {required this.date, required this.amount, required this.isHospital});
 }
