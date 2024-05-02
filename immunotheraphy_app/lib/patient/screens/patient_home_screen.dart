@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:immunotheraphy_app/patient/screens/dosage_and_symptom_page.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_page.dart';
-import 'package:immunotheraphy_app/patient/screens/home_page.dart';
-import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
+// import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
+// import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/profile_page.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
@@ -15,6 +16,7 @@ class PatientHomeScreen extends StatefulWidget {
 }
 
 class _PatientHomeScreenState extends State<PatientHomeScreen> {
+  // ignore: unused_field
   late User _user;
   final Text homeScreenTitle = const Text("Patient Home Screen");
   final Text logOutText = const Text("Log Out");
@@ -41,7 +43,8 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = const HomePage();
+        // page = const HomePage();
+        page = const DosageAndSymptomPage();
         break;
       case 1:
         page = const DosePage();
@@ -63,6 +66,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: homeScreenTitle,
+        surfaceTintColor: Theme.of(context).colorScheme.background,
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
@@ -74,7 +78,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
             children: [
               BottomNavigationBar(
                 // backgroundColor: hexStringToColor("1A80E5"),
-                backgroundColor: hexStringToColor("E8EDF2"),
+                backgroundColor: Theme.of(context).colorScheme.background,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),

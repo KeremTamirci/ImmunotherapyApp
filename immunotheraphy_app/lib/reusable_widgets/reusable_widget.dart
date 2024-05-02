@@ -76,6 +76,7 @@ class DoseChart extends StatelessWidget {
   DoseChart(
       {required this.doses, required this.dates, required this.isHospitalList});
 
+
   @override
   Widget build(BuildContext context) {
     // Check if doses list is empty or null

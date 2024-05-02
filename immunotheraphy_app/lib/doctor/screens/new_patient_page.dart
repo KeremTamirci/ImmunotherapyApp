@@ -237,7 +237,7 @@ void _registerPatient() async {
     } else {
       try {
         String otp = _generateOTP();
-        await PatientsFirestoreService().addPatient(
+        await TempPatientsFirestoreService().addPatient(
           _nameTextController.text,
           _surnameTextController.text,
           _phoneNumberTextController.text,
