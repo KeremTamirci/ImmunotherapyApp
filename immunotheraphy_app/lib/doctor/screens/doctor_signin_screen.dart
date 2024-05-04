@@ -50,13 +50,23 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                reusableTextField("Enter UserName", Icons.person_outline, false,
-                    _emailTextController),
+                reusableTextField(
+                  "Enter UserName",
+                  Icons.person_outline,
+                  false,
+                  _emailTextController,
+                  scrollPadding: MediaQuery.of(context).viewInsets.bottom,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField("Enter Password", Icons.lock_outline, true,
-                    _passwordTextController),
+                reusableTextField(
+                  "Enter Password",
+                  Icons.lock_outline,
+                  true,
+                  _passwordTextController,
+                  scrollPadding: MediaQuery.of(context).viewInsets.bottom,
+                ),
                 const SizedBox(
                   height: 5,
                 ),
