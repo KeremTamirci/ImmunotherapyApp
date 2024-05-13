@@ -50,13 +50,23 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                reusableTextField("Enter UserName", Icons.person_outline, false,
-                    _emailTextController),
+                reusableTextField(
+                  "Enter UserName",
+                  Icons.person_outline,
+                  false,
+                  _emailTextController,
+                  scrollPadding: MediaQuery.of(context).viewInsets.bottom,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField("Enter Password", Icons.lock_outline, true,
-                    _passwordTextController),
+                reusableTextField(
+                  "Enter Password",
+                  Icons.lock_outline,
+                  true,
+                  _passwordTextController,
+                  scrollPadding: MediaQuery.of(context).viewInsets.bottom,
+                ),
                 const SizedBox(
                   height: 5,
                 ),
@@ -68,11 +78,11 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                             email: _emailTextController.text,
                             password: _passwordTextController.text);
                     // Sign-in successful, navigate to the next screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DoctorHomeScreen()),
-                    );
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DoctorHomeScreen()),
+                        (_) => false);
                   } catch (error) {
                     print("Error: ${error.toString()}");
                     // Handle the error gracefully, e.g., show a dialog or a snackbar

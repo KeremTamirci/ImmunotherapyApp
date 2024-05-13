@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
+import 'package:immunotheraphy_app/doctor/screens/doctor_profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/doctor/screens/new_patient_page.dart';
+import 'package:immunotheraphy_app/doctor/screens/patient_list_screen.dart';
+import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
+import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class DoctorHomeScreen extends StatefulWidget {
   const DoctorHomeScreen({Key? key}) : super(key: key);
@@ -11,6 +15,10 @@ class DoctorHomeScreen extends StatefulWidget {
 
 class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
   late User _user;
+  final Text homeScreenTitle = const Text("Doctor Home Screen");
+  final Text logOutText = const Text("Log Out");
+  final TextStyle style = const TextStyle(fontSize: 20);
+  var selectedIndex = 0;
 
   @override
   void initState() {
@@ -29,33 +37,75 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page =  PatientListScreen();
+        break;
+      case 1:
+        page = const NewPatientPage();
+        break;
+      case 2:
+        page = const DoctorProfilePage();
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedIndex');
+    }
+    var mainArea = ColoredBox(
+      color: const Color.fromARGB(0, 188, 188, 253),
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        child: page,
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Doctor Home Screen'),
+        title: const Text('Doctor Home Screen'),
+      ),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+            // sets the background color of the `BottomNavigationBar`
+            ), // sets the inactive color of the `BottomNavigationBar`
+        child: SizedBox(
+          height: 72,
+          child: Wrap(
+            children: [
+              BottomNavigationBar(
+                // backgroundColor: hexStringToColor("1A80E5"),
+                backgroundColor: hexStringToColor("E8EDF2"),
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Ana Sayfa',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.sick),
+                    label: 'Yeni Hasta',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: 'Ayarlar',
+                  ),
+                ],
+                currentIndex: selectedIndex,
+                unselectedItemColor: Colors.black87,
+                showUnselectedLabels: true,
+                iconSize: 32,
+                unselectedLabelStyle: const TextStyle(fontSize: 14),
+                selectedLabelStyle: const TextStyle(fontSize: 16),
+                selectedItemColor: hexStringToColor("1A80E5"),
+                onTap: (value) {
+                  setState(() {
+                    selectedIndex = value;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Welcome, ${_user.displayName ?? 'Guest'}!',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: Text("Logout"),
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  print("Signed Out");
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => DoctorSignInScreen()),
-                  );
-                });
-              },
-            ),
-          ],
-        ),
+        child: mainArea,
       ),
     );
   }
