@@ -74,34 +74,100 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
 class DoseChart extends StatelessWidget {
   final List<int> doses;
   final List<String> dates;
+  final List<bool> isHospitalList;
 
-  DoseChart({required this.doses, required this.dates});
+  DoseChart(
+      {required this.doses, required this.dates, required this.isHospitalList});
+
 
   @override
   Widget build(BuildContext context) {
+    // Check if doses list is empty or null
+    if (doses!.isEmpty) {
+      // Return a message or placeholder if doses list is empty
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    // Find the minimum and maximum values in the doses list
+    int minValue = doses.reduce((curr, next) => curr < next ? curr : next);
+    int maxValue = doses.reduce((curr, next) => curr > next ? curr : next);
+
+    // Calculate the padding percentage (adjust this value based on your preference)
+    double paddingPercentage = 0.1;
+
+    // Calculate padding values
+    double paddingMax = (maxValue - minValue) * paddingPercentage;
+
+    // Adjust minY and maxY values with padding
+    double maxY = maxValue + paddingMax;
+
+    List<Color> spotColors = isHospitalList
+        .map((isHospital) => isHospital ? Colors.red : Colors.blue)
+        .toList();
+
     return SizedBox(
       height: 300,
-      child: LineChart(
-        LineChartData(
-          titlesData: FlTitlesData(
-            bottomTitles: AxisTitles(),
-          ),
-          borderData: FlBorderData(
-            show: true,
-          ),
-          lineBarsData: [
-            LineChartBarData(
-              spots: doses.asMap().entries.map((entry) {
-                return FlSpot(entry.key.toDouble(), entry.value.toDouble());
-              }).toList(),
-              //isCurved: true,
-              color: Colors.blue,
-              barWidth: 4,
-              isStrokeCapRound: true,
-              belowBarData: BarAreaData(show: false),
+      child: Stack(
+        children: [
+          Positioned(
+            left: 5,
+            top: 0,
+            bottom: 70,
+            child: RotatedBox(
+              quarterTurns: -1,
+              child: Text(
+                'Doz miktarı (mg)',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 10,
+            child: Center(
+              child: Text(
+                'Tarih',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, top: 50.0),
+            child: LineChart(
+              LineChartData(
+                titlesData: FlTitlesData(topTitles: AxisTitles(), show: true),
+                borderData: FlBorderData(
+                  show: true,
+                ),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: doses.asMap().entries.map((entry) {
+                      return FlSpot(
+                          entry.key.toDouble(), entry.value.toDouble());
+                    }).toList(),
+                    //isCurved: true,
+                    gradient: LinearGradient(colors: spotColors),
+                    //color: spotColors[],
+                    barWidth: 4,
+                    isStrokeCapRound: true,
+                    belowBarData: BarAreaData(show: false),
+                  ),
+                ],
+                // Set minY and maxY values to add padding
+                minY: 0,
+                maxY: maxY,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

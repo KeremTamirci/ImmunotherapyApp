@@ -57,6 +57,8 @@ class _DosePageState extends State<DosePage> {
           ? DoseChart(
               doses: _dosageData.map((data) => data.amount).toList(),
               dates: _dosageData.map((data) => data.date.toString()).toList(),
+              isHospitalList:
+                  _dosageData.map((data) => data.isHospital).toList(),
             )
           : Center(
               child: CircularProgressIndicator(),
