@@ -75,7 +75,14 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
             ],
           ),
           const SizedBox(
-            height: 5,
+            height: 20,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 16, left: 16),
+            child: Text(
+              "Bilgilendirici İçerikler",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
           ),
           const Padding(
             padding: EdgeInsets.all(8.0),
@@ -83,8 +90,9 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 InfoCardWidget(
-                  title: 'Semptomlar ve Anaflaksi Hakkında',
-                  description: "Çeşitli semptomlar ve anaflaktik şok anında  yapılacaklar",
+                  title: 'Semptomlar ve Anafilaksi Hakkında',
+                  description:
+                      "Çeşitli semptomlar ve anafilaktik şok anında yapılacaklar",
                   imagePath: "assets/images/kalp_atisi.png",
                 ),
                 InfoCardWidget(
@@ -126,7 +134,9 @@ class InfoCardWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Card(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 255, 255, 255),
+        // shadowColor: Color.fromARGB(255, 255, 14, 14),
+        surfaceTintColor: const Color.fromARGB(255, 255, 255, 255),
         child: InkWell(
           splashColor: Theme.of(context).colorScheme.primary.withAlpha(30),
           onTap: () {
@@ -135,10 +145,10 @@ class InfoCardWidget extends StatelessWidget {
                 context: context,
                 isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
-                    // borderRadius: BorderRadius.vertical(
-                    //   top: Radius.circular(25.0),
-                    // ),
-                    ),
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(25.0),
+                  ),
+                ),
                 builder: (context) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.9,
@@ -192,7 +202,7 @@ class InfoCardWidget extends StatelessWidget {
                   ), // Replace YourImageWidget with your image widget
                 ),
                 Expanded(
-                  flex: 3,
+                  flex: description.length > 50 ? 4 : 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(

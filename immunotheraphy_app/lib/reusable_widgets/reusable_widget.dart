@@ -12,9 +12,12 @@ Image logoWidget(String imageName) {
 }
 
 TextField reusableTextField(String text, IconData icon, bool isPasswordType,
-    TextEditingController controller) {
+    TextEditingController controller,
+    {VoidCallback? onTap, double? scrollPadding}) {
   return TextField(
     controller: controller,
+    onTap: onTap,
+    scrollPadding: EdgeInsets.only(bottom: scrollPadding ?? 20),
     obscureText: isPasswordType,
     enableSuggestions: !isPasswordType,
     autocorrect: !isPasswordType,

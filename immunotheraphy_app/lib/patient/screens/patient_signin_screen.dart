@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_home_screen.dart';
@@ -16,6 +18,7 @@ class PatientSignInScreen extends StatefulWidget {
 class _PatientSignInScreenState extends State<PatientSignInScreen> {
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     ColorScheme colorSchemeContext = Theme.of(context).colorScheme;
@@ -50,6 +53,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
             // color: Color.fromARGB(255, 243, 240, 231),
             ),
         child: SingleChildScrollView(
+          // controller: _scrollController,
           child: Padding(
             padding: EdgeInsets.fromLTRB(
                 20, MediaQuery.of(context).size.height * 0.2, 20, 0),
@@ -59,13 +63,23 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                reusableTextField("Enter UserName", Icons.person_outline, false,
-                    _emailTextController),
+                reusableTextField(
+                  "Enter UserName",
+                  Icons.person_outline,
+                  false,
+                  _emailTextController,
+                  scrollPadding: MediaQuery.of(context).viewInsets.bottom,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField("Enter Password", Icons.lock_outline, true,
-                    _passwordTextController),
+                reusableTextField(
+                  "Enter Password",
+                  Icons.lock_outline,
+                  true,
+                  _passwordTextController,
+                  scrollPadding: MediaQuery.of(context).viewInsets.bottom,
+                ),
                 const SizedBox(
                   height: 5,
                 ),
