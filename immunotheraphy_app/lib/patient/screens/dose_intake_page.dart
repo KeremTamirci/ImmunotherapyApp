@@ -102,7 +102,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
         'dosage_date': DateTime.now(),
         'detail': 'Doz kaydı detayı',
         // 'dosage_amount': _selectedItem, // Using the selected item directly
-        'dosage_amount': int.tryParse(_textController.text),
+        'dosage_amount': double.tryParse(_textController.text),
         'is_hospital_dosage': _isHospitalDosage,
         'measure_metric': 'mg',
         // Add any other fields you need for your dosage recording
@@ -136,13 +136,13 @@ class DoseIntakePageState extends State<DoseIntakePage> {
     }
   }
 
-  Future<void> _checkValue() async {
-    int? value = int.tryParse(_textController.text);
+  Future<void> _checkValue(double minValue, double maxValue) async {
+    double? value = double.tryParse(_textController.text);
     print("AAAAAAAAAAAAAAAAAAAAAAAA");
     print("Text Controller Value: ${_textController.text}");
     if (value == null) {
       _showRangeAlert();
-    } else if (value > 200) {
+    } else if (value < minValue || value > maxValue) {
       // If the value is bigger than 200, show an alert dialog
       _showRangeAlert();
     } else {
@@ -172,9 +172,9 @@ class DoseIntakePageState extends State<DoseIntakePage> {
             borderRadius: BorderRadius.circular(40),
           ),
           child: TextField(
-            keyboardType: const TextInputType.numberWithOptions(decimal: false),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
             ],
             decoration: InputDecoration(
               hintText: 'Enter a number',
@@ -194,7 +194,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
             // Inside the onChanged callback
             onChanged: (String value) {
               // Parse the input value to ensure it's numeric
-              String newValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+              String newValue = value.replaceAll(RegExp(r'[^0-9.]'), '');
 
               // Update the text field's value without triggering onChanged
               _textController.value = _textController.value.copyWith(
@@ -246,7 +246,9 @@ class DoseIntakePageState extends State<DoseIntakePage> {
           ),
         ),
         ElevatedButton(
-          onPressed: _checkValue,
+          onPressed: () {
+            _checkValue(5, 200);
+          },
           // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
           child: const Text('Save Dosage Info'),
         ),

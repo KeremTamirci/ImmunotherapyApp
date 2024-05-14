@@ -53,11 +53,6 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
       onPressed: () {
         onTap();
       },
-      child: Text(
-        title,
-        style: const TextStyle(
-            color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
-      ),
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
@@ -67,31 +62,35 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
+      child: Text(
+        title,
+        style: const TextStyle(
+            color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
+      ),
     ),
   );
 }
 
 class DoseChart extends StatelessWidget {
-  final List<int> doses;
+  final List<double> doses;
   final List<String> dates;
   final List<bool> isHospitalList;
 
   DoseChart(
       {required this.doses, required this.dates, required this.isHospitalList});
 
-
   @override
   Widget build(BuildContext context) {
     // Check if doses list is empty or null
     if (doses!.isEmpty) {
       // Return a message or placeholder if doses list is empty
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(),
       );
     }
     // Find the minimum and maximum values in the doses list
-    int minValue = doses.reduce((curr, next) => curr < next ? curr : next);
-    int maxValue = doses.reduce((curr, next) => curr > next ? curr : next);
+    double minValue = doses.reduce((curr, next) => curr < next ? curr : next);
+    double maxValue = doses.reduce((curr, next) => curr > next ? curr : next);
 
     // Calculate the padding percentage (adjust this value based on your preference)
     double paddingPercentage = 0.1;
@@ -110,7 +109,7 @@ class DoseChart extends StatelessWidget {
       height: 300,
       child: Stack(
         children: [
-          Positioned(
+          const Positioned(
             left: 5,
             top: 0,
             bottom: 70,
@@ -125,7 +124,7 @@ class DoseChart extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             left: 0,
             right: 0,
             top: 10,

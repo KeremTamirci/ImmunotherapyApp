@@ -4,7 +4,7 @@ import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 
 class DosePage extends StatefulWidget {
-  const DosePage({Key? key}) : super(key: key);
+  const DosePage({super.key});
 
   @override
   State<DosePage> createState() => _DosePageState();
@@ -60,7 +60,7 @@ class _DosePageState extends State<DosePage> {
               isHospitalList:
                   _dosageData.map((data) => data.isHospital).toList(),
             )
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );
