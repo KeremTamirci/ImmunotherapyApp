@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 // import 'package:immunotheraphy_app/utils/color_utils.dart';
@@ -165,62 +166,105 @@ class FormPageState extends State<FormPage> {
           ),
           Step(
             title: const Text('Adım 2'),
-            content: Container(
-              // Content for step 1
-              child: Column(
-                children: [
-                  // Each CheckboxListTile represents a question with a checkbox
-                  CheckboxListTile(
-                    title: const Text(
-                      'Son birkaç saat içinde ... ilacını aldınız mı?',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    value: checkedStateStep2[0],
-                    onChanged: (newValue) {
-                      setState(() {
-                        checkedStateStep2[0] = newValue!;
-                      });
-                    },
+            content: Column(
+              children: [
+                !areAllCheckedStep2()
+                    ? Column(
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                color: CupertinoColors.systemBackground),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.warning,
+                                        color: CupertinoColors.systemRed,
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "Uyarı",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: CupertinoColors.systemRed,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    "Aşağıdaki bulgularda veya özel durumlarda bugünkü dozunuzu atlamanız veya 1/4'üne indirmeniz önerilir.",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      // color: CupertinoColors.systemRed
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Divider()
+                        ],
+                      )
+                    : Container(),
+                // const Divider(),
+                // Each CheckboxListTile represents a question with a checkbox
+                CheckboxListTile(
+                  title: const Text(
+                    'Son birkaç saat içinde ... ilacını aldınız mı?',
+                    style: TextStyle(fontSize: 20),
                   ),
-                  CheckboxListTile(
-                    title: const Text(
-                      'Bugün içinde ... yaptınız mı?',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    value: checkedStateStep2[1],
-                    onChanged: (newValue) {
-                      setState(() {
-                        checkedStateStep2[1] = newValue!;
-                      });
-                    },
+                  value: checkedStateStep2[0],
+                  onChanged: (newValue) {
+                    setState(() {
+                      checkedStateStep2[0] = newValue!;
+                    });
+                  },
+                ),
+                CheckboxListTile(
+                  title: const Text(
+                    'Bugün içinde ... yaptınız mı?',
+                    style: TextStyle(fontSize: 20),
                   ),
-                  CheckboxListTile(
-                    title: const Text(
-                      'Question 3',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    value: checkedStateStep2[2],
-                    onChanged: (newValue) {
-                      setState(() {
-                        checkedStateStep2[2] = newValue!;
-                      });
-                    },
+                  value: checkedStateStep2[1],
+                  onChanged: (newValue) {
+                    setState(() {
+                      checkedStateStep2[1] = newValue!;
+                    });
+                  },
+                ),
+                CheckboxListTile(
+                  title: const Text(
+                    'Question 3',
+                    style: TextStyle(fontSize: 20),
                   ),
-                  CheckboxListTile(
-                    title: const Text(
-                      'Question 4',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    value: checkedStateStep2[3],
-                    onChanged: (newValue) {
-                      setState(() {
-                        checkedStateStep2[3] = newValue!;
-                      });
-                    },
+                  value: checkedStateStep2[2],
+                  onChanged: (newValue) {
+                    setState(() {
+                      checkedStateStep2[2] = newValue!;
+                    });
+                  },
+                ),
+                CheckboxListTile(
+                  title: const Text(
+                    'Question 4',
+                    style: TextStyle(fontSize: 20),
                   ),
-                  const SizedBox(height: 20),
-                ],
-              ),
+                  value: checkedStateStep2[3],
+                  onChanged: (newValue) {
+                    setState(() {
+                      checkedStateStep2[3] = newValue!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
             isActive: _currentStep >= 1,
           ),
@@ -228,7 +272,9 @@ class FormPageState extends State<FormPage> {
             title: const Text('Adım 3'),
             content: (_currentStep == 2 && doseAllowed)
                 ? const DoseIntakePage()
-                : const Step1Incomplete(),
+                : (!areAllCheckedStep1())
+                    ? const Step1Incomplete()
+                    : const Step1Incomplete(),
             isActive: _currentStep >= 2,
           ),
         ],
@@ -249,6 +295,27 @@ class Step1Incomplete extends StatelessWidget {
         children: [
           Text(
             "Doz alımı yapmadan önce bütün hazırlıklarınızı tamamlamanız gerekiyor.",
+            style: TextStyle(fontSize: 24),
+          ),
+          // SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+}
+
+class Step2Incomplete extends StatelessWidget {
+  const Step2Incomplete({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Column(
+        children: [
+          Text(
+            "İşaretlediğiniz bulgular sebebiyle bugünkü dozunuzu atlamanız veya 1/4'üne indirmeniz önerilir.",
             style: TextStyle(fontSize: 24),
           ),
           // SizedBox(height: 20),
