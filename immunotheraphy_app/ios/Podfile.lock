@@ -220,7 +220,6 @@ CHECKOUT OPTIONS:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
     :tag: 10.24.0
 
-
 SPEC CHECKSUMS:
   cloud_firestore: 2d605d2b9d1b8c055b4fc8b1dbd70121b86cf168
   DKImagePickerController: a7836546cfdfe014171694f643a7d575bc8ace7f
@@ -257,6 +256,6 @@ SPEC CHECKSUMS:
   SDWebImage: 40b0b4053e36c660a764958bff99eed16610acbb
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
 
-PODFILE CHECKSUM: 6523e60c146f41f9c5f036ad16d328d28204098f
+PODFILE CHECKSUM: ba1102e4e83b975b588a701c59730ec2ec8e2ea0
 
 COCOAPODS: 1.15.2
