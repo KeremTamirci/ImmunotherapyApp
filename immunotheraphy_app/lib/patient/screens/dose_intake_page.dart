@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_pickers/flutter_material_pickers.dart';
+import 'package:flutter/services.dart';
+// import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class DoseIntakePage extends StatefulWidget {
-  const DoseIntakePage({Key? key}) : super(key: key);
+  const DoseIntakePage({super.key});
 
   @override
   State<DoseIntakePage> createState() => DoseIntakePageState();
@@ -13,6 +14,8 @@ class DoseIntakePage extends StatefulWidget {
 
 class DoseIntakePageState extends State<DoseIntakePage> {
   int _selectedItem = 10; // Initial value for dropdown
+  String _numericValue = '';
+  final TextEditingController _textController = TextEditingController();
   TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
   bool _isHospitalDosage = false; // Initial value for hospital dosage
   late DatabaseController _databaseController;
@@ -25,18 +28,18 @@ class DoseIntakePageState extends State<DoseIntakePage> {
     _getUserData();
   }
 
-  // Function to show the time picker
-  void _showTimePicker() {
-    showMaterialTimePicker(
-      context: context,
-      selectedTime: _selectedTime,
-      onChanged: (time) {
-        setState(() {
-          _selectedTime = time;
-        });
-      },
-    );
-  }
+  // // Function to show the time picker
+  // void _showTimePicker() {
+  //   showMaterialTimePicker(
+  //     context: context,
+  //     selectedTime: _selectedTime,
+  //     onChanged: (time) {
+  //       setState(() {
+  //         _selectedTime = time;
+  //       });
+  //     },
+  //   );
+  // }
 
   Future<void> _showTimePickerTest() async {
     final TimeOfDay? pickedTime = await showTimePicker(
@@ -78,7 +81,8 @@ class DoseIntakePageState extends State<DoseIntakePage> {
       Map<String, dynamic> dosageDetails = {
         'dosage_date': DateTime.now(),
         'detail': 'Doz kaydı detayı',
-        'dosage_amount': _selectedItem, // Using the selected item directly
+        // 'dosage_amount': _selectedItem, // Using the selected item directly
+        'dosage_amount': int.tryParse(_textController.text),
         'is_hospital_dosage': _isHospitalDosage,
         'measure_metric': 'mg',
         // Add any other fields you need for your dosage recording
@@ -133,34 +137,47 @@ class DoseIntakePageState extends State<DoseIntakePage> {
             color: hexStringToColor("E8EDF2"),
             borderRadius: BorderRadius.circular(40),
           ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<int>(
-              value: _selectedItem,
-              isExpanded: true,
-              dropdownColor: hexStringToColor("E8EDF2"),
-              iconSize: 36,
-              style: TextStyle(
-                color: hexStringToColor("4F7396"),
-                fontSize: 18,
+          child: TextField(
+            keyboardType: const TextInputType.numberWithOptions(decimal: false),
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+            ],
+            decoration: InputDecoration(
+              hintText: 'Enter a number',
+              labelText: 'Number',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
               ),
-              borderRadius: BorderRadius.circular(30),
-              onChanged: (int? newValue) {
-                setState(() {
-                  _selectedItem = newValue!;
-                });
-              },
-              items: <int>[10, 20, 30, 40, 50]
-                  .map<DropdownMenuItem<int>>((int value) {
-                return DropdownMenuItem<int>(
-                  value: value,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text('$value'), // Convert integer to string
-                  ),
-                );
-              }).toList(),
+              filled: true,
+              fillColor: hexStringToColor("E8EDF2"),
             ),
+            style: TextStyle(
+              color: hexStringToColor("4F7396"),
+              fontSize: 18,
+            ),
+            // Set the TextEditingController
+            controller: _textController,
+            // Inside the onChanged callback
+            onChanged: (String value) {
+              // Parse the input value to ensure it's numeric
+              String newValue = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+              // Update the text field's value without triggering onChanged
+              _textController.value = _textController.value.copyWith(
+                text: newValue,
+                selection: TextSelection.collapsed(offset: newValue.length),
+                composing: TextRange.empty,
+              );
+            },
           ),
+          // MyDropdownWidget(
+          //   selectedItem: _selectedItem,
+          //   onChanged: (int? newValue) {
+          //     setState(() {
+          //       _selectedItem = newValue!;
+          //     });
+          //   },
+          // ),
         ),
         const SizedBox(height: 20),
         Text(
@@ -203,5 +220,44 @@ class DoseIntakePageState extends State<DoseIntakePage> {
       ],
     );
     // );
+  }
+}
+
+class MyDropdownWidget extends StatelessWidget {
+  final int selectedItem;
+  final ValueChanged<int?> onChanged;
+
+  const MyDropdownWidget({
+    super.key,
+    required this.selectedItem,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<int>(
+        value: selectedItem,
+        isExpanded: true,
+        dropdownColor: hexStringToColor("E8EDF2"),
+        iconSize: 36,
+        style: TextStyle(
+          color: hexStringToColor("4F7396"),
+          fontSize: 18,
+        ),
+        borderRadius: BorderRadius.circular(30),
+        onChanged: onChanged,
+        items:
+            <int>[10, 20, 30, 40, 50].map<DropdownMenuItem<int>>((int value) {
+          return DropdownMenuItem<int>(
+            value: value,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text('$value'), // Convert integer to string
+            ),
+          );
+        }).toList(),
+      ),
+    );
   }
 }
