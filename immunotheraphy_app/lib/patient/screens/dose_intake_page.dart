@@ -238,23 +238,29 @@ class DoseIntakePageState extends State<DoseIntakePage>
         ),
         const SizedBox(height: 10),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          width: 350,
+          // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          // width: 350,
+          height: 60,
           decoration: BoxDecoration(
-            color: hexStringToColor("E8EDF2"),
-            borderRadius: BorderRadius.circular(40),
+            color: CupertinoColors.systemBackground,
+            borderRadius: BorderRadius.circular(15),
           ),
           child: TextField(
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
             ],
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Doz miktarı (mg)',
-              labelText: 'Doz miktarını giriniz',
-              border: InputBorder.none,
+              hintStyle: TextStyle(color: CupertinoColors.systemGrey),
+              // alignLabelWithHint: true,
+              // labelText: 'Doz miktarını giriniz',
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  borderSide: BorderSide.none),
               filled: true,
-              fillColor: hexStringToColor("E8EDF2"),
+              // fillColor: hexStringToColor("E8EDF2"),
+              fillColor: CupertinoColors.systemBackground,
             ),
             style: TextStyle(
               color: hexStringToColor("4F7396"),
@@ -286,7 +292,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
         Container(
           decoration: const BoxDecoration(
               color: CupertinoColors.systemBackground,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+              borderRadius: BorderRadius.all(Radius.circular(15))),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -329,12 +335,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
                   ],
                 ),
                 AnimatedSize(
-                  // axisAlignment: -1.0,
-                  // sizeFactor: _animation,
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeInOut,
                   child: SizedBox(
-                    height: _showTime ? 232 : 0,
+                    // height: _showTime ? 232 : 0,
                     child: _showTime
                         ? Column(
                             children: [
@@ -346,7 +350,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                                   child: CupertinoDatePicker(
                                       mode: CupertinoDatePickerMode.time,
                                       use24hFormat: true,
-                                      initialDateTime: DateTime.now(),
+                                      initialDateTime: _selectedTimeCupertino,
                                       onDateTimeChanged:
                                           (DateTime newDateTime) {
                                         setState(() {
@@ -366,7 +370,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Hospital Dosage',
+                        'Hastane Dozu',
                         style: TextStyle(fontSize: 20),
                       ),
                       const Spacer(),

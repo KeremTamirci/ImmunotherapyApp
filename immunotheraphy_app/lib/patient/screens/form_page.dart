@@ -64,18 +64,21 @@ class FormPageState extends State<FormPage> {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    TextButton(
-                      onPressed: details.onStepCancel,
-                      style: const ButtonStyle(
-                        textStyle:
-                            MaterialStatePropertyAll(TextStyle(fontSize: 18)),
-                        minimumSize: MaterialStatePropertyAll(Size(70, 50)),
-                        foregroundColor: MaterialStatePropertyAll(
-                          Color(0xff1a80e5),
-                        ),
-                      ),
-                      child: const Text('Geri Dön'),
-                    ),
+                    (_currentStep != 0)
+                        ? TextButton(
+                            onPressed: details.onStepCancel,
+                            style: const ButtonStyle(
+                              textStyle: MaterialStatePropertyAll(
+                                  TextStyle(fontSize: 18)),
+                              minimumSize:
+                                  MaterialStatePropertyAll(Size(70, 50)),
+                              foregroundColor: MaterialStatePropertyAll(
+                                Color(0xff1a80e5),
+                              ),
+                            ),
+                            child: const Text('Geri Dön'),
+                          )
+                        : Container(),
                     (_currentStep != 2)
                         ? ElevatedButton(
                             onPressed: details.onStepContinue,
