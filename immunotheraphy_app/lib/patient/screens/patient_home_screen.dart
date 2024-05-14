@@ -74,13 +74,13 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         data: Theme.of(context).copyWith(
             // sets the background color of the `BottomNavigationBar`
             ), // sets the inactive color of the `BottomNavigationBar`
-        child: Wrap(
-          children: [
-            SizedBox(
-              height: Platform.isIOS
-                  ? MediaQuery.of(context).size.height * 0.1
-                  : MediaQuery.of(context).size.height * 0.08,
-              child: BottomNavigationBar(
+        child: SizedBox(
+          height: Platform.isIOS
+              ? MediaQuery.of(context).size.height * 0.1
+              : MediaQuery.of(context).size.height * 0.08,
+          child: Wrap(
+            children: [
+              BottomNavigationBar(
                 // backgroundColor: hexStringToColor("1A80E5"),
                 backgroundColor: Theme.of(context).colorScheme.background,
                 items: const <BottomNavigationBarItem>[
@@ -110,8 +110,8 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                   });
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: Center(
