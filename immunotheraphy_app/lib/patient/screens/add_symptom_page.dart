@@ -55,6 +55,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
     await showMaterialCheckboxPicker(
       context: context,
       items: allSymptomTypes,
+      title: "Semptomlarınızı Seçin",
       selectedItems: _selectedSymptomTypes,
       onChanged: (List<String> value) {
         setState(() {
