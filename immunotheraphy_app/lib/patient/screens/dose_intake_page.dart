@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_material_pickers/flutter_material_pickers.dart';
@@ -17,6 +19,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
   String _numericValue = '';
   final TextEditingController _textController = TextEditingController();
   TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
+  DateTime _selectedTimeCupertino = DateTime.now();
   bool _isHospitalDosage = false; // Initial value for hospital dosage
   late DatabaseController _databaseController;
   // ignore: unused_field
@@ -40,6 +43,41 @@ class DoseIntakePageState extends State<DoseIntakePage> {
   //     },
   //   );
   // }
+
+  void _showDialog(Widget child) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => ListView(reverse: true, children: [
+        Container(
+          height: 216,
+          padding: const EdgeInsets.only(top: 6.0),
+          // The Bottom margin is provided to align the popup above the system
+          // navigation bar.
+          margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          // Provide a background color for the popup.
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          // Use a SafeArea widget to avoid system overlaps.
+          child: SafeArea(
+            top: false,
+            child: child,
+          ),
+        ),
+        CupertinoButton(
+            color: CupertinoColors.systemBackground.resolveFrom(context),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
+            child: const Text(
+              'Kaydet',
+              style: TextStyle(color: CupertinoColors.activeBlue, fontSize: 22),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+      ]),
+    );
+  }
 
   Future<void> _showTimePickerTest() async {
     final TimeOfDay? pickedTime = await showTimePicker(
@@ -99,7 +137,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
   void _saveDosageInfo() async {
     try {
       Map<String, dynamic> dosageDetails = {
-        'dosage_date': DateTime.now(),
+        'dosage_date': _selectedTimeCupertino,
         'detail': 'Doz kaydı detayı',
         // 'dosage_amount': _selectedItem, // Using the selected item directly
         'dosage_amount': double.tryParse(_textController.text),
@@ -160,7 +198,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Text(
-          'Select Dosage:',
+          'Doz Miktarı:',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
@@ -177,11 +215,12 @@ class DoseIntakePageState extends State<DoseIntakePage> {
               FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
             ],
             decoration: InputDecoration(
-              hintText: 'Enter a number',
-              labelText: 'Number',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
+              hintText: 'Doz miktarı (mg)',
+              labelText: 'Doz miktarını giriniz',
+              // border: OutlineInputBorder(
+              //   borderRadius: BorderRadius.circular(30),
+              // ),
+              border: InputBorder.none,
               filled: true,
               fillColor: hexStringToColor("E8EDF2"),
             ),
@@ -213,16 +252,54 @@ class DoseIntakePageState extends State<DoseIntakePage> {
           //   },
           // ),
         ),
+        // const SizedBox(height: 20),
+        // Text(
+        //   'Selected Time: ${_selectedTime.hour}:${_selectedTime.minute}',
+        //   style: const TextStyle(fontSize: 18),
+        // ),
         const SizedBox(height: 20),
-        Text(
-          'Selected Time: ${_selectedTime.hour}:${_selectedTime.minute}',
-          style: const TextStyle(fontSize: 18),
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          // onPressed: _showTimePicker, // ESKİ HALİ BU
-          onPressed: _showTimePickerTest,
-          child: const Text('Select Time'),
+        // ElevatedButton(
+        //   // onPressed: _showTimePicker, // ESKİ HALİ BU
+        //   // onPressed: _showTimePickerTest,
+        //   onPressed: _showCupertinoTimePicker,
+        //   child: const Text('Select Time'),
+        // ),
+        Row(
+          children: [
+            const Text(
+              "Doz Saati:",
+              style: TextStyle(fontSize: 22),
+            ),
+            const SizedBox(width: 10),
+            // SizedBox(
+            //   width: 100,
+            //   child:
+            Text(
+              '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
+              style: const TextStyle(
+                fontSize: 22.0,
+              ),
+            ),
+            CupertinoButton(
+              // padding: const EdgeInsets.all(0),
+              // color: CupertinoColors.systemGrey,
+              // Display a CupertinoDatePicker in time picker mode.
+              onPressed: () => _showDialog(
+                CupertinoDatePicker(
+                  initialDateTime: _selectedTimeCupertino,
+                  mode: CupertinoDatePickerMode.time,
+                  use24hFormat: true,
+                  // This is called when the user changes the time.
+                  onDateTimeChanged: (DateTime newTime) {
+                    setState(() => _selectedTimeCupertino = newTime);
+                  },
+                ),
+              ),
+              child: const Text("Değiştir"),
+            ),
+
+            // ),
+          ],
         ),
         SizedBox(
           width: 350,
