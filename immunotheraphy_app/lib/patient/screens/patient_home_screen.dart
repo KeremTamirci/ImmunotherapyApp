@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/screens/dosage_and_symptom_page.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_page.dart';
@@ -72,38 +74,44 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         data: Theme.of(context).copyWith(
             // sets the background color of the `BottomNavigationBar`
             ), // sets the inactive color of the `BottomNavigationBar`
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.08,
-          child: BottomNavigationBar(
-            // backgroundColor: hexStringToColor("1A80E5"),
-            backgroundColor: Theme.of(context).colorScheme.background,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Ana Sayfa',
+        child: Wrap(
+          children: [
+            SizedBox(
+              height: Platform.isIOS
+                  ? MediaQuery.of(context).size.height * 0.1
+                  : MediaQuery.of(context).size.height * 0.08,
+              child: BottomNavigationBar(
+                // backgroundColor: hexStringToColor("1A80E5"),
+                backgroundColor: Theme.of(context).colorScheme.background,
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Ana Sayfa',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.auto_graph),
+                    label: 'Dozaj',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: 'Ayarlar',
+                  ),
+                ],
+                currentIndex: selectedIndex,
+                unselectedItemColor: Colors.black87,
+                showUnselectedLabels: true,
+                iconSize: 32,
+                unselectedLabelStyle: const TextStyle(fontSize: 14),
+                selectedLabelStyle: const TextStyle(fontSize: 16),
+                selectedItemColor: hexStringToColor("1A80E5"),
+                onTap: (value) {
+                  setState(() {
+                    selectedIndex = value;
+                  });
+                },
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.auto_graph),
-                label: 'Dozaj',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Ayarlar',
-              ),
-            ],
-            currentIndex: selectedIndex,
-            unselectedItemColor: Colors.black87,
-            showUnselectedLabels: true,
-            iconSize: 32,
-            unselectedLabelStyle: const TextStyle(fontSize: 14),
-            selectedLabelStyle: const TextStyle(fontSize: 16),
-            selectedItemColor: hexStringToColor("1A80E5"),
-            onTap: (value) {
-              setState(() {
-                selectedIndex = value;
-              });
-            },
-          ),
+            ),
+          ],
         ),
       ),
       body: Center(
