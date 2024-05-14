@@ -328,25 +328,34 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     // ),
                   ],
                 ),
-                SizeTransition(
-                  axisAlignment: -1.0,
-                  sizeFactor: _animation,
-                  child: Column(
-                    children: [
-                      const Divider(
-                          thickness: 0.5, color: CupertinoColors.systemGrey),
-                      SizedBox(
-                          height: 200,
-                          child: CupertinoDatePicker(
-                              mode: CupertinoDatePickerMode.time,
-                              use24hFormat: true,
-                              initialDateTime: DateTime.now(),
-                              onDateTimeChanged: (DateTime newDateTime) {
-                                setState(() {
-                                  _selectedTimeCupertino = newDateTime;
-                                });
-                              })),
-                    ],
+                AnimatedSize(
+                  // axisAlignment: -1.0,
+                  // sizeFactor: _animation,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                  child: SizedBox(
+                    height: _showTime ? 232 : 0,
+                    child: _showTime
+                        ? Column(
+                            children: [
+                              const Divider(
+                                  thickness: 0.5,
+                                  color: CupertinoColors.systemGrey),
+                              SizedBox(
+                                  height: 200,
+                                  child: CupertinoDatePicker(
+                                      mode: CupertinoDatePickerMode.time,
+                                      use24hFormat: true,
+                                      initialDateTime: DateTime.now(),
+                                      onDateTimeChanged:
+                                          (DateTime newDateTime) {
+                                        setState(() {
+                                          _selectedTimeCupertino = newDateTime;
+                                        });
+                                      })),
+                            ],
+                          )
+                        : null,
                   ),
                 ),
                 const Divider(
