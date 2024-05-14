@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
+import 'package:intl/intl.dart';
 
 class DosePage extends StatefulWidget {
   const DosePage({Key? key}) : super(key: key);
@@ -53,16 +54,44 @@ class _DosePageState extends State<DosePage> {
       appBar: AppBar(
         title: const Text('Dosage Progression'),
       ),
-      body: _dosageData != null
-          ? DoseChart(
-              doses: _dosageData.map((data) => data.amount).toList(),
-              dates: _dosageData.map((data) => data.date.toString()).toList(),
-              isHospitalList:
-                  _dosageData.map((data) => data.isHospital).toList(),
-            )
-          : Center(
-              child: CircularProgressIndicator(),
+      body: Column(
+        children: [
+          SizedBox(
+            child: _dosageData != null
+                ? DoseChart(
+                    doses: _dosageData.map((data) => data.amount).toList(),
+                    dates: _dosageData
+                        .map((data) => data.date.toString())
+                        .toList(),
+                    isHospitalList:
+                        _dosageData.map((data) => data.isHospital).toList(),
+                  )
+                : Center(
+                    child: CircularProgressIndicator(),
+                  ),
+          ),
+          SizedBox(height: 20),
+          Expanded(
+            //height: 200, // Adjust the height as needed
+            child: ListView.builder(
+              itemCount: _dosageData.length,
+              itemBuilder: (context, index) {
+                final dosage = _dosageData.reversed.toList()[index];
+                String formattedDate =
+                    DateFormat('yyyy-MM-dd HH:mm:ss').format(dosage.date);
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  child: ListTile(
+                    title: Text('Tarih: ${formattedDate}'),
+                    subtitle: Text('Doz Miktarı: ${dosage.amount}'),
+                    // Add more details if needed
+                  ),
+                );
+              },
             ),
+          ),
+        ],
+      ),
     );
   }
 }
