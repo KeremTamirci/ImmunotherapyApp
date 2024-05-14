@@ -75,6 +75,26 @@ class DoseIntakePageState extends State<DoseIntakePage> {
     });
   }
 
+  void _showRangeAlert() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Dosage Value Too Big"),
+          content: const Text("The dosage value is too big."),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   // Function to save dosage information to Firestore
   void _saveDosageInfo() async {
     try {
@@ -113,6 +133,20 @@ class DoseIntakePageState extends State<DoseIntakePage> {
         _user = user;
         _databaseController = DatabaseController(user.uid);
       });
+    }
+  }
+
+  Future<void> _checkValue() async {
+    int? value = int.tryParse(_textController.text);
+    print("AAAAAAAAAAAAAAAAAAAAAAAA");
+    print("Text Controller Value: ${_textController.text}");
+    if (value == null) {
+      _showRangeAlert();
+    } else if (value > 200) {
+      // If the value is bigger than 200, show an alert dialog
+      _showRangeAlert();
+    } else {
+      _saveDosageInfo();
     }
   }
 
@@ -212,7 +246,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
           ),
         ),
         ElevatedButton(
-          onPressed: _saveDosageInfo,
+          onPressed: _checkValue,
           // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
           child: const Text('Save Dosage Info'),
         ),
