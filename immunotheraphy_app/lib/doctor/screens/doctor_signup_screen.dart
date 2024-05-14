@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_home_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
-import 'package:immunotheraphy_app/screens/home_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart'; 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class DoctorSignUpScreen extends StatefulWidget {
   const DoctorSignUpScreen({Key? key}) : super(key: key);
@@ -30,8 +31,8 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          "Sign Up",
+        title:  Text(
+          AppLocalizations.of(context)!.signUp,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
@@ -56,28 +57,28 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
               children: <Widget>[
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Name",
+                  AppLocalizations.of(context)!.name,
                   Icons.person_outline,
                   false,
                   _nameTextController,
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Surname",
+                  AppLocalizations.of(context)!.surname,
                   Icons.person_outline,
                   false,
                   _surnameTextController,
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Email",
+                  AppLocalizations.of(context)!.enterEmail,
                   Icons.mail_outline,
                   false,
                   _emailTextController,
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Password",
+                  AppLocalizations.of(context)!.enterPassword,
                   Icons.lock_outline,
                   true,
                   _passwordTextController,
@@ -90,7 +91,7 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                   _tokenTextController,
                 ),
                 const SizedBox(height: 20),
-                firebaseUIButton(context, "Sign Up", () {
+                firebaseUIButton(context, AppLocalizations.of(context)!.signUp, () {
                   _auth
                       .createUserWithEmailAndPassword(
                     email: _emailTextController.text,

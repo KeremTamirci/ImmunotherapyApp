@@ -5,6 +5,8 @@ import 'package:immunotheraphy_app/screens/home_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class PatientSignUpScreen extends StatefulWidget {
   const PatientSignUpScreen({Key? key}) : super(key: key);
@@ -24,8 +26,8 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          "Sign Up",
+        title:  Text(
+          AppLocalizations.of(context)!.signUp,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
@@ -50,20 +52,20 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
               children: <Widget>[
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "Phone Number",
+                  AppLocalizations.of(context)!.phoneNumber,
                   Icons.phone,
                   false,
                   _phoneNumberTextController,
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
-                  "One Time Password",
+                  AppLocalizations.of(context)!.otp,
                   Icons.lock_outlined,
                   true,
                   _otpTextController,
                 ),
                 const SizedBox(height: 20),
-                firebaseUIButton(context, "Sign Up", () {
+                firebaseUIButton(context, AppLocalizations.of(context)!.signUp, () {
                   _checkPatientExists();
                 })
               ],

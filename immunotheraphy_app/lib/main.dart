@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:immunotheraphy_app/firebase_options.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
 // import 'package:immunotheraphy_app/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'api/firebase_api.dart';
 
@@ -21,6 +23,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate, 
+        GlobalWidgetsLocalizations.delegate, 
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale("en"),
+        Locale("tr")
+      ],
+      locale: const Locale("tr"),
       theme: ThemeData(
           // This is the theme of your application.
           //
