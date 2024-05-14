@@ -247,7 +247,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
         ),
         ElevatedButton(
           onPressed: () {
-            _checkValue(5, 200);
+            _checkValue(0.1, 200);
           },
           // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
           child: const Text('Save Dosage Info'),
