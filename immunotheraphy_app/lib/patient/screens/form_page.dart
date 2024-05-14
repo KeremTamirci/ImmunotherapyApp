@@ -225,17 +225,7 @@ class FormPageState extends State<FormPage> {
             title: const Text('Adım 3'),
             content: (_currentStep == 2 && doseAllowed)
                 ? const DoseIntakePage()
-                : const Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          "Doz alımı yapmadan önce bütün hazırlıklarınızı tamamlamanız gerekiyor.",
-                          style: TextStyle(fontSize: 24),
-                        ),
-                        // SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
+                : const Step1Incomplete(),
             isActive: _currentStep >= 2,
           ),
         ],
@@ -244,58 +234,23 @@ class FormPageState extends State<FormPage> {
   }
 }
 
-// class Step1Screen extends StatefulWidget {
-//   const Step1Screen({super.key});
+class Step1Incomplete extends StatelessWidget {
+  const Step1Incomplete({
+    super.key,
+  });
 
-//   @override
-//   State<Step1Screen> createState() => _Step1ScreenState();
-// }
-
-// class _Step1ScreenState extends State<Step1Screen> {
-//   final List<bool> checkedState = [false, false, false, false];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         // Each CheckboxListTile represents a question with a checkbox
-//         CheckboxListTile(
-//           title: const Text('Karnınız tok mu?'),
-//           value: checkedState[0],
-//           onChanged: (newValue) {
-//             setState(() {
-//               checkedState[0] = newValue!;
-//             });
-//           },
-//         ),
-//         CheckboxListTile(
-//           title: const Text('1 saat önce antihistamin dozunuzu aldınız mı?'),
-//           value: checkedState[1],
-//           onChanged: (newValue) {
-//             setState(() {
-//               checkedState[1] = newValue!;
-//             });
-//           },
-//         ),
-//         CheckboxListTile(
-//           title: const Text('Question 3'),
-//           value: checkedState[2],
-//           onChanged: (newValue) {
-//             setState(() {
-//               checkedState[2] = newValue!;
-//             });
-//           },
-//         ),
-//         CheckboxListTile(
-//           title: const Text('Question 4'),
-//           value: checkedState[3],
-//           onChanged: (newValue) {
-//             setState(() {
-//               checkedState[3] = newValue!;
-//             });
-//           },
-//         ),
-//       ],
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Column(
+        children: [
+          Text(
+            "Doz alımı yapmadan önce bütün hazırlıklarınızı tamamlamanız gerekiyor.",
+            style: TextStyle(fontSize: 24),
+          ),
+          // SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+}

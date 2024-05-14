@@ -20,6 +20,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
   final TextEditingController _textController = TextEditingController();
   TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
   DateTime _selectedTimeCupertino = DateTime.now();
+  bool _showTime = false;
   bool _isHospitalDosage = false; // Initial value for hospital dosage
   late DatabaseController _databaseController;
   // ignore: unused_field
@@ -198,7 +199,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
       children: <Widget>[
         const Text(
           'Doz Miktarı:',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
         Container(
@@ -216,9 +217,6 @@ class DoseIntakePageState extends State<DoseIntakePage> {
             decoration: InputDecoration(
               hintText: 'Doz miktarı (mg)',
               labelText: 'Doz miktarını giriniz',
-              // border: OutlineInputBorder(
-              //   borderRadius: BorderRadius.circular(30),
-              // ),
               border: InputBorder.none,
               filled: true,
               fillColor: hexStringToColor("E8EDF2"),
@@ -242,20 +240,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
               );
             },
           ),
-          // MyDropdownWidget(
-          //   selectedItem: _selectedItem,
-          //   onChanged: (int? newValue) {
-          //     setState(() {
-          //       _selectedItem = newValue!;
-          //     });
-          //   },
-          // ),
         ),
-        // const SizedBox(height: 20),
-        // Text(
-        //   'Selected Time: ${_selectedTime.hour}:${_selectedTime.minute}',
-        //   style: const TextStyle(fontSize: 18),
-        // ),
         const SizedBox(height: 20),
         // ElevatedButton(
         //   // onPressed: _showTimePicker, // ESKİ HALİ BU
@@ -263,72 +248,110 @@ class DoseIntakePageState extends State<DoseIntakePage> {
         //   onPressed: _showCupertinoTimePicker,
         //   child: const Text('Select Time'),
         // ),
-        Row(
-          children: [
-            const Text(
-              "Doz Saati:",
-              style: TextStyle(fontSize: 22),
-            ),
-            const SizedBox(width: 10),
-            // SizedBox(
-            //   width: 100,
-            //   child:
-            Text(
-              '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
-              style: const TextStyle(
-                fontSize: 22.0,
-              ),
-            ),
-            CupertinoButton(
-              // padding: const EdgeInsets.all(0),
-              // color: CupertinoColors.systemGrey,
-              // Display a CupertinoDatePicker in time picker mode.
-              onPressed: () => _showDialog(
-                CupertinoDatePicker(
-                  initialDateTime: _selectedTimeCupertino,
-                  mode: CupertinoDatePickerMode.time,
-                  use24hFormat: true,
-                  // This is called when the user changes the time.
-                  onDateTimeChanged: (DateTime newTime) {
-                    setState(() => _selectedTimeCupertino = newTime);
-                  },
+        Container(
+          decoration: const BoxDecoration(
+              color: CupertinoColors.systemBackground,
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "Doz Saati",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    const SizedBox(width: 10),
+                    // SizedBox(
+                    //   width: 100,
+                    //   child:
+                    const Spacer(),
+                    CupertinoButton(
+                      // padding: const EdgeInsets.all(0),
+                      // color: CupertinoColors.systemGrey,
+                      // Display a CupertinoDatePicker in time picker mode.
+                      // onPressed: () => _showDialog(
+                      //   CupertinoDatePicker(
+                      //     initialDateTime: _selectedTimeCupertino,
+                      //     mode: CupertinoDatePickerMode.time,
+                      //     use24hFormat: true,
+                      //     // This is called when the user changes the time.
+                      //     onDateTimeChanged: (DateTime newTime) {
+                      //       setState(() => _selectedTimeCupertino = newTime);
+                      //     },
+                      //   ),
+                      // ),
+                      onPressed: () {
+                        setState(() {
+                          _showTime = !_showTime;
+                        });
+                      },
+                      child: Text(
+                        '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                    // ),
+                  ],
                 ),
-              ),
-              child: const Text("Değiştir"),
+                if (_showTime)
+                  Column(
+                    children: [
+                      const Divider(
+                          thickness: 0.5, color: CupertinoColors.systemGrey),
+                      SizedBox(
+                          height: 200,
+                          child: CupertinoDatePicker(
+                              mode: CupertinoDatePickerMode.time,
+                              use24hFormat: true,
+                              initialDateTime: DateTime.now(),
+                              onDateTimeChanged: (DateTime newDateTime) {
+                                setState(() {
+                                  _selectedTimeCupertino = newDateTime;
+                                });
+                              })),
+                    ],
+                  ),
+                const Divider(
+                    thickness: 0.5, color: CupertinoColors.systemGrey),
+                SizedBox(
+                  width: 350,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Hospital Dosage',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const Spacer(),
+                      Checkbox(
+                        value: _isHospitalDosage,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _isHospitalDosage = newValue!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                    thickness: 0.5, color: CupertinoColors.systemGrey),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    _checkValue(0, 200);
+                  },
+                  // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
+                  child: const Text('Save Dosage Info'),
+                ),
+              ],
             ),
-
-            // ),
-          ],
-        ),
-        SizedBox(
-          width: 350,
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Hospital Dosage:',
-                style: TextStyle(fontSize: 18),
-              ),
-              const SizedBox(width: 5),
-              Checkbox(
-                value: _isHospitalDosage,
-                onChanged: (newValue) {
-                  setState(() {
-                    _isHospitalDosage = newValue!;
-                  });
-                },
-              ),
-            ],
           ),
         ),
-        ElevatedButton(
-          onPressed: () {
-            _checkValue(0.1, 200);
-          },
-          // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
-          child: const Text('Save Dosage Info'),
-        ),
-        const SizedBox(height: 20),
       ],
     );
     // );
