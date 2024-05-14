@@ -15,8 +15,8 @@ class DoseIntakePage extends StatefulWidget {
 }
 
 class DoseIntakePageState extends State<DoseIntakePage> {
-  int _selectedItem = 10; // Initial value for dropdown
-  String _numericValue = '';
+  // int _selectedItem = 10; // Initial value for dropdown
+  // String _numericValue = '';
   final TextEditingController _textController = TextEditingController();
   TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
   DateTime _selectedTimeCupertino = DateTime.now();
@@ -118,8 +118,9 @@ class DoseIntakePageState extends State<DoseIntakePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Dosage Value Too Big"),
-          content: const Text("The dosage value is too big."),
+          title: const Text("Doz Uygun Değil"),
+          content: const Text(
+              "Girilen doz değeri uygun değil. Girdiğiniz miktarı kontrol edin."),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -176,8 +177,6 @@ class DoseIntakePageState extends State<DoseIntakePage> {
 
   Future<void> _checkValue(double minValue, double maxValue) async {
     double? value = double.tryParse(_textController.text);
-    print("AAAAAAAAAAAAAAAAAAAAAAAA");
-    print("Text Controller Value: ${_textController.text}");
     if (value == null) {
       _showRangeAlert();
     } else if (value < minValue || value > maxValue) {
@@ -333,44 +332,5 @@ class DoseIntakePageState extends State<DoseIntakePage> {
       ],
     );
     // );
-  }
-}
-
-class MyDropdownWidget extends StatelessWidget {
-  final int selectedItem;
-  final ValueChanged<int?> onChanged;
-
-  const MyDropdownWidget({
-    super.key,
-    required this.selectedItem,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton<int>(
-        value: selectedItem,
-        isExpanded: true,
-        dropdownColor: hexStringToColor("E8EDF2"),
-        iconSize: 36,
-        style: TextStyle(
-          color: hexStringToColor("4F7396"),
-          fontSize: 18,
-        ),
-        borderRadius: BorderRadius.circular(30),
-        onChanged: onChanged,
-        items:
-            <int>[10, 20, 30, 40, 50].map<DropdownMenuItem<int>>((int value) {
-          return DropdownMenuItem<int>(
-            value: value,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text('$value'), // Convert integer to string
-            ),
-          );
-        }).toList(),
-      ),
-    );
   }
 }

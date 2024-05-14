@@ -171,3 +171,42 @@ class DoseChart extends StatelessWidget {
     );
   }
 }
+
+class MyDropdownWidget extends StatelessWidget {
+  final int selectedItem;
+  final ValueChanged<int?> onChanged;
+
+  const MyDropdownWidget({
+    super.key,
+    required this.selectedItem,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<int>(
+        value: selectedItem,
+        isExpanded: true,
+        // dropdownColor: hexStringToColor("E8EDF2"),
+        iconSize: 36,
+        style: const TextStyle(
+          // color: hexStringToColor("4F7396"),
+          fontSize: 18,
+        ),
+        borderRadius: BorderRadius.circular(30),
+        onChanged: onChanged,
+        items:
+            <int>[10, 20, 30, 40, 50].map<DropdownMenuItem<int>>((int value) {
+          return DropdownMenuItem<int>(
+            value: value,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text('$value'), // Convert integer to string
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
