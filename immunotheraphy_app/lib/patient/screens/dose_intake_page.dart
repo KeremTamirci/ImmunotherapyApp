@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 // import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
@@ -14,7 +15,8 @@ class DoseIntakePage extends StatefulWidget {
   State<DoseIntakePage> createState() => DoseIntakePageState();
 }
 
-class DoseIntakePageState extends State<DoseIntakePage> {
+class DoseIntakePageState extends State<DoseIntakePage>
+    with SingleTickerProviderStateMixin {
   // int _selectedItem = 10; // Initial value for dropdown
   // String _numericValue = '';
   final TextEditingController _textController = TextEditingController();
@@ -26,10 +28,43 @@ class DoseIntakePageState extends State<DoseIntakePage> {
   // ignore: unused_field
   late User _user;
 
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
     _getUserData();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(_animationController);
+    // CurvedAnimation(
+    //   parent: _animationController,
+    //   curve: Curves.easeInOut,
+    // );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _toggleDatePickerVisibility() {
+    if (_showTime) {
+      _animationController.reverse();
+    } else {
+      _animationController.forward();
+    }
+    setState(() {
+      _showTime = !_showTime;
+    });
   }
 
   // // Function to show the time picker
@@ -282,11 +317,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
                       //     },
                       //   ),
                       // ),
-                      onPressed: () {
-                        setState(() {
-                          _showTime = !_showTime;
-                        });
-                      },
+                      onPressed: _toggleDatePickerVisibility,
                       child: Text(
                         '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
                         style: const TextStyle(
@@ -297,8 +328,10 @@ class DoseIntakePageState extends State<DoseIntakePage> {
                     // ),
                   ],
                 ),
-                if (_showTime)
-                  Column(
+                SizeTransition(
+                  axisAlignment: -1.0,
+                  sizeFactor: _animation,
+                  child: Column(
                     children: [
                       const Divider(
                           thickness: 0.5, color: CupertinoColors.systemGrey),
@@ -315,6 +348,7 @@ class DoseIntakePageState extends State<DoseIntakePage> {
                               })),
                     ],
                   ),
+                ),
                 const Divider(
                     thickness: 0.5, color: CupertinoColors.systemGrey),
                 SizedBox(
