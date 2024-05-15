@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class AddSymptomsPage extends StatefulWidget {
   const AddSymptomsPage({Key? key}) : super(key: key);
@@ -50,12 +52,30 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   }
 
   Future<void> _showSymptomTypePicker() async {
-    List<String> allSymptomTypes = ['Fever', 'Cough', 'Headache', 'Fatigue', 'Other'];
+    List<String> allSymptomTypes = [
+  AppLocalizations.of(context)!.urtiker,
+  AppLocalizations.of(context)!.anjiyoOdem,
+  AppLocalizations.of(context)!.kasinti,
+  AppLocalizations.of(context)!.kizariklik,
+  AppLocalizations.of(context)!.burunAkitmasi,
+  AppLocalizations.of(context)!.hapsirik,
+  AppLocalizations.of(context)!.oksuruk,
+  AppLocalizations.of(context)!.hirilti,
+  AppLocalizations.of(context)!.nefesDarligi,
+  AppLocalizations.of(context)!.gogusAgri,
+  AppLocalizations.of(context)!.karinAgri,
+  AppLocalizations.of(context)!.kusma,
+  AppLocalizations.of(context)!.ishal,
+  AppLocalizations.of(context)!.kalbinCokHizliAtimlari,
+  AppLocalizations.of(context)!.tansiyonDusmesi,
+  AppLocalizations.of(context)!.bayginlikHissi,
+  AppLocalizations.of(context)!.bayilma,
+];
 
     await showMaterialCheckboxPicker(
       context: context,
       items: allSymptomTypes,
-      title: "Semptomlarınızı Seçin",
+      title: AppLocalizations.of(context)!.selectSymptomType,
       selectedItems: _selectedSymptomTypes,
       onChanged: (List<String> value) {
         setState(() {
@@ -111,7 +131,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Symptoms'),
+        title:  Text(AppLocalizations.of(context)!.addSymptoms),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -128,20 +148,23 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
               child: Text('Select Date: ${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}'),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Select Symptom Types:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)!.selectSymptomType,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: _showSymptomTypePicker,
-              child: Text('Select Symptom Types: ${_selectedSymptomTypes.join(", ")}'),
+            child: Text(
+              '${AppLocalizations.of(context)!.selected}: ${_selectedSymptomTypes.join(", ")}'
+            ),
+
             ),
             const SizedBox(height: 20),
             TextField(
-              decoration: const InputDecoration(
-                labelText: 'Symptom Detail (Optional)',
-                border: OutlineInputBorder(),
+              decoration:  InputDecoration(
+                labelText: AppLocalizations.of(context)!.symptomDetail,
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
                 _symptomDetail = value;
@@ -150,7 +173,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _addSymptoms,
-              child: const Text('Add Symptoms'),
+              child:  Text(AppLocalizations.of(context)!.addSymptoms),
             ),
           ],
         ),

@@ -69,7 +69,10 @@
     "kalbinCokHizliAtimlari": "Rapid Heartbeat",
     "tansiyonDusmesi": "Hypotension",
     "bayginlikHissi": "Feeling Faint",
-    "bayilma": "Fainting"
+    "bayilma": "Fainting",
+    "addSymptoms": "Add Symptoms",
+    "symptomDetail": "Symptom Detail (Optional)",
+    "selected": "Selected"
 
 
  }

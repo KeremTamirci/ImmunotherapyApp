@@ -57,7 +57,10 @@
     "kalbinCokHizliAtimlari": "Kalbin çok hızlı atımları",
     "tansiyonDusmesi": "Tansiyon düşmesi",
     "bayginlikHissi": "Baygınlık hissi",
-    "bayilma": "Bayılma"
+    "bayilma": "Bayılma",
+    "addSymptoms": "Semptomları Ekle",
+    "symptomDetail": "Semptom Detayı (Opsiyonel)",
+    "selected": "Semptomlar"
 
 
 
