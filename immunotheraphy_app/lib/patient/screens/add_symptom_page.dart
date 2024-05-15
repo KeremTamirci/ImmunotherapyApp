@@ -3,7 +3,6 @@ import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 
-
 class AddSymptomsPage extends StatefulWidget {
   const AddSymptomsPage({Key? key}) : super(key: key);
 
@@ -15,7 +14,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   late DatabaseController _databaseController;
   late User _user;
   late DateTime _selectedDate;
-  String _selectedSymptomType = '';
+  List<String> _selectedSymptomTypes = [];
   String _symptomDetail = '';
 
   @override
@@ -38,6 +37,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   Future<void> _showDatePicker() async {
     showMaterialDatePicker(
       context: context,
+      title: "Semptomun görüldüğü tarih",
       selectedDate: _selectedDate,
       onChanged: (date) {
         setState(() {
@@ -48,16 +48,18 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
       lastDate: DateTime.now(),
     );
   }
+
   Future<void> _showSymptomTypePicker() async {
-    showMaterialScrollPicker(
+    List<String> allSymptomTypes = ['Fever', 'Cough', 'Headache', 'Fatigue', 'Other'];
+
+    await showMaterialCheckboxPicker(
       context: context,
-      showDivider: false,
-      title: 'Select Symptom Type',
-      items: ['Fever', 'Cough', 'Headache', 'Fatigue', 'Other'],
-      selectedItem: _selectedSymptomType,
-      onChanged: (value) {
+      items: allSymptomTypes,
+      title: "Semptomlarınızı Seçin",
+      selectedItems: _selectedSymptomTypes,
+      onChanged: (List<String> value) {
         setState(() {
-          _selectedSymptomType = value;
+          _selectedSymptomTypes = value;
         });
       },
     );
@@ -66,14 +68,16 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   Future<void> _addSymptoms() async {
     try {
       // Constructing symptom details
-      Map<String, dynamic> symptomDetails = {
-        'symptom_date': _selectedDate,
-        'symptom_type': _selectedSymptomType,
-        'detail': _symptomDetail,
-      };
+      List<Map<String, dynamic>> symptoms = _selectedSymptomTypes.map((type) {
+        return {
+          'symptom_date': _selectedDate,
+          'symptom_type': type,
+          'detail': _symptomDetail,
+        };
+      }).toList();
 
       // Calling addSymptoms method from DatabaseController
-      await _databaseController.addSymptoms(symptomDetails);
+      await _databaseController.addSymptoms(symptoms);
 
       // Show success snackbar
       _showSuccessSnackbar();
@@ -107,35 +111,35 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Symptoms'),
+        title: const Text('Add Symptoms'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Select Date:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: _showDatePicker,
               child: Text('Select Date: ${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}'),
             ),
-            SizedBox(height: 20),
-            Text(
-              'Select Symptom Type:',
+            const SizedBox(height: 20),
+            const Text(
+              'Select Symptom Types:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: _showSymptomTypePicker,
-              child: Text('Select Symptom Type: $_selectedSymptomType'),
+              child: Text('Select Symptom Types: ${_selectedSymptomTypes.join(", ")}'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Symptom Detail (Optional)',
                 border: OutlineInputBorder(),
               ),
@@ -143,10 +147,10 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
                 _symptomDetail = value;
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _addSymptoms,
-              child: Text('Add Symptoms'),
+              child: const Text('Add Symptoms'),
             ),
           ],
         ),
