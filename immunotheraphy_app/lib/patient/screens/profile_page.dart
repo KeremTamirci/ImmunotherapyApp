@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
+import 'package:immunotheraphy_app/patient/utils/date_format_helper.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -68,42 +69,6 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     } catch (e) {
       print('Error fetching doctor data: $e');
-    }
-  }
-
-  String _formatDate(Timestamp timestamp) {
-    DateTime date = timestamp.toDate();
-    return '${date.day} ${_getMonth(date.month)} ${date.year}';
-  }
-
-  String _getMonth(int month) {
-    switch (month) {
-      case 1:
-        return 'January';
-      case 2:
-        return 'February';
-      case 3:
-        return 'March';
-      case 4:
-        return 'April';
-      case 5:
-        return 'May';
-      case 6:
-        return 'June';
-      case 7:
-        return 'July';
-      case 8:
-        return 'August';
-      case 9:
-        return 'September';
-      case 10:
-        return 'October';
-      case 11:
-        return 'November';
-      case 12:
-        return 'December';
-      default:
-        return '';
     }
   }
 
@@ -205,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
-                    'Birth Date: ${_formatDate(_patientData['birth_date'])}',
+                    'Birth Date: ${DateFormatHelper.formatDate(_patientData['birth_date'])}',
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
