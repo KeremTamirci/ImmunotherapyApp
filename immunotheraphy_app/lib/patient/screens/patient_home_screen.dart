@@ -6,6 +6,8 @@ import 'package:immunotheraphy_app/patient/screens/dose_page.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/profile_page.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class PatientHomeScreen extends StatefulWidget {
   const PatientHomeScreen({super.key});
@@ -18,8 +20,6 @@ class PatientHomeScreen extends StatefulWidget {
 class _PatientHomeScreenState extends State<PatientHomeScreen> {
   // ignore: unused_field
   late User _user;
-  final Text homeScreenTitle = const Text("Patient Home Screen");
-  final Text logOutText = const Text("Log Out");
   final TextStyle style = const TextStyle(fontSize: 20);
   var selectedIndex = 0;
 
@@ -65,7 +65,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: homeScreenTitle,
+        title: Text(AppLocalizations.of(context)!.patientHomeScreen),
         surfaceTintColor: Theme.of(context).colorScheme.background,
       ),
       bottomNavigationBar: Theme(
@@ -79,18 +79,18 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
               BottomNavigationBar(
                 // backgroundColor: hexStringToColor("1A80E5"),
                 backgroundColor: Theme.of(context).colorScheme.background,
-                items: const <BottomNavigationBarItem>[
+                items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    label: 'Ana Sayfa',
+                    icon: const Icon(Icons.home),
+                    label: AppLocalizations.of(context)!.home,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.auto_graph),
-                    label: 'Dozaj',
+                    icon: const Icon(Icons.auto_graph),
+                    label: AppLocalizations.of(context)!.dosage,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
-                    label: 'Ayarlar',
+                    icon: const Icon(Icons.settings),
+                    label: AppLocalizations.of(context)!.settings,
                   ),
                 ],
                 currentIndex: selectedIndex,

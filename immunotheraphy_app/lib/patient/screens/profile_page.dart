@@ -1,8 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:immunotheraphy_app/patient/utils/date_format.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -15,15 +18,15 @@ class _ProfilePageState extends State<ProfilePage> {
   late User _user;
   late Map<String, dynamic> _patientData = {};
   late Map<String, dynamic> _doctorData = {};
-  final Text homeScreenTitle = const Text("Patient Home Screen");
-  final Text logOutText = const Text("Log Out");
   final TextStyle style = const TextStyle(fontSize: 20);
   bool gotData = false;
+  late String selectedLanguage = 'en'; // Default language
 
   @override
   void initState() {
     super.initState();
     _getUserData();
+    _loadLanguagePreference(); // Load language preference
   }
 
   Future<void> _getUserData() async {
@@ -72,29 +75,44 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future<void> _loadLanguagePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedLanguage = prefs.getString('preferredLanguage') ?? 'en'; // Default language is English
+    });
+  }
+
+  Future<void> _saveLanguagePreference(String languageCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('preferredLanguage', languageCode);
+    setState(() {
+      selectedLanguage = languageCode;
+    });
+  }
+
   Future<void> _confirmSignOut(BuildContext context) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm'),
-          content: const SingleChildScrollView(
+          title: Text(AppLocalizations.of(context)!.confirm),
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Are you sure you want to sign out?'),
+                Text(AppLocalizations.of(context)!.signOutSure),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Sign Out'),
+              child:  Text(AppLocalizations.of(context)!.logOut),
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");
@@ -158,31 +176,39 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
-                    'Phone Number: ${_patientData['phone_number']}',
+                    '${AppLocalizations.of(context)!.phoneNumber}: ${_patientData['phone_number']}',
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
-                    'Has Allergic Rhinitis: ${_patientData['has_allergic_rhinitis'] ? 'Yes' : 'No'}',
+                    '${AppLocalizations.of(context)!.hasRhinitis}: ${_patientData['has_allergic_rhinitis'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
-                    'Has Asthma: ${_patientData['has_asthma'] ? 'Yes' : 'No'}',
+                    '${AppLocalizations.of(context)!.hasAsthma}: ${_patientData['has_asthma'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
-                    'Birth Date: ${DateFormatHelper.formatDate(_patientData['birth_date'])}',
+                    '${AppLocalizations.of(context)!.birthDate}: ${DateFormatHelper.formatDate(_patientData['birth_date'])}',
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
-                    'Doctor: ${_doctorData['first_name']} ${_doctorData['last_name']}',
+                    '${AppLocalizations.of(context)!.doctor}: ${_doctorData['first_name']} ${_doctorData['last_name']}',
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
+
                   const SizedBox(height: 20),
+                  // Button to change language
                   ElevatedButton(
-                    child: logOutText,
+                    onPressed: () {
+                      _showLanguageSelector(context);
+                    },
+                    child: Text('Change Language/Dili Değiştir'),
+                  ),
+                  ElevatedButton(
                     onPressed: () {
                       _confirmSignOut(context);
                     },
+                    child: Text(AppLocalizations.of(context)!.logOut),
                   ),
                 ],
               );
@@ -190,6 +216,46 @@ class _ProfilePageState extends State<ProfilePage> {
           },
         ),
       ),
+    );
+  }
+
+  void _showLanguageSelector(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Language/Dili Seçin'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile(
+                title: Text('English'),
+                value: 'en',
+                groupValue: selectedLanguage,
+                onChanged: (value) {
+                  setState(() {
+                    selectedLanguage = value as String;
+                  });
+                  _saveLanguagePreference(selectedLanguage);
+                  Navigator.of(context).pop();
+                },
+              ),
+              RadioListTile(
+                title: Text('Türkçe'),
+                value: 'tr',
+                groupValue: selectedLanguage,
+                onChanged: (value) {
+                  setState(() {
+                    selectedLanguage = value as String;
+                  });
+                  _saveLanguagePreference(selectedLanguage);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
