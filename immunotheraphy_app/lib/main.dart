@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/screens/language_selection.dart';
@@ -9,6 +12,8 @@ import 'package:immunotheraphy_app/screens/choice_screen.dart';
 
 import 'api/firebase_api.dart';
 
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -16,8 +21,21 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? preferredLanguage = prefs.getString('preferredLanguage');
 
+  // If preferred language is not set, initialize it to the default locale (Turkish)
+  if (preferredLanguage == null) {
+    // Retrieve the device's locale
+    String locale = Platform.localeName;
+    // Extract language code from locale string
+    String languageCode = locale.split('_')[0];
+    // Check if the device's locale is supported, if not default to Turkish
+    preferredLanguage = ['en', 'tr'].contains(languageCode) ? languageCode : 'en';
+    // Save the default language to SharedPreferences
+    await prefs.setString('preferredLanguage', preferredLanguage);
+  }
+
   runApp(MyApp(preferredLanguage: preferredLanguage));
 }
+
 
 class MyApp extends StatelessWidget {
   final String? preferredLanguage;

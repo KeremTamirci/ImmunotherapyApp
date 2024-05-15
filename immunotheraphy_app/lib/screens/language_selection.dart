@@ -49,8 +49,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               },
             ),
             ElevatedButton(
-              onPressed: () {
-                _saveLanguagePreference(selectedLanguage);
+              onPressed: () async {
+                await _saveLanguagePreference(selectedLanguage);
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const ChoiceScreen()),
                 );
