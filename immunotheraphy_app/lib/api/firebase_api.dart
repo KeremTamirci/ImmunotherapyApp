@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print("Title: ${message.notification?.title}");
@@ -32,6 +34,7 @@ class FirebaseApi {
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
+    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     print("Token: $fCMToken");
     // FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage); // This is moved to initPushNotifications
 
@@ -71,6 +74,25 @@ class FirebaseApi {
       );
     });
   }
+
+
+  Future<bool> isDoctor(String userId) async {
+    try {
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('Doctors')
+          .doc(userId)
+          .get();
+
+      return userSnapshot.exists;
+    } catch (e) {
+      print('Error checking if user is doctor: $e');
+      return false;
+    }
+  }
+
+
+
+
 
   Future initLocalNotifications() async {
     const iOS = DarwinInitializationSettings();
