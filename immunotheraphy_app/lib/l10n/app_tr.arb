@@ -1,0 +1,34 @@
+{
+    "helloWorld": "Merhaba Dünyalı",
+    "enterEmail": "E-Mail",
+    "enterPassword": "Şifre",
+    "signIn": "Giriş Yap",
+    "dontHaveAnAccount": "Hesabınız yok mu?",
+    "forgotPassword": "Şifrenizi mi unuttunuz?",
+    "signUp": "Hesap Açın",
+    "phoneNumber": "Telefon Numarası",
+    "otp": "Tek Kullanımlık Şifre",
+    "resetPassword": "Şifreyi Yenile",
+    "doctorSignIn": "Doktor Girişi",
+    "patientSignIn": "Hasta Girişi",
+    "name": "Ad",
+    "surname": "Soyad",
+    "appTitle": "Koç Üniversitesi Hastanesi İmmünoterapi Takip Uygulaması",
+    "doctorHomeScreen": "Doktor Ana Sayfası",
+    "patientHomeScreen": "Hasta Ana Sayfası",
+    "logOut": "Çıkış Yap",
+    "home": "Ana Sayfa",
+    "newPatient": "Yeni Hasta",
+    "settings": "Ayarlar",
+    "patientList": "Hasta Listesi",
+    "birthDate": "Doğum Tarihi",
+    "hasAsthma": "Astımı var",
+    "hasRhinitis": "Alerjik riniti  var",
+    "yes": "Evet",
+    "no": "Hayır",
+    "patientDetails": "Hasta Detayları"
+
+
+
+
+}

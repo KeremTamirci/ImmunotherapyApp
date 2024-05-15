@@ -1,0 +1,44 @@
+ {
+    "helloWorld": "Hello World!",
+    "@helloWorld":{
+        "description": "The conventional newborn programmer greeting"
+    },
+    "enterEmail": "Enter Email",
+    "@enterEmail":{
+        "description": "Title for Email textfield"
+    },
+    "enterPassword": "Enter Password",
+    "@enterPassword":{
+        "description": "Title for password textfield"
+    },
+    "signIn": "Sign In",
+    "@signIn":{
+        "description": "Title for sign in button"
+    },
+    "dontHaveAnAccount": "Dont have an account?",
+    "forgotPassword": "Forgot Password?",
+    "signUp": "Sign Up",
+    "phoneNumber": "Phone Number",
+    "otp": "One Time Password",
+    "resetPassword": "Reset Password",
+    "doctorSignIn": "Doctor Sign In",
+    "patientSignIn": "Patient Sign In",
+    "name": "Name",
+    "surname": "Surname",
+    "appTitle": "Koc University Hospital Immunotherapy Tracking Application",
+    "doctorHomeScreen": "Doctor Home Screen",
+    "patientHomeScreen": "Patient Home Screen",
+    "logOut": "Log Out",
+    "home": "Home",
+    "newPatient": "New Patient",
+    "settings": "Settings",
+    "patientList": "Patient List",
+    "birthDate": "Birth Date",
+    "hasAsthma": "Has Asthma",
+    "hasRhinitis": "Has allergic rhinits",
+    "yes": "Yes",
+    "no": "No",
+    "patientDetails": "Patient Details"
+
+
+ }
