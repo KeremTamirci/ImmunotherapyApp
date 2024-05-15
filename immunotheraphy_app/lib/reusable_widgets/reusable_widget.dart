@@ -196,9 +196,7 @@ class LoadingScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: CircularProgressIndicator(
-          backgroundColor: Colors.blue,
-        ),
+        child: CircularProgressIndicator(),
       ),
     );
   }

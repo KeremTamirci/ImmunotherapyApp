@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/api/firebase_api.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_home_screen.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_home_screen.dart';
+import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
 
 void main() async {
@@ -90,18 +91,18 @@ class UserTypeChecker extends StatelessWidget {
   }
 }
 
-class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+// class LoadingScreen extends StatelessWidget {
+//   const LoadingScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: CircularProgressIndicator(
-          backgroundColor: Colors.blue,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(
+//       backgroundColor: Colors.white,
+//       body: Center(
+//         child: CircularProgressIndicator(
+//           backgroundColor: Colors.blue,
+//         ),
+//       ),
+//     );
+//   }
+// }
