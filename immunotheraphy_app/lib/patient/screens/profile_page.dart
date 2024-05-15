@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
-import 'package:immunotheraphy_app/patient/utils/date_format_helper.dart';
+import 'package:immunotheraphy_app/patient/utils/date_format.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
