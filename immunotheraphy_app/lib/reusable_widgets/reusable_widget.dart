@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -11,9 +13,14 @@ Image logoWidget(String imageName) {
   );
 }
 
-TextField reusableTextField(String text, IconData icon, bool isPasswordType,
-    TextEditingController controller,
-    {VoidCallback? onTap, double? scrollPadding}) {
+TextField reusableTextField(
+  String text,
+  IconData icon,
+  bool isPasswordType,
+  TextEditingController controller, {
+  VoidCallback? onTap,
+  double? scrollPadding,
+}) {
   return TextField(
     controller: controller,
     onTap: onTap,
@@ -34,8 +41,9 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordType,
       floatingLabelBehavior: FloatingLabelBehavior.never,
       fillColor: Colors.white.withOpacity(0.3),
       border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+        borderRadius: BorderRadius.circular(30.0),
+        borderSide: const BorderSide(width: 0, style: BorderStyle.none),
+      ),
     ),
     keyboardType: isPasswordType
         ? TextInputType.visiblePassword
@@ -43,7 +51,8 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordType,
   );
 }
 
-Container firebaseUIButton(BuildContext context, String title, Function onTap) {
+Container firebaseUIButton(
+    BuildContext context, String title, Function onTap) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 50,
@@ -59,14 +68,18 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
             color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
       ),
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.pressed)) {
-              return Colors.black26;
-            }
-            return Colors.white;
-          }),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.pressed)) {
+            return Colors.black26;
+          }
+          return Colors.white;
+        }),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+      ),
     ),
   );
 }
@@ -76,14 +89,16 @@ class DoseChart extends StatelessWidget {
   final List<String> dates;
   final List<bool> isHospitalList;
 
-  DoseChart(
-      {required this.doses, required this.dates, required this.isHospitalList});
-
+  DoseChart({
+    required this.doses,
+    required this.dates,
+    required this.isHospitalList,
+  });
 
   @override
   Widget build(BuildContext context) {
     // Check if doses list is empty or null
-    if (doses!.isEmpty) {
+    if (doses.isEmpty) {
       // Return a message or placeholder if doses list is empty
       return Center(
         child: CircularProgressIndicator(),
@@ -168,6 +183,22 @@ class DoseChart extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.blue,
+        ),
       ),
     );
   }
