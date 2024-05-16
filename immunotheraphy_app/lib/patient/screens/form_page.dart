@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class FormPage extends StatefulWidget {
@@ -28,7 +29,7 @@ class FormPageState extends State<FormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Doz Giriş Sayfası'),
+        title:  Text(AppLocalizations.of(context)!.dozGirisSayfasi),
       ),
       body: Stepper(
         // connectorColor: const MaterialStatePropertyAll(Color(0xff18c872)),
@@ -77,7 +78,7 @@ class FormPageState extends State<FormPage> {
                                 Color(0xff1a80e5),
                               ),
                             ),
-                            child: const Text('Geri Dön'),
+                            child:  Text(AppLocalizations.of(context)!.geriDon),
                           )
                         : Container(),
                     (_currentStep != 2)
@@ -92,7 +93,7 @@ class FormPageState extends State<FormPage> {
                                     MaterialStatePropertyAll(Colors.white),
                                 minimumSize:
                                     MaterialStatePropertyAll(Size(70, 50))),
-                            child: const Text('İlerle'),
+                            child:  Text(AppLocalizations.of(context)!.ilerle),
                           )
                         : Container(),
                     const SizedBox(
@@ -103,16 +104,16 @@ class FormPageState extends State<FormPage> {
         },
         steps: [
           Step(
-            title: const Text('Adım 1'),
+            title:  Text(AppLocalizations.of(context)!.adim1),
             content: Container(
               // Content for step 1
               child: Column(
                 children: [
                   // Each CheckboxListTile represents a question with a checkbox
                   CheckboxListTile(
-                    title: const Text(
-                      'Karnınız tok mu?',
-                      style: TextStyle(fontSize: 20),
+                    title:  Text(
+                      AppLocalizations.of(context)!.karninizTokMu,
+                      style: const TextStyle(fontSize: 20),
                     ),
                     // activeColor: Colors.blue,
                     value: checkedStateStep1[0],
@@ -123,9 +124,9 @@ class FormPageState extends State<FormPage> {
                     },
                   ),
                   CheckboxListTile(
-                    title: const Text(
-                      '1 saat önce antihistamin dozunuzu aldınız mı?',
-                      style: TextStyle(fontSize: 20),
+                    title:  Text(
+                      AppLocalizations.of(context)!.antihistaminDozu,
+                      style: const TextStyle(fontSize: 20),
                     ),
                     value: checkedStateStep1[1],
                     onChanged: (newValue) {
@@ -135,9 +136,9 @@ class FormPageState extends State<FormPage> {
                     },
                   ),
                   CheckboxListTile(
-                    title: const Text(
-                      'Astım ilacınızı aldınız mı?',
-                      style: TextStyle(fontSize: 20),
+                    title:  Text(
+                      AppLocalizations.of(context)!.astimIlaci,
+                      style: const TextStyle(fontSize: 20),
                     ),
                     value: checkedStateStep1[2],
                     onChanged: (newValue) {
@@ -165,7 +166,7 @@ class FormPageState extends State<FormPage> {
             isActive: _currentStep >= 0,
           ),
           Step(
-            title: const Text('Adım 2'),
+            title:  Text(AppLocalizations.of(context)!.adim2),
             content: Column(
               children: [
                 !areAllCheckedStep2()
@@ -176,30 +177,30 @@ class FormPageState extends State<FormPage> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)),
                                 color: CupertinoColors.systemBackground),
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.warning,
                                         color: CupertinoColors.systemRed,
                                       ),
-                                      SizedBox(width: 10),
+                                      const SizedBox(width: 10),
                                       Text(
-                                        "Uyarı",
-                                        style: TextStyle(
+                                        AppLocalizations.of(context)!.uyari,
+                                        style: const TextStyle(
                                             fontSize: 22,
                                             color: CupertinoColors.systemRed,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    "Aşağıdaki bulgularda veya özel durumlarda bugünkü dozunuzu atlamanız veya 1/4'üne indirmeniz önerilir.",
-                                    style: TextStyle(
+                                  const SizedBox(height: 10),
+                                   Text(
+                                    AppLocalizations.of(context)!.bulgulardaOneri,
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       // color: CupertinoColors.systemRed
@@ -216,9 +217,9 @@ class FormPageState extends State<FormPage> {
                 // const Divider(),
                 // Each CheckboxListTile represents a question with a checkbox
                 CheckboxListTile(
-                  title: const Text(
-                    'Yolculukta mısınız?',
-                    style: TextStyle(fontSize: 20),
+                  title:  Text(
+                    AppLocalizations.of(context)!.yolculuktaMisiniz,
+                    style: const TextStyle(fontSize: 20),
                   ),
                   value: checkedStateStep2[0],
                   onChanged: (newValue) {
@@ -228,9 +229,9 @@ class FormPageState extends State<FormPage> {
                   },
                 ),
                 CheckboxListTile(
-                  title: const Text(
-                    'Gün içinde ağır egzersiz yaptınız mı?',
-                    style: TextStyle(fontSize: 20),
+                  title:  Text(
+                    AppLocalizations.of(context)!.agirEgzersiz,
+                    style: const TextStyle(fontSize: 20),
                   ),
                   value: checkedStateStep2[1],
                   onChanged: (newValue) {
@@ -240,9 +241,9 @@ class FormPageState extends State<FormPage> {
                   },
                 ),
                 CheckboxListTile(
-                  title: const Text(
-                    'Yorgun hissediyor musunuz?',
-                    style: TextStyle(fontSize: 20),
+                  title:  Text(
+                    AppLocalizations.of(context)!.yorgunHissediyor,
+                    style: const TextStyle(fontSize: 20),
                   ),
                   value: checkedStateStep2[2],
                   onChanged: (newValue) {
@@ -252,9 +253,9 @@ class FormPageState extends State<FormPage> {
                   },
                 ),
                 CheckboxListTile(
-                  title: const Text(
-                    'Vücut sıcaklığınızı artıracak koşu, sıcak banyo, sauna, hamam vb. bir aktivitede bulundunuz mu?',
-                    style: TextStyle(fontSize: 20),
+                  title:  Text(
+                    AppLocalizations.of(context)!.vucutSicakligi,
+                    style: const TextStyle(fontSize: 20),
                   ),
                   value: checkedStateStep2[3],
                   onChanged: (newValue) {
@@ -269,7 +270,7 @@ class FormPageState extends State<FormPage> {
             isActive: _currentStep >= 1,
           ),
           Step(
-            title: const Text('Adım 3'),
+            title:  Text(AppLocalizations.of(context)!.adim3),
             content: (_currentStep == 2 && doseAllowed)
                 ? const DoseIntakePage()
                 : (!areAllCheckedStep1())
@@ -290,12 +291,12 @@ class Step1Incomplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         children: [
           Text(
-            "Doz alımı yapmadan önce bütün hazırlıklarınızı tamamlamanız gerekiyor.",
-            style: TextStyle(fontSize: 24),
+            AppLocalizations.of(context)!.dozAlimTamamlama,
+            style: const TextStyle(fontSize: 24),
           ),
           // SizedBox(height: 20),
         ],
@@ -311,12 +312,12 @@ class Step2Incomplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return  Center(
       child: Column(
         children: [
           Text(
-            "İşaretlediğiniz bulgular sebebiyle bugünkü dozunuzu atlamanız veya 1/4'üne indirmeniz önerilir.",
-            style: TextStyle(fontSize: 24),
+            AppLocalizations.of(context)!.bulgularOneri,
+            style: const TextStyle(fontSize: 24),
           ),
           // SizedBox(height: 20),
         ],
