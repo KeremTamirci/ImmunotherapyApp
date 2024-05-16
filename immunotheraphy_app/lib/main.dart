@@ -1,3 +1,15 @@
+
+// ignore_for_file: use_super_parameters
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/api/firebase_api.dart';
+import 'package:immunotheraphy_app/doctor/screens/doctor_home_screen.dart';
+import 'package:immunotheraphy_app/patient/screens/patient_home_screen.dart';
+import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
+import 'package:immunotheraphy_app/screens/choice_screen.dart';
+
 import 'dart:io';
 import 'dart:ui';
 
@@ -16,7 +28,7 @@ import 'api/firebase_api.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
   await FirebaseApi().initNotifications();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? preferredLanguage = prefs.getString('preferredLanguage');
@@ -74,7 +86,69 @@ class MyApp extends StatelessWidget {
           onSurface: Color.fromARGB(255, 0, 0, 0),
         ),
       ),
-      home: preferredLanguage != null ? const ChoiceScreen() : LanguageSelectionScreen(),
+      home: const AuthenticationWrapper(),
     );
   }
 }
+
+class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const LoadingScreen();
+        } else if (snapshot.hasData) {
+          return UserTypeChecker(user: snapshot.data!);
+        } else {
+          return preferredLanguage != null ? const ChoiceScreen() : LanguageSelectionScreen();
+        }
+      },
+    );
+  }
+}
+
+class UserTypeChecker extends StatelessWidget {
+  final User user;
+
+  const UserTypeChecker({Key? key, required this.user}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: FirebaseApi().isDoctor(user.uid),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const LoadingScreen();
+        } else if (snapshot.hasData) {
+          if (snapshot.data!) {
+            return const DoctorHomeScreen();
+          } else {
+            return const PatientHomeScreen();
+          }
+        } else {
+          return const Text('Error determining user type');
+        }
+      },
+    );
+  }
+}
+
+// class LoadingScreen extends StatelessWidget {
+//   const LoadingScreen({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(
+//       backgroundColor: Colors.white,
+//       body: Center(
+//         child: CircularProgressIndicator(
+//           backgroundColor: Colors.blue,
+//         ),
+//       ),
+//     );
+//   }
+// }
