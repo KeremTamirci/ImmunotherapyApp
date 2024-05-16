@@ -75,7 +75,9 @@ Container firebaseUIButton(
           ),
         ),
 
-      ), child: null,
+      ), child: 
+      Text(title,
+      style:    const TextStyle( color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16)),
     ),
   );
 }
