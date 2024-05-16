@@ -14,7 +14,7 @@ class FormPageState extends State<FormPage> {
   int _currentStep = 0;
   bool doseAllowed = false;
   final List<bool> checkedStateStep1 = [false, false, false, false];
-  final List<bool> checkedStateStep2 = [false, false, false, false];
+  final List<bool> checkedStateStep2 = [false, false, false, false, false];
 
   bool areAllCheckedStep1() {
     return checkedStateStep1.every((element) => element == true);
@@ -136,7 +136,7 @@ class FormPageState extends State<FormPage> {
                   ),
                   CheckboxListTile(
                     title: const Text(
-                      'Question 3',
+                      'Astım ilacınızı aldınız mı?',
                       style: TextStyle(fontSize: 20),
                     ),
                     value: checkedStateStep1[2],
@@ -217,7 +217,7 @@ class FormPageState extends State<FormPage> {
                 // Each CheckboxListTile represents a question with a checkbox
                 CheckboxListTile(
                   title: const Text(
-                    'Son birkaç saat içinde ... ilacını aldınız mı?',
+                    'Yolculukta mısınız?',
                     style: TextStyle(fontSize: 20),
                   ),
                   value: checkedStateStep2[0],
@@ -229,7 +229,7 @@ class FormPageState extends State<FormPage> {
                 ),
                 CheckboxListTile(
                   title: const Text(
-                    'Bugün içinde ... yaptınız mı?',
+                    'Gün içinde ağır egzersiz yaptınız mı?',
                     style: TextStyle(fontSize: 20),
                   ),
                   value: checkedStateStep2[1],
@@ -241,7 +241,7 @@ class FormPageState extends State<FormPage> {
                 ),
                 CheckboxListTile(
                   title: const Text(
-                    'Question 3',
+                    'Yorgun hissediyor musunuz?',
                     style: TextStyle(fontSize: 20),
                   ),
                   value: checkedStateStep2[2],
@@ -253,7 +253,7 @@ class FormPageState extends State<FormPage> {
                 ),
                 CheckboxListTile(
                   title: const Text(
-                    'Question 4',
+                    'Vücut sıcaklığınızı artıracak koşu, sıcak banyo, sauna, hamam vb. bir aktivitede bulundunuz mu?',
                     style: TextStyle(fontSize: 20),
                   ),
                   value: checkedStateStep2[3],
