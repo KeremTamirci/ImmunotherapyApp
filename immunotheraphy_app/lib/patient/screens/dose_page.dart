@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DosePage extends StatefulWidget {
-  const DosePage({Key? key}) : super(key: key);
+  const DosePage({super.key});
 
   @override
   State<DosePage> createState() => _DosePageState();
@@ -50,6 +50,7 @@ class _DosePageState extends State<DosePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Dosage Data Chart',
       home: Scaffold(
