@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DoctorResetPassword extends StatefulWidget {
   const DoctorResetPassword({Key? key}) : super(key: key);
@@ -19,8 +20,8 @@ class _DoctorResetPasswordState extends State<DoctorResetPassword> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          "Reset Password",
+        title:  Text(
+          AppLocalizations.of(context)!.resetPassword,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
@@ -41,12 +42,12 @@ class _DoctorResetPasswordState extends State<DoctorResetPassword> {
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField("Enter Email Id", Icons.person_outline, false,
+                reusableTextField(AppLocalizations.of(context)!.enterEmail, Icons.person_outline, false,
                     _emailTextController),
                 const SizedBox(
                   height: 20,
                 ),
-                firebaseUIButton(context, "Reset Password", () {
+                firebaseUIButton(context, AppLocalizations.of(context)!.resetPassword, () {
                   FirebaseAuth.instance
                       .sendPasswordResetEmail(email: _emailTextController.text)
                       .then((value) => Navigator.of(context).pop());

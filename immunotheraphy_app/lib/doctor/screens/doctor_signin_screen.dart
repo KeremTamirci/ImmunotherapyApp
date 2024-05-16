@@ -5,6 +5,7 @@ import 'package:immunotheraphy_app/doctor/screens/reset_password.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signup_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DoctorSignInScreen extends StatefulWidget {
   const DoctorSignInScreen({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Doctor Sign In'),
+        title: Text(AppLocalizations.of(context)!.doctorSignIn),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -51,7 +52,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                   height: 30,
                 ),
                 reusableTextField(
-                  "Enter UserName",
+                  AppLocalizations.of(context)!.enterEmail,
                   Icons.person_outline,
                   false,
                   _emailTextController,
@@ -61,7 +62,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                   height: 20,
                 ),
                 reusableTextField(
-                  "Enter Password",
+                  AppLocalizations.of(context)!.enterPassword,
                   Icons.lock_outline,
                   true,
                   _passwordTextController,
@@ -71,7 +72,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                   height: 5,
                 ),
                 forgetPassword(context),
-                firebaseUIButton(context, "Sign In", () async {
+                firebaseUIButton(context, AppLocalizations.of(context)!.signIn, () async {
                   try {
                     final userCredential = await FirebaseAuth.instance
                         .signInWithEmailAndPassword(
@@ -119,15 +120,15 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Don't have account?",
+         Text(AppLocalizations.of(context)!.dontHaveAnAccount,
             style: TextStyle(color: Colors.white70)),
         GestureDetector(
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => DoctorSignUpScreen()));
           },
-          child: const Text(
-            " Sign Up",
+          child:  Text(
+            AppLocalizations.of(context)!.signUp,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         )
@@ -141,8 +142,8 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
       height: 35,
       alignment: Alignment.bottomRight,
       child: TextButton(
-        child: const Text(
-          "Forgot Password?",
+        child:  Text(
+          AppLocalizations.of(context)!.forgotPassword,
           style: TextStyle(color: Colors.white70),
           textAlign: TextAlign.right,
         ),

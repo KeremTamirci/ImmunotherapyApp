@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class AddSymptomsPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   late DatabaseController _databaseController;
   late User _user;
   late DateTime _selectedDate;
-  String _selectedSymptomType = '';
+  List<String> _selectedSymptomTypes = [];
   String _symptomDetail = '';
 
   @override
@@ -38,6 +39,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   Future<void> _showDatePicker() async {
     showMaterialDatePicker(
       context: context,
+      title: "Semptomun görüldüğü tarih",
       selectedDate: _selectedDate,
       onChanged: (date) {
         setState(() {
@@ -48,16 +50,36 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
       lastDate: DateTime.now(),
     );
   }
+
   Future<void> _showSymptomTypePicker() async {
-    showMaterialScrollPicker(
+    List<String> allSymptomTypes = [
+  AppLocalizations.of(context)!.urtiker,
+  AppLocalizations.of(context)!.anjiyoOdem,
+  AppLocalizations.of(context)!.kasinti,
+  AppLocalizations.of(context)!.kizariklik,
+  AppLocalizations.of(context)!.burunAkitmasi,
+  AppLocalizations.of(context)!.hapsirik,
+  AppLocalizations.of(context)!.oksuruk,
+  AppLocalizations.of(context)!.hirilti,
+  AppLocalizations.of(context)!.nefesDarligi,
+  AppLocalizations.of(context)!.gogusAgri,
+  AppLocalizations.of(context)!.karinAgri,
+  AppLocalizations.of(context)!.kusma,
+  AppLocalizations.of(context)!.ishal,
+  AppLocalizations.of(context)!.kalbinCokHizliAtimlari,
+  AppLocalizations.of(context)!.tansiyonDusmesi,
+  AppLocalizations.of(context)!.bayginlikHissi,
+  AppLocalizations.of(context)!.bayilma,
+];
+
+    await showMaterialCheckboxPicker(
       context: context,
-      showDivider: false,
-      title: 'Select Symptom Type',
-      items: ['Fever', 'Cough', 'Headache', 'Fatigue', 'Other'],
-      selectedItem: _selectedSymptomType,
-      onChanged: (value) {
+      items: allSymptomTypes,
+      title: AppLocalizations.of(context)!.selectSymptomType,
+      selectedItems: _selectedSymptomTypes,
+      onChanged: (List<String> value) {
         setState(() {
-          _selectedSymptomType = value;
+          _selectedSymptomTypes = value;
         });
       },
     );
@@ -66,14 +88,16 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   Future<void> _addSymptoms() async {
     try {
       // Constructing symptom details
-      Map<String, dynamic> symptomDetails = {
-        'symptom_date': _selectedDate,
-        'symptom_type': _selectedSymptomType,
-        'detail': _symptomDetail,
-      };
+      List<Map<String, dynamic>> symptoms = _selectedSymptomTypes.map((type) {
+        return {
+          'symptom_date': _selectedDate,
+          'symptom_type': type,
+          'detail': _symptomDetail,
+        };
+      }).toList();
 
       // Calling addSymptoms method from DatabaseController
-      await _databaseController.addSymptoms(symptomDetails);
+      await _databaseController.addSymptoms(symptoms);
 
       // Show success snackbar
       _showSuccessSnackbar();
@@ -107,46 +131,49 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Symptoms'),
+        title:  Text(AppLocalizations.of(context)!.addSymptoms),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Select Date:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: _showDatePicker,
               child: Text('Select Date: ${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
-              'Select Symptom Type:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.selectSymptomType,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: _showSymptomTypePicker,
-              child: Text('Select Symptom Type: $_selectedSymptomType'),
+            child: Text(
+              '${AppLocalizations.of(context)!.selected}: ${_selectedSymptomTypes.join(", ")}'
             ),
-            SizedBox(height: 20),
+
+            ),
+            const SizedBox(height: 20),
             TextField(
-              decoration: InputDecoration(
-                labelText: 'Symptom Detail (Optional)',
-                border: OutlineInputBorder(),
+              decoration:  InputDecoration(
+                labelText: AppLocalizations.of(context)!.symptomDetail,
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
                 _symptomDetail = value;
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _addSymptoms,
-              child: Text('Add Symptoms'),
+              child:  Text(AppLocalizations.of(context)!.addSymptoms),
             ),
           ],
         ),

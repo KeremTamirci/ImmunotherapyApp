@@ -3,6 +3,8 @@ import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:immunotheraphy_app/utils/color_utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ChoiceScreen extends StatelessWidget {
   const ChoiceScreen({Key? key}) : super(key: key);
@@ -11,13 +13,13 @@ class ChoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(top: 20.0), // Add top padding to the title
+        title:  Padding(
+          padding: const EdgeInsets.only(top: 20.0), // Add top padding to the title
           child: Text(
-            'Koç Üniversitesi Hastanesi İmmünoterapi Takip Uygulaması',
+            AppLocalizations.of(context)!.appTitle,
             maxLines: 3,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 26,
               fontWeight: FontWeight.bold,
@@ -71,9 +73,9 @@ class ChoiceScreen extends StatelessWidget {
                         height:
                             175), // Replace 'assets/patient_image.png' with your actual image path
                     const SizedBox(height: 30),
-                    const Text(
-                      'Hasta Girişi',
-                      style: TextStyle(
+                     Text(
+                      AppLocalizations.of(context)!.patientSignIn,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20, // Set font size to 20 points
                         fontWeight: FontWeight.bold, // Set font weight to bold
@@ -122,9 +124,9 @@ class ChoiceScreen extends StatelessWidget {
                         height:
                             175), // Replace 'assets/doctor_image.png' with your actual image path
                     SizedBox(height: 30),
-                    const Text(
-                      'Doktor Girişi',
-                      style: TextStyle(
+                     Text(
+                      AppLocalizations.of(context)!.doctorSignIn,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20, // Set font size to 20 points
                         fontWeight: FontWeight.bold, // Set font weight to bold
