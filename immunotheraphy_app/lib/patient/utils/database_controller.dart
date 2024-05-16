@@ -47,23 +47,28 @@ class DatabaseController {
   }
 
   // Method to add symptoms to the symptoms table
-  Future<void> addSymptoms(Map<String, dynamic> symptomDetails) async {
+  Future<void> addSymptoms(List<Map<String, dynamic>> symptoms) async {
     try {
-      await FirebaseFirestore.instance
+      final CollectionReference symptomRecordings = FirebaseFirestore.instance
           .collection('Patients')
           .doc(userId)
-          .collection('Symptom Recordings')
-          .add(symptomDetails);
-      print('Symptoms added to Firestore for user $userId');
-      print(symptomDetails);
+          .collection('Symptom Recordings');
+
+      // Loop through each symptom and add it to Firestore
+      for (Map<String, dynamic> symptomDetails in symptoms) {
+        await symptomRecordings.add(symptomDetails);
+        print('Symptom added to Firestore for user $userId');
+        print(symptomDetails);
+      }
     } catch (e) {
       print('Failed to add symptoms to Firestore: $e');
       throw e;
     }
   }
 
-  Future<void> processTempPatientRecord(
-      String otp, String phoneNumber, String patientId) async {
+
+  Future<void> processTempPatientRecord(String otp, String phoneNumber, String patientId) async {
+
     try {
       CollectionReference tempPatientsCollection =
           FirebaseFirestore.instance.collection('Temp_Patients');

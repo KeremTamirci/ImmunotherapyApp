@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -11,9 +13,14 @@ Image logoWidget(String imageName) {
   );
 }
 
-TextField reusableTextField(String text, IconData icon, bool isPasswordType,
-    TextEditingController controller,
-    {VoidCallback? onTap, double? scrollPadding}) {
+TextField reusableTextField(
+  String text,
+  IconData icon,
+  bool isPasswordType,
+  TextEditingController controller, {
+  VoidCallback? onTap,
+  double? scrollPadding,
+}) {
   return TextField(
     controller: controller,
     onTap: onTap,
@@ -34,8 +41,9 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordType,
       floatingLabelBehavior: FloatingLabelBehavior.never,
       fillColor: Colors.white.withOpacity(0.3),
       border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+        borderRadius: BorderRadius.circular(30.0),
+        borderSide: const BorderSide(width: 0, style: BorderStyle.none),
+      ),
     ),
     keyboardType: isPasswordType
         ? TextInputType.visiblePassword
@@ -43,7 +51,8 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordType,
   );
 }
 
-Container firebaseUIButton(BuildContext context, String title, Function onTap) {
+Container firebaseUIButton(
+    BuildContext context, String title, Function onTap) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 50,
@@ -54,18 +63,18 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
         onTap();
       },
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.pressed)) {
-              return Colors.black26;
-            }
-            return Colors.white;
-          }),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
-      child: Text(
-        title,
-        style: const TextStyle(
-            color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.pressed)) {
+            return Colors.black26;
+          }
+          return Colors.white;
+        }),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+
       ),
     ),
   );
@@ -75,19 +84,72 @@ class DoseChart extends StatelessWidget {
   final List<double> doses;
   final List<String> dates;
   final List<bool> isHospitalList;
+  final List<(String, bool)> tookDoseList;
+
 
   DoseChart(
-      {required this.doses, required this.dates, required this.isHospitalList});
+      {required this.doses,
+      required this.dates,
+      required this.isHospitalList,
+      required this.tookDoseList});
 
   @override
   Widget build(BuildContext context) {
-    // Check if doses list is empty or null
-    if (doses!.isEmpty) {
-      // Return a message or placeholder if doses list is empty
-      return const Center(
-        child: CircularProgressIndicator(),
+    if (doses.isEmpty || dates.isEmpty) {
+      // Return an empty graph widget
+      return SizedBox(
+        height: 300,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 5,
+              top: 0,
+              bottom: 70,
+              child: RotatedBox(
+                quarterTurns: -1,
+                child: Text(
+                  'Doz miktarı (mg)',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 10,
+              child: Center(
+                child: Text(
+                  'Tarih',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 50.0),
+              child: LineChart(
+                LineChartData(
+                  titlesData: FlTitlesData(topTitles: AxisTitles(), show: true),
+                  borderData: FlBorderData(
+                    show: true,
+                  ),
+                  // Set minY and maxY values to add padding
+                  minY: 0,
+                  maxY: 50,
+                ),
+              ),
+            ),
+          ],
+        ),
+
       );
     }
+
     // Find the minimum and maximum values in the doses list
     double minValue = doses.reduce((curr, next) => curr < next ? curr : next);
     double maxValue = doses.reduce((curr, next) => curr > next ? curr : next);
@@ -148,6 +210,8 @@ class DoseChart extends StatelessWidget {
                 ),
                 lineBarsData: [
                   LineChartBarData(
+                    isCurved: true,
+                    preventCurveOverShooting: true,
                     spots: doses.asMap().entries.map((entry) {
                       return FlSpot(
                           entry.key.toDouble(), entry.value.toDouble());
@@ -162,7 +226,7 @@ class DoseChart extends StatelessWidget {
                 ],
                 // Set minY and maxY values to add padding
                 minY: 0,
-                maxY: maxY,
+                maxY: maxY >= 50 ? maxY : 50,
               ),
             ),
           ),
@@ -206,6 +270,17 @@ class MyDropdownWidget extends StatelessWidget {
             ),
           );
         }).toList(),
+
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: CircularProgressIndicator(),
+
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:immunotheraphy_app/doctor/screens/new_patient_page.dart';
 import 'package:immunotheraphy_app/doctor/screens/patient_list_screen.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DoctorHomeScreen extends StatefulWidget {
   const DoctorHomeScreen({Key? key}) : super(key: key);
@@ -15,8 +16,6 @@ class DoctorHomeScreen extends StatefulWidget {
 
 class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
   late User _user;
-  final Text homeScreenTitle = const Text("Doctor Home Screen");
-  final Text logOutText = const Text("Log Out");
   final TextStyle style = const TextStyle(fontSize: 20);
   var selectedIndex = 0;
 
@@ -40,7 +39,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page =  PatientListScreen();
+        page =  const PatientListScreen();
         break;
       case 1:
         page = const NewPatientPage();
@@ -60,7 +59,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Doctor Home Screen'),
+        title: Text(AppLocalizations.of(context)!.doctorHomeScreen),
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
@@ -73,18 +72,18 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
               BottomNavigationBar(
                 // backgroundColor: hexStringToColor("1A80E5"),
                 backgroundColor: hexStringToColor("E8EDF2"),
-                items: const <BottomNavigationBarItem>[
+                items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    label: 'Ana Sayfa',
+                    icon: const Icon(Icons.home),
+                    label: AppLocalizations.of(context)!.home,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.sick),
-                    label: 'Yeni Hasta',
+                    icon: const Icon(Icons.sick),
+                    label: AppLocalizations.of(context)!.newPatient,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
-                    label: 'Ayarlar',
+                    icon: const Icon(Icons.settings),
+                    label: AppLocalizations.of(context)!.settings,
                   ),
                 ],
                 currentIndex: selectedIndex,

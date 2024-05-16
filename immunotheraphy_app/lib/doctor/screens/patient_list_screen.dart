@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/screens/patient_detail_page.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PatientListScreen extends StatefulWidget {
   const PatientListScreen({super.key});
@@ -43,7 +44,7 @@ class PatientListScreenState extends State<PatientListScreen> {
     if (patients.isEmpty) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Patient List'),
+          title:  Text(AppLocalizations.of(context)!.patientList),
         ),
         body: const Center(
           child: CircularProgressIndicator(),
@@ -52,7 +53,7 @@ class PatientListScreenState extends State<PatientListScreen> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Patient List'),
+          title: Text(AppLocalizations.of(context)!.patientList),
         ),
         body: ListView.builder(
           itemCount: patients.length,
@@ -75,14 +76,15 @@ class PatientListScreenState extends State<PatientListScreen> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 4),
-                    Text('Phone: ${patient.phoneNumber}'),
-                    const SizedBox(height: 2),
-                    Text('Birth Date: ${_formatDate(patient.birthDate)}'),
-                    const SizedBox(height: 2),
-                    Text('Has Rhinitis: ${patient.hasRhinits ? 'Yes' : 'No'}'),
-                    const SizedBox(height: 2),
-                    Text('Has Asthma: ${patient.hasAsthma ? 'Yes' : 'No'}'),
+                  const SizedBox(height: 4),
+                  Text(AppLocalizations.of(context)!.phoneNumber + patient.phoneNumber),
+                  const SizedBox(height: 2),
+                  Text('${AppLocalizations.of(context)!.birthDate} ${_formatDate(patient.birthDate)}'),
+                  const SizedBox(height: 2),
+                  Text('${AppLocalizations.of(context)!.hasRhinitis}: ${patient.hasRhinits  ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
+                  const SizedBox(height: 2),
+                  Text('${AppLocalizations.of(context)!.hasAsthma}: ${patient.hasAsthma ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
+
                   ],
                 ),
                 onTap: () {
