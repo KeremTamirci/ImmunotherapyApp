@@ -75,7 +75,7 @@ Container firebaseUIButton(
           ),
         ),
 
-      ),
+      ), child: null,
     ),
   );
 }
@@ -269,7 +269,11 @@ class MyDropdownWidget extends StatelessWidget {
               child: Text('$value'), // Convert integer to string
             ),
           );
-        }).toList(),
+        }).toList()
+      )
+    );
+  }
+}
 
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({super.key});
