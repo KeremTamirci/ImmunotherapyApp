@@ -112,16 +112,18 @@ class UserTypeChecker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: FirebaseApi().isDoctor(user.uid),
+    return FutureBuilder<Map<String, dynamic>>(
+      future: FirebaseApi().getUserType(user.uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingScreen();
         } else if (snapshot.hasData) {
-          if (snapshot.data!) {
+          if (snapshot.data!['isDoctor']) {
             return const DoctorHomeScreen();
-          } else {
+          } else if (snapshot.data!['isPatient']) {
             return const PatientHomeScreen();
+          } else {
+            return const ChoiceScreen();
           }
         } else {
           return const Text('Error determining user type');
