@@ -13,17 +13,10 @@ import 'package:immunotheraphy_app/screens/choice_screen.dart';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/screens/language_selection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:immunotheraphy_app/firebase_options.dart';
-import 'package:immunotheraphy_app/screens/choice_screen.dart';
-
-import 'api/firebase_api.dart';
-
 
 
 void main() async {
@@ -47,7 +40,6 @@ void main() async {
 
   runApp(MyApp(preferredLanguage: preferredLanguage));
 }
-
 
 class MyApp extends StatelessWidget {
   final String? preferredLanguage;
@@ -86,13 +78,15 @@ class MyApp extends StatelessWidget {
           onSurface: Color.fromARGB(255, 0, 0, 0),
         ),
       ),
-      home: const AuthenticationWrapper(),
+      home: AuthenticationWrapper(preferredLanguage: preferredLanguage),
     );
   }
 }
 
 class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({Key? key}) : super(key: key);
+  final String? preferredLanguage;
+
+  const AuthenticationWrapper({Key? key, this.preferredLanguage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -136,19 +130,3 @@ class UserTypeChecker extends StatelessWidget {
     );
   }
 }
-
-// class LoadingScreen extends StatelessWidget {
-//   const LoadingScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//       backgroundColor: Colors.white,
-//       body: Center(
-//         child: CircularProgressIndicator(
-//           backgroundColor: Colors.blue,
-//         ),
-//       ),
-//     );
-//   }
-// }
