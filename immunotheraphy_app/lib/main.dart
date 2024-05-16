@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
           surface: Color.fromARGB(255, 242, 242, 247),
           onSurface: Color.fromARGB(255, 0, 0, 0),
         ),
+
       ),
       home: AuthenticationWrapper(preferredLanguage: preferredLanguage),
     );
