@@ -21,7 +21,6 @@ class DatabaseController {
 
   Future<List<DosageData>> getSortedDosageData() async {
     try {
-
       // Reference to the dosage collection for the current user
       CollectionReference dosageCollection = FirebaseFirestore.instance
           .collection('Patients')
@@ -32,12 +31,11 @@ class DatabaseController {
       QuerySnapshot snapshot =
           await dosageCollection.orderBy("dosage_date").get();
 
-
       List<DosageData> dosageData = snapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return DosageData(
             date: (data['dosage_date'] as Timestamp).toDate(),
-            amount: data['dosage_amount'] as int,
+            amount: data['dosage_amount'] as double,
             isHospital: data['is_hospital_dosage']);
       }).toList();
 
@@ -48,26 +46,32 @@ class DatabaseController {
     }
   }
 
-
   // Method to add symptoms to the symptoms table
-  Future<void> addSymptoms(Map<String, dynamic> symptomDetails) async {
+  Future<void> addSymptoms(List<Map<String, dynamic>> symptoms) async {
     try {
-      await FirebaseFirestore.instance
+      final CollectionReference symptomRecordings = FirebaseFirestore.instance
           .collection('Patients')
           .doc(userId)
-          .collection('Symptom Recordings')
-          .add(symptomDetails);
-      print('Symptoms added to Firestore for user $userId');
-      print(symptomDetails);
+          .collection('Symptom Recordings');
+
+      // Loop through each symptom and add it to Firestore
+      for (Map<String, dynamic> symptomDetails in symptoms) {
+        await symptomRecordings.add(symptomDetails);
+        print('Symptom added to Firestore for user $userId');
+        print(symptomDetails);
+      }
     } catch (e) {
       print('Failed to add symptoms to Firestore: $e');
       throw e;
     }
   }
 
+
   Future<void> processTempPatientRecord(String otp, String phoneNumber, String patientId) async {
+
     try {
-      CollectionReference tempPatientsCollection = FirebaseFirestore.instance.collection('Temp_Patients');
+      CollectionReference tempPatientsCollection =
+          FirebaseFirestore.instance.collection('Temp_Patients');
 
       QuerySnapshot snapshot = await tempPatientsCollection
           .where('otp', isEqualTo: otp)
@@ -76,11 +80,11 @@ class DatabaseController {
           .get();
 
       if (snapshot.docs.isNotEmpty) {
-        
-        Map<String, dynamic> tempPatientData = snapshot.docs.first.data() as Map<String, dynamic>;
-        
-        CollectionReference patientsCollection = FirebaseFirestore.instance.collection('Patients');
+        Map<String, dynamic> tempPatientData =
+            snapshot.docs.first.data() as Map<String, dynamic>;
 
+        CollectionReference patientsCollection =
+            FirebaseFirestore.instance.collection('Patients');
 
         await patientsCollection.doc(patientId).set(tempPatientData);
 
@@ -98,7 +102,7 @@ class DatabaseController {
 
 class DosageData {
   final DateTime date;
-  final int amount;
+  final double amount;
   final bool isHospital;
   DosageData(
       {required this.date, required this.amount, required this.isHospital});

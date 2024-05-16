@@ -12,7 +12,7 @@ class DoctorProfilePage extends StatefulWidget {
 
 class _DoctorProfilePageState extends State<DoctorProfilePage> {
   late User _user;
-  late Map<String, dynamic> _doctorData;
+  late Map<String, dynamic> _doctorData = {};
   bool gotData = false;
   final Text homeScreenTitle = const Text("Doctor Home Screen");
   final Text logOutText = const Text("Log Out");
@@ -41,10 +41,12 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
           .doc(doctorId)
           .get();
 
-      setState(() {
-        _doctorData = doctorSnapshot.data() as Map<String, dynamic>;
-      });
-      gotData = true;
+      if (doctorSnapshot.exists) {
+        setState(() {
+          _doctorData = doctorSnapshot.data() as Map<String, dynamic>;
+        });
+        gotData = true;
+      }
     } catch (e) {
       print('Error fetching doctor data: $e');
     }
@@ -90,53 +92,69 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
     );
   }
 
-@override
-Widget build(BuildContext context) {
-  return Align(
-    alignment: Alignment.topLeft,
-    child: Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: FutureBuilder(
-        future: _getUserData(),
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-          if (_doctorData.isEmpty) {
-            return const CircularProgressIndicator();
-          } else {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    text: '${_doctorData['first_name'][0].toUpperCase()}${_doctorData['first_name'].substring(1)} ',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: _doctorData['last_name'].toUpperCase(),
-                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                    ],
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: FutureBuilder(
+          future: _getUserData(),
+          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            if (!gotData) {
+              return const CircularProgressIndicator();
+            } else {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: NetworkImage(
+                        'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
                   ),
-                ),
-                Text(
-                  'Phone Number: ${_doctorData['phone_number']}',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  child: logOutText,
-                  onPressed: () {
-                    _confirmSignOut(context);
-                  },
-                ),
-              ],
-            );
-          }
-        },
+                  const SizedBox(height: 20),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text:
+                          '${_doctorData['first_name'][0].toUpperCase()}${_doctorData['first_name'].substring(1)} ',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: _doctorData['last_name'].toUpperCase(),
+                          style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'email: ${_user.email}',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                  Text(
+                    'Phone Number: ${_doctorData['phone_number']}',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    child: logOutText,
+                    onPressed: () {
+                      _confirmSignOut(context);
+                    },
+                  ),
+                ],
+              );
+            }
+          },
+        ),
       ),
-    ),
-  );
-}
-
-
-
+    );
+  }
 }

@@ -5,6 +5,8 @@ import 'package:immunotheraphy_app/patient/screens/add_symptom_page.dart';
 // import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 import 'package:immunotheraphy_app/patient/screens/form_page.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class DosageAndSymptomPage extends StatefulWidget {
   const DosageAndSymptomPage({super.key});
@@ -31,7 +33,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               InformationBox(
-                title: 'Doz Girişi',
+                title: AppLocalizations.of(context)!.dosageEntry,
                 onTap: () {
                   print('Box 1 tapped');
                   Navigator.push(
@@ -52,7 +54,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                 ),
               ),
               InformationBox(
-                title: 'Semptom Girişi',
+                title: AppLocalizations.of(context)!.symptomEntry,
                 onTap: () {
                   print('Box 2 tapped');
                   Navigator.push(
@@ -77,27 +79,27 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
           const SizedBox(
             height: 20,
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 16, left: 16),
+          Padding(
+            padding: const EdgeInsets.only(top: 16, left: 16),
             child: Text(
-              "Bilgilendirici İçerikler",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.informationalEntries,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 InfoCardWidget(
-                  title: 'Semptomlar ve Anafilaksi Hakkında',
+                  title: AppLocalizations.of(context)!.aboutSymptoms,
                   description:
-                      "Çeşitli semptomlar ve anafilaktik şok anında yapılacaklar",
+                      AppLocalizations.of(context)!.whatToDo,
                   imagePath: "assets/images/kalp_atisi.png",
                 ),
                 InfoCardWidget(
-                  title: 'Süt Merdiveni',
-                  description: "Süt bazlı ürünlerin süt proteini miktarları",
+                  title: AppLocalizations.of(context)!.milkLadder,
+                  description: AppLocalizations.of(context)!.milkLadderSubtitle,
                   imagePath: "assets/images/sut_ana_resim.png",
                 ),
                 InfoCardWidget(
@@ -285,13 +287,13 @@ class InformationBox extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 15),
-            const ElevatedButton(
+            ElevatedButton(
               onPressed: null,
               style: ButtonStyle(
                 foregroundColor: MaterialStatePropertyAll(Colors.white),
               ),
               child: Text(
-                "Başla",
+                AppLocalizations.of(context)!.start,
                 style: TextStyle(fontSize: 16),
               ),
             )

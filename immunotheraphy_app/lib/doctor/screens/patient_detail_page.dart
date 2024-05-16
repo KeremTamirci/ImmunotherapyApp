@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class PatientDetailScreen extends StatelessWidget {
   final Patient patient;
@@ -10,18 +12,18 @@ class PatientDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Patient Details'),
+        title: Text(AppLocalizations.of(context)!.patientDetails),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            _buildDetailItem('First Name', patient.firstName),
-            _buildDetailItem('Last Name', patient.lastName),
-            _buildDetailItem('Phone Number', patient.phoneNumber),
-            _buildDetailItem('Birth Date', _formatDate(patient.birthDate)),
-            _buildDetailItem('Has Rhinitis', patient.hasRhinits ? 'Yes' : 'No'),
-            _buildDetailItem('Has Asthma', patient.hasAsthma ? 'Yes' : 'No'),
+            _buildDetailItem(AppLocalizations.of(context)!.name, patient.firstName),
+            _buildDetailItem(AppLocalizations.of(context)!.surname, patient.lastName),
+            _buildDetailItem(AppLocalizations.of(context)!.phoneNumber, patient.phoneNumber),
+            _buildDetailItem(AppLocalizations.of(context)!.birthDate, _formatDate(patient.birthDate)),
+            _buildDetailItem(AppLocalizations.of(context)!.hasRhinitis, patient.hasRhinits ?  AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no),
+            _buildDetailItem(AppLocalizations.of(context)!.hasAsthma, patient.hasAsthma ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no),
           ],
         ),
       ),
