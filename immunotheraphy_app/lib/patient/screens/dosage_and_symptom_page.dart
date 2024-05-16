@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:immunotheraphy_app/patient/screens/add_symptom_page.dart';
 // import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 import 'package:immunotheraphy_app/patient/screens/form_page.dart';
+import 'package:immunotheraphy_app/patient/screens/infoSheets/MilkLadderInfoSheet.dart';
+import 'package:immunotheraphy_app/patient/screens/infoSheets/SymptomsInfoSheet.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -96,16 +98,19 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                   description:
                       AppLocalizations.of(context)!.whatToDo,
                   imagePath: "assets/images/kalp_atisi.png",
+                  cardNo: 0,
                 ),
                 InfoCardWidget(
                   title: AppLocalizations.of(context)!.milkLadder,
                   description: AppLocalizations.of(context)!.milkLadderSubtitle,
                   imagePath: "assets/images/sut_ana_resim.png",
+                  cardNo: 1,
                 ),
                 InfoCardWidget(
                   title: 'Alerjik Besinler',
                   description: "Yaygın besin alerjileri",
                   imagePath: "assets/images/armut_yiyen_adam.png",
+                  cardNo: 1,
                 ),
               ],
             ),
@@ -124,11 +129,13 @@ class InfoCardWidget extends StatelessWidget {
   final String title;
   final String description;
   final String imagePath;
+  final int cardNo;
   const InfoCardWidget({
     super.key,
     required this.title,
     required this.imagePath,
     required this.description,
+    required this.cardNo
   });
 
   @override
@@ -151,39 +158,16 @@ class InfoCardWidget extends StatelessWidget {
                     top: Radius.circular(25.0),
                   ),
                 ),
-                builder: (context) {
-                  return SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.9,
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Yazı Başlığı",
-                                  style: TextStyle(fontSize: 24),
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                                  style: TextStyle(fontSize: 18),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                });
+                  builder: (context) {
+                    switch (cardNo) {
+                      case 0:
+                        return SymptomsInfoSheet();
+                      case 1:
+                        return MilkLadderInfoSheet();
+                      default:
+                        return Container(); // Return some default widget if cardNo doesn't match any case.
+                    }
+                  });
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
@@ -232,14 +216,7 @@ class InfoCardWidget extends StatelessWidget {
   }
 }
 
-// class InformationBox extends StatelessWidget {
-//   const InformationBox({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-// }
 class InformationBox extends StatelessWidget {
   final String title;
   final IconData icon;
