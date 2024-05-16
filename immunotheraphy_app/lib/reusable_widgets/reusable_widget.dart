@@ -75,9 +75,13 @@ class DoseChart extends StatelessWidget {
   final List<int> doses;
   final List<String> dates;
   final List<bool> isHospitalList;
+  final List<(String, bool)> tookDoseList;
 
   DoseChart(
-      {required this.doses, required this.dates, required this.isHospitalList});
+      {required this.doses,
+      required this.dates,
+      required this.isHospitalList,
+      required this.tookDoseList});
 
   @override
   Widget build(BuildContext context) {
