@@ -62,11 +62,6 @@ Container firebaseUIButton(
       onPressed: () {
         onTap();
       },
-      child: Text(
-        title,
-        style: const TextStyle(
-            color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
-      ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.pressed)) {
@@ -79,13 +74,14 @@ Container firebaseUIButton(
             borderRadius: BorderRadius.circular(30),
           ),
         ),
+
       ),
     ),
   );
 }
 
 class DoseChart extends StatelessWidget {
-  final List<int> doses;
+  final List<double> doses;
   final List<String> dates;
   final List<bool> isHospitalList;
   final List<(String, bool)> tookDoseList;
@@ -150,12 +146,13 @@ class DoseChart extends StatelessWidget {
             ),
           ],
         ),
+
       );
     }
 
     // Find the minimum and maximum values in the doses list
-    int minValue = doses.reduce((curr, next) => curr < next ? curr : next);
-    int maxValue = doses.reduce((curr, next) => curr > next ? curr : next);
+    double minValue = doses.reduce((curr, next) => curr < next ? curr : next);
+    double maxValue = doses.reduce((curr, next) => curr > next ? curr : next);
 
     // Calculate the padding percentage (adjust this value based on your preference)
     double paddingPercentage = 0.1;
@@ -174,7 +171,7 @@ class DoseChart extends StatelessWidget {
       height: 300,
       child: Stack(
         children: [
-          Positioned(
+          const Positioned(
             left: 5,
             top: 0,
             bottom: 70,
@@ -189,7 +186,7 @@ class DoseChart extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             left: 0,
             right: 0,
             top: 10,
@@ -239,6 +236,41 @@ class DoseChart extends StatelessWidget {
   }
 }
 
+class MyDropdownWidget extends StatelessWidget {
+  final int selectedItem;
+  final ValueChanged<int?> onChanged;
+
+  const MyDropdownWidget({
+    super.key,
+    required this.selectedItem,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<int>(
+        value: selectedItem,
+        isExpanded: true,
+        // dropdownColor: hexStringToColor("E8EDF2"),
+        iconSize: 36,
+        style: const TextStyle(
+          // color: hexStringToColor("4F7396"),
+          fontSize: 18,
+        ),
+        borderRadius: BorderRadius.circular(30),
+        onChanged: onChanged,
+        items:
+            <int>[10, 20, 30, 40, 50].map<DropdownMenuItem<int>>((int value) {
+          return DropdownMenuItem<int>(
+            value: value,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text('$value'), // Convert integer to string
+            ),
+          );
+        }).toList(),
+
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({super.key});
 
@@ -248,6 +280,7 @@ class LoadingScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Center(
         child: CircularProgressIndicator(),
+
       ),
     );
   }

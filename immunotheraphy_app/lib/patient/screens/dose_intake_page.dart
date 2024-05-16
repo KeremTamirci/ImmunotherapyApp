@@ -1,40 +1,117 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_pickers/flutter_material_pickers.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+// import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class DoseIntakePage extends StatefulWidget {
-  const DoseIntakePage({Key? key}) : super(key: key);
+  const DoseIntakePage({super.key});
 
   @override
   State<DoseIntakePage> createState() => DoseIntakePageState();
 }
 
-class DoseIntakePageState extends State<DoseIntakePage> {
-  int _selectedItem = 10; // Initial value for dropdown
+class DoseIntakePageState extends State<DoseIntakePage>
+    with SingleTickerProviderStateMixin {
+  // int _selectedItem = 10; // Initial value for dropdown
+  // String _numericValue = '';
+  final TextEditingController _textController = TextEditingController();
   TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
+  DateTime _selectedTimeCupertino = DateTime.now();
+  bool _showTime = false;
   bool _isHospitalDosage = false; // Initial value for hospital dosage
   late DatabaseController _databaseController;
   // ignore: unused_field
   late User _user;
 
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
     _getUserData();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(_animationController);
+    // CurvedAnimation(
+    //   parent: _animationController,
+    //   curve: Curves.easeInOut,
+    // );
   }
 
-  // Function to show the time picker
-  void _showTimePicker() {
-    showMaterialTimePicker(
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _toggleDatePickerVisibility() {
+    if (_showTime) {
+      _animationController.reverse();
+    } else {
+      _animationController.forward();
+    }
+    setState(() {
+      _showTime = !_showTime;
+    });
+  }
+
+  // // Function to show the time picker
+  // void _showTimePicker() {
+  //   showMaterialTimePicker(
+  //     context: context,
+  //     selectedTime: _selectedTime,
+  //     onChanged: (time) {
+  //       setState(() {
+  //         _selectedTime = time;
+  //       });
+  //     },
+  //   );
+  // }
+
+  void _showDialog(Widget child) {
+    showCupertinoModalPopup<void>(
       context: context,
-      selectedTime: _selectedTime,
-      onChanged: (time) {
-        setState(() {
-          _selectedTime = time;
-        });
-      },
+      builder: (BuildContext context) => ListView(reverse: true, children: [
+        Container(
+          height: 216,
+          padding: const EdgeInsets.only(top: 6.0),
+          // The Bottom margin is provided to align the popup above the system
+          // navigation bar.
+          margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          // Provide a background color for the popup.
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          // Use a SafeArea widget to avoid system overlaps.
+          child: SafeArea(
+            top: false,
+            child: child,
+          ),
+        ),
+        CupertinoButton(
+            color: CupertinoColors.systemBackground.resolveFrom(context),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
+            child: const Text(
+              'Kaydet',
+              style: TextStyle(color: CupertinoColors.activeBlue, fontSize: 22),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+      ]),
     );
   }
 
@@ -72,13 +149,35 @@ class DoseIntakePageState extends State<DoseIntakePage> {
     });
   }
 
+  void _showRangeAlert() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Doz Uygun Değil"),
+          content: const Text(
+              "Girilen doz değeri uygun değil. Girdiğiniz miktarı kontrol edin."),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   // Function to save dosage information to Firestore
   void _saveDosageInfo() async {
     try {
       Map<String, dynamic> dosageDetails = {
-        'dosage_date': DateTime.now(),
+        'dosage_date': _selectedTimeCupertino,
         'detail': 'Doz kaydı detayı',
-        'dosage_amount': _selectedItem, // Using the selected item directly
+        // 'dosage_amount': _selectedItem, // Using the selected item directly
+        'dosage_amount': double.tryParse(_textController.text),
         'is_hospital_dosage': _isHospitalDosage,
         'measure_metric': 'mg',
         // Add any other fields you need for your dosage recording
@@ -112,6 +211,18 @@ class DoseIntakePageState extends State<DoseIntakePage> {
     }
   }
 
+  Future<void> _checkValue(double minValue, double maxValue) async {
+    double? value = double.tryParse(_textController.text);
+    if (value == null) {
+      _showRangeAlert();
+    } else if (value < minValue || value > maxValue) {
+      // If the value is bigger than 200, show an alert dialog
+      _showRangeAlert();
+    } else {
+      _saveDosageInfo();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // return Scaffold(
@@ -122,84 +233,172 @@ class DoseIntakePageState extends State<DoseIntakePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Text(
-          'Select Dosage:',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          'Doz Miktarı:',
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          width: 350,
+          // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          // width: 350,
+          height: 60,
           decoration: BoxDecoration(
-            color: hexStringToColor("E8EDF2"),
-            borderRadius: BorderRadius.circular(40),
+            color: CupertinoColors.systemBackground,
+            borderRadius: BorderRadius.circular(15),
           ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<int>(
-              value: _selectedItem,
-              isExpanded: true,
-              dropdownColor: hexStringToColor("E8EDF2"),
-              iconSize: 36,
-              style: TextStyle(
-                color: hexStringToColor("4F7396"),
-                fontSize: 18,
-              ),
-              borderRadius: BorderRadius.circular(30),
-              onChanged: (int? newValue) {
-                setState(() {
-                  _selectedItem = newValue!;
-                });
-              },
-              items: <int>[10, 20, 30, 40, 50]
-                  .map<DropdownMenuItem<int>>((int value) {
-                return DropdownMenuItem<int>(
-                  value: value,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text('$value'), // Convert integer to string
+          child: TextField(
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+            ],
+            decoration: const InputDecoration(
+              hintText: 'Doz miktarı (mg)',
+              hintStyle: TextStyle(color: CupertinoColors.systemGrey),
+              // alignLabelWithHint: true,
+              // labelText: 'Doz miktarını giriniz',
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  borderSide: BorderSide.none),
+              filled: true,
+              // fillColor: hexStringToColor("E8EDF2"),
+              fillColor: CupertinoColors.systemBackground,
+            ),
+            style: TextStyle(
+              color: hexStringToColor("4F7396"),
+              fontSize: 18,
+            ),
+            // Set the TextEditingController
+            controller: _textController,
+            // Inside the onChanged callback
+            onChanged: (String value) {
+              // Parse the input value to ensure it's numeric
+              String newValue = value.replaceAll(RegExp(r'[^0-9.]'), '');
+
+              // Update the text field's value without triggering onChanged
+              _textController.value = _textController.value.copyWith(
+                text: newValue,
+                selection: TextSelection.collapsed(offset: newValue.length),
+                composing: TextRange.empty,
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 20),
+        // ElevatedButton(
+        //   // onPressed: _showTimePicker, // ESKİ HALİ BU
+        //   // onPressed: _showTimePickerTest,
+        //   onPressed: _showCupertinoTimePicker,
+        //   child: const Text('Select Time'),
+        // ),
+        Container(
+          decoration: const BoxDecoration(
+              color: CupertinoColors.systemBackground,
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "Doz Saati",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    const SizedBox(width: 10),
+                    // SizedBox(
+                    //   width: 100,
+                    //   child:
+                    const Spacer(),
+                    CupertinoButton(
+                      // padding: const EdgeInsets.all(0),
+                      // color: CupertinoColors.systemGrey,
+                      // Display a CupertinoDatePicker in time picker mode.
+                      // onPressed: () => _showDialog(
+                      //   CupertinoDatePicker(
+                      //     initialDateTime: _selectedTimeCupertino,
+                      //     mode: CupertinoDatePickerMode.time,
+                      //     use24hFormat: true,
+                      //     // This is called when the user changes the time.
+                      //     onDateTimeChanged: (DateTime newTime) {
+                      //       setState(() => _selectedTimeCupertino = newTime);
+                      //     },
+                      //   ),
+                      // ),
+                      onPressed: _toggleDatePickerVisibility,
+                      child: Text(
+                        '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                    // ),
+                  ],
+                ),
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                  child: SizedBox(
+                    // height: _showTime ? 232 : 0,
+                    child: _showTime
+                        ? Column(
+                            children: [
+                              const Divider(
+                                  thickness: 0.5,
+                                  color: CupertinoColors.systemGrey),
+                              SizedBox(
+                                  height: 200,
+                                  child: CupertinoDatePicker(
+                                      mode: CupertinoDatePickerMode.time,
+                                      use24hFormat: true,
+                                      initialDateTime: _selectedTimeCupertino,
+                                      onDateTimeChanged:
+                                          (DateTime newDateTime) {
+                                        setState(() {
+                                          _selectedTimeCupertino = newDateTime;
+                                        });
+                                      })),
+                            ],
+                          )
+                        : null,
                   ),
-                );
-              }).toList(),
+                ),
+                const Divider(
+                    thickness: 0.5, color: CupertinoColors.systemGrey),
+                SizedBox(
+                  width: 350,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Hastane Dozu',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const Spacer(),
+                      Checkbox(
+                        value: _isHospitalDosage,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _isHospitalDosage = newValue!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                    thickness: 0.5, color: CupertinoColors.systemGrey),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    _checkValue(0, 200);
+                  },
+                  // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
+                  child: const Text('Save Dosage Info'),
+                ),
+              ],
             ),
           ),
         ),
-        const SizedBox(height: 20),
-        Text(
-          'Selected Time: ${_selectedTime.hour}:${_selectedTime.minute}',
-          style: const TextStyle(fontSize: 18),
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          // onPressed: _showTimePicker, // ESKİ HALİ BU
-          onPressed: _showTimePickerTest,
-          child: const Text('Select Time'),
-        ),
-        SizedBox(
-          width: 350,
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Hospital Dosage:',
-                style: TextStyle(fontSize: 18),
-              ),
-              const SizedBox(width: 5),
-              Checkbox(
-                value: _isHospitalDosage,
-                onChanged: (newValue) {
-                  setState(() {
-                    _isHospitalDosage = newValue!;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
-        ElevatedButton(
-          onPressed: _saveDosageInfo,
-          // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
-          child: const Text('Save Dosage Info'),
-        ),
-        const SizedBox(height: 20),
       ],
     );
     // );
