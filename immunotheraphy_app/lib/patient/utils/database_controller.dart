@@ -85,6 +85,9 @@ class DatabaseController {
 
         CollectionReference patientsCollection =
             FirebaseFirestore.instance.collection('Patients');
+        
+        tempPatientData['patient_id'] = patientId; // Replace 'newField' and 'newValue' with your actual field name and value
+
 
         await patientsCollection.doc(patientId).set(tempPatientData);
 

@@ -94,9 +94,10 @@ class Patient {
   final bool hasAsthma;
   final String uid;
   final String otp;
+  final String patientId;
 
   Patient({required this.firstName, required this.lastName, required this.phoneNumber, required this.birthDate,
-   required this.hasRhinits, required this.hasAsthma, required this.uid, required this.otp,});
+   required this.hasRhinits, required this.hasAsthma, required this.uid, required this.otp, required this.patientId});
 
   factory Patient.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -110,7 +111,8 @@ class Patient {
       hasRhinits: data['has_allergic_rhinitis'],
       hasAsthma: data['has_asthma'],
       uid: data['uid'],
-      otp: data['otp']
+      otp: data['otp'],
+      patientId: data['patient_id']
     );
   }
 }
