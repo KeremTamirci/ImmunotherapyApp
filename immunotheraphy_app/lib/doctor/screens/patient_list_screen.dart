@@ -1,3 +1,5 @@
+import 'dart:async'; // Import to use StreamSubscription
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/screens/patient_detail_page.dart';
@@ -15,6 +17,7 @@ class PatientListScreenState extends State<PatientListScreen> {
   final PatientsFirestoreService _patientsFirestoreService =
       PatientsFirestoreService();
   late List<Patient> patients = [];
+  StreamSubscription<List<Patient>>? _patientsSubscription;
 
   @override
   void initState() {
@@ -22,21 +25,31 @@ class PatientListScreenState extends State<PatientListScreen> {
     _fetchPatients();
   }
 
-  Future<void> _fetchPatients() async {
+  void _fetchPatients() {
     // Get the current user (doctor) UID
     String currentDoctorUID = FirebaseAuth.instance.currentUser?.uid ?? '';
 
-    // Fetch patients associated with the current doctor UID
-    List<Patient> fetchedPatients = await _patientsFirestoreService
+    // Subscribe to the patients stream and update the state
+    _patientsSubscription = _patientsFirestoreService
         .getPatients()
-        .first
-        .then((List<Patient> patients) => patients
-            .where((patient) => patient.uid == currentDoctorUID)
-            .toList());
+        .listen((List<Patient> fetchedPatients) {
+      List<Patient> filteredPatients = fetchedPatients
+          .where((patient) => patient.uid == currentDoctorUID)
+          .toList();
 
-    setState(() {
-      patients = fetchedPatients;
+      if (mounted) {
+        setState(() {
+          patients = filteredPatients;
+        });
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    // Cancel the subscription to avoid memory leaks
+    _patientsSubscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -44,7 +57,7 @@ class PatientListScreenState extends State<PatientListScreen> {
     if (patients.isEmpty) {
       return Scaffold(
         appBar: AppBar(
-          title:  Text(AppLocalizations.of(context)!.patientList),
+          title: Text(AppLocalizations.of(context)!.patientList),
         ),
         body: const Center(
           child: CircularProgressIndicator(),
@@ -76,15 +89,18 @@ class PatientListScreenState extends State<PatientListScreen> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  const SizedBox(height: 4),
-                  Text(AppLocalizations.of(context)!.phoneNumber + patient.phoneNumber),
-                  const SizedBox(height: 2),
-                  Text('${AppLocalizations.of(context)!.birthDate} ${_formatDate(patient.birthDate)}'),
-                  const SizedBox(height: 2),
-                  Text('${AppLocalizations.of(context)!.hasRhinitis}: ${patient.hasRhinits  ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
-                  const SizedBox(height: 2),
-                  Text('${AppLocalizations.of(context)!.hasAsthma}: ${patient.hasAsthma ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
-
+                    const SizedBox(height: 4),
+                    Text(AppLocalizations.of(context)!.phoneNumber +
+                        patient.phoneNumber),
+                    const SizedBox(height: 2),
+                    Text(
+                        '${AppLocalizations.of(context)!.birthDate} ${_formatDate(patient.birthDate)}'),
+                    const SizedBox(height: 2),
+                    Text(
+                        '${AppLocalizations.of(context)!.hasRhinitis}: ${patient.hasRhinits ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
+                    const SizedBox(height: 2),
+                    Text(
+                        '${AppLocalizations.of(context)!.hasAsthma}: ${patient.hasAsthma ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
                   ],
                 ),
                 onTap: () {
@@ -92,7 +108,8 @@ class PatientListScreenState extends State<PatientListScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PatientDetailScreen(patient: patient),
+                      builder: (context) =>
+                          PatientDetailScreen(patient: patient),
                     ),
                   );
                 },
