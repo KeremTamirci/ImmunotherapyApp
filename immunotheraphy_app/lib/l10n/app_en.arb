@@ -72,7 +72,25 @@
     "bayilma": "Fainting",
     "addSymptoms": "Add Symptoms",
     "symptomDetail": "Symptom Detail (Optional)",
-    "selected": "Selected"
+    "selected": "Selected",
+    "dozGirisSayfasi": "Dose Entry Page",
+    "adim1": "Step 1",
+    "adim2": "Step 2",
+    "adim3": "Step 3",
+    "geriDon": "Back",
+    "ilerle": "Continue",
+    "uyari": "Warning",
+    "bulgulardaOneri": "It is recommended to skip todays dose or reduce it to 1/4 due to the following symptoms or special circumstances.",
+    "yolculuktaMisiniz": "Are you on a journey?",
+    "agirEgzersiz": "Did you do heavy exercise during the day?",
+    "yorgunHissediyor": "Do you feel tired?",
+    "vucutSicakligi": "Have you engaged in activities that increase your body temperature, such as running, taking a hot bath, sauna, or hammam?",
+    "dozAlimTamamlama": "You need to complete all preparations before taking the dose.",
+    "bulgularOneri": "It is recommended to skip todays dose or reduce it to 1/4 due to the symptoms you have marked.",
+    "karninizTokMu": "Is your stomach full?",
+    "antihistaminDozu": "Did you take your antihistamine dose 1 hour ago?",
+    "astimIlaci": "Did you take your asthma medication?"
+
 
 
  }
