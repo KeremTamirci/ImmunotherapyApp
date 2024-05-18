@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DoctorProfilePage extends StatefulWidget {
   const DoctorProfilePage({Key? key}) : super(key: key);
@@ -148,7 +149,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                     style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
-                    'Phone Number: ${_doctorData['phone_number']}',
+                    '${AppLocalizations.of(context)!.phoneNumber}: ${_doctorData['phone_number']}',
                     style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   const SizedBox(height: 20),

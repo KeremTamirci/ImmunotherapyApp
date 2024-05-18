@@ -32,6 +32,16 @@
     "cancel": "İptal",
     "doctor": "Doktor",
     "dosage": "Dozaj",
+    "doseChart": "Dozaj Veri Grafiği",
+    "dosageEntries": "Doz Girişleri",
+    "hospitalDoses": "Hastane Dozları",
+    "lastDosage": "Son Doz Alımı",
+    "date": "Tarih",
+    "location": "Lokasyon",
+    "homeLocation": "Ev",
+    "hospital": "Hastane",
+    "dosageAmount": "Doz Miktarı",
+    "amount": "Miktar",
     "dosageEntry": "Doz Girişi",
     "symptomEntry": "Semptom Girişi",
     "informationalEntries": "Bilgilendirici İçerikler",
@@ -77,6 +87,10 @@
     "bulgularOneri": "İşaretlediğiniz bulgular sebebiyle bugünkü dozunuzu atlamanız veya 1/4üne indirmeniz önerilir.",
     "karninizTokMu": "Karnınız tok mu?",
     "antihistaminDozu": "1 saat önce antihistamin dozunuzu aldınız mı?",
-    "astimIlaci": "Astım ilacınızı aldınız mı?"
-
+    "astimIlaci": "Astım ilacınızı aldınız mı?",
+    "register": "Kaydet",
+    "allergyType": "Alerji Türü",
+    "pleaseFill": "Lütfen tüm alanları doldurun",
+    "milk": "Süt",
+    "nuts": "Kuruyemiş"
 }

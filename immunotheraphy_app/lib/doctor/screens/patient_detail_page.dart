@@ -121,7 +121,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       children: [
         const SizedBox(height: 20),
         Text(
-          'Dosage Data Chart',
+          AppLocalizations.of(context)!.doseChart,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
@@ -142,7 +142,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                 dataSource: _dosageData,
                 xValueMapper: (DosageData data, _) => data.date,
                 yValueMapper: (DosageData data, _) => data.amount,
-                name: "Dosage Entries",
+                name: AppLocalizations.of(context)!.dosageEntries,
                 dataLabelSettings: DataLabelSettings(isVisible: true),
                 markerSettings: MarkerSettings(
                   isVisible: true,
@@ -156,7 +156,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                     _dosageData.where((data) => data.isHospital).toList(),
                 xValueMapper: (DosageData data, _) => data.date,
                 yValueMapper: (DosageData data, _) => data.amount,
-                name: "Hospital Doses",
+                name: AppLocalizations.of(context)!.hospitalDoses,
                 opacity: 0,
                 color: Colors.red,
                 markerSettings: MarkerSettings(
@@ -183,20 +183,20 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Last Dosage Intake',
+              AppLocalizations.of(context)!.lastDosage,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Text(
-              'Date: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(_lastDosageData!.date)}',
+              '${AppLocalizations.of(context)!.date}: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(_lastDosageData!.date)}',
               style: TextStyle(fontSize: 16),
             ),
             Text(
-              'Amount: ${_lastDosageData!.amount}',
+              '${AppLocalizations.of(context)!.amount}: ${_lastDosageData!.amount}',
               style: TextStyle(fontSize: 16),
             ),
             Text(
-              'Location: ${_lastDosageData!.isHospital ? 'Hospital' : 'Home'}',
+              '${AppLocalizations.of(context)!.location}: ${_lastDosageData!.isHospital ? AppLocalizations.of(context)!.hospital : AppLocalizations.of(context)!.homeLocation}',
               style: TextStyle(fontSize: 16),
             ),
           ],
