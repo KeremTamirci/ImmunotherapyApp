@@ -104,5 +104,14 @@
     "allergyType": "Allergy Type",
     "pleaseFill": "Please fill all the fields",
     "milk": "Milk",
-    "nuts": "Nuts"
+    "nuts": "Nuts",
+    "save": "Save",
+    "dosageTimeSelect": "Select the time you took the dose",
+    "dosageTime": "Dosage Time",
+    "incorrectDosage": "Incorrect dosage",
+    "incorrectDosageExpl": "The amount you chose is not a valid dose, please check the amount",
+    "dosageAmountMl": "Dosage Amount(ml)",
+    "hospitalDosage": "Hospital Dosage",
+    "dosageAdded": "Dosage added successfully",
+    "dosageAndSymptomPage": "Dosage and Symptom Page"
  }
