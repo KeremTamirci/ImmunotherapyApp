@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:accordion/accordion.dart';
 
 class SymptomsInfoSheet extends StatefulWidget {
-  const SymptomsInfoSheet({
-    Key? key,
-  }) : super(key: key);
+  const SymptomsInfoSheet({Key? key}) : super(key: key);
 
   @override
   _SymptomsInfoSheetState createState() => _SymptomsInfoSheetState();
@@ -18,7 +17,6 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
   @override
   void initState() {
     super.initState();
-    // Initialize controller
     _initializeYoutubePlayer();
   }
 
@@ -43,64 +41,34 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Anafilaksi (Alerjik Şok) Semptomları:",
                       style: TextStyle(fontSize: 24),
                     ),
-                    SizedBox(height: 10),
-                    _buildSymptomList([
-                      "Deri Sistemi:",
-                      "   - Ürtiker",
-                      "   - Anjiyo Ödem",
-                      "   - Kaşıntı",
-                      "   - Kızarıklık",
-                    ]),
-                    _buildSymptomList([
-                      "Solunum Sistemi: (Adrenalin oto-enjektörü uygulayınız)",
-                      "   - Burun Akıntısı",
-                      "   - Hapşırık",
-                      "   - Öksürük",
-                      "   - Hırıltı",
-                      "   - Nefes Darlığı",
-                      "   - Göğüs Ağrısı",
-                    ]),
-                    _buildSymptomList([
-                      "Sindirim Sistemi: (Adrenalin oto-enjektörü uygulayınız)",
-                      "   - Karın Ağrısı",
-                      "   - Kusma",
-                      "   - İshal",
-                    ]),
-                    _buildSymptomList([
-                      "Kalp Sistemi: (Adrenalin oto-enjektörü uygulayınız)",
-                      "   - Kalbin Çok Hızlı Atımları",
-                      "   - Tansiyon Düşmesi",
-                      "   - Baygınlık Hissi",
-                      "   - Bayılma",
-                    ]),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 10),
+                    _buildAccordion(),
+                    const SizedBox(height: 20),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           "Video:",
                           style: TextStyle(fontSize: 24),
                         ),
                         ElevatedButton(
                           onPressed: _launchYouTubeVideo,
-                          child: Text("Watch on YouTube"),
+                          child: const Text("Watch on YouTube"),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     YoutubePlayer(
                       controller: _controller,
                       bottomActions: [
@@ -118,30 +86,127 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
     );
   }
 
-  Widget _buildSymptomList(List<String> symptoms) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: symptoms.map((symptom) => Text(symptom)).toList(),
+  Widget _buildAccordion() {
+    return Accordion(
+      maxOpenSections: 1,
+      headerBackgroundColor: Color(0xFF2196F3),
+      headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+      sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
+      sectionClosingHapticFeedback: SectionHapticFeedback.light,
+      children: [
+        AccordionSection(
+          isOpen: false,
+          leftIcon: const Icon(Icons.circle, color: Colors.white),
+          header: const Text('Deri Sistemi', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              'Deri sistemi: küçük bir alanda ise alerji şurubu veya tableti veriniz ancak ürtiker plakları yaygın ise, anjiyo ödem dilde ise adrenalin yapınız',
+              'Ürtiker',
+              'Anjiyo Ödem',
+              'Kaşıntı',
+              'Kızarıklık',
+            ].map((symptom) => Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+              child: Row(
+                children: [
+                  const Icon(Icons.circle, size: 8),
+                  const SizedBox(width: 10),
+                  Expanded(child: Text(symptom, style: const TextStyle(fontSize: 16))),
+                ],
+              ),
+            )).toList(),
+          ),
+        ),
+        AccordionSection(
+          isOpen: false,
+          leftIcon: const Icon(Icons.circle, color: Colors.white),
+          header: const Text('Solunum Sistemi', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              'Adrenalin oto-enjektörü uygulayınız',
+              'Burun Akıntısı',
+              'Hapşırık',
+              'Öksürük',
+              'Hırıltı',
+              'Nefes Darlığı',
+              'Göğüs Ağrısı',
+            ].map((symptom) => Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+              child: Row(
+                children: [
+                  const Icon(Icons.circle, size: 8),
+                  const SizedBox(width: 10),
+                  Expanded(child: Text(symptom, style: const TextStyle(fontSize: 16))),
+                ],
+              ),
+            )).toList(),
+          ),
+        ),
+        AccordionSection(
+          isOpen: false,
+          leftIcon: const Icon(Icons.circle, color: Colors.white),
+          header: const Text('Sindirim Sistemi', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              'Adrenalin oto-enjektörü uygulayınız',
+              'Karın Ağrısı',
+              'Kusma',
+              'İshal',
+            ].map((symptom) => Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+              child: Row(
+                children: [
+                  const Icon(Icons.circle, size: 8),
+                  const SizedBox(width: 10),
+                  Expanded(child: Text(symptom, style: const TextStyle(fontSize: 16))),
+                ],
+              ),
+            )).toList(),
+          ),
+        ),
+        AccordionSection(
+          isOpen: false,
+          leftIcon: const Icon(Icons.circle, color: Colors.white),
+          header: const Text('Kalp Sistemi', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              'Adrenalin oto-enjektörü uygulayınız',
+              'Kalbin Çok Hızlı Atımları',
+              'Tansiyon Düşmesi',
+              'Baygınlık Hissi',
+              'Bayılma',
+            ].map((symptom) => Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+              child: Row(
+                children: [
+                  const Icon(Icons.circle, size: 8),
+                  const SizedBox(width: 10),
+                  Expanded(child: Text(symptom, style: const TextStyle(fontSize: 16))),
+                ],
+              ),
+            )).toList(),
+          ),
+        ),
+      ],
     );
   }
 
   @override
   void dispose() {
-    // Dispose the controller when the widget is disposed
     _controller.dispose();
     super.dispose();
   }
 
   void _launchYouTubeVideo() async {
     const url = 'https://youtu.be/zHBrWm0faso?si=IX9Zu0vvoqfLT1LB';
-    try {
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
-    } catch (e) {
-      print('Error launching URL: $e');
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 }
