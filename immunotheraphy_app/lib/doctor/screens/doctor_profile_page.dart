@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:immunotheraphy_app/screens/choice_screen.dart';
 
 class DoctorProfilePage extends StatefulWidget {
-  const DoctorProfilePage({Key? key}) : super(key: key);
+  const DoctorProfilePage({super.key});
 
   @override
   State<DoctorProfilePage> createState() => _DoctorProfilePageState();
@@ -67,9 +68,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirm'),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: ListBody(
-              children: const <Widget>[
+              children: <Widget>[
                 Text('Are you sure you want to sign out?'),
               ],
             ),
@@ -86,10 +87,10 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");
-                  Navigator.pushReplacement(
-                    context,
+                  Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                        builder: (context) => const DoctorSignInScreen()),
+                        builder: (context) => const ChoiceScreen()),
+                    (Route<dynamic> route) => false,
                   );
                 });
               },
@@ -117,7 +118,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 60,
                     backgroundImage: NetworkImage(
                         'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
@@ -128,14 +129,14 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                     text: TextSpan(
                       text:
                           '${_doctorData['first_name'][0].toUpperCase()}${_doctorData['first_name'].substring(1)} ',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                       children: <TextSpan>[
                         TextSpan(
                           text: _doctorData['last_name'].toUpperCase(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
@@ -146,11 +147,11 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                   const SizedBox(height: 10),
                   Text(
                     'email: ${_user.email}',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
                     '${AppLocalizations.of(context)!.phoneNumber}: ${_doctorData['phone_number']}',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
