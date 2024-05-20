@@ -92,5 +92,14 @@
     "allergyType": "Alerji Türü",
     "pleaseFill": "Lütfen tüm alanları doldurun",
     "milk": "Süt",
-    "nuts": "Kuruyemiş"
+    "nuts": "Kuruyemiş",
+    "save": "Kaydet",
+    "dosageTimeSelect": "Dozu Aldığınız Zamanı Seçiniz",
+    "dosageTime": "Doz Saati",
+    "incorrectDosage": "Doz Uygun Değil",
+    "incorrectDosageExpl": "Girilen doz değeri uygun değil. Girdiğiniz miktarı kontrol edin.",
+    "dosageAmountMl": "Doz Miktarı(ml)",
+    "hospitalDosage": "Hastane Dozu",
+    "dosageAdded": "Doz başarıyla eklenmiştir",
+    "dosageAndSymptomPage": "Doz ve Semptom Sayfası"
 }

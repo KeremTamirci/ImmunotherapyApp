@@ -21,9 +21,10 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: Text('Information Page'),
-        // ),
+         appBar: AppBar(
+          //forceMaterialTransparency: true,
+           title:  Text(AppLocalizations.of(context)!.dosageAndSymptomPage),
+         ),
         body: SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
