@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DoctorProfilePage extends StatefulWidget {
   const DoctorProfilePage({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class DoctorProfilePage extends StatefulWidget {
 
 class _DoctorProfilePageState extends State<DoctorProfilePage> {
   late User _user;
+  late Future<void> _userDataFuture;
   late Map<String, dynamic> _doctorData = {};
   bool gotData = false;
   final Text homeScreenTitle = const Text("Doctor Home Screen");
@@ -21,15 +23,17 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   @override
   void initState() {
     super.initState();
-    _getUserData();
+    _userDataFuture = _getUserData();
   }
 
   Future<void> _getUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      setState(() {
-        _user = user;
-      });
+      if (mounted) {
+        setState(() {
+          _user = user;
+        });
+      }
       await _getDoctorData(user.uid);
     }
   }
@@ -42,13 +46,17 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
           .get();
 
       if (doctorSnapshot.exists) {
-        setState(() {
-          _doctorData = doctorSnapshot.data() as Map<String, dynamic>;
-        });
-        gotData = true;
+        if (mounted) {
+          setState(() {
+            _doctorData = doctorSnapshot.data() as Map<String, dynamic>;
+            gotData = true;
+          });
+        }
       }
     } catch (e) {
-      print('Error fetching doctor data: $e');
+      if (mounted) {
+        print('Error fetching doctor data: $e');
+      }
     }
   }
 
@@ -98,10 +106,12 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: FutureBuilder(
-          future: _getUserData(),
+          future: _userDataFuture,
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-            if (!gotData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
             } else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +149,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                     style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Text(
-                    'Phone Number: ${_doctorData['phone_number']}',
+                    '${AppLocalizations.of(context)!.phoneNumber}: ${_doctorData['phone_number']}',
                     style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   const SizedBox(height: 20),

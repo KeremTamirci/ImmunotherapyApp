@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/doctor/screens/otp_page_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewPatientPage extends StatefulWidget {
   const NewPatientPage({Key? key}) : super(key: key);
@@ -51,13 +52,13 @@ class _NewPatientPageState extends State<NewPatientPage> {
               children: [
                 const SizedBox(height: 20),
                 _blueTextField(
-                  "Name",
+                  AppLocalizations.of(context)!.name,
                   Icons.person_outline,
                   _nameTextController,
                 ),
                 const SizedBox(height: 20),
                 _blueTextField(
-                  "Surname",
+                  AppLocalizations.of(context)!.surname,
                   Icons.person_outline,
                   _surnameTextController,
                 ),
@@ -65,7 +66,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
                 _allergyDropdown(),
                 const SizedBox(height: 20),
                 _blueTextField(
-                  "Phone Number",
+                  AppLocalizations.of(context)!.phoneNumber,
                   Icons.phone,
                   _phoneNumberTextController,
                 ),
@@ -83,7 +84,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
                       },
                     ),
                     SizedBox(width: 8),
-                    Text('Has Allergic Rhinitis'),
+                    Text(AppLocalizations.of(context)!.hasRhinitis),
                   ],
                 ),
                 SizedBox(height: 8),
@@ -98,7 +99,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
                       },
                     ),
                     SizedBox(width: 8),
-                    Text('Has Asthma'),
+                    Text(AppLocalizations.of(context)!.hasAsthma),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -106,7 +107,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
                   onPressed: () {
                     _registerPatient();
                   },
-                  child: Text('Register'),
+                  child: Text(AppLocalizations.of(context)!.register),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: hexStringToColor("6495ED"),
                     padding: EdgeInsets.symmetric(vertical: 16),
@@ -156,7 +157,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
       child: DropdownButtonFormField(
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          hintText: 'Allergy Type',
+          hintText: AppLocalizations.of(context)!.allergyType,
           hintStyle: TextStyle(color: hexStringToColor("6495ED")),
           border: InputBorder.none,
           prefixIcon: Icon(
@@ -194,7 +195,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
           _selectDate(context);
         },
         decoration: InputDecoration(
-          hintText: 'Date of Birth',
+          hintText: AppLocalizations.of(context)!.birthDate,
           hintStyle: TextStyle(color: hexStringToColor("6495ED")),
           prefixIcon: Icon(
             Icons.calendar_today,
@@ -221,58 +222,57 @@ class _NewPatientPageState extends State<NewPatientPage> {
       });
   }
 
-void _registerPatient() async {
-  final currentUser = _auth.currentUser;
-  if (currentUser != null) {
-    if (_nameTextController.text.isEmpty ||
-        _surnameTextController.text.isEmpty ||
-        _phoneNumberTextController.text.isEmpty ||
-        _selectedDateOfBirth == null ||
-        _selectedAllergy == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please fill all the fields'),
-        ),
-      );
-    } else {
-      try {
-        String otp = _generateOTP();
-        await TempPatientsFirestoreService().addPatient(
-          _nameTextController.text,
-          _surnameTextController.text,
-          _phoneNumberTextController.text,
-          _selectedDateOfBirth!,
-          _hasAllergicRhinitis,
-          _hasAsthma,
-          currentUser.uid,
-          otp,
-        );
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OTPPage(otp: otp),
-          ),
-        );
-      } catch (e) {
-        print('Error registering patient: $e');
+  void _registerPatient() async {
+    final currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      if (_nameTextController.text.isEmpty ||
+          _surnameTextController.text.isEmpty ||
+          _phoneNumberTextController.text.isEmpty ||
+          _selectedDateOfBirth == null ||
+          _selectedAllergy == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to register patient. Please try again later.'),
+            content: Text(AppLocalizations.of(context)!.pleaseFill),
           ),
         );
+      } else {
+        try {
+          String otp = _generateOTP();
+          await TempPatientsFirestoreService().addPatient(
+            _nameTextController.text,
+            _surnameTextController.text,
+            _phoneNumberTextController.text,
+            _selectedDateOfBirth!,
+            _hasAllergicRhinitis,
+            _hasAsthma,
+            currentUser.uid,
+            otp,
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OTPPage(otp: otp),
+            ),
+          );
+        } catch (e) {
+          print('Error registering patient: $e');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content:
+                  Text('Failed to register patient. Please try again later.'),
+            ),
+          );
+        }
       }
+    } else {
+      print('User not logged in');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('User not logged in. Please log in and try again.'),
+        ),
+      );
     }
-  } else {
-    print('User not logged in');
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('User not logged in. Please log in and try again.'),
-      ),
-    );
   }
-}
-
-
 
   String _generateOTP() {
     const String _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';

@@ -44,6 +44,16 @@
     "cancel": "Cancel",
     "doctor": "Doctor",
     "dosage": "Dosage",
+    "doseChart": "Dosage Data Chart",
+    "dosageEntries": "Dosage Entries",
+    "hospitalDoses": "Hospital Doses",
+    "lastDosage": "Last Dosage Intake",
+    "date": "Date",
+    "amount": "Amount",
+    "location": "Location",
+    "homeLocation": "Home",
+    "hospital": "Hospital",
+    "dosageAmount": "Dosage Amount",
     "dosageEntry": "Dosage Entry",
     "symptomEntry": "Symptom Entry",
     "informationalEntries": "Informational Content",
@@ -89,8 +99,10 @@
     "bulgularOneri": "It is recommended to skip todays dose or reduce it to 1/4 due to the symptoms you have marked.",
     "karninizTokMu": "Is your stomach full?",
     "antihistaminDozu": "Did you take your antihistamine dose 1 hour ago?",
-    "astimIlaci": "Did you take your asthma medication?"
-
-
-
+    "astimIlaci": "Did you take your asthma medication?",
+    "register": "Register",
+    "allergyType": "Allergy Type",
+    "pleaseFill": "Please fill all the fields",
+    "milk": "Milk",
+    "nuts": "Nuts"
  }
