@@ -4,6 +4,7 @@ import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DosePage extends StatefulWidget {
   const DosePage({super.key});
@@ -50,7 +51,6 @@ class _DosePageState extends State<DosePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Dosage Data Chart',
       home: Scaffold(
@@ -79,7 +79,7 @@ class _DosePageState extends State<DosePage> {
                         dataSource: _dosageData,
                         xValueMapper: (DosageData data, _) => data.date,
                         yValueMapper: (DosageData data, _) => data.amount,
-                        name: "Dosage Entries",
+                        name: AppLocalizations.of(context)!.dosageEntries,
                         dataLabelSettings: DataLabelSettings(isVisible: true),
                         markerSettings: MarkerSettings(
                           isVisible: true, // Show markers
@@ -94,7 +94,7 @@ class _DosePageState extends State<DosePage> {
                             .toList(),
                         xValueMapper: (DosageData data, _) => data.date,
                         yValueMapper: (DosageData data, _) => data.amount,
-                        name: "Hospital Doses",
+                        name: AppLocalizations.of(context)!.hospitalDoses,
                         opacity: 0,
                         color: Colors.red,
                         //dataLabelSettings: DataLabelSettings(isVisible: true),
@@ -119,9 +119,10 @@ class _DosePageState extends State<DosePage> {
                     margin:
                         EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     child: ListTile(
-                      title: Text('Dosage Amount: ${dosage[index].amount}'),
+                      title: Text(
+                          '${AppLocalizations.of(context)!.dosageAmount}: ${dosage[index].amount}'),
                       subtitle: Text(
-                          'Date: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(dosage[index].date)}'),
+                          '${AppLocalizations.of(context)!.date}: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(dosage[index].date)}'),
                     ),
                   );
                 },
