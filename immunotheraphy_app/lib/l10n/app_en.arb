@@ -113,5 +113,7 @@
     "dosageAmountMl": "Dosage Amount(ml)",
     "hospitalDosage": "Hospital Dosage",
     "dosageAdded": "Dosage added successfully",
-    "dosageAndSymptomPage": "Dosage and Symptom Page"
+    "dosageAndSymptomPage": "Dosage and Symptom Page",
+    "selectSymptom": "Select Symptom"
+
  }

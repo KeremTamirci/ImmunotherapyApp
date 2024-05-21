@@ -224,6 +224,7 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).dialogBackgroundColor,
           title: Text('Select Language/Dili Seçin'),
           content: Column(
             mainAxisSize: MainAxisSize.min,

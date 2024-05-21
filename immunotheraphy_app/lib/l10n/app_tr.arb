@@ -101,5 +101,7 @@
     "dosageAmountMl": "Doz Miktarı(ml)",
     "hospitalDosage": "Hastane Dozu",
     "dosageAdded": "Doz başarıyla eklenmiştir",
-    "dosageAndSymptomPage": "Doz ve Semptom Sayfası"
+    "dosageAndSymptomPage": "Doz ve Semptom Sayfası",
+    "selectSymptom": "Semptom Seçin"
+
 }
