@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:accordion/accordion.dart';
 
 class SymptomsInfoSheet extends StatefulWidget {
-  const SymptomsInfoSheet({Key? key}) : super(key: key);
+  const SymptomsInfoSheet({super.key});
 
   @override
   _SymptomsInfoSheetState createState() => _SymptomsInfoSheetState();
@@ -39,7 +39,9 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.9,
         child: SingleChildScrollView(
-          child: Column(
+          child: Container(
+            color: Colors.white,
+            child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -82,7 +84,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                                 children: [
                                   const Text(
                                     "Video:",
-                                    style: TextStyle(fontSize: 24),
+                                    style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),
                                   ),
                                   ElevatedButton.icon(
                                     onPressed: _launchYouTubeVideo,
@@ -111,6 +113,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
           ),
         ),
       ),
+      )
     );
   }
 
