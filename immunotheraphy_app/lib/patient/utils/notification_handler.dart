@@ -38,13 +38,11 @@ Future<String> getAccessToken() async {
 Future<void> sendNotificationToDoctor(
     String doctorId, String patientName) async {
   // Fetch the doctor's FCM token from Firestore
-  // DocumentSnapshot doc = await FirebaseFirestore.instance
-  //     .collection('doctors')
-  //     .doc(doctorId)
-  //     .get();
-  // String? fcmToken = doc['fcmToken'];
-  String fcmToken =
-      "dR_VgAdWy0jvsAICbHOkLt:APA91bGeC4MWNAKncRWz_G3o97G62TvlzkDA0Yd2hiR6mQmlUmvUE16oqDcVcig5xT4eZqpCqtwckWWgtc62unMNqI7aJlOMio4rLDvF4bm20yOy79XfoeW4qxBwKP_cRyMCcA7tSRXa";
+  DocumentSnapshot doc = await FirebaseFirestore.instance
+      .collection('Doctors')
+      .doc(doctorId)
+      .get();
+  String? fcmToken = doc['app_token'];
 
   if (fcmToken != null) {
     // Get the access token

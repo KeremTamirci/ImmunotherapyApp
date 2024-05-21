@@ -4,13 +4,14 @@ class DoctorsFirestoreService {
   final CollectionReference _doctorsCollection =
       FirebaseFirestore.instance.collection('Doctors');
 
-  Future<void> addDoctor(
-      String firstName, String lastName, String phoneNumber, String uid) async {
+  Future<void> addDoctor(String firstName, String lastName, String phoneNumber,
+      String uid, String appToken) async {
     await _doctorsCollection.doc(uid).set({
       'uid': uid,
       'first_name': firstName,
       'last_name': lastName,
-      'phone_number': phoneNumber
+      'phone_number': phoneNumber,
+      'app_token': appToken
     });
   }
 
@@ -25,12 +26,14 @@ class Doctor {
   final String lastName;
   final String phoneNumber;
   final String uid;
+  final String appToken;
 
   Doctor(
       {required this.uid,
       required this.firstName,
       required this.lastName,
-      required this.phoneNumber});
+      required this.phoneNumber,
+      required this.appToken});
 
   factory Doctor.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
@@ -38,7 +41,8 @@ class Doctor {
         firstName: data['first_name'],
         lastName: data['last_name'],
         phoneNumber: data['phone_number'],
-        uid: data['uid']);
+        uid: data['uid'],
+        appToken: data['app_token']);
   }
 }
 
