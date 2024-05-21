@@ -114,5 +114,6 @@
     "hospitalDosage": "Hospital Dosage",
     "dosageAdded": "Dosage added successfully",
     "dosageAndSymptomPage": "Dosage and Symptom Page",
+    "selectSymptom": "Select Symptom",
     "saveDosage":"Save Dosage"
  }

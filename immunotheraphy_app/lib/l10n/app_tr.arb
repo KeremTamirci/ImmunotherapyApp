@@ -102,5 +102,6 @@
     "hospitalDosage": "Hastane Dozu",
     "dosageAdded": "Doz başarıyla eklenmiştir",
     "dosageAndSymptomPage": "Doz ve Semptom Sayfası",
+    "selectSymptom": "Semptom Seçin",
     "saveDosage":"Dozu Kaydet"
 }

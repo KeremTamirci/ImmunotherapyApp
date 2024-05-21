@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,10 +13,15 @@ class AddSymptomsPage extends StatefulWidget {
   _AddSymptomsPageState createState() => _AddSymptomsPageState();
 }
 
-class _AddSymptomsPageState extends State<AddSymptomsPage> {
+class _AddSymptomsPageState extends State<AddSymptomsPage> 
+  with SingleTickerProviderStateMixin {
   late DatabaseController _databaseController;
   late User _user;
   late DateTime _selectedDate;
+  DateTime _selectedTimeCupertino = DateTime.now();
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+  bool _showTime = false;
   List<String> _selectedSymptomTypes = [];
   String _symptomDetail = '';
 
@@ -25,6 +31,14 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
     _getUserData();
     _databaseController = DatabaseController(_user.uid);
     _selectedDate = DateTime.now();
+        _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(_animationController);
   }
 
   Future<void> _getUserData() async {
@@ -50,6 +64,17 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
       lastDate: DateTime.now(),
     );
   }
+    void _toggleDatePickerVisibility() {
+    if (_showTime) {
+      _animationController.reverse();
+    } else {
+      _animationController.forward();
+    }
+    setState(() {
+      _showTime = !_showTime;
+    });
+  }
+
 
   Future<void> _showSymptomTypePicker() async {
     List<String> allSymptomTypes = [
@@ -132,52 +157,163 @@ class _AddSymptomsPageState extends State<AddSymptomsPage> {
     return Scaffold(
       appBar: AppBar(
         title:  Text(AppLocalizations.of(context)!.addSymptoms),
+        surfaceTintColor: CupertinoColors.systemBackground,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Select Date:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _showDatePicker,
-              child: Text('Select Date: ${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}'),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              AppLocalizations.of(context)!.selectSymptomType,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _showSymptomTypePicker,
-            child: Text(
-              '${AppLocalizations.of(context)!.selected}: ${_selectedSymptomTypes.join(", ")}'
-            ),
+      body:Container(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.systemBackground,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.selectSymptomType,
+                                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(fontSize: 16, color: Colors.black), // Default style
+                                  children: [
+                                    TextSpan(
+                                      text: '${AppLocalizations.of(context)!.selected}: ',
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: _selectedSymptomTypes.join(", "),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: _showSymptomTypePicker,
+                          style: ElevatedButton.styleFrom(
+                            alignment: Alignment.centerLeft
+                        ),
+                        child: Text(AppLocalizations.of(context)!.selectSymptom) 
+                        //Text(
+                        //  '${AppLocalizations.of(context)!.selected}: ${_selectedSymptomTypes.join(", ")}'
+                        //),
+                        ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
 
+                Container(
+                                      decoration: BoxDecoration(
+                      color: CupertinoColors.systemBackground,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.dosageTime,
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(width: 10),
+                        
+                            const Spacer(),
+                            CupertinoButton(
+                        
+                              onPressed: _toggleDatePickerVisibility,
+                              child: Text(
+                                '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
+                                style: const TextStyle(
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                         AnimatedSize(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                      child: SizedBox(
+                        // height: _showTime ? 232 : 0,
+                        child: _showTime
+                            ? Column(
+                                children: [
+                                  const Divider(
+                                      thickness: 0.5,
+                                      color: CupertinoColors.systemGrey),
+                                  SizedBox(
+                                      height: 200,
+                                      child: CupertinoDatePicker(
+                                          mode: CupertinoDatePickerMode.time,
+                                          use24hFormat: true,
+                                          initialDateTime: _selectedTimeCupertino,
+                                          onDateTimeChanged:
+                                              (DateTime newDateTime) {
+                                            setState(() {
+                                              _selectedTimeCupertino = newDateTime;
+                                            });
+                                          })),
+                                ],
+                              )
+                            : null,
+                      ),
+                    ),
+                                   
+                    const Divider(
+                        thickness: 0.5, color: CupertinoColors.systemGrey),
+                    
+                    const SizedBox(height: 10),
+                                TextField(
+                                  maxLines: null,
+                                  decoration:  InputDecoration(
+                    labelText: AppLocalizations.of(context)!.symptomDetail,
+                    border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+                                  ),
+                                  onChanged: (value) {
+                    _symptomDetail = value;
+                                  },
+                                ),
+                    const SizedBox(height: 10),
+
+                    const Divider(
+                        thickness: 0.5, color: CupertinoColors.systemGrey),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        _addSymptoms();
+                      }, 
+                      child:  Text(AppLocalizations.of(context)!.addSymptoms),
+                    
+                    ),
+                    const SizedBox(height: 10),
+                      ],
+                    ),
+                  ),
+                ),
+
+            ],
             ),
-            const SizedBox(height: 20),
-            TextField(
-              decoration:  InputDecoration(
-                labelText: AppLocalizations.of(context)!.symptomDetail,
-                border: const OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                _symptomDetail = value;
-              },
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _addSymptoms,
-              child:  Text(AppLocalizations.of(context)!.addSymptoms),
-            ),
-          ],
+          ),
         ),
-      ),
     );
   }
 }
