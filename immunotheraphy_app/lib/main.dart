@@ -1,4 +1,3 @@
-
 // ignore_for_file: use_super_parameters
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,12 +18,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseApi().initNotifications();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? preferredLanguage = prefs.getString('preferredLanguage');
@@ -36,7 +32,8 @@ void main() async {
     // Extract language code from locale string
     String languageCode = locale.split('_')[0];
     // Check if the device's locale is supported, if not default to Turkish
-    preferredLanguage = ['en', 'tr'].contains(languageCode) ? languageCode : 'en';
+    preferredLanguage =
+        ['en', 'tr'].contains(languageCode) ? languageCode : 'en';
     // Save the default language to SharedPreferences
     await prefs.setString('preferredLanguage', preferredLanguage);
   }
@@ -80,7 +77,6 @@ class MyApp extends StatelessWidget {
           surface: Color.fromARGB(255, 242, 242, 247),
           onSurface: Color.fromARGB(255, 0, 0, 0),
         ),
-
       ),
       home: AuthenticationWrapper(preferredLanguage: preferredLanguage),
     );
@@ -90,7 +86,8 @@ class MyApp extends StatelessWidget {
 class AuthenticationWrapper extends StatelessWidget {
   final String? preferredLanguage;
 
-  const AuthenticationWrapper({Key? key, this.preferredLanguage}) : super(key: key);
+  const AuthenticationWrapper({Key? key, this.preferredLanguage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +99,9 @@ class AuthenticationWrapper extends StatelessWidget {
         } else if (snapshot.hasData) {
           return UserTypeChecker(user: snapshot.data!);
         } else {
-          return preferredLanguage != null ? const ChoiceScreen() : LanguageSelectionScreen();
+          return preferredLanguage != null
+              ? const ChoiceScreen()
+              : LanguageSelectionScreen();
         }
       },
     );
@@ -122,9 +121,9 @@ class UserTypeChecker extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingScreen();
         } else if (snapshot.hasData) {
-          if (snapshot.data!['isDoctor']) {
+          if (snapshot.data!['isDoctor'] ?? false) {
             return const DoctorHomeScreen();
-          } else if (snapshot.data!['isPatient']) {
+          } else if (snapshot.data!['isPatient'] ?? false) {
             return const PatientHomeScreen();
           } else {
             return const ChoiceScreen();

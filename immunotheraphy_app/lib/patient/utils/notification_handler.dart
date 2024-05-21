@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:googleapis_auth/auth_io.dart';
+import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Replace with your project's service account file
 const String serviceAccountKeyPath =
-    'immunotheraphy_app/lib/patient/utils/private_key/immunotheraphytracker-firebase-adminsdk-ws0wd-37f9d772d5.json';
+    'assets/immunotheraphytracker-firebase-adminsdk-ws0wd-37f9d772d5.json';
 
 // Define the FCM endpoint
 const String fcmEndpoint =
@@ -14,9 +15,14 @@ const String fcmEndpoint =
 
 // Function to get the access token
 Future<String> getAccessToken() async {
-  final serviceAccount = ServiceAccountCredentials.fromJson(
-    json.decode(await File(serviceAccountKeyPath).readAsString()),
-  );
+  // final serviceAccount = ServiceAccountCredentials.fromJson(
+  //   json.decode(await File(serviceAccountKeyPath).readAsString()),
+  // );
+
+  final String serviceAccountKey = await rootBundle.loadString(
+      'assets/immunotheraphytracker-firebase-adminsdk-ws0wd-37f9d772d5.json');
+  final serviceAccount =
+      ServiceAccountCredentials.fromJson(json.decode(serviceAccountKey));
 
   final httpClient = http.Client();
   final credentials = await obtainAccessCredentialsViaServiceAccount(
