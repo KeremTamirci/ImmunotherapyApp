@@ -29,7 +29,7 @@ class FormPageState extends State<FormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(AppLocalizations.of(context)!.dozGirisSayfasi),
+        title: Text(AppLocalizations.of(context)!.dozGirisSayfasi),
       ),
       body: Stepper(
         // connectorColor: const MaterialStatePropertyAll(Color(0xff18c872)),
@@ -66,7 +66,7 @@ class FormPageState extends State<FormPage> {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    (_currentStep != 0)
+                    (_currentStep != 0 && _currentStep <= 2)
                         ? TextButton(
                             onPressed: details.onStepCancel,
                             style: const ButtonStyle(
@@ -78,10 +78,11 @@ class FormPageState extends State<FormPage> {
                                 Color(0xff1a80e5),
                               ),
                             ),
-                            child:  Text(AppLocalizations.of(context)!.geriDon),
+                            child: Text(AppLocalizations.of(context)!.geriDon),
                           )
                         : Container(),
-                    (_currentStep != 2)
+                    (_currentStep == 0 ||
+                            (_currentStep == 1 && areAllCheckedStep1()))
                         ? ElevatedButton(
                             onPressed: details.onStepContinue,
                             style: const ButtonStyle(
@@ -93,7 +94,7 @@ class FormPageState extends State<FormPage> {
                                     MaterialStatePropertyAll(Colors.white),
                                 minimumSize:
                                     MaterialStatePropertyAll(Size(70, 50))),
-                            child:  Text(AppLocalizations.of(context)!.ilerle),
+                            child: Text(AppLocalizations.of(context)!.ilerle),
                           )
                         : Container(),
                     const SizedBox(
@@ -104,14 +105,14 @@ class FormPageState extends State<FormPage> {
         },
         steps: [
           Step(
-            title:  Text(AppLocalizations.of(context)!.adim1),
+            title: Text(AppLocalizations.of(context)!.adim1),
             content: Container(
               // Content for step 1
               child: Column(
                 children: [
                   // Each CheckboxListTile represents a question with a checkbox
                   CheckboxListTile(
-                    title:  Text(
+                    title: Text(
                       AppLocalizations.of(context)!.karninizTokMu,
                       style: const TextStyle(fontSize: 20),
                     ),
@@ -124,7 +125,7 @@ class FormPageState extends State<FormPage> {
                     },
                   ),
                   CheckboxListTile(
-                    title:  Text(
+                    title: Text(
                       AppLocalizations.of(context)!.antihistaminDozu,
                       style: const TextStyle(fontSize: 20),
                     ),
@@ -136,7 +137,7 @@ class FormPageState extends State<FormPage> {
                     },
                   ),
                   CheckboxListTile(
-                    title:  Text(
+                    title: Text(
                       AppLocalizations.of(context)!.astimIlaci,
                       style: const TextStyle(fontSize: 20),
                     ),
@@ -166,120 +167,131 @@ class FormPageState extends State<FormPage> {
             isActive: _currentStep >= 0,
           ),
           Step(
-            title:  Text(AppLocalizations.of(context)!.adim2),
-            content: Column(
-              children: [
-                !areAllCheckedStep2()
-                    ? Column(
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                                color: CupertinoColors.systemBackground),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.warning,
-                                        color: CupertinoColors.systemRed,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        AppLocalizations.of(context)!.uyari,
-                                        style: const TextStyle(
-                                            fontSize: 22,
-                                            color: CupertinoColors.systemRed,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                   Text(
-                                    AppLocalizations.of(context)!.bulgulardaOneri,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      // color: CupertinoColors.systemRed
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const Divider()
-                        ],
-                      )
-                    : Container(),
-                // const Divider(),
-                // Each CheckboxListTile represents a question with a checkbox
-                CheckboxListTile(
-                  title:  Text(
-                    AppLocalizations.of(context)!.yolculuktaMisiniz,
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  value: checkedStateStep2[0],
-                  onChanged: (newValue) {
-                    setState(() {
-                      checkedStateStep2[0] = newValue!;
-                    });
-                  },
-                ),
-                CheckboxListTile(
-                  title:  Text(
-                    AppLocalizations.of(context)!.agirEgzersiz,
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  value: checkedStateStep2[1],
-                  onChanged: (newValue) {
-                    setState(() {
-                      checkedStateStep2[1] = newValue!;
-                    });
-                  },
-                ),
-                CheckboxListTile(
-                  title:  Text(
-                    AppLocalizations.of(context)!.yorgunHissediyor,
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  value: checkedStateStep2[2],
-                  onChanged: (newValue) {
-                    setState(() {
-                      checkedStateStep2[2] = newValue!;
-                    });
-                  },
-                ),
-                CheckboxListTile(
-                  title:  Text(
-                    AppLocalizations.of(context)!.vucutSicakligi,
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  value: checkedStateStep2[3],
-                  onChanged: (newValue) {
-                    setState(() {
-                      checkedStateStep2[3] = newValue!;
-                    });
-                  },
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
+            title: Text(AppLocalizations.of(context)!.adim2),
+            content: areAllCheckedStep1()
+                ? Column(
+                    children: [
+                      !areAllCheckedStep2() ? const WarningBox() : Container(),
+                      // const Divider(),
+                      // Each CheckboxListTile represents a question with a checkbox
+                      CheckboxListTile(
+                        title: Text(
+                          AppLocalizations.of(context)!.yolculuktaMisiniz,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        value: checkedStateStep2[0],
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkedStateStep2[0] = newValue!;
+                          });
+                        },
+                      ),
+                      CheckboxListTile(
+                        title: Text(
+                          AppLocalizations.of(context)!.agirEgzersiz,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        value: checkedStateStep2[1],
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkedStateStep2[1] = newValue!;
+                          });
+                        },
+                      ),
+                      CheckboxListTile(
+                        title: Text(
+                          AppLocalizations.of(context)!.yorgunHissediyor,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        value: checkedStateStep2[2],
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkedStateStep2[2] = newValue!;
+                          });
+                        },
+                      ),
+                      CheckboxListTile(
+                        title: Text(
+                          AppLocalizations.of(context)!.vucutSicakligi,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        value: checkedStateStep2[3],
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkedStateStep2[3] = newValue!;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  )
+                : const Step1Incomplete(),
             isActive: _currentStep >= 1,
           ),
           Step(
-            title:  Text(AppLocalizations.of(context)!.adim3),
-            content: (_currentStep == 2 && doseAllowed)
-                ? const DoseIntakePage()
-                : (!areAllCheckedStep1())
-                    ? const Step1Incomplete()
-                    : const Step1Incomplete(),
+            title: Text(AppLocalizations.of(context)!.adim3),
+            content: (_currentStep == 2 && areAllCheckedStep2())
+                ? const DoseIntakePage(warning: false)
+                : const DoseIntakePage(warning: true),
             isActive: _currentStep >= 2,
           ),
         ],
       ),
+    );
+  }
+}
+
+class WarningBox extends StatelessWidget {
+  const WarningBox({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              color: CupertinoColors.destructiveRed.withOpacity(0.5)),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.warning,
+                      color: Color.fromARGB(255, 126, 6, 0),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      AppLocalizations.of(context)!.uyari,
+                      style: const TextStyle(
+                          fontSize: 22,
+                          // color: CupertinoColors.systemRed,
+                          color: Color.fromARGB(255, 126, 6, 0),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  AppLocalizations.of(context)!.bulgulardaOneri,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    // fontWeight: FontWeight.bold,
+                    // color: CupertinoColors.systemRed
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        // const Divider()
+        const SizedBox(height: 10)
+      ],
     );
   }
 }
@@ -312,7 +324,7 @@ class Step2Incomplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
+    return Center(
       child: Column(
         children: [
           Text(

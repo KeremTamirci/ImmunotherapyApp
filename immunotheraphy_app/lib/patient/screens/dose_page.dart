@@ -71,15 +71,16 @@ class _DosePageState extends State<DosePage> {
                     }
                   },
                   primaryXAxis: const DateTimeAxis(),
-                  legend:
-                      const Legend(isVisible: true, toggleSeriesVisibility: false),
+                  legend: const Legend(
+                      isVisible: true, toggleSeriesVisibility: false),
                   series: <LineSeries<DosageData, DateTime>>[
                     LineSeries<DosageData, DateTime>(
                       dataSource: _dosageData,
                       xValueMapper: (DosageData data, _) => data.date,
                       yValueMapper: (DosageData data, _) => data.amount,
                       name: AppLocalizations.of(context)!.dosageEntries,
-                      dataLabelSettings: const DataLabelSettings(isVisible: true),
+                      dataLabelSettings:
+                          const DataLabelSettings(isVisible: true),
                       markerSettings: const MarkerSettings(
                         isVisible: true, // Show markers
                         shape: DataMarkerType.circle, // Set marker shape
@@ -88,9 +89,8 @@ class _DosePageState extends State<DosePage> {
                       ),
                     ),
                     LineSeries<DosageData, DateTime>(
-                      dataSource: _dosageData
-                          .where((data) => data.isHospital)
-                          .toList(),
+                      dataSource:
+                          _dosageData.where((data) => data.isHospital).toList(),
                       xValueMapper: (DosageData data, _) => data.date,
                       yValueMapper: (DosageData data, _) => data.amount,
                       name: AppLocalizations.of(context)!.hospitalDoses,
@@ -115,8 +115,8 @@ class _DosePageState extends State<DosePage> {
               itemBuilder: (context, index) {
                 final dosage = _dosageData.reversed.toList();
                 return Card(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
                   child: ListTile(
                     title: Text(
                         '${AppLocalizations.of(context)!.dosageAmount}: ${dosage[index].amount}'),

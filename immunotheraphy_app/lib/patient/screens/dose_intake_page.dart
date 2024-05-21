@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:immunotheraphy_app/patient/screens/form_page.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class DoseIntakePage extends StatefulWidget {
-  const DoseIntakePage({super.key});
+  final bool warning;
+  const DoseIntakePage({super.key, required this.warning});
 
   @override
   State<DoseIntakePage> createState() => DoseIntakePageState();
@@ -103,9 +104,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
             color: CupertinoColors.systemBackground.resolveFrom(context),
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
-            child:  Text(
+            child: Text(
               AppLocalizations.of(context)!.confirm,
-              style: const TextStyle(color: CupertinoColors.activeBlue, fontSize: 22),
+              style: const TextStyle(
+                  color: CupertinoColors.activeBlue, fontSize: 22),
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -154,8 +156,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.incorrectDosage),
-          content:  Text(
-              AppLocalizations.of(context)!.incorrectDosageExpl),
+          content: Text(AppLocalizations.of(context)!.incorrectDosageExpl),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -231,6 +232,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        (widget.warning) ? const WarningBox() : Container(),
         Text(
           AppLocalizations.of(context)!.dosageAmount,
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
