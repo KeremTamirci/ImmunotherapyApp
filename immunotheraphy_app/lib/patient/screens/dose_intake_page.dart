@@ -196,9 +196,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(AppLocalizations.of(context)!.dosageAdded),
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 4),
       ),
     );
+    Navigator.pop(context);
   }
 
   Future<void> _getUserData() async {
@@ -233,9 +234,12 @@ class DoseIntakePageState extends State<DoseIntakePage>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         (widget.warning) ? const WarningBox() : Container(),
-        Text(
-          AppLocalizations.of(context)!.dosageAmount,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Text(
+            AppLocalizations.of(context)!.dosageAmount,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
         ),
         const SizedBox(height: 10),
         Container(
@@ -392,9 +396,13 @@ class DoseIntakePageState extends State<DoseIntakePage>
                 ElevatedButton(
                   onPressed: () {
                     _checkValue(0, 200);
+                    // Navigator.pop(context);
                   },
                   // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
-                  child: const Text('Save Dosage Info'),
+                  child: Text(
+                    AppLocalizations.of(context)!.saveDosage,
+                    style: const TextStyle(fontSize: 16.0),
+                  ),
                 ),
               ],
             ),
