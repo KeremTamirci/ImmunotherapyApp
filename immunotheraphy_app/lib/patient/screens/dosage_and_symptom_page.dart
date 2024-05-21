@@ -189,7 +189,7 @@ class InfoCardWidget extends StatelessWidget {
                   ), // Replace YourImageWidget with your image widget
                 ),
                 Expanded(
-                  flex: description.length > 50 ? 4 : 3,
+                  flex: description.length > 50 ? 5 : 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
