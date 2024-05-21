@@ -15,7 +15,7 @@
     "@signIn":{
         "description": "Title for sign in button"
     },
-    "dontHaveAnAccount": "Dont have an account?",
+    "dontHaveAnAccount": "Don't have an account?",
     "forgotPassword": "Forgot Password?",
     "signUp": "Sign Up",
     "phoneNumber": "Phone Number",
@@ -90,13 +90,13 @@
     "geriDon": "Back",
     "ilerle": "Continue",
     "uyari": "Warning",
-    "bulgulardaOneri": "It is recommended to skip todays dose or reduce it to 1/4 due to the following symptoms or special circumstances.",
+    "bulgulardaOneri": "It is recommended to skip today's dose or reduce it to 1/4 due to the symptoms you have selected or special circumstances.",
     "yolculuktaMisiniz": "Are you on a journey?",
     "agirEgzersiz": "Did you do heavy exercise during the day?",
     "yorgunHissediyor": "Do you feel tired?",
     "vucutSicakligi": "Have you engaged in activities that increase your body temperature, such as running, taking a hot bath, sauna, or hammam?",
     "dozAlimTamamlama": "You need to complete all preparations before taking the dose.",
-    "bulgularOneri": "It is recommended to skip todays dose or reduce it to 1/4 due to the symptoms you have marked.",
+    "bulgularOneri": "It is recommended to skip today's dose or reduce it to 1/4 due to the symptoms you have marked.",
     "karninizTokMu": "Is your stomach full?",
     "antihistaminDozu": "Did you take your antihistamine dose 1 hour ago?",
     "astimIlaci": "Did you take your asthma medication?",
@@ -114,6 +114,6 @@
     "hospitalDosage": "Hospital Dosage",
     "dosageAdded": "Dosage added successfully",
     "dosageAndSymptomPage": "Dosage and Symptom Page",
-    "selectSymptom": "Select Symptom"
-
+    "selectSymptom": "Select Symptom",
+    "saveDosage":"Save Dosage"
  }

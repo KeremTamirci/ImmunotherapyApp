@@ -9,7 +9,6 @@ import 'package:immunotheraphy_app/patient/screens/infoSheets/SymptomsInfoSheet.
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class DosageAndSymptomPage extends StatefulWidget {
   const DosageAndSymptomPage({super.key});
 
@@ -21,104 +20,105 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         appBar: AppBar(
+        appBar: AppBar(
           //forceMaterialTransparency: true,
-           title:  Text(AppLocalizations.of(context)!.dosageAndSymptomPage),
-         ),
+          title: Text(AppLocalizations.of(context)!.dosageAndSymptomPage),
+        ),
         body: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              InformationBox(
-                title: AppLocalizations.of(context)!.dosageEntry,
-                onTap: () {
-                  print('Box 1 tapped');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FormPage(),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  InformationBox(
+                    title: AppLocalizations.of(context)!.dosageEntry,
+                    onTap: () {
+                      print('Box 1 tapped');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const FormPage(),
+                        ),
+                      );
+                    },
+                    icon: Icons.list,
+                    linearGradient: LinearGradient(
+                      colors: [
+                        hexStringToColor("3DED97"),
+                        hexStringToColor("18C872")
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
-                  );
-                },
-                icon: Icons.list,
-                linearGradient: LinearGradient(
-                  colors: [
-                    hexStringToColor("3DED97"),
-                    hexStringToColor("18C872")
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+                  ),
+                  InformationBox(
+                    title: AppLocalizations.of(context)!.symptomEntry,
+                    onTap: () {
+                      print('Box 2 tapped');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AddSymptomsPage(),
+                        ),
+                      );
+                    },
+                    icon: Icons.sick,
+                    linearGradient: LinearGradient(
+                      colors: [
+                        hexStringToColor("3FA5FF"),
+                        hexStringToColor("1A80E5")
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16, left: 16),
+                child: Text(
+                  AppLocalizations.of(context)!.informationalEntries,
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
-              InformationBox(
-                title: AppLocalizations.of(context)!.symptomEntry,
-                onTap: () {
-                  print('Box 2 tapped');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddSymptomsPage(),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    InfoCardWidget(
+                      title: AppLocalizations.of(context)!.aboutSymptoms,
+                      description: AppLocalizations.of(context)!.whatToDo,
+                      imagePath: "assets/images/kalp_atisi.png",
+                      cardNo: 0,
                     ),
-                  );
-                },
-                icon: Icons.sick,
-                linearGradient: LinearGradient(
-                  colors: [
-                    hexStringToColor("3FA5FF"),
-                    hexStringToColor("1A80E5")
+                    InfoCardWidget(
+                      title: AppLocalizations.of(context)!.milkLadder,
+                      description:
+                          AppLocalizations.of(context)!.milkLadderSubtitle,
+                      imagePath: "assets/images/sut_ana_resim.png",
+                      cardNo: 1,
+                    ),
+                    InfoCardWidget(
+                      title: 'Alerjik Besinler',
+                      description: "Yaygın besin alerjileri",
+                      imagePath: "assets/images/armut_yiyen_adam.png",
+                      cardNo: 1,
+                    ),
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16, left: 16),
-            child: Text(
-              AppLocalizations.of(context)!.informationalEntries,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                InfoCardWidget(
-                  title: AppLocalizations.of(context)!.aboutSymptoms,
-                  description:
-                      AppLocalizations.of(context)!.whatToDo,
-                  imagePath: "assets/images/kalp_atisi.png",
-                  cardNo: 0,
-                ),
-                InfoCardWidget(
-                  title: AppLocalizations.of(context)!.milkLadder,
-                  description: AppLocalizations.of(context)!.milkLadderSubtitle,
-                  imagePath: "assets/images/sut_ana_resim.png",
-                  cardNo: 1,
-                ),
-                InfoCardWidget(
-                  title: 'Alerjik Besinler',
-                  description: "Yaygın besin alerjileri",
-                  imagePath: "assets/images/armut_yiyen_adam.png",
-                  cardNo: 1,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 
   int getPatientDoseNumber() {
@@ -131,13 +131,12 @@ class InfoCardWidget extends StatelessWidget {
   final String description;
   final String imagePath;
   final int cardNo;
-  const InfoCardWidget({
-    super.key,
-    required this.title,
-    required this.imagePath,
-    required this.description,
-    required this.cardNo
-  });
+  const InfoCardWidget(
+      {super.key,
+      required this.title,
+      required this.imagePath,
+      required this.description,
+      required this.cardNo});
 
   @override
   Widget build(BuildContext context) {
@@ -152,6 +151,7 @@ class InfoCardWidget extends StatelessWidget {
           onTap: () {
             debugPrint('Card $title tapped.');
             showModalBottomSheet(
+                backgroundColor: CupertinoColors.systemBackground,
                 context: context,
                 isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
@@ -159,16 +159,16 @@ class InfoCardWidget extends StatelessWidget {
                     top: Radius.circular(25.0),
                   ),
                 ),
-                  builder: (context) {
-                    switch (cardNo) {
-                      case 0:
-                        return SymptomsInfoSheet();
-                      case 1:
-                        return MilkLadderInfoSheet();
-                      default:
-                        return Container(); // Return some default widget if cardNo doesn't match any case.
-                    }
-                  });
+                builder: (context) {
+                  switch (cardNo) {
+                    case 0:
+                      return SymptomsInfoSheet();
+                    case 1:
+                      return MilkLadderInfoSheet();
+                    default:
+                      return Container(); // Return some default widget if cardNo doesn't match any case.
+                  }
+                });
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
@@ -216,7 +216,6 @@ class InfoCardWidget extends StatelessWidget {
     );
   }
 }
-
 
 class InformationBox extends StatelessWidget {
   final String title;
