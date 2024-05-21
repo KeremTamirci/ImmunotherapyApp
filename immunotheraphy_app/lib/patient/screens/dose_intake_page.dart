@@ -400,6 +400,24 @@ class DoseIntakePageState extends State<DoseIntakePage>
             ),
           ),
         ),
+
+        // // Uncomment for apple style button
+        // const SizedBox(height: 20),
+        // Center(
+        //   child: Container(
+        //     width: double.infinity,
+        //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+        //     child: CupertinoButton(
+        //         color: CupertinoColors.systemBackground,
+        //         onPressed: () {
+        //           _checkValue(0, 200);
+        //         },
+        //         child: const Text(
+        //           "Save Dosage Info",
+        //           style: TextStyle(color: CupertinoColors.activeBlue),
+        //         )),
+        //   ),
+        // ),
       ],
     );
     // );
