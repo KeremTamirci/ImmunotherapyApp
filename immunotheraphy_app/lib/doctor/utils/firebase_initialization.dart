@@ -129,6 +129,31 @@ class PatientsFirestoreService {
       return [];
     }
   }
+
+  Future<List<SymptomData>> getSymptomsData(String userId) async {
+    try {
+      CollectionReference symptomsCollection = FirebaseFirestore.instance
+          .collection('Patients')
+          .doc(userId)
+          .collection('Symptom Recordings');
+
+      QuerySnapshot snapshot =
+          await symptomsCollection.orderBy("symptom_date").get();
+
+      List<SymptomData> symptomsData = snapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return SymptomData(
+            date: (data['symptom_date'] as Timestamp).toDate(),
+            detail: data['detail'] as String,
+            type: data['symptom_type'] as String);
+      }).toList();
+
+      return symptomsData;
+    } catch (e) {
+      print('Failed to retrieve symptoms data: $e');
+      return [];
+    }
+  }
 }
 
 class DosageData {
@@ -137,6 +162,14 @@ class DosageData {
   final bool isHospital;
   DosageData(
       {required this.date, required this.amount, required this.isHospital});
+}
+
+class SymptomData {
+  final DateTime date;
+  final String detail;
+  final String type;
+
+  SymptomData({required this.date, required this.detail, required this.type});
 }
 
 class Patient {

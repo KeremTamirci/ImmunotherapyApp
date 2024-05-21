@@ -104,5 +104,14 @@
     "allergyType": "Allergy Type",
     "pleaseFill": "Please fill all the fields",
     "milk": "Milk",
-    "nuts": "Nuts"
+    "nuts": "Nuts",
+    "age": "Age",
+    "symptoms": "Symptoms",
+    "yil": "years",
+    "gun": "days",
+    "and": "and",
+    "noSymptoms": "No Symptoms",
+    "symptomType": "Symptom Type",
+    "detail": "Detail",
+    "goBack": "GO BACK"
  }

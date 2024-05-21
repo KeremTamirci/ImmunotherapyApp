@@ -6,7 +6,7 @@
     "dontHaveAnAccount": "Hesabınız yok mu?",
     "forgotPassword": "Şifrenizi mi unuttunuz?",
     "signUp": "Hesap Açın",
-    "phoneNumber": "Telefon Numarası",
+    "phoneNumber": "Telefon No",
     "otp": "Tek Kullanımlık Şifre",
     "resetPassword": "Şifreyi Yenile",
     "doctorSignIn": "Doktor Girişi",
@@ -23,7 +23,7 @@
     "patientList": "Hasta Listesi",
     "birthDate": "Doğum Tarihi",
     "hasAsthma": "Astımı var",
-    "hasRhinitis": "Alerjik riniti  var",
+    "hasRhinitis": "Alerjik riniti var",
     "yes": "Evet",
     "no": "Hayır",
     "patientDetails": "Hasta Detayları",
@@ -92,5 +92,14 @@
     "allergyType": "Alerji Türü",
     "pleaseFill": "Lütfen tüm alanları doldurun",
     "milk": "Süt",
-    "nuts": "Kuruyemiş"
+    "nuts": "Kuruyemiş",
+    "age": "Yaş",
+    "symptoms": "Semptomlar",
+    "yil": "yıl",
+    "gun": "gün",
+    "and": "ve",
+    "noSymptoms": "Semptom Yok",
+    "symptomType": "Semptom Türü",
+    "detail": "Detay",
+    "goBack": "GERİ DÖN"
 }

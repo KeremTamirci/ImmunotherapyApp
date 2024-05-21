@@ -17,6 +17,7 @@ class PatientDetailScreen extends StatefulWidget {
 
 class _PatientDetailScreenState extends State<PatientDetailScreen> {
   late List<DosageData> _dosageData = [];
+  late List<SymptomData> _symptomsData = [];
   bool _loading = true;
   late PatientsFirestoreService _databaseController =
       PatientsFirestoreService();
@@ -26,6 +27,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
   void initState() {
     super.initState();
     _getDosageData();
+    _getSymptomsData();
   }
 
   Future<void> _getDosageData() async {
@@ -47,66 +49,191 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
     }
   }
 
+  Future<void> _getSymptomsData() async {
+    try {
+      List<SymptomData> symptomsData =
+          await _databaseController.getSymptomsData(widget.patient.patientId);
+      setState(() {
+        _symptomsData = symptomsData.reversed.toList();
+        _loading = false;
+      });
+    } catch (e) {
+      print('Failed to retrieve dosage data: $e');
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
+
+  String _calculateAge(DateTime birthDate) {
+    DateTime today = DateTime.now();
+
+    int years = today.year - birthDate.year;
+    int months = today.month - birthDate.month;
+    int days = today.day - birthDate.day;
+
+    if (days < 0) {
+      final previousMonth =
+          DateTime(today.year, today.month - 1, birthDate.day);
+      days = today.difference(previousMonth).inDays;
+      months--;
+    }
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    return '$years ${AppLocalizations.of(context)!.yil} ${AppLocalizations.of(context)!.and} $days ${AppLocalizations.of(context)!.gun}';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.patientDetails),
+        title: Text("${widget.patient.firstName} ${widget.patient.lastName}"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: _loading
             ? Center(child: CircularProgressIndicator())
-            : ListView(
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _buildDetailItem(AppLocalizations.of(context)!.name,
-                      widget.patient.firstName),
-                  _buildDetailItem(AppLocalizations.of(context)!.surname,
-                      widget.patient.lastName),
-                  _buildDetailItem(AppLocalizations.of(context)!.phoneNumber,
-                      widget.patient.phoneNumber),
-                  _buildDetailItem(AppLocalizations.of(context)!.birthDate,
-                      _formatDate(widget.patient.birthDate)),
-                  _buildDetailItem(
-                      AppLocalizations.of(context)!.hasRhinitis,
-                      widget.patient.hasRhinits
-                          ? AppLocalizations.of(context)!.yes
-                          : AppLocalizations.of(context)!.no),
-                  _buildDetailItem(
-                      AppLocalizations.of(context)!.hasAsthma,
-                      widget.patient.hasAsthma
-                          ? AppLocalizations.of(context)!.yes
-                          : AppLocalizations.of(context)!.no),
+                  GridView.count(
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16.0,
+                    crossAxisSpacing: 16.0,
+                    childAspectRatio: 3, // Adjusted to fit text better
+                    children: [
+                      _buildDetailItem(
+                          AppLocalizations.of(context)!.allergyType,
+                          AppLocalizations.of(context)!.milk,
+                          Icons.edit_note),
+                      _buildDetailItem(
+                          AppLocalizations.of(context)!.birthDate,
+                          _formatDate(widget.patient.birthDate),
+                          Icons.calendar_month),
+                      _buildDetailItem(
+                          AppLocalizations.of(context)!.phoneNumber,
+                          widget.patient.phoneNumber,
+                          Icons.call),
+                      _buildDetailItem(
+                          AppLocalizations.of(context)!.age,
+                          _calculateAge(widget.patient.birthDate).toString(),
+                          Icons.cake),
+                      _buildDetailItem(
+                          AppLocalizations.of(context)!.hasRhinitis,
+                          widget.patient.hasRhinits
+                              ? AppLocalizations.of(context)!.yes
+                              : AppLocalizations.of(context)!.no,
+                          Icons.assignment_outlined),
+                      _buildDetailItem(
+                          AppLocalizations.of(context)!.hasAsthma,
+                          widget.patient.hasAsthma
+                              ? AppLocalizations.of(context)!.yes
+                              : AppLocalizations.of(context)!.no,
+                          Icons.assignment_outlined),
+                      _buildDetailItem(
+                          AppLocalizations.of(context)!.lastDosage,
+                          DateFormat('dd.MM.yy  HH:mm')
+                              .format(_lastDosageData!.date),
+                          Icons.vaccines),
+                      _buildDetailItem(
+                          AppLocalizations.of(context)!.dosageAmount,
+                          _lastDosageData!.amount.toString(),
+                          Icons.vaccines),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: _showDosageChart,
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Row(
+                        mainAxisSize: MainAxisSize
+                            .min, // Adjust the size to fit the content
+                        children: [
+                          Icon(Icons.timeline,
+                              color:
+                                  Colors.white), // Add your desired icon here
+                          SizedBox(width: 10),
+                          Text(
+                            AppLocalizations.of(context)!.doseChart,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ]),
+                  ),
                   const SizedBox(height: 20),
-                  _buildDosageChart(),
-                  if (_lastDosageData != null) _buildLastDosageIntake(),
+                  ElevatedButton(
+                    onPressed: _showSymptomsList,
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize
+                          .min, // Adjust the size to fit the content
+                      children: [
+                        Icon(Icons.pan_tool,
+                            color: Colors.white), // Add your desired icon here
+                        SizedBox(
+                            width:
+                                10), // Add some space between the icon and the text
+                        Text(
+                          AppLocalizations.of(context)!.symptoms,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //if (_lastDosageData != null) _buildLastDosageIntake(),
                 ],
               ),
       ),
     );
   }
 
-  Widget _buildDetailItem(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(
-              label,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+  Widget _buildDetailItem(String label, String value, IconData icon) {
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+        child: Row(
+          children: [
+            Icon(icon, size: 24), // Add your desired icon here
+            SizedBox(width: 10), // Space between the icon and the column
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis, // Handle overflow
+                  ),
+                  SizedBox(height: 1),
+                  Text(
+                    value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis, // Handle overflow
+                  ),
+                ],
               ),
             ),
-          ),
-          SizedBox(width: 8),
-          Expanded(
-            flex: 2,
-            child: Text(value),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -115,11 +242,97 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
     return '${date.day}/${date.month}/${date.year}';
   }
 
+  void _showDosageChart() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                _buildDosageChart(),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(AppLocalizations.of(context)!.goBack),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showSymptomsList() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Expanded(child: _buildSymptomsList()),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(AppLocalizations.of(context)!.goBack),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSymptomsList() {
+    if (_symptomsData.isEmpty) {
+      return Center(child: Text(AppLocalizations.of(context)!.noSymptoms));
+    }
+    return ListView.builder(
+      itemCount: _symptomsData.length,
+      itemBuilder: (context, index) {
+        SymptomData symptom = _symptomsData[index];
+        return Card(
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${AppLocalizations.of(context)!.symptomType}: ${symptom.type}',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '${AppLocalizations.of(context)!.date}: ${DateFormat('dd.MM.yyyy HH:mm:ss').format(symptom.date)}',
+                  style: TextStyle(fontSize: 14),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '${AppLocalizations.of(context)!.detail}: ${symptom.detail}',
+                  style: TextStyle(fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildDosageChart() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 20),
         Text(
           AppLocalizations.of(context)!.doseChart,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -169,7 +382,6 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
             ],
           ),
         ),
-        const SizedBox(height: 20),
       ],
     );
   }
@@ -188,7 +400,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
             ),
             const SizedBox(height: 10),
             Text(
-              '${AppLocalizations.of(context)!.date}: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(_lastDosageData!.date)}',
+              '${AppLocalizations.of(context)!.date}: ${DateFormat('dd.MM.yyyy HH:mm:ss').format(_lastDosageData!.date)}',
               style: TextStyle(fontSize: 16),
             ),
             Text(
