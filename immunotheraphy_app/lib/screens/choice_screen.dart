@@ -5,7 +5,6 @@ import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class ChoiceScreen extends StatelessWidget {
   const ChoiceScreen({Key? key}) : super(key: key);
 
@@ -13,8 +12,9 @@ class ChoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Padding(
-          padding: const EdgeInsets.only(top: 20.0), // Add top padding to the title
+        title: Padding(
+          padding:
+              const EdgeInsets.only(top: 20.0), // Add top padding to the title
           child: Text(
             AppLocalizations.of(context)!.appTitle,
             maxLines: 3,
@@ -39,16 +39,16 @@ class ChoiceScreen extends StatelessWidget {
             const SizedBox(height: 30),
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => PatientSignInScreen(),
-                //   ),
-                // );
                 Navigator.push(
                   context,
-                  _createRoute("Hasta"),
+                  MaterialPageRoute(
+                    builder: (context) => const PatientSignInScreen(),
+                  ),
                 );
+                //Navigator.push(
+                //  context,
+                //  _createRoute("Hasta"),
+                //);
               },
               child: Container(
                 width: 271,
@@ -73,7 +73,7 @@ class ChoiceScreen extends StatelessWidget {
                         height:
                             175), // Replace 'assets/patient_image.png' with your actual image path
                     const SizedBox(height: 30),
-                     Text(
+                    Text(
                       AppLocalizations.of(context)!.patientSignIn,
                       style: const TextStyle(
                         color: Colors.white,
@@ -89,16 +89,16 @@ class ChoiceScreen extends StatelessWidget {
             const SizedBox(height: 50),
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => DoctorSignInScreen(),
-                //   ),
-                // );
                 Navigator.push(
                   context,
-                  _createRoute("Doktor"),
+                  MaterialPageRoute(
+                    builder: (context) => const DoctorSignInScreen(),
+                  ),
                 );
+                //Navigator.push(
+                //  context,
+                //  _createRoute("Doktor"),
+                //);
               },
               child: Container(
                 width: 271,
@@ -124,7 +124,7 @@ class ChoiceScreen extends StatelessWidget {
                         height:
                             175), // Replace 'assets/doctor_image.png' with your actual image path
                     SizedBox(height: 30),
-                     Text(
+                    Text(
                       AppLocalizations.of(context)!.doctorSignIn,
                       style: const TextStyle(
                         color: Colors.white,

@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:immunotheraphy_app/api/firebase_api.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_home_screen.dart';
 import 'package:immunotheraphy_app/firebase_options.dart';
@@ -38,7 +39,10 @@ void main() async {
     await prefs.setString('preferredLanguage', preferredLanguage);
   }
 
-  runApp(MyApp(preferredLanguage: preferredLanguage));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MyApp(preferredLanguage: preferredLanguage));
+  });
 }
 
 class MyApp extends StatelessWidget {
