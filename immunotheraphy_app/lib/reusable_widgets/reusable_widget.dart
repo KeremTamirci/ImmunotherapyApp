@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -51,8 +52,7 @@ TextField reusableTextField(
   );
 }
 
-Container firebaseUIButton(
-    BuildContext context, String title, Function onTap) {
+Container firebaseUIButton(BuildContext context, String title, Function onTap) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 50,
@@ -74,10 +74,10 @@ Container firebaseUIButton(
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-
-      ), child: 
-      Text(title,
-      style:    const TextStyle( color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16)),
+      ),
+      child: Text(title,
+          style: const TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16)),
     ),
   );
 }
@@ -87,7 +87,6 @@ class DoseChart extends StatelessWidget {
   final List<String> dates;
   final List<bool> isHospitalList;
   final List<(String, bool)> tookDoseList;
-
 
   DoseChart(
       {required this.doses,
@@ -148,7 +147,6 @@ class DoseChart extends StatelessWidget {
             ),
           ],
         ),
-
       );
     }
 
@@ -238,6 +236,81 @@ class DoseChart extends StatelessWidget {
   }
 }
 
+class CupertinoList extends StatelessWidget {
+  final List<Map<String, String?>> dataPairs;
+  final String? title;
+
+  const CupertinoList({super.key, required this.dataPairs, this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoListSection.insetGrouped(
+      dividerMargin: -22.0,
+      header: title != null ? Text(title!) : null,
+      children: dataPairs.map((pair) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+          child: CupertinoListTile(
+            title: Text(pair['titleText']!, style: TextStyle(fontSize: 20)),
+            additionalInfo:
+                Text(pair['textValue']!, style: TextStyle(fontSize: 20)),
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class WhiteBoxWithRadius extends StatelessWidget {
+  final List<Map<String, String?>> dataPairs;
+
+  const WhiteBoxWithRadius({super.key, required this.dataPairs});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0), // Add padding if needed
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius:
+            BorderRadius.circular(15.0), // Set your desired radius here
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.withOpacity(0.5),
+        //     spreadRadius: 1,
+        //     blurRadius: 5,
+        //     offset: Offset(0, 3), // changes position of shadow
+        //   ),
+        // ],
+      ),
+      child: Column(
+        children: List.generate(dataPairs.length * 2 - 1, (index) {
+          if (index.isOdd) {
+            return Divider(
+                thickness: 0.3,
+                color: CupertinoColors.systemGrey); // Divider between rows
+          } else {
+            int pairIndex = index ~/ 2;
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                children: [
+                  Text(dataPairs[pairIndex]['titleText']!,
+                      style: TextStyle(fontSize: 18)),
+                  Spacer(),
+                  Text(dataPairs[pairIndex]['textValue']!,
+                      style: TextStyle(
+                          fontSize: 18, color: CupertinoColors.systemGrey)),
+                ],
+              ),
+            );
+          }
+        }),
+      ),
+    );
+  }
+}
+
 class MyDropdownWidget extends StatelessWidget {
   final int selectedItem;
   final ValueChanged<int?> onChanged;
@@ -251,29 +324,27 @@ class MyDropdownWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
-      child: DropdownButton<int>(
-        value: selectedItem,
-        isExpanded: true,
-        // dropdownColor: hexStringToColor("E8EDF2"),
-        iconSize: 36,
-        style: const TextStyle(
-          // color: hexStringToColor("4F7396"),
-          fontSize: 18,
-        ),
-        borderRadius: BorderRadius.circular(30),
-        onChanged: onChanged,
-        items:
-            <int>[10, 20, 30, 40, 50].map<DropdownMenuItem<int>>((int value) {
-          return DropdownMenuItem<int>(
-            value: value,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text('$value'), // Convert integer to string
+        child: DropdownButton<int>(
+            value: selectedItem,
+            isExpanded: true,
+            // dropdownColor: hexStringToColor("E8EDF2"),
+            iconSize: 36,
+            style: const TextStyle(
+              // color: hexStringToColor("4F7396"),
+              fontSize: 18,
             ),
-          );
-        }).toList()
-      )
-    );
+            borderRadius: BorderRadius.circular(30),
+            onChanged: onChanged,
+            items: <int>[10, 20, 30, 40, 50]
+                .map<DropdownMenuItem<int>>((int value) {
+              return DropdownMenuItem<int>(
+                value: value,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text('$value'), // Convert integer to string
+                ),
+              );
+            }).toList()));
   }
 }
 
@@ -286,7 +357,6 @@ class LoadingScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Center(
         child: CircularProgressIndicator(),
-
       ),
     );
   }
