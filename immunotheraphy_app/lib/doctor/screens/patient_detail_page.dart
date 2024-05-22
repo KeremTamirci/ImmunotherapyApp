@@ -136,14 +136,20 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                               : AppLocalizations.of(context)!.no,
                           Icons.assignment_outlined),
                       _buildDetailItem(
-                          AppLocalizations.of(context)!.lastDosage,
-                          DateFormat('dd.MM.yy  HH:mm')
-                              .format(_lastDosageData!.date),
-                          Icons.vaccines),
+                        AppLocalizations.of(context)!.lastDosage,
+                        _lastDosageData != null
+                            ? DateFormat('dd.MM.yy  HH:mm')
+                                .format(_lastDosageData!.date)
+                            : "-",
+                        Icons.vaccines,
+                      ),
                       _buildDetailItem(
-                          AppLocalizations.of(context)!.dosageAmount,
-                          _lastDosageData!.amount.toString(),
-                          Icons.vaccines),
+                        AppLocalizations.of(context)!.dosageAmount,
+                        _lastDosageData != null
+                            ? _lastDosageData!.amount.toString()
+                            : "-",
+                        Icons.vaccines,
+                      ),
                     ],
                   ),
                   ElevatedButton(

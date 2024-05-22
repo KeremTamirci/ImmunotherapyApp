@@ -62,6 +62,7 @@ class _DosePageState extends State<DosePage> {
           Expanded(
             child: Center(
               child: Container(
+                color: Colors.white,
                 height: 300,
                 child: SfCartesianChart(
                   onMarkerRender: (MarkerRenderArgs args) {
