@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, file_names
+
 import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -21,7 +23,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
   }
 
   void _initializeYoutubePlayer() {
-    final videoURL = "https://youtu.be/zHBrWm0faso?si=IX9Zu0vvoqfLT1LB";
+    const videoURL = "https://youtu.be/zHBrWm0faso?si=IX9Zu0vvoqfLT1LB";
     final videoID = YoutubePlayer.convertUrlToId(videoURL);
     _controller = YoutubePlayerController(
       initialVideoId: videoID!,
@@ -49,7 +51,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                   width: double.infinity,
                   // color: Color(0xFF2196F3),
                   padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/images/kalp_atisi.png"),
                       fit: BoxFit.cover,
@@ -70,8 +72,8 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Center(
-                  child: const Text(
+                const Center(
+                  child: Text(
                     "Anafilaksi (Alerjik Şok) Semptomları:",
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
@@ -143,7 +145,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
   Widget _buildAccordion() {
     return Accordion(
       maxOpenSections: 1,
-      headerBackgroundColor: Color(0xFF2196F3),
+      headerBackgroundColor: const Color(0xFF2196F3),
       headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
       sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
       sectionClosingHapticFeedback: SectionHapticFeedback.light,
@@ -170,7 +172,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     ],
                   ),
                 );
-              }).toList(),
+              }),
               const SizedBox(height: 10),
               const Text(
                 'Küçük bir alanda ise alerji şurubu veya tableti veriniz ancak ürtiker plakları yaygın ise, anjiyo ödem dilde ise adrenalin yapınız',
@@ -203,7 +205,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     ],
                   ),
                 );
-              }).toList(),
+              }),
               const SizedBox(height: 10),
               const Row(
                 children: [
@@ -239,7 +241,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     ],
                   ),
                 );
-              }).toList(),
+              }),
               const SizedBox(height: 10),
               const Row(
                 children: [
@@ -274,7 +276,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     Expanded(child: Text(symptom, style: const TextStyle(fontSize: 16))),
                   ],
                 ),
-              )).toList(),
+              )),
               const SizedBox(height: 10),
               const Row(
                 children: [
