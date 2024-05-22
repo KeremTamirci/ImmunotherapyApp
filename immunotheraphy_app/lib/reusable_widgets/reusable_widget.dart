@@ -248,10 +248,13 @@ class CupertinoList extends StatelessWidget {
       dividerMargin: -22.0,
       header: title != null ? Text(title!) : null,
       children: dataPairs.map((pair) {
-        return CupertinoListTile(
-          title: Text(pair['titleText']!, style: TextStyle(fontSize: 18)),
-          additionalInfo:
-              Text(pair['textValue']!, style: TextStyle(fontSize: 18)),
+        return Padding(
+          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+          child: CupertinoListTile(
+            title: Text(pair['titleText']!, style: TextStyle(fontSize: 20)),
+            additionalInfo:
+                Text(pair['textValue']!, style: TextStyle(fontSize: 20)),
+          ),
         );
       }).toList(),
     );
