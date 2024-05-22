@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_home_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
-import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart'; 
+import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class DoctorSignUpScreen extends StatefulWidget {
   const DoctorSignUpScreen({Key? key}) : super(key: key);
@@ -21,6 +21,7 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _tokenTextController = TextEditingController();
 
+  final _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final DoctorsFirestoreService _firestoreService = DoctorsFirestoreService();
 
@@ -31,7 +32,7 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title:  Text(
+        title: Text(
           AppLocalizations.of(context)!.signUp,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
@@ -91,30 +92,33 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                   _tokenTextController,
                 ),
                 const SizedBox(height: 20),
-                firebaseUIButton(context, AppLocalizations.of(context)!.signUp, () {
+                firebaseUIButton(context, AppLocalizations.of(context)!.signUp,
+                    () {
                   _auth
                       .createUserWithEmailAndPassword(
                     email: _emailTextController.text,
                     password: _passwordTextController.text,
                   )
-                      .then((value) {
-                    _firestoreService.addDoctor(
-                      _nameTextController.text,
-                      _surnameTextController.text,
-                      _tokenTextController.text,
-                      value.user!.uid,
-                    ).then((_) {
+                      .then((value) async {
+                    _firestoreService
+                        .addDoctor(
+                            _nameTextController.text,
+                            _surnameTextController.text,
+                            _tokenTextController.text,
+                            value.user!.uid,
+                            await _firebaseMessaging.getToken() ?? "token123")
+                        .then((_) {
                       print("User added to Firestore");
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => DoctorHomeScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => DoctorHomeScreen()),
                       );
                     }).catchError((error) {
                       print("Failed to add user to Firestore: $error");
                       // Handle Firestore errors if needed
                     });
-                  })
-                      .catchError((error) {
+                  }).catchError((error) {
                     print("Error: $error");
                     // Handle sign up errors if needed
                   });
