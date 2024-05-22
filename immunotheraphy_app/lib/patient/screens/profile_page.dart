@@ -218,7 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     onPressed: () {
                       _showLanguageSelector(context);
                     },
-                    child: Text('Change Language/Dili Değiştir'),
+                    child: const Text('Change Language/Dili Değiştir'),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -241,12 +241,12 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Theme.of(context).dialogBackgroundColor,
-          title: Text('Select Language/Dili Seçin'),
+          title: const Text('Select Language/Dili Seçin'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               RadioListTile(
-                title: Text('English'),
+                title: const Text('English'),
                 value: 'en',
                 groupValue: selectedLanguage,
                 onChanged: (value) {
@@ -258,7 +258,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 },
               ),
               RadioListTile(
-                title: Text('Türkçe'),
+                title: const Text('Türkçe'),
                 value: 'tr',
                 groupValue: selectedLanguage,
                 onChanged: (value) {
