@@ -291,13 +291,13 @@ class AdditionalInfoBox extends StatelessWidget {
         // title: "Additional Information",
         dataPairs: [
           {
-            'titleText': '${AppLocalizations.of(context)!.hasRhinitis}',
+            'titleText': AppLocalizations.of(context)!.hasRhinitis,
             'textValue': _patientData['has_allergic_rhinitis']
                 ? AppLocalizations.of(context)!.yes
                 : AppLocalizations.of(context)!.no
           },
           {
-            'titleText': '${AppLocalizations.of(context)!.hasAsthma}',
+            'titleText': AppLocalizations.of(context)!.hasAsthma,
             'textValue': _patientData['has_asthma']
                 ? AppLocalizations.of(context)!.yes
                 : AppLocalizations.of(context)!.no
@@ -327,15 +327,15 @@ class PatientInfoBox extends StatelessWidget {
         dataPairs: [
           {'titleText': 'Email', 'textValue': _user.email},
           {
-            'titleText': "${AppLocalizations.of(context)!.phoneNumber}",
+            'titleText': AppLocalizations.of(context)!.phoneNumber,
             'textValue': _patientData['phone_number']
           },
           {
-            'titleText': '${AppLocalizations.of(context)!.birthDate}',
+            'titleText': AppLocalizations.of(context)!.birthDate,
             'textValue': DateFormatHelper.formatDate(_patientData['birth_date'])
           },
           {
-            'titleText': '${AppLocalizations.of(context)!.doctor}',
+            'titleText': AppLocalizations.of(context)!.doctor,
             'textValue':
                 '${_doctorData['first_name']} ${_doctorData['last_name']}'
           },
