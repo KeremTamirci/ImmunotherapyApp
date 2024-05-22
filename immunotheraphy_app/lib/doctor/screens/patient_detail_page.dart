@@ -136,14 +136,20 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                               : AppLocalizations.of(context)!.no,
                           Icons.assignment_outlined),
                       _buildDetailItem(
-                          AppLocalizations.of(context)!.lastDosage,
-                          DateFormat('dd.MM.yy  HH:mm')
-                              .format(_lastDosageData!.date),
-                          Icons.vaccines),
+                        AppLocalizations.of(context)!.lastDosage,
+                        _lastDosageData != null
+                            ? DateFormat('dd.MM.yy  HH:mm')
+                                .format(_lastDosageData!.date)
+                            : "-",
+                        Icons.vaccines,
+                      ),
                       _buildDetailItem(
-                          AppLocalizations.of(context)!.dosageAmount,
-                          _lastDosageData!.amount.toString(),
-                          Icons.vaccines),
+                        AppLocalizations.of(context)!.dosageAmount,
+                        _lastDosageData != null
+                            ? _lastDosageData!.amount.toString()
+                            : "-",
+                        Icons.vaccines,
+                      ),
                     ],
                   ),
                   ElevatedButton(
@@ -247,12 +253,39 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(20.0), // Set the desired radius here
+          ),
           child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(
+                  20.0), // Ensure Container respects border radius
+            ),
             padding: EdgeInsets.all(16.0),
             child: Column(
               children: [
                 _buildDosageChart(),
-                SizedBox(height: 20),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _dosageData.length,
+                    itemBuilder: (context, index) {
+                      final dosage = _dosageData.reversed.toList();
+                      return Card(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 16.0),
+                        child: ListTile(
+                          title: Text(
+                              '${AppLocalizations.of(context)!.dosageAmount}: ${dosage[index].amount}'),
+                          subtitle: Text(
+                              '${AppLocalizations.of(context)!.date}: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(dosage[index].date)}'),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: 20), // Adds some space above the button
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -272,7 +305,16 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(20.0), // Set the desired radius here
+          ),
           child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(
+                  20.0), // Ensure Container respects border radius
+            ),
             padding: EdgeInsets.all(16.0),
             child: Column(
               children: [
@@ -348,7 +390,26 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                 args.borderColor = Colors.red;
               }
             },
-            primaryXAxis: DateTimeAxis(),
+            primaryXAxis: DateTimeAxis(
+              title: AxisTitle(
+                text:
+                    AppLocalizations.of(context)!.date, // Horizontal axis title
+                textStyle: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            primaryYAxis: NumericAxis(
+              title: AxisTitle(
+                text: AppLocalizations.of(context)!
+                    .dosageAmount, // Vertical axis title
+                textStyle: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             legend: Legend(isVisible: true, toggleSeriesVisibility: false),
             series: <LineSeries<DosageData, DateTime>>[
               LineSeries<DosageData, DateTime>(

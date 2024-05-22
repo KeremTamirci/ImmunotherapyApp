@@ -56,63 +56,60 @@ class _DosePageState extends State<DosePage> {
         surfaceTintColor: CupertinoColors.systemBackground,
         title: Text(AppLocalizations.of(context)!.doseChart),
       ),
+
       body: Padding(
         padding: const EdgeInsets.only(left: 12.0, right: 12.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Center(
-                child: Container(
-                  height: 300,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      color: CupertinoColors.systemBackground),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SfCartesianChart(
-                      onMarkerRender: (MarkerRenderArgs args) {
-                        if (_dosageData[args.pointIndex!].isHospital) {
-                          args.color = Colors.red;
-                          args.borderColor = Colors.red;
-                        }
-                      },
-                      primaryXAxis: const DateTimeAxis(),
-                      legend: const Legend(
-                          isVisible: true, toggleSeriesVisibility: false),
-                      series: <LineSeries<DosageData, DateTime>>[
-                        LineSeries<DosageData, DateTime>(
-                          dataSource: _dosageData,
-                          xValueMapper: (DosageData data, _) => data.date,
-                          yValueMapper: (DosageData data, _) => data.amount,
-                          name: AppLocalizations.of(context)!.dosageEntries,
-                          dataLabelSettings:
-                              const DataLabelSettings(isVisible: true),
-                          markerSettings: const MarkerSettings(
-                            isVisible: true, // Show markers
-                            shape: DataMarkerType.circle, // Set marker shape
-                            borderColor: Colors.blue,
-                            color: Colors.blue,
-                          ),
-                        ),
-                        LineSeries<DosageData, DateTime>(
-                          dataSource: _dosageData
-                              .where((data) => data.isHospital)
-                              .toList(),
-                          xValueMapper: (DosageData data, _) => data.date,
-                          yValueMapper: (DosageData data, _) => data.amount,
-                          name: AppLocalizations.of(context)!.hospitalDoses,
-                          opacity: 0,
-                          color: Colors.red,
-                          //dataLabelSettings: DataLabelSettings(isVisible: true),
-                          markerSettings: const MarkerSettings(
-                            isVisible: true, // Show markers
-                            shape: DataMarkerType.circle, // Set marker shape
-                            borderColor: Colors.red,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Center(
+              child: Container(
+                color: Colors.white,
+                height: 300,
+                child: SfCartesianChart(
+                  onMarkerRender: (MarkerRenderArgs args) {
+                    if (_dosageData[args.pointIndex!].isHospital) {
+                      args.color = Colors.red;
+                      args.borderColor = Colors.red;
+                    }
+                  },
+                  primaryXAxis: DateTimeAxis(
+                    title: AxisTitle(
+                      text: AppLocalizations.of(context)!
+                          .date, // Horizontal axis title
+                      textStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  primaryYAxis: NumericAxis(
+                    title: AxisTitle(
+                      text: AppLocalizations.of(context)!
+                          .dosageAmount, // Vertical axis title
+                      textStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  legend: const Legend(
+                      isVisible: true, toggleSeriesVisibility: false),
+                  series: <LineSeries<DosageData, DateTime>>[
+                    LineSeries<DosageData, DateTime>(
+                      dataSource: _dosageData,
+                      xValueMapper: (DosageData data, _) => data.date,
+                      yValueMapper: (DosageData data, _) => data.amount,
+                      name: AppLocalizations.of(context)!.dosageEntries,
+                      dataLabelSettings:
+                          const DataLabelSettings(isVisible: true),
+                      markerSettings: const MarkerSettings(
+                        isVisible: true, // Show markers
+                        shape: DataMarkerType.circle, // Set marker shape
+                        borderColor: Colors.blue,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
                 ),
