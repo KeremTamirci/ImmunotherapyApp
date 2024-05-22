@@ -113,7 +113,7 @@
     "noSymptoms": "No Symptoms",
     "symptomType": "Symptom Type",
     "detail": "Detail",
-    "goBack": "GO BACK"
+    "goBack": "GO BACK",
     "save": "Save",
     "dosageTimeSelect": "Select the time you took the dose",
     "dosageTime": "Dosage Time",
