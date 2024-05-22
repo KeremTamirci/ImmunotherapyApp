@@ -236,6 +236,28 @@ class DoseChart extends StatelessWidget {
   }
 }
 
+class CupertinoList extends StatelessWidget {
+  final List<Map<String, String?>> dataPairs;
+  final String? title;
+
+  const CupertinoList({super.key, required this.dataPairs, this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoListSection.insetGrouped(
+      dividerMargin: -22.0,
+      header: title != null ? Text(title!) : null,
+      children: dataPairs.map((pair) {
+        return CupertinoListTile(
+          title: Text(pair['titleText']!, style: TextStyle(fontSize: 18)),
+          additionalInfo:
+              Text(pair['textValue']!, style: TextStyle(fontSize: 18)),
+        );
+      }).toList(),
+    );
+  }
+}
+
 class WhiteBoxWithRadius extends StatelessWidget {
   final List<Map<String, String?>> dataPairs;
 
@@ -262,7 +284,7 @@ class WhiteBoxWithRadius extends StatelessWidget {
         children: List.generate(dataPairs.length * 2 - 1, (index) {
           if (index.isOdd) {
             return Divider(
-                thickness: 0.5,
+                thickness: 0.3,
                 color: CupertinoColors.systemGrey); // Divider between rows
           } else {
             int pairIndex = index ~/ 2;
@@ -271,11 +293,11 @@ class WhiteBoxWithRadius extends StatelessWidget {
               child: Row(
                 children: [
                   Text(dataPairs[pairIndex]['titleText']!,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      style: TextStyle(fontSize: 18)),
                   Spacer(),
                   Text(dataPairs[pairIndex]['textValue']!,
-                      style: TextStyle(fontSize: 18)),
+                      style: TextStyle(
+                          fontSize: 18, color: CupertinoColors.systemGrey)),
                 ],
               ),
             );

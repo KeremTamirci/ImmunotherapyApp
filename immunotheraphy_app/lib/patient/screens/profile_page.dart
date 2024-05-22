@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
@@ -139,9 +140,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
+    return CupertinoPageScaffold(
+      child: Center(
         child: FutureBuilder(
           future: _getUserData(),
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
@@ -184,6 +184,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       user: _user,
                       patientData: _patientData,
                       doctorData: _doctorData),
+                  // const SizedBox(height: 30),
+                  AdditionalInfoBox(patientData: _patientData),
                   //////////////////////////////////////////////////////////
                   // Text(
                   //   'Email: ${_user.email}',
@@ -275,6 +277,35 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
+class AdditionalInfoBox extends StatelessWidget {
+  const AdditionalInfoBox({
+    super.key,
+    required Map<String, dynamic> patientData,
+  }) : _patientData = patientData;
+
+  final Map<String, dynamic> _patientData;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoList(
+        // title: "Additional Information",
+        dataPairs: [
+          {
+            'titleText': '${AppLocalizations.of(context)!.hasRhinitis}',
+            'textValue': _patientData['has_allergic_rhinitis']
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no
+          },
+          {
+            'titleText': '${AppLocalizations.of(context)!.hasAsthma}',
+            'textValue': _patientData['has_asthma']
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no
+          },
+        ]);
+  }
+}
+
 class PatientInfoBox extends StatelessWidget {
   const PatientInfoBox({
     super.key,
@@ -292,31 +323,19 @@ class PatientInfoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: WhiteBoxWithRadius(
+      child: CupertinoList(
         dataPairs: [
-          {'titleText': 'Email:', 'textValue': _user.email},
+          {'titleText': 'Email', 'textValue': _user.email},
           {
-            'titleText': "${AppLocalizations.of(context)!.phoneNumber}:",
+            'titleText': "${AppLocalizations.of(context)!.phoneNumber}",
             'textValue': _patientData['phone_number']
           },
           {
-            'titleText': '${AppLocalizations.of(context)!.hasRhinitis}:',
-            'textValue': _patientData['has_allergic_rhinitis']
-                ? AppLocalizations.of(context)!.yes
-                : AppLocalizations.of(context)!.no
-          },
-          {
-            'titleText': '${AppLocalizations.of(context)!.hasAsthma}:',
-            'textValue': _patientData['has_asthma']
-                ? AppLocalizations.of(context)!.yes
-                : AppLocalizations.of(context)!.no
-          },
-          {
-            'titleText': '${AppLocalizations.of(context)!.birthDate}:',
+            'titleText': '${AppLocalizations.of(context)!.birthDate}',
             'textValue': DateFormatHelper.formatDate(_patientData['birth_date'])
           },
           {
-            'titleText': '${AppLocalizations.of(context)!.doctor}:',
+            'titleText': '${AppLocalizations.of(context)!.doctor}',
             'textValue':
                 '${_doctorData['first_name']} ${_doctorData['last_name']}'
           },
