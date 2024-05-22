@@ -70,7 +70,26 @@ class _DosePageState extends State<DosePage> {
                       args.borderColor = Colors.red;
                     }
                   },
-                  primaryXAxis: const DateTimeAxis(),
+                  primaryXAxis: DateTimeAxis(
+                    title: AxisTitle(
+                      text: AppLocalizations.of(context)!
+                          .date, // Horizontal axis title
+                      textStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  primaryYAxis: NumericAxis(
+                    title: AxisTitle(
+                      text: AppLocalizations.of(context)!
+                          .dosageAmount, // Vertical axis title
+                      textStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                   legend: const Legend(
                       isVisible: true, toggleSeriesVisibility: false),
                   series: <LineSeries<DosageData, DateTime>>[
