@@ -247,7 +247,16 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(20.0), // Set the desired radius here
+          ),
           child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(
+                  20.0), // Ensure Container respects border radius
+            ),
             padding: EdgeInsets.all(16.0),
             child: Column(
               children: [
@@ -290,7 +299,16 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(20.0), // Set the desired radius here
+          ),
           child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(
+                  20.0), // Ensure Container respects border radius
+            ),
             padding: EdgeInsets.all(16.0),
             child: Column(
               children: [
