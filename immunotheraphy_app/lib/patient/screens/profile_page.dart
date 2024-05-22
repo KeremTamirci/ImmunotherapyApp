@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -160,47 +161,54 @@ class _ProfilePageState extends State<ProfilePage> {
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: _patientData['first_name'],
+                      text: _patientData['first_name'] +
+                          ' ' +
+                          _patientData['last_name'],
                       style: const TextStyle(
-                          fontSize: 24,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: ' ' + _patientData['last_name'],
-                          style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                      ],
+                      // children: <TextSpan>[
+                      //   TextSpan(
+                      //     text: ' ' + _patientData['last_name'],
+                      //     style: const TextStyle(
+                      //         fontSize: 28,
+                      //         fontWeight: FontWeight.bold,
+                      //         color: Colors.black),
+                      //   ),
+                      // ],
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    'Email: ${_user.email}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.phoneNumber}: ${_patientData['phone_number']}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.hasRhinitis}: ${_patientData['has_allergic_rhinitis'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.hasAsthma}: ${_patientData['has_asthma'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.birthDate}: ${DateFormatHelper.formatDate(_patientData['birth_date'])}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.doctor}: ${_doctorData['first_name']} ${_doctorData['last_name']}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
+                  PatientInfoBox(
+                      user: _user,
+                      patientData: _patientData,
+                      doctorData: _doctorData),
+                  //////////////////////////////////////////////////////////
+                  // Text(
+                  //   'Email: ${_user.email}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.phoneNumber}: ${_patientData['phone_number']}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.hasRhinitis}: ${_patientData['has_allergic_rhinitis'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.hasAsthma}: ${_patientData['has_asthma'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.birthDate}: ${DateFormatHelper.formatDate(_patientData['birth_date'])}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.doctor}: ${_doctorData['first_name']} ${_doctorData['last_name']}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
 
                   const SizedBox(height: 20),
                   // Button to change language
@@ -263,6 +271,57 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         );
       },
+    );
+  }
+}
+
+class PatientInfoBox extends StatelessWidget {
+  const PatientInfoBox({
+    super.key,
+    required User user,
+    required Map<String, dynamic> patientData,
+    required Map<String, dynamic> doctorData,
+  })  : _user = user,
+        _patientData = patientData,
+        _doctorData = doctorData;
+
+  final User _user;
+  final Map<String, dynamic> _patientData;
+  final Map<String, dynamic> _doctorData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: WhiteBoxWithRadius(
+        dataPairs: [
+          {'titleText': 'Email:', 'textValue': _user.email},
+          {
+            'titleText': "${AppLocalizations.of(context)!.phoneNumber}:",
+            'textValue': _patientData['phone_number']
+          },
+          {
+            'titleText': '${AppLocalizations.of(context)!.hasRhinitis}:',
+            'textValue': _patientData['has_allergic_rhinitis']
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no
+          },
+          {
+            'titleText': '${AppLocalizations.of(context)!.hasAsthma}:',
+            'textValue': _patientData['has_asthma']
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no
+          },
+          {
+            'titleText': '${AppLocalizations.of(context)!.birthDate}:',
+            'textValue': DateFormatHelper.formatDate(_patientData['birth_date'])
+          },
+          {
+            'titleText': '${AppLocalizations.of(context)!.doctor}:',
+            'textValue':
+                '${_doctorData['first_name']} ${_doctorData['last_name']}'
+          },
+        ],
+      ),
     );
   }
 }
