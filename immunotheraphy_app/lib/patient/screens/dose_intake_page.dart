@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-// import 'package:flutter_material_pickers/flutter_material_pickers.dart';
+import 'package:immunotheraphy_app/patient/screens/form_page.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DoseIntakePage extends StatefulWidget {
-  const DoseIntakePage({super.key});
+  final bool warning;
+  const DoseIntakePage({super.key, required this.warning});
 
   @override
   State<DoseIntakePage> createState() => DoseIntakePageState();
@@ -104,9 +104,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
             color: CupertinoColors.systemBackground.resolveFrom(context),
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
-            child: const Text(
-              'Kaydet',
-              style: TextStyle(color: CupertinoColors.activeBlue, fontSize: 22),
+            child: Text(
+              AppLocalizations.of(context)!.confirm,
+              style: const TextStyle(
+                  color: CupertinoColors.activeBlue, fontSize: 22),
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -118,7 +119,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
   Future<void> _showTimePickerTest() async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      helpText: "Dozu Aldığınız Zamanı Seçiniz",
+      helpText: AppLocalizations.of(context)!.dosageTimeSelect,
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.inputOnly,
       builder: (BuildContext context, Widget? child) {
@@ -154,9 +155,8 @@ class DoseIntakePageState extends State<DoseIntakePage>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Doz Uygun Değil"),
-          content: const Text(
-              "Girilen doz değeri uygun değil. Girdiğiniz miktarı kontrol edin."),
+          title: Text(AppLocalizations.of(context)!.incorrectDosage),
+          content: Text(AppLocalizations.of(context)!.incorrectDosageExpl),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -179,7 +179,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
         // 'dosage_amount': _selectedItem, // Using the selected item directly
         'dosage_amount': double.tryParse(_textController.text),
         'is_hospital_dosage': _isHospitalDosage,
-        'measure_metric': 'mg',
+        'measure_metric': 'ml',
         // Add any other fields you need for your dosage recording
       };
 
@@ -194,11 +194,12 @@ class DoseIntakePageState extends State<DoseIntakePage>
   // Function to show a snackbar indicating success
   void _showSuccessSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Dosage recording added successfully'),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.dosageAdded),
+        duration: const Duration(seconds: 4),
       ),
     );
+    Navigator.pop(context);
   }
 
   Future<void> _getUserData() async {
@@ -232,9 +233,13 @@ class DoseIntakePageState extends State<DoseIntakePage>
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Text(
-          'Doz Miktarı:',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        (widget.warning) ? const WarningBox() : Container(),
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Text(
+            AppLocalizations.of(context)!.dosageAmount,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
         ),
         const SizedBox(height: 10),
         Container(
@@ -250,12 +255,12 @@ class DoseIntakePageState extends State<DoseIntakePage>
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
             ],
-            decoration: const InputDecoration(
-              hintText: 'Doz miktarı (mg)',
-              hintStyle: TextStyle(color: CupertinoColors.systemGrey),
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.dosageAmountMl,
+              hintStyle: const TextStyle(color: CupertinoColors.systemGrey),
               // alignLabelWithHint: true,
               // labelText: 'Doz miktarını giriniz',
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                   borderSide: BorderSide.none),
               filled: true,
@@ -299,9 +304,9 @@ class DoseIntakePageState extends State<DoseIntakePage>
               children: [
                 Row(
                   children: [
-                    const Text(
-                      "Doz Saati",
-                      style: TextStyle(fontSize: 20),
+                    Text(
+                      AppLocalizations.of(context)!.dosageTime,
+                      style: const TextStyle(fontSize: 20),
                     ),
                     const SizedBox(width: 10),
                     // SizedBox(
@@ -369,9 +374,9 @@ class DoseIntakePageState extends State<DoseIntakePage>
                   child: Row(
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Hastane Dozu',
-                        style: TextStyle(fontSize: 20),
+                      Text(
+                        AppLocalizations.of(context)!.hospitalDosage,
+                        style: const TextStyle(fontSize: 20),
                       ),
                       const Spacer(),
                       Checkbox(
@@ -391,14 +396,36 @@ class DoseIntakePageState extends State<DoseIntakePage>
                 ElevatedButton(
                   onPressed: () {
                     _checkValue(0, 200);
+                    // Navigator.pop(context);
                   },
                   // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
-                  child: const Text('Save Dosage Info'),
+                  child: Text(
+                    AppLocalizations.of(context)!.saveDosage,
+                    style: const TextStyle(fontSize: 16.0),
+                  ),
                 ),
               ],
             ),
           ),
         ),
+
+        // // Uncomment for apple style button
+        // const SizedBox(height: 20),
+        // Center(
+        //   child: Container(
+        //     width: double.infinity,
+        //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+        //     child: CupertinoButton(
+        //         color: CupertinoColors.systemBackground,
+        //         onPressed: () {
+        //           _checkValue(0, 200);
+        //         },
+        //         child: const Text(
+        //           "Save Dosage Info",
+        //           style: TextStyle(color: CupertinoColors.activeBlue),
+        //         )),
+        //   ),
+        // ),
       ],
     );
     // );

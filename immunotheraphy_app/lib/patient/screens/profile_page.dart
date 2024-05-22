@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/screens/choice_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:immunotheraphy_app/patient/utils/date_format.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -78,7 +78,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _loadLanguagePreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      selectedLanguage = prefs.getString('preferredLanguage') ?? 'en'; // Default language is English
+      selectedLanguage = prefs.getString('preferredLanguage') ??
+          'en'; // Default language is English
     });
   }
 
@@ -112,14 +113,19 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             TextButton(
-              child:  Text(AppLocalizations.of(context)!.logOut),
+              child: Text(AppLocalizations.of(context)!.logOut),
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");
-                  Navigator.pushReplacement(
-                    context,
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const ChoiceScreen()),
+                  // );
+                  Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                        builder: (context) => const PatientSignInScreen()),
+                        builder: (context) => const ChoiceScreen()),
+                    (Route<dynamic> route) => false,
                   );
                 });
               },
@@ -224,6 +230,7 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).dialogBackgroundColor,
           title: Text('Select Language/Dili Seçin'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
