@@ -1,4 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:immunotheraphy_app/patient/utils/notification_handler.dart';
 
 class DatabaseController {
   final String userId;
@@ -60,15 +64,71 @@ class DatabaseController {
         print('Symptom added to Firestore for user $userId');
         print(symptomDetails);
       }
+      final DocumentSnapshot patientRecordings = await FirebaseFirestore
+          .instance
+          .collection('Patients')
+          .doc(userId)
+          .get();
+      String doctorId = patientRecordings['uid'];
+      String patientName = patientRecordings['first_name'] +
+          " " +
+          patientRecordings['last_name'];
+
+      // ! Change this
+      await sendNotificationToDoctor(doctorId, patientName);
     } catch (e) {
       print('Failed to add symptoms to Firestore: $e');
       throw e;
     }
   }
 
+  // ALTAY Token (yerli ve milli): dR_VgAdWy0jvsAICbHOkLt:APA91bGeC4MWNAKncRWz_G3o97G62TvlzkDA0Yd2hiR6mQmlUmvUE16oqDcVcig5xT4eZqpCqtwckWWgtc62unMNqI7aJlOMio4rLDvF4bm20yOy79XfoeW4qxBwKP_cRyMCcA7tSRXa
 
-  Future<void> processTempPatientRecord(String otp, String phoneNumber, String patientId) async {
+  // Future<void> sendNotificationToDoctor(
+  //     String doctorId, String patientName) async {
+  //   // Fetch the doctor's FCM token from Firestore
+  //   DocumentSnapshot doc = await FirebaseFirestore.instance
+  //       .collection('doctors')
+  //       .doc(doctorId)
+  //       .get();
+  //   // String? fcmToken = doc['fcmToken'];
+  //   String? fcmToken =
+  //       "dR_VgAdWy0jvsAICbHOkLt:APA91bGeC4MWNAKncRWz_G3o97G62TvlzkDA0Yd2hiR6mQmlUmvUE16oqDcVcig5xT4eZqpCqtwckWWgtc62unMNqI7aJlOMio4rLDvF4bm20yOy79XfoeW4qxBwKP_cRyMCcA7tSRXa";
 
+  //   if (fcmToken != null) {
+  //     // Define your server key from Firebase project settings
+  //     const String serverKey = 'YOUR_SERVER_KEY';
+
+  //     // Create the notification payload
+  //     final Map<String, dynamic> notification = {
+  //       'notification': {
+  //         'title': 'New Symptom Registered',
+  //         'body': 'A new symptom has been registered by $patientName.',
+  //       },
+  //       'priority': 'high',
+  //       'to': fcmToken,
+  //     };
+
+  //     // Send the POST request to FCM
+  //     final response = await http.post(
+  //       Uri.parse('https://fcm.googleapis.com/fcm/send'),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'key=$serverKey',
+  //       },
+  //       body: json.encode(notification),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       print('Notification sent successfully');
+  //     } else {
+  //       print('Failed to send notification: ${response.statusCode}');
+  //     }
+  //   }
+  // }
+
+  Future<void> processTempPatientRecord(
+      String otp, String phoneNumber, String patientId) async {
     try {
       CollectionReference tempPatientsCollection =
           FirebaseFirestore.instance.collection('Temp_Patients');
@@ -85,9 +145,9 @@ class DatabaseController {
 
         CollectionReference patientsCollection =
             FirebaseFirestore.instance.collection('Patients');
-        
-        tempPatientData['patient_id'] = patientId; // Replace 'newField' and 'newValue' with your actual field name and value
 
+        tempPatientData['patient_id'] =
+            patientId; // Replace 'newField' and 'newValue' with your actual field name and value
 
         await patientsCollection.doc(patientId).set(tempPatientData);
 

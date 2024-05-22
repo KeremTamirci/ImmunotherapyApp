@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -138,9 +140,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
+    return CupertinoPageScaffold(
+      child: Center(
         child: FutureBuilder(
           future: _getUserData(),
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
@@ -160,47 +161,56 @@ class _ProfilePageState extends State<ProfilePage> {
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: _patientData['first_name'],
+                      text: _patientData['first_name'] +
+                          ' ' +
+                          _patientData['last_name'],
                       style: const TextStyle(
-                          fontSize: 24,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: ' ' + _patientData['last_name'],
-                          style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                      ],
+                      // children: <TextSpan>[
+                      //   TextSpan(
+                      //     text: ' ' + _patientData['last_name'],
+                      //     style: const TextStyle(
+                      //         fontSize: 28,
+                      //         fontWeight: FontWeight.bold,
+                      //         color: Colors.black),
+                      //   ),
+                      // ],
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    'Email: ${_user.email}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.phoneNumber}: ${_patientData['phone_number']}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.hasRhinitis}: ${_patientData['has_allergic_rhinitis'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.hasAsthma}: ${_patientData['has_asthma'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.birthDate}: ${DateFormatHelper.formatDate(_patientData['birth_date'])}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.doctor}: ${_doctorData['first_name']} ${_doctorData['last_name']}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
+                  PatientInfoBox(
+                      user: _user,
+                      patientData: _patientData,
+                      doctorData: _doctorData),
+                  // const SizedBox(height: 30),
+                  AdditionalInfoBox(patientData: _patientData),
+                  //////////////////////////////////////////////////////////
+                  // Text(
+                  //   'Email: ${_user.email}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.phoneNumber}: ${_patientData['phone_number']}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.hasRhinitis}: ${_patientData['has_allergic_rhinitis'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.hasAsthma}: ${_patientData['has_asthma'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.birthDate}: ${DateFormatHelper.formatDate(_patientData['birth_date'])}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
+                  // Text(
+                  //   '${AppLocalizations.of(context)!.doctor}: ${_doctorData['first_name']} ${_doctorData['last_name']}',
+                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                  // ),
 
                   const SizedBox(height: 20),
                   // Button to change language
@@ -208,7 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     onPressed: () {
                       _showLanguageSelector(context);
                     },
-                    child: Text('Change Language/Dili Değiştir'),
+                    child: const Text('Change Language/Dili Değiştir'),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -230,12 +240,13 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select Language/Dili Seçin'),
+          backgroundColor: Theme.of(context).dialogBackgroundColor,
+          title: const Text('Select Language/Dili Seçin'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               RadioListTile(
-                title: Text('English'),
+                title: const Text('English'),
                 value: 'en',
                 groupValue: selectedLanguage,
                 onChanged: (value) {
@@ -247,7 +258,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 },
               ),
               RadioListTile(
-                title: Text('Türkçe'),
+                title: const Text('Türkçe'),
                 value: 'tr',
                 groupValue: selectedLanguage,
                 onChanged: (value) {
@@ -262,6 +273,74 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         );
       },
+    );
+  }
+}
+
+class AdditionalInfoBox extends StatelessWidget {
+  const AdditionalInfoBox({
+    super.key,
+    required Map<String, dynamic> patientData,
+  }) : _patientData = patientData;
+
+  final Map<String, dynamic> _patientData;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoList(
+        // title: "Additional Information",
+        dataPairs: [
+          {
+            'titleText': AppLocalizations.of(context)!.hasRhinitis,
+            'textValue': _patientData['has_allergic_rhinitis']
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no
+          },
+          {
+            'titleText': AppLocalizations.of(context)!.hasAsthma,
+            'textValue': _patientData['has_asthma']
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no
+          },
+        ]);
+  }
+}
+
+class PatientInfoBox extends StatelessWidget {
+  const PatientInfoBox({
+    super.key,
+    required User user,
+    required Map<String, dynamic> patientData,
+    required Map<String, dynamic> doctorData,
+  })  : _user = user,
+        _patientData = patientData,
+        _doctorData = doctorData;
+
+  final User _user;
+  final Map<String, dynamic> _patientData;
+  final Map<String, dynamic> _doctorData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CupertinoList(
+        dataPairs: [
+          {'titleText': 'Email', 'textValue': _user.email},
+          {
+            'titleText': AppLocalizations.of(context)!.phoneNumber,
+            'textValue': _patientData['phone_number']
+          },
+          {
+            'titleText': AppLocalizations.of(context)!.birthDate,
+            'textValue': DateFormatHelper.formatDate(_patientData['birth_date'])
+          },
+          {
+            'titleText': AppLocalizations.of(context)!.doctor,
+            'textValue':
+                '${_doctorData['first_name']} ${_doctorData['last_name']}'
+          },
+        ],
+      ),
     );
   }
 }

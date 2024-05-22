@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:immunotheraphy_app/patient/screens/form_page.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class DoseIntakePage extends StatefulWidget {
-  const DoseIntakePage({super.key});
+  final bool warning;
+  const DoseIntakePage({super.key, required this.warning});
 
   @override
   State<DoseIntakePage> createState() => DoseIntakePageState();
@@ -103,9 +104,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
             color: CupertinoColors.systemBackground.resolveFrom(context),
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
-            child:  Text(
+            child: Text(
               AppLocalizations.of(context)!.confirm,
-              style: const TextStyle(color: CupertinoColors.activeBlue, fontSize: 22),
+              style: const TextStyle(
+                  color: CupertinoColors.activeBlue, fontSize: 22),
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -154,8 +156,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.incorrectDosage),
-          content:  Text(
-              AppLocalizations.of(context)!.incorrectDosageExpl),
+          content: Text(AppLocalizations.of(context)!.incorrectDosageExpl),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -195,9 +196,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(AppLocalizations.of(context)!.dosageAdded),
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 4),
       ),
     );
+    Navigator.pop(context);
   }
 
   Future<void> _getUserData() async {
@@ -231,9 +233,13 @@ class DoseIntakePageState extends State<DoseIntakePage>
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          AppLocalizations.of(context)!.dosageAmount,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        (widget.warning) ? const WarningBox() : Container(),
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Text(
+            AppLocalizations.of(context)!.dosageAmount,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
         ),
         const SizedBox(height: 10),
         Container(
@@ -390,14 +396,36 @@ class DoseIntakePageState extends State<DoseIntakePage>
                 ElevatedButton(
                   onPressed: () {
                     _checkValue(0, 200);
+                    // Navigator.pop(context);
                   },
                   // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
-                  child: const Text('Save Dosage Info'),
+                  child: Text(
+                    AppLocalizations.of(context)!.saveDosage,
+                    style: const TextStyle(fontSize: 16.0),
+                  ),
                 ),
               ],
             ),
           ),
         ),
+
+        // // Uncomment for apple style button
+        // const SizedBox(height: 20),
+        // Center(
+        //   child: Container(
+        //     width: double.infinity,
+        //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+        //     child: CupertinoButton(
+        //         color: CupertinoColors.systemBackground,
+        //         onPressed: () {
+        //           _checkValue(0, 200);
+        //         },
+        //         child: const Text(
+        //           "Save Dosage Info",
+        //           style: TextStyle(color: CupertinoColors.activeBlue),
+        //         )),
+        //   ),
+        // ),
       ],
     );
     // );
