@@ -99,7 +99,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
     await showMaterialCheckboxPicker(
       context: context,
       items: allSymptomTypes,
-      headerColor: Colors.amber,
+      headerColor: Colors.blue,
       backgroundColor: Colors.white,
       title: AppLocalizations.of(context)!.selectSymptomType,
       selectedItems: _selectedSymptomTypes,
@@ -160,160 +160,177 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
         title: Text(AppLocalizations.of(context)!.addSymptoms),
         surfaceTintColor: CupertinoColors.systemBackground,
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemBackground,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      Row(
+      body: SingleChildScrollView(
+        child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.systemBackground,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!.selectSymptomType,
-                            style: const TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RichText(
-                              text: TextSpan(
+                          Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.selectSymptomType,
                                 style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black), // Default style
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        '${AppLocalizations.of(context)!.selected}: ',
+                                    fontSize: 22, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: RichText(
+                                  text: TextSpan(
                                     style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
+                                        fontSize: 16,
+                                        color: Colors.black), // Default style
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${AppLocalizations.of(context)!.selected}: ',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
+                                        text: _selectedSymptomTypes.join(", "),
+                                      ),
+                                    ],
                                   ),
-                                  TextSpan(
-                                    text: _selectedSymptomTypes.join(", "),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
+                            ],
                           ),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                              onPressed: _showSymptomTypePicker,
+                              style: ElevatedButton.styleFrom(
+                                  alignment: Alignment.centerLeft),
+                              child: Text(
+                                  AppLocalizations.of(context)!.selectSymptom)
+                              //Text(
+                              //  '${AppLocalizations.of(context)!.selected}: ${_selectedSymptomTypes.join(", ")}'
+                              //),
+                              ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                          onPressed: _showSymptomTypePicker,
-                          style: ElevatedButton.styleFrom(
-                              alignment: Alignment.centerLeft),
-                          child:
-                              Text(AppLocalizations.of(context)!.selectSymptom)
-                          //Text(
-                          //  '${AppLocalizations.of(context)!.selected}: ${_selectedSymptomTypes.join(", ")}'
-                          //),
-                          ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: CupertinoColors.systemBackground,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      Row(
+                  const SizedBox(height: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.systemBackground,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!.dosageTime,
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          const SizedBox(width: 10),
-                          const Spacer(),
-                          CupertinoButton(
-                            onPressed: _toggleDatePickerVisibility,
-                            child: Text(
-                              '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
-                              style: const TextStyle(
-                                fontSize: 20.0,
+                          Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.dosageTime,
+                                style: const TextStyle(fontSize: 20),
                               ),
+                              const SizedBox(width: 10),
+                              const Spacer(),
+                              CupertinoButton(
+                                onPressed: _toggleDatePickerVisibility,
+                                child: Text(
+                                  '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
+                                  style: const TextStyle(
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                            child: SizedBox(
+                              // height: _showTime ? 232 : 0,
+                              child: _showTime
+                                  ? Column(
+                                      children: [
+                                        const Divider(
+                                            thickness: 0.5,
+                                            color: CupertinoColors.systemGrey),
+                                        SizedBox(
+                                            height: 200,
+                                            child: CupertinoDatePicker(
+                                                mode: CupertinoDatePickerMode
+                                                    .time,
+                                                use24hFormat: true,
+                                                initialDateTime:
+                                                    _selectedTimeCupertino,
+                                                onDateTimeChanged:
+                                                    (DateTime newDateTime) {
+                                                  setState(() {
+                                                    _selectedTimeCupertino =
+                                                        newDateTime;
+                                                  });
+                                                })),
+                                      ],
+                                    )
+                                  : null,
                             ),
                           ),
+                          const Divider(
+                              thickness: 0.5,
+                              color: CupertinoColors.systemGrey),
+                          const SizedBox(height: 10),
+                          TextField(
+                            maxLines: null,
+                            scrollPadding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            decoration: InputDecoration(
+                              labelText:
+                                  AppLocalizations.of(context)!.symptomDetail,
+                              border: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                            ),
+                            onChanged: (value) {
+                              _symptomDetail = value;
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          const Divider(
+                              thickness: 0.5,
+                              color: CupertinoColors.systemGrey),
+                          const SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: () {
+                              _addSymptoms();
+                            },
+                            child:
+                                Text(AppLocalizations.of(context)!.addSymptoms),
+                          ),
+                          const SizedBox(height: 10),
                         ],
                       ),
-                      AnimatedSize(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                        child: SizedBox(
-                          // height: _showTime ? 232 : 0,
-                          child: _showTime
-                              ? Column(
-                                  children: [
-                                    const Divider(
-                                        thickness: 0.5,
-                                        color: CupertinoColors.systemGrey),
-                                    SizedBox(
-                                        height: 200,
-                                        child: CupertinoDatePicker(
-                                            mode: CupertinoDatePickerMode.time,
-                                            use24hFormat: true,
-                                            initialDateTime:
-                                                _selectedTimeCupertino,
-                                            onDateTimeChanged:
-                                                (DateTime newDateTime) {
-                                              setState(() {
-                                                _selectedTimeCupertino =
-                                                    newDateTime;
-                                              });
-                                            })),
-                                  ],
-                                )
-                              : null,
-                        ),
-                      ),
-                      const Divider(
-                          thickness: 0.5, color: CupertinoColors.systemGrey),
-                      const SizedBox(height: 10),
-                      TextField(
-                        maxLines: null,
-                        decoration: InputDecoration(
-                          labelText:
-                              AppLocalizations.of(context)!.symptomDetail,
-                          border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                        ),
-                        onChanged: (value) {
-                          _symptomDetail = value;
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      const Divider(
-                          thickness: 0.5, color: CupertinoColors.systemGrey),
-                      const SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () {
-                          _addSymptoms();
-                        },
-                        child: Text(AppLocalizations.of(context)!.addSymptoms),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

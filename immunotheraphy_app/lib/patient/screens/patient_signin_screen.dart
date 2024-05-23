@@ -76,7 +76,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                   height: 20,
                 ),
                 reusableTextField(
-                   AppLocalizations.of(context)!.enterPassword,
+                  AppLocalizations.of(context)!.enterPassword,
                   Icons.lock_outline,
                   true,
                   _passwordTextController,
@@ -86,7 +86,8 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                   height: 5,
                 ),
                 forgetPassword(context),
-                firebaseUIButton(context,  AppLocalizations.of(context)!.signIn, () async {
+                firebaseUIButton(context, AppLocalizations.of(context)!.signIn,
+                    () async {
                   try {
                     // ignore: unused_local_variable
                     final userCredential = await FirebaseAuth.instance
@@ -123,13 +124,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                     );
                   }
                 }),
-                signUpOption(),
-                Padding(padding: EdgeInsets.fromLTRB(
-                20,
-                MediaQuery.of(context).size.height * 0.18,
-                20,
-                20, // Add bottom padding here
-                ))
+                signUpOption()
               ],
             ),
           ),
@@ -142,7 +137,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text( AppLocalizations.of(context)!.dontHaveAnAccount,
+        Text(AppLocalizations.of(context)!.dontHaveAnAccount,
             style: TextStyle(color: Colors.white70)),
         GestureDetector(
           onTap: () {
@@ -151,7 +146,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                 MaterialPageRoute(
                     builder: (context) => const PatientSignUpScreen()));
           },
-          child:  Text(
+          child: Text(
             AppLocalizations.of(context)!.signUp,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
@@ -166,7 +161,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
       height: 35,
       alignment: Alignment.bottomRight,
       child: TextButton(
-        child:  Text(
+        child: Text(
           AppLocalizations.of(context)!.forgotPassword,
           style: TextStyle(color: Colors.white70),
           textAlign: TextAlign.right,

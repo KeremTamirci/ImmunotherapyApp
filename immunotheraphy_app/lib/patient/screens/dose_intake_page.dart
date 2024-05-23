@@ -230,204 +230,214 @@ class DoseIntakePageState extends State<DoseIntakePage>
     // return Scaffold(
     // appBar: AppBar(),
     // body:
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        (widget.warning) ? const WarningBox() : Container(),
-        Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Text(
-            AppLocalizations.of(context)!.dosageAmount,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          // width: 350,
-          height: 60,
-          decoration: BoxDecoration(
-            color: CupertinoColors.systemBackground,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: TextField(
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-            ],
-            decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.dosageAmountMl,
-              hintStyle: const TextStyle(color: CupertinoColors.systemGrey),
-              // alignLabelWithHint: true,
-              // labelText: 'Doz miktarını giriniz',
-              border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  borderSide: BorderSide.none),
-              filled: true,
-              // fillColor: hexStringToColor("E8EDF2"),
-              fillColor: CupertinoColors.systemBackground,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          (widget.warning) ? const WarningBox() : Container(),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              AppLocalizations.of(context)!.dosageAmount,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            style: TextStyle(
-              color: hexStringToColor("4F7396"),
-              fontSize: 18,
-            ),
-            // Set the TextEditingController
-            controller: _textController,
-            // Inside the onChanged callback
-            onChanged: (String value) {
-              // Parse the input value to ensure it's numeric
-              String newValue = value.replaceAll(RegExp(r'[^0-9.]'), '');
-
-              // Update the text field's value without triggering onChanged
-              _textController.value = _textController.value.copyWith(
-                text: newValue,
-                selection: TextSelection.collapsed(offset: newValue.length),
-                composing: TextRange.empty,
-              );
-            },
           ),
-        ),
-        const SizedBox(height: 20),
-        // ElevatedButton(
-        //   // onPressed: _showTimePicker, // ESKİ HALİ BU
-        //   // onPressed: _showTimePickerTest,
-        //   onPressed: _showCupertinoTimePicker,
-        //   child: const Text('Select Time'),
-        // ),
-        Container(
-          decoration: const BoxDecoration(
+          const SizedBox(height: 10),
+          Container(
+            // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            // width: 350,
+            height: 60,
+            decoration: BoxDecoration(
               color: CupertinoColors.systemBackground,
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.dosageTime,
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(width: 10),
-                    // SizedBox(
-                    //   width: 100,
-                    //   child:
-                    const Spacer(),
-                    CupertinoButton(
-                      // padding: const EdgeInsets.all(0),
-                      // color: CupertinoColors.systemGrey,
-                      // Display a CupertinoDatePicker in time picker mode.
-                      // onPressed: () => _showDialog(
-                      //   CupertinoDatePicker(
-                      //     initialDateTime: _selectedTimeCupertino,
-                      //     mode: CupertinoDatePickerMode.time,
-                      //     use24hFormat: true,
-                      //     // This is called when the user changes the time.
-                      //     onDateTimeChanged: (DateTime newTime) {
-                      //       setState(() => _selectedTimeCupertino = newTime);
-                      //     },
-                      //   ),
-                      // ),
-                      onPressed: _toggleDatePickerVisibility,
-                      child: Text(
-                        '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
-                        style: const TextStyle(
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ),
-                    // ),
-                  ],
-                ),
-                AnimatedSize(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
-                  child: SizedBox(
-                    // height: _showTime ? 232 : 0,
-                    child: _showTime
-                        ? Column(
-                            children: [
-                              const Divider(
-                                  thickness: 0.5,
-                                  color: CupertinoColors.systemGrey),
-                              SizedBox(
-                                  height: 200,
-                                  child: CupertinoDatePicker(
-                                      mode: CupertinoDatePickerMode.time,
-                                      use24hFormat: true,
-                                      initialDateTime: _selectedTimeCupertino,
-                                      onDateTimeChanged:
-                                          (DateTime newDateTime) {
-                                        setState(() {
-                                          _selectedTimeCupertino = newDateTime;
-                                        });
-                                      })),
-                            ],
-                          )
-                        : null,
-                  ),
-                ),
-                const Divider(
-                    thickness: 0.5, color: CupertinoColors.systemGrey),
-                SizedBox(
-                  width: 350,
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: TextField(
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+              ],
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.dosageAmountMl,
+                hintStyle: const TextStyle(color: CupertinoColors.systemGrey),
+                // alignLabelWithHint: true,
+                // labelText: 'Doz miktarını giriniz',
+                border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    borderSide: BorderSide.none),
+                filled: true,
+                // fillColor: hexStringToColor("E8EDF2"),
+                fillColor: CupertinoColors.systemBackground,
+              ),
+              style: TextStyle(
+                color: hexStringToColor("4F7396"),
+                fontSize: 18,
+              ),
+              // Set the TextEditingController
+              controller: _textController,
+              // Inside the onChanged callback
+              onChanged: (String value) {
+                // Parse the input value to ensure it's numeric
+                String newValue = value.replaceAll(RegExp(r'[^0-9.]'), '');
+
+                // Update the text field's value without triggering onChanged
+                _textController.value = _textController.value.copyWith(
+                  text: newValue,
+                  selection: TextSelection.collapsed(offset: newValue.length),
+                  composing: TextRange.empty,
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          // ElevatedButton(
+          //   // onPressed: _showTimePicker, // ESKİ HALİ BU
+          //   // onPressed: _showTimePickerTest,
+          //   onPressed: _showCupertinoTimePicker,
+          //   child: const Text('Select Time'),
+          // ),
+          Container(
+            decoration: const BoxDecoration(
+                color: CupertinoColors.systemBackground,
+                borderRadius: BorderRadius.all(Radius.circular(15))),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.hospitalDosage,
+                        AppLocalizations.of(context)!.dosageTime,
                         style: const TextStyle(fontSize: 20),
                       ),
+                      const SizedBox(width: 10),
+                      // SizedBox(
+                      //   width: 100,
+                      //   child:
                       const Spacer(),
-                      Checkbox(
-                        value: _isHospitalDosage,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _isHospitalDosage = newValue!;
-                          });
-                        },
+                      CupertinoButton(
+                        // padding: const EdgeInsets.all(0),
+                        // color: CupertinoColors.systemGrey,
+                        // Display a CupertinoDatePicker in time picker mode.
+                        // onPressed: () => _showDialog(
+                        //   CupertinoDatePicker(
+                        //     initialDateTime: _selectedTimeCupertino,
+                        //     mode: CupertinoDatePickerMode.time,
+                        //     use24hFormat: true,
+                        //     // This is called when the user changes the time.
+                        //     onDateTimeChanged: (DateTime newTime) {
+                        //       setState(() => _selectedTimeCupertino = newTime);
+                        //     },
+                        //   ),
+                        // ),
+                        onPressed: _toggleDatePickerVisibility,
+                        child: Text(
+                          '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
                       ),
+                      // ),
                     ],
                   ),
-                ),
-                const Divider(
-                    thickness: 0.5, color: CupertinoColors.systemGrey),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    _checkValue(0, 200);
-                    // Navigator.pop(context);
-                  },
-                  // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
-                  child: Text(
-                    AppLocalizations.of(context)!.saveDosage,
-                    style: const TextStyle(fontSize: 16.0),
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                    child: SizedBox(
+                      // height: _showTime ? 232 : 0,
+                      child: _showTime
+                          ? Column(
+                              children: [
+                                const Divider(
+                                    thickness: 0.5,
+                                    color: CupertinoColors.systemGrey),
+                                SizedBox(
+                                    height: 200,
+                                    child: CupertinoDatePicker(
+                                        mode: CupertinoDatePickerMode.time,
+                                        use24hFormat: true,
+                                        initialDateTime: _selectedTimeCupertino,
+                                        onDateTimeChanged:
+                                            (DateTime newDateTime) {
+                                          setState(() {
+                                            _selectedTimeCupertino =
+                                                newDateTime;
+                                          });
+                                        })),
+                              ],
+                            )
+                          : null,
+                    ),
                   ),
-                ),
-              ],
+                  const Divider(
+                      thickness: 0.5, color: CupertinoColors.systemGrey),
+                  SizedBox(
+                    width: 350,
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.hospitalDosage,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const Spacer(),
+                        Checkbox(
+                          value: _isHospitalDosage,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _isHospitalDosage = newValue!;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                      thickness: 0.5, color: CupertinoColors.systemGrey),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      _checkValue(0, 200);
+                      // Navigator.pop(context);
+                    },
+                    // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
+                    child: Text(
+                      AppLocalizations.of(context)!.saveDosage,
+                      style: const TextStyle(fontSize: 16.0),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
 
-        // // Uncomment for apple style button
-        // const SizedBox(height: 20),
-        // Center(
-        //   child: Container(
-        //     width: double.infinity,
-        //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
-        //     child: CupertinoButton(
-        //         color: CupertinoColors.systemBackground,
-        //         onPressed: () {
-        //           _checkValue(0, 200);
-        //         },
-        //         child: const Text(
-        //           "Save Dosage Info",
-        //           style: TextStyle(color: CupertinoColors.activeBlue),
-        //         )),
-        //   ),
-        // ),
-      ],
+          // // Uncomment for apple style button
+          // const SizedBox(height: 20),
+          // Center(
+          //   child: Container(
+          //     width: double.infinity,
+          //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+          //     child: CupertinoButton(
+          //         color: CupertinoColors.systemBackground,
+          //         onPressed: () {
+          //           _checkValue(0, 200);
+          //         },
+          //         child: const Text(
+          //           "Save Dosage Info",
+          //           style: TextStyle(color: CupertinoColors.activeBlue),
+          //         )),
+          //   ),
+          // ),
+        ],
+      ),
     );
     // );
   }

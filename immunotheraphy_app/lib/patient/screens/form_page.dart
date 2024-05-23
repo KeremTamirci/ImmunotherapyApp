@@ -15,7 +15,7 @@ class FormPage extends StatefulWidget {
 class FormPageState extends State<FormPage> {
   int _currentStep = 0;
   bool doseAllowed = false;
-  final List<bool> checkedStateStep1 = [false, false, false, false];
+  final List<bool> checkedStateStep1 = [false, false, false];
   final List<bool> checkedStateStep2 = [false, false, false, false, false];
 
   bool areAllCheckedStep1() {
@@ -146,18 +146,6 @@ class FormPageState extends State<FormPage> {
                     onChanged: (newValue) {
                       setState(() {
                         checkedStateStep1[2] = newValue!;
-                      });
-                    },
-                  ),
-                  CheckboxListTile(
-                    title: const Text(
-                      'Question 4',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    value: checkedStateStep1[3],
-                    onChanged: (newValue) {
-                      setState(() {
-                        checkedStateStep1[3] = newValue!;
                       });
                     },
                   ),
