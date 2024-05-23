@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:immunotheraphy_app/patient/screens/add_symptom_page.dart';
 // import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 import 'package:immunotheraphy_app/patient/screens/form_page.dart';
+import 'package:immunotheraphy_app/patient/screens/infoSheets/AllergyInfoSheet.dart';
 import 'package:immunotheraphy_app/patient/screens/infoSheets/MilkLadderInfoSheet.dart';
 import 'package:immunotheraphy_app/patient/screens/infoSheets/SymptomsInfoSheet.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
@@ -112,7 +113,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                       title: 'Alerjik Besinler',
                       description: "Yaygın besin alerjileri",
                       imagePath: "assets/images/armut_yiyen_adam.png",
-                      cardNo: 1,
+                      cardNo: 2,
                     ),
                   ],
                 ),
@@ -166,6 +167,8 @@ class InfoCardWidget extends StatelessWidget {
                       return SymptomsInfoSheet();
                     case 1:
                       return MilkLadderInfoSheet();
+                    case 2:
+                      return AllergyInfoSheet();
                     default:
                       return Container(); // Return some default widget if cardNo doesn't match any case.
                   }

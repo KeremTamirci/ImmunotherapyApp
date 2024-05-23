@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.0),
                     maxHeight: MediaQuery.of(context).size.height * 0.9,
                     minHeight: 0,
-                    panel: MilkLadderInfoSheet(),
+                    panel: AllergyInfoSheet(),
                   );
                 },
               );
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MilkLadderInfoSheet extends StatelessWidget {
+class AllergyInfoSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -52,7 +52,7 @@ class MilkLadderInfoSheet extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/sut_ana_resim.png"),
+                    image: AssetImage("assets/images/armut_yiyen_adam.png"),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -69,7 +69,7 @@ class MilkLadderInfoSheet extends StatelessWidget {
               const SizedBox(height: 10),
               const Center(
                 child: Text(
-                  "Süt Merdiveni",
+                  "Alerji Bilgileri",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -77,22 +77,39 @@ class MilkLadderInfoSheet extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Text(
-                  "Aşağıdaki diagramda çeşitli süt ürünlerinin içerdiği süt proteini miktarlarını görüp karşılaştırabilirsiniz.",
+                  "Aşağıda süt, fındık ve susam alerjileri hakkında bilgi bulabilirsiniz.",
                   style: TextStyle(fontSize: 16),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: RotatedBox(
-                  quarterTurns: 1, // Rotates the image 90 degrees
-                  child: AspectRatio(
-                    aspectRatio: 1.5, // Adjust the aspect ratio as needed
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Image.asset("assets/images/Süt_Merdiveni_İngilizce.png"),
-                    ),
-                  ),
-                ),
+              _buildCard(
+                context,
+                "Süt Alerjisi",
+                [
+                  'Ciltte kızarıklık ve kaşıntı',
+                  'Karın ağrısı, bulantı, ishal',
+                  'Öksürük, hırıltı',
+                  'Nadir durumlarda anafilaksi'
+                ],
+              ),
+              _buildCard(
+                context,
+                "Fındık Alerjisi",
+                [
+                  'Ciltte döküntü ve kaşıntı',
+                  'Mide krampları, bulantı, ishal',
+                  'Nefes darlığı, hırıltı',
+                  'Şiddetli alerjik reaksiyon (anafilaksi)'
+                ],
+              ),
+              _buildCard(
+                context,
+                "Susam Alerjisi",
+                [
+                  'Kurdeşen, kızarıklık',
+                  'Karın ağrısı, bulantı, ishal',
+                  'Burun akıntısı, nefes darlığı',
+                  'Şiddetli alerjik reaksiyon (anafilaksi)'
+                ],
               ),
               const SizedBox(height: 20),
             ],
@@ -102,7 +119,44 @@ class MilkLadderInfoSheet extends StatelessWidget {
     );
   }
 
-
+  Widget _buildCard(BuildContext context, String title, List<String> symptoms) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: symptoms.map<Widget>((symptom) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.circle, size: 8),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(symptom, style: const TextStyle(fontSize: 16)),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   void _showImageDialog(BuildContext context) {
     showDialog(
