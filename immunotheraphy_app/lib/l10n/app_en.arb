@@ -129,5 +129,6 @@
     "enterPhone": "Phone Number",
     "confirmPassword": "Re-enter Password",
     "passwordMismatch": "Password missmatch, please try again!",
-    "invalidToken": "You entered an invalid token!"
+    "invalidToken": "You entered an invalid token!",
+    "registerNewPatient": "Register New Patient"
  }

@@ -117,6 +117,8 @@
     "enterPhone": "Telefon Numarası",
     "confirmPassword": "Şifrenizi Tekrar Girin",
     "passwordMismatch": "Şifreleriniz uyuşmuyor, tekrar deneyin!",
-    "invalidToken": "Yanlış bir token girdiniz!"
+    "invalidToken": "Yanlış bir token girdiniz!",
+    "registerNewPatient": "Yeni Hasta Kaydı"
+
 
 }
