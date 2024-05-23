@@ -67,10 +67,14 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                       children: [
                         const Text(
                           "Anaflaksi Hakkında",
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                          icon: const Icon(Icons.arrow_back_ios_rounded,
+                              color: Colors.white),
                           onPressed: () => Navigator.of(context).pop(),
                         ),
                       ],
@@ -80,7 +84,8 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                   const Center(
                     child: Text(
                       "Anafilaksi (Alerjik Şok) Semptomları:",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -92,12 +97,9 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            "Semptomunuzun şiddetine göre anafilaktik şok geçirdiğinizi anlayabilmek için aşağıdaki semptom listesini inceleyin. Anafilaktik şok durumunda Penepin enjektörü uygulayın ve hastaneye gidin.",
                             style: TextStyle(fontSize: 16),
                           ),
-                          const SizedBox(height: 20),
-                          _buildAccordion(),
-                          const SizedBox(height: 20),
                           Card(
                             elevation: 4,
                             shape: RoundedRectangleBorder(
@@ -109,15 +111,19 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text(
                                         "Video:",
-                                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       ElevatedButton.icon(
                                         onPressed: _launchYouTubeVideo,
-                                        icon: const Icon(Icons.ondemand_video_rounded),
+                                        icon: const Icon(
+                                            Icons.ondemand_video_rounded),
                                         label: const Text("Watch on YouTube"),
                                       ),
                                     ],
@@ -134,6 +140,9 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 20),
+                          _buildAccordion(),
+                          const SizedBox(height: 20),
                         ],
                       ),
                     ),
@@ -158,7 +167,11 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       children: [
         AccordionSection(
           isOpen: false,
-          header: const Text('Deri Sistemi', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+          header: const Text('Deri Sistemi',
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -174,33 +187,38 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     children: [
                       const Icon(Icons.circle, size: 8),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(item, style: const TextStyle(fontSize: 16))),
+                      Expanded(
+                          child:
+                              Text(item, style: const TextStyle(fontSize: 16))),
                     ],
                   ),
                 );
               }),
               const SizedBox(height: 10),
               const Padding(
-        padding: EdgeInsets.only(left: 20.0, top: 5.0),
-        child: Row(
-          children: [
-            Icon(Icons.error_outline, size: 20, color: Colors.blue),
-            SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                'Küçük bir alanda ise alerji şurubu veya tableti veriniz ancak ürtiker plakları yaygın ise, anjiyo ödem dilde ise adrenalin yapınız',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
-        )
-        ),
+                  padding: EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.error_outline, size: 20, color: Colors.blue),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'Küçük bir alanda ise alerji şurubu veya tableti veriniz ancak ürtiker plakları yaygın ise, anjiyo ödem dilde ise adrenalin yapınız',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  )),
             ],
           ),
         ),
         AccordionSection(
           isOpen: false,
-          header: const Text('Solunum Sistemi', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+          header: const Text('Solunum Sistemi',
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -218,33 +236,38 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     children: [
                       const Icon(Icons.circle, size: 8),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(symptom, style: const TextStyle(fontSize: 16))),
+                      Expanded(
+                          child: Text(symptom,
+                              style: const TextStyle(fontSize: 16))),
                     ],
                   ),
                 );
               }),
               const SizedBox(height: 10),
               const Padding(
-        padding: EdgeInsets.only(left: 20.0, top: 5.0),
-        child: Row(
-          children: [
-            Icon(Icons.error_outline, size: 20, color: Colors.blue),
-            SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                'Adrenalin oto-enjektörü uygulayınız',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
-        )
-),
+                  padding: EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.error_outline, size: 20, color: Colors.blue),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'Adrenalin oto-enjektörü uygulayınız',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  )),
             ],
           ),
         ),
         AccordionSection(
           isOpen: false,
-          header: const Text('Sindirim Sistemi', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+          header: const Text('Sindirim Sistemi',
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -259,33 +282,38 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     children: [
                       const Icon(Icons.circle, size: 8),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(symptom, style: const TextStyle(fontSize: 16))),
+                      Expanded(
+                          child: Text(symptom,
+                              style: const TextStyle(fontSize: 16))),
                     ],
                   ),
                 );
               }),
               const SizedBox(height: 10),
               const Padding(
-        padding: EdgeInsets.only(left: 20.0, top: 5.0),
-        child: Row(
-          children: [
-            Icon(Icons.error_outline, size: 20, color: Colors.blue),
-            SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                'Adrenalin oto-enjektörü uygulayınız',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
-        )
-),
+                  padding: EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.error_outline, size: 20, color: Colors.blue),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'Adrenalin oto-enjektörü uygulayınız',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  )),
             ],
           ),
         ),
         AccordionSection(
           isOpen: false,
-          header: const Text('Kalp Sistemi', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+          header: const Text('Kalp Sistemi',
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -295,31 +323,32 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                 'Baygınlık Hissi',
                 'Bayılma',
               ].map((symptom) => Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 5.0),
-                child: Row(
-                  children: [
-                    const Icon(Icons.circle, size: 8),
-                    const SizedBox(width: 10),
-                    Expanded(child: Text(symptom, style: const TextStyle(fontSize: 16))),
-                  ],
-                ),
-              )),
+                    padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.circle, size: 8),
+                        const SizedBox(width: 10),
+                        Expanded(
+                            child: Text(symptom,
+                                style: const TextStyle(fontSize: 16))),
+                      ],
+                    ),
+                  )),
               const SizedBox(height: 10),
               const Padding(
-        padding: EdgeInsets.only(left: 20.0, top: 5.0),
-        child: Row(
-          children: [
-            Icon(Icons.error_outline, size: 20, color: Colors.blue),
-            SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                'Adrenalin oto-enjektörü uygulayınız',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
-        )
-),
+                  padding: EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.error_outline, size: 20, color: Colors.blue),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'Adrenalin oto-enjektörü uygulayınız',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  )),
             ],
           ),
         ),
