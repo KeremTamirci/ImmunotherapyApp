@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -96,7 +97,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: _loading
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -157,8 +158,8 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                   ElevatedButton(
                     onPressed: _showDosageChart,
                     style: ElevatedButton.styleFrom(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 20),
                       backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -168,13 +169,13 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                         mainAxisSize: MainAxisSize
                             .min, // Adjust the size to fit the content
                         children: [
-                          Icon(Icons.timeline,
+                          const Icon(Icons.timeline,
                               color:
                                   Colors.white), // Add your desired icon here
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(
                             AppLocalizations.of(context)!.doseChart,
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ]),
                   ),
@@ -182,8 +183,8 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                   ElevatedButton(
                     onPressed: _showSymptomsList,
                     style: ElevatedButton.styleFrom(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 20),
                       backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -193,14 +194,14 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                       mainAxisSize: MainAxisSize
                           .min, // Adjust the size to fit the content
                       children: [
-                        Icon(Icons.pan_tool,
+                        const Icon(Icons.pan_tool,
                             color: Colors.white), // Add your desired icon here
-                        SizedBox(
+                        const SizedBox(
                             width:
                                 10), // Add some space between the icon and the text
                         Text(
                           AppLocalizations.of(context)!.symptoms,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ],
                     ),
@@ -220,18 +221,19 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
         child: Row(
           children: [
             Icon(icon, size: 24), // Add your desired icon here
-            SizedBox(width: 10), // Space between the icon and the column
+            const SizedBox(width: 10), // Space between the icon and the column
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     label,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis, // Handle overflow
                   ),
-                  SizedBox(height: 1),
+                  const SizedBox(height: 1),
                   Text(
                     value,
                     maxLines: 1,
@@ -265,7 +267,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
               borderRadius: BorderRadius.circular(
                   20.0), // Ensure Container respects border radius
             ),
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
                 _buildDosageChart(),
@@ -287,7 +289,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 20), // Adds some space above the button
+                const SizedBox(height: 20), // Adds some space above the button
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -317,11 +319,11 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
               borderRadius: BorderRadius.circular(
                   20.0), // Ensure Container respects border radius
             ),
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
                 Expanded(child: _buildSymptomsList()),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -353,17 +355,18 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
               children: [
                 Text(
                   '${AppLocalizations.of(context)!.symptomType}: ${symptom.type}',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   '${AppLocalizations.of(context)!.date}: ${DateFormat('dd.MM.yyyy HH:mm:ss').format(symptom.date)}',
-                  style: TextStyle(fontSize: 14),
+                  style: const TextStyle(fontSize: 14),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   '${AppLocalizations.of(context)!.detail}: ${symptom.detail}',
-                  style: TextStyle(fontSize: 14),
+                  style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),
@@ -379,7 +382,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       children: [
         Text(
           AppLocalizations.of(context)!.doseChart,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 10),
@@ -396,7 +399,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
               title: AxisTitle(
                 text:
                     AppLocalizations.of(context)!.date, // Horizontal axis title
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -406,21 +409,22 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
               title: AxisTitle(
                 text: AppLocalizations.of(context)!
                     .dosageAmount, // Vertical axis title
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            legend: Legend(isVisible: true, toggleSeriesVisibility: false),
+            legend:
+                const Legend(isVisible: true, toggleSeriesVisibility: false),
             series: <LineSeries<DosageData, DateTime>>[
               LineSeries<DosageData, DateTime>(
                 dataSource: _dosageData,
                 xValueMapper: (DosageData data, _) => data.date,
                 yValueMapper: (DosageData data, _) => data.amount,
                 name: AppLocalizations.of(context)!.dosageEntries,
-                dataLabelSettings: DataLabelSettings(isVisible: true),
-                markerSettings: MarkerSettings(
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+                markerSettings: const MarkerSettings(
                   isVisible: true,
                   shape: DataMarkerType.circle,
                   borderColor: Colors.blue,
@@ -435,7 +439,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                 name: AppLocalizations.of(context)!.hospitalDoses,
                 opacity: 0,
                 color: Colors.red,
-                markerSettings: MarkerSettings(
+                markerSettings: const MarkerSettings(
                   isVisible: true,
                   shape: DataMarkerType.circle,
                   borderColor: Colors.red,
@@ -459,20 +463,20 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
           children: [
             Text(
               AppLocalizations.of(context)!.lastDosage,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Text(
               '${AppLocalizations.of(context)!.date}: ${DateFormat('dd.MM.yyyy HH:mm:ss').format(_lastDosageData!.date)}',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
             Text(
               '${AppLocalizations.of(context)!.amount}: ${_lastDosageData!.amount}',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
             Text(
               '${AppLocalizations.of(context)!.location}: ${_lastDosageData!.isHospital ? AppLocalizations.of(context)!.hospital : AppLocalizations.of(context)!.homeLocation}',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),
