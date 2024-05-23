@@ -102,6 +102,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                 children: [
                   GridView.count(
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     crossAxisCount: 2,
                     mainAxisSpacing: 16.0,
                     crossAxisSpacing: 16.0,
@@ -152,6 +153,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 30),
                   ElevatedButton(
                     onPressed: _showDosageChart,
                     style: ElevatedButton.styleFrom(
