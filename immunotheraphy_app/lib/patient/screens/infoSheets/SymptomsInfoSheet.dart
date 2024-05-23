@@ -36,109 +36,114 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20.0),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.9,
-        child: SingleChildScrollView(
+    return DraggableScrollableSheet(
+      initialChildSize: 0.9,
+      minChildSize: 0.4,
+      maxChildSize: 0.9,
+      expand: false,
+      builder: (BuildContext context, ScrollController scrollController) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
           child: Container(
             color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  width: double.infinity,
-                  // color: Color(0xFF2196F3),
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/kalp_atisi.png"),
-                      fit: BoxFit.cover,
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    width: double.infinity,
+                    // color: Color(0xFF2196F3),
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/kalp_atisi.png"),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Anaflaksi Hakkında",
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Center(
-                  child: Text(
-                    "Anafilaksi (Alerjik Şok) Semptomları:",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                          style: TextStyle(fontSize: 16),
+                          "Anaflaksi Hakkında",
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
-                        const SizedBox(height: 20),
-                        _buildAccordion(),
-                        const SizedBox(height: 20),
-                        Card(
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      "Video:",
-                                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                                    ),
-                                    ElevatedButton.icon(
-                                      onPressed: _launchYouTubeVideo,
-                                      icon: const Icon(Icons.ondemand_video_rounded),
-                                      label: const Text("Watch on YouTube"),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                YoutubePlayer(
-                                  controller: _controller,
-                                  bottomActions: [
-                                    CurrentPosition(),
-                                    ProgressBar(isExpanded: true),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                          onPressed: () => Navigator.of(context).pop(),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  const Center(
+                    child: Text(
+                      "Anafilaksi (Alerjik Şok) Semptomları:",
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 20),
+                          _buildAccordion(),
+                          const SizedBox(height: 20),
+                          Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                        "Video:",
+                                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                                      ),
+                                      ElevatedButton.icon(
+                                        onPressed: _launchYouTubeVideo,
+                                        icon: const Icon(Icons.ondemand_video_rounded),
+                                        label: const Text("Watch on YouTube"),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  YoutubePlayer(
+                                    controller: _controller,
+                                    bottomActions: [
+                                      CurrentPosition(),
+                                      ProgressBar(isExpanded: true),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -149,6 +154,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
       sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
       sectionClosingHapticFeedback: SectionHapticFeedback.light,
+      disableScrolling: true,
       children: [
         AccordionSection(
           isOpen: false,
@@ -174,10 +180,21 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                 );
               }),
               const SizedBox(height: 10),
-              const Text(
+              const Padding(
+        padding: EdgeInsets.only(left: 20.0, top: 5.0),
+        child: Row(
+          children: [
+            Icon(Icons.error_outline, size: 20, color: Colors.blue),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
                 'Küçük bir alanda ise alerji şurubu veya tableti veriniz ancak ürtiker plakları yaygın ise, anjiyo ödem dilde ise adrenalin yapınız',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 16),
               ),
+            ),
+          ],
+        )
+        ),
             ],
           ),
         ),
@@ -207,16 +224,21 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                 );
               }),
               const SizedBox(height: 10),
-              const Row(
-                children: [
-                  Icon(Icons.error_outline, size: 20, color: Colors.blue),
-                  SizedBox(width: 10),
-                  Text(
-                    'Adrenalin oto-enjektörü uygulayınız',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
+              const Padding(
+        padding: EdgeInsets.only(left: 20.0, top: 5.0),
+        child: Row(
+          children: [
+            Icon(Icons.error_outline, size: 20, color: Colors.blue),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                'Adrenalin oto-enjektörü uygulayınız',
+                style: TextStyle(fontSize: 16),
               ),
+            ),
+          ],
+        )
+),
             ],
           ),
         ),
@@ -243,16 +265,21 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                 );
               }),
               const SizedBox(height: 10),
-              const Row(
-                children: [
-                  Icon(Icons.error_outline, size: 20, color: Colors.blue),
-                  SizedBox(width: 10),
-                  Text(
-                    'Adrenalin oto-enjektörü uygulayınız',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
+              const Padding(
+        padding: EdgeInsets.only(left: 20.0, top: 5.0),
+        child: Row(
+          children: [
+            Icon(Icons.error_outline, size: 20, color: Colors.blue),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                'Adrenalin oto-enjektörü uygulayınız',
+                style: TextStyle(fontSize: 16),
               ),
+            ),
+          ],
+        )
+),
             ],
           ),
         ),
@@ -278,16 +305,21 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                 ),
               )),
               const SizedBox(height: 10),
-              const Row(
-                children: [
-                  Icon(Icons.error_outline, size: 20, color: Colors.blue),
-                  SizedBox(width: 10),
-                  Text(
-                    'Adrenalin oto-enjektörü uygulayınız',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
+              const Padding(
+        padding: EdgeInsets.only(left: 20.0, top: 5.0),
+        child: Row(
+          children: [
+            Icon(Icons.error_outline, size: 20, color: Colors.blue),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                'Adrenalin oto-enjektörü uygulayınız',
+                style: TextStyle(fontSize: 16),
               ),
+            ),
+          ],
+        )
+),
             ],
           ),
         ),

@@ -18,6 +18,7 @@ class PatientListScreenState extends State<PatientListScreen> {
       PatientsFirestoreService();
   late List<Patient> patients = [];
   StreamSubscription<List<Patient>>? _patientsSubscription;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -40,6 +41,14 @@ class PatientListScreenState extends State<PatientListScreen> {
       if (mounted) {
         setState(() {
           patients = filteredPatients;
+          _isLoading = false;
+        });
+      }
+    }, onError: (error) {
+      // Handle error if needed
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
         });
       }
     });
@@ -54,71 +63,87 @@ class PatientListScreenState extends State<PatientListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (patients.isEmpty) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.patientList),
-        ),
-        body: const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.patientList),
-        ),
-        body: ListView.builder(
-          itemCount: patients.length,
-          itemBuilder: (context, index) {
-            Patient patient = patients[index];
-            return Card(
-              elevation: 3,
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: ListTile(
-                leading: const IconTheme(
-                  data: IconThemeData(size: 36), // Adjust the size here
-                  child: Icon(Icons.person),
-                ),
-                title: Text(
-                  '${patient.firstName} ${patient.lastName}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 4),
-                    Text(AppLocalizations.of(context)!.phoneNumber +
-                        patient.phoneNumber),
-                    const SizedBox(height: 2),
-                    Text(
-                        '${AppLocalizations.of(context)!.birthDate} ${_formatDate(patient.birthDate)}'),
-                    const SizedBox(height: 2),
-                    Text(
-                        '${AppLocalizations.of(context)!.hasRhinitis}: ${patient.hasRhinits ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
-                    const SizedBox(height: 2),
-                    Text(
-                        '${AppLocalizations.of(context)!.hasAsthma}: ${patient.hasAsthma ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
-                  ],
-                ),
-                onTap: () {
-                  // Navigate to PatientDetailScreen and pass the selected patient
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          PatientDetailScreen(patient: patient),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.patientList),
+      ),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : patients.isEmpty
+              ? Center(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16.0), // Rounded corners
+                      // boxShadow: const [
+                      //   BoxShadow(
+                      //     color: Colors.black26,
+                      //     blurRadius: 2,
+                      //     offset: Offset(0, 2),
+                      //   ),
+                      // ],
                     ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      );
-    }
+                    child: Text(
+                      AppLocalizations.of(context)!.noPatientsFound,
+                      style: TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: patients.length,
+                  itemBuilder: (context, index) {
+                    Patient patient = patients[index];
+                    return Card(
+                      elevation: 3,
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 16),
+                      child: ListTile(
+                        leading: const IconTheme(
+                          data: IconThemeData(size: 36), // Adjust the size here
+                          child: Icon(Icons.person),
+                        ),
+                        title: Text(
+                          '${patient.firstName} ${patient.lastName}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 4),
+                            Text(AppLocalizations.of(context)!.phoneNumber +
+                                ' ' + patient.phoneNumber),
+                            const SizedBox(height: 2),
+                            Text(
+                                '${AppLocalizations.of(context)!.birthDate} ${_formatDate(patient.birthDate)}'),
+                            const SizedBox(height: 2),
+                            Text(
+                                '${AppLocalizations.of(context)!.hasRhinitis}: ${patient.hasRhinits ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
+                            const SizedBox(height: 2),
+                            Text(
+                                '${AppLocalizations.of(context)!.hasAsthma}: ${patient.hasAsthma ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
+                          ],
+                        ),
+                        onTap: () {
+                          // Navigate to PatientDetailScreen and pass the selected patient
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PatientDetailScreen(patient: patient),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+    );
   }
 
   String _formatDate(DateTime date) {

@@ -3,7 +3,7 @@
     "enterEmail": "E-Mail",
     "enterPassword": "Şifre",
     "signIn": "Giriş Yap",
-    "dontHaveAnAccount": "Hesabınız yok mu?",
+    "dontHaveAnAccount": "Hesabınız yok mu? ",
     "forgotPassword": "Şifrenizi mi unuttunuz?",
     "signUp": "Hesap Açın",
     "phoneNumber": "Telefon No",
@@ -112,5 +112,11 @@
     "dosageAdded": "Doz başarıyla eklenmiştir",
     "dosageAndSymptomPage": "Doz ve Semptom Sayfası",
     "selectSymptom": "Semptom Seçin",
-    "saveDosage":"Dozu Kaydet"
+    "saveDosage":"Dozu Kaydet",
+    "noPatientsFound":"Kayıtlı hastanız bulunmamaktadır.",
+    "enterPhone": "Telefon Numarası",
+    "confirmPassword": "Şifrenizi Tekrar Girin",
+    "passwordMismatch": "Şifreleriniz uyuşmuyor, tekrar deneyin!",
+    "invalidToken": "Yanlış bir token girdiniz!"
+
 }

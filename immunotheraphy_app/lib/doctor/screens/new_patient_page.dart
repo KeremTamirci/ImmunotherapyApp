@@ -110,6 +110,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
                   child: Text(AppLocalizations.of(context)!.register),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: hexStringToColor("6495ED"),
+                    foregroundColor: Colors.black,
                     padding: EdgeInsets.symmetric(vertical: 16),
                   ),
                 ),
@@ -300,7 +301,7 @@ class FancyCheckbox extends StatelessWidget {
       height: 28,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.blue),
+        border: Border.all(color: hexStringToColor("2E5984")),
       ),
       child: Theme(
         data: ThemeData(
@@ -309,7 +310,7 @@ class FancyCheckbox extends StatelessWidget {
         child: Checkbox(
           value: value,
           onChanged: onChanged,
-          activeColor: Colors.blue,
+          activeColor: hexStringToColor("2E5984"),
           checkColor: Colors.white,
         ),
       ),
