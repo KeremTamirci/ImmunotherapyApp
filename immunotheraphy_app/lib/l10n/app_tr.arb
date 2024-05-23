@@ -113,5 +113,10 @@
     "dosageAndSymptomPage": "Doz ve Semptom Sayfası",
     "selectSymptom": "Semptom Seçin",
     "saveDosage":"Dozu Kaydet",
-    "noPatientsFound":"Kayıtlı hastanız bulunmamaktadır."
+    "noPatientsFound":"Kayıtlı hastanız bulunmamaktadır.",
+    "enterPhone": "Telefon Numarası",
+    "confirmPassword": "Şifrenizi Tekrar Girin",
+    "passwordMismatch": "Şifreleriniz uyuşmuyor, tekrar deneyin!",
+    "invalidToken": "Yanlış bir token girdiniz!"
+
 }

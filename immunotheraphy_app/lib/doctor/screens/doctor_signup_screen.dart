@@ -15,11 +15,13 @@ class DoctorSignUpScreen extends StatefulWidget {
 }
 
 class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
-  TextEditingController _nameTextController = TextEditingController();
-  TextEditingController _surnameTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _tokenTextController = TextEditingController();
+  final TextEditingController _nameTextController = TextEditingController();
+  final TextEditingController _surnameTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _confirmPasswordTextController = TextEditingController();
+  final TextEditingController _tokenTextController = TextEditingController();
+  final TextEditingController _phoneTextController = TextEditingController();
 
   final _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -34,7 +36,7 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
         elevation: 0,
         title: Text(
           AppLocalizations.of(context)!.signUp,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
       body: Container(
@@ -53,7 +55,7 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
         ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 120, 20, 0),
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 20),
@@ -72,6 +74,13 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
+                  AppLocalizations.of(context)!.enterPhone,
+                  Icons.phone_iphone,
+                  false,
+                  _phoneTextController,
+                ),
+                const SizedBox(height: 20),
+                reusableTextField(
                   AppLocalizations.of(context)!.enterEmail,
                   Icons.mail_outline,
                   false,
@@ -86,6 +95,13 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                 ),
                 const SizedBox(height: 20),
                 reusableTextField(
+                  AppLocalizations.of(context)!.confirmPassword,
+                  Icons.lock_outline,
+                  true,
+                  _confirmPasswordTextController,
+                ),
+                const SizedBox(height: 20),
+                reusableTextField(
                   "Token",
                   Icons.security_outlined,
                   false,
@@ -94,25 +110,47 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                 const SizedBox(height: 20),
                 firebaseUIButton(context, AppLocalizations.of(context)!.signUp,
                     () {
+                  String password = _passwordTextController.text;
+                  String confirmPassword = _confirmPasswordTextController.text;
+                  String token = _tokenTextController.text;
+
+                  if (password != confirmPassword) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context)!.passwordMismatch),
+                      ),
+                    );
+                    return;
+                  }
+
+                  if (token != "KOC24") {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context)!.invalidToken),
+                      ),
+                    );
+                    return;
+                  }
+
                   _auth
                       .createUserWithEmailAndPassword(
                     email: _emailTextController.text,
-                    password: _passwordTextController.text,
+                    password: password,
                   )
                       .then((value) async {
                     _firestoreService
                         .addDoctor(
                             _nameTextController.text,
                             _surnameTextController.text,
-                            _tokenTextController.text,
+                            _phoneTextController.text,
                             value.user!.uid,
-                            await _firebaseMessaging.getToken() ?? "token123")
+                            await _firebaseMessaging.getToken() ?? " ")
                         .then((_) {
                       print("User added to Firestore");
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DoctorHomeScreen()),
+                            builder: (context) => const DoctorHomeScreen()),
                       );
                     }).catchError((error) {
                       print("Failed to add user to Firestore: $error");

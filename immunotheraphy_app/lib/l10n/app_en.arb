@@ -124,6 +124,10 @@
     "dosageAdded": "Dosage added successfully",
     "dosageAndSymptomPage": "Dosage and Symptom Page",
     "selectSymptom": "Select Symptom",
-    "saveDosage":"Save Dosage",
-    "noPatientsFound":" You currently have no recorded patients."
+    "saveDosage": "Save Dosage",
+    "noPatientsFound": "You currently have no recorded patients.",
+    "enterPhone": "Phone Number",
+    "confirmPassword": "Re-enter Password",
+    "passwordMismatch": "Password missmatch, please try again!",
+    "invalidToken": "You entered an invalid token!"
  }
