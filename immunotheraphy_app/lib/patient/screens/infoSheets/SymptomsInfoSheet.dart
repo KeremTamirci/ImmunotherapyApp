@@ -154,6 +154,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
       sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
       sectionClosingHapticFeedback: SectionHapticFeedback.light,
+      disableScrolling: true,
       children: [
         AccordionSection(
           isOpen: false,
