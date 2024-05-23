@@ -21,6 +21,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          surfaceTintColor: Colors.white,
           //forceMaterialTransparency: true,
           title: Text(AppLocalizations.of(context)!.dosageAndSymptomPage),
         ),
