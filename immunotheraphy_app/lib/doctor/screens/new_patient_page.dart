@@ -262,7 +262,18 @@ class _NewPatientPageState extends State<NewPatientPage> {
             MaterialPageRoute(
               builder: (context) => OTPPage(otp: otp),
             ),
-          );
+          ).then((_) {
+            // Clear text fields when returning from OTPPage
+            _nameTextController.clear();
+            _surnameTextController.clear();
+            _phoneNumberTextController.clear();
+            _dateOfBirthController.clear();
+            setState(() {
+              _selectedAllergy = null;
+              _hasAllergicRhinitis = false;
+              _hasAsthma = false;
+            });
+          });
         } catch (e) {
           print('Error registering patient: $e');
           ScaffoldMessenger.of(context).showSnackBar(
@@ -282,7 +293,6 @@ class _NewPatientPageState extends State<NewPatientPage> {
       );
     }
   }
-
   String _generateOTP() {
     const String _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     Random _rnd = Random(DateTime.now().millisecondsSinceEpoch);
