@@ -40,7 +40,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register New Patient'),
+        title: Text(AppLocalizations.of(context)!.registerNewPatient),
         // backgroundColor: hexStringToColor("6495ED"),
         surfaceTintColor: CupertinoColors.systemBackground,
       ),
@@ -117,7 +117,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
                     child: Text(AppLocalizations.of(context)!.register),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: hexStringToColor("6495ED"),
-                      foregroundColor: Colors.black,
+                      foregroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(vertical: 16),
                     ),
                   ),
@@ -293,6 +293,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
       );
     }
   }
+
   String _generateOTP() {
     const String _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     Random _rnd = Random(DateTime.now().millisecondsSinceEpoch);
