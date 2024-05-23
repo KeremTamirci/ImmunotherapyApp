@@ -129,5 +129,22 @@
     "enterPhone": "Phone Number",
     "confirmPassword": "Re-enter Password",
     "passwordMismatch": "Password missmatch, please try again!",
-    "invalidToken": "You entered an invalid token!"
+    "invalidToken": "You entered an invalid token!",
+    "allergyInfoTitle": "Allergy Info",
+    "allergyInfo": "Below you can find information about milk, hazelnut, and sesame allergies.",
+    "milkAllergy": "Milk Allergy:",
+    "milkAllergyInfo1": "Skin redness and itching",
+    "milkAllergyInfo2": "Stomach pain, nausea, diarrhea",
+    "milkAllergyInfo3": "Cough, wheezing",
+    "milkAllergyInfo4": "Rarely anaphylaxis",
+    "hazelnutAllergy": "Hazelnut Allergy:",
+    "hazelnutAllergyInfo1": "Skin rash and itching",
+    "hazelnutAllergyInfo2": "Stomach cramps, nausea, diarrhea",
+    "hazelnutAllergyInfo3": "Shortness of breath, wheezing",
+    "hazelnutAllergyInfo4": "Severe allergic reaction (anaphylaxis)",
+    "sesameAllergy": "Sesame Allergy:",
+    "sesameAllergyInfo1": "Hives, redness",
+    "sesameAllergyInfo2": "Stomach pain, nausea, diarrhea",
+    "sesameAllergyInfo3": "Runny nose, shortness of breath",
+    "sesameAllergyInfo4": "Severe allergic reaction (anaphylaxis)"
  }

@@ -117,6 +117,23 @@
     "enterPhone": "Telefon Numarası",
     "confirmPassword": "Şifrenizi Tekrar Girin",
     "passwordMismatch": "Şifreleriniz uyuşmuyor, tekrar deneyin!",
-    "invalidToken": "Yanlış bir token girdiniz!"
+    "invalidToken": "Yanlış bir token girdiniz!",
+    "allergyInfoTitle": "Alerji Bilgileri",
+    "allergyInfo": "Aşağıda süt, fındık ve susam alerjileri hakkında bilgi bulabilirsiniz.",
+    "milkAllergy": "Süt Alerjisi::",
+    "milkAllergyInfo1": "Ciltte kızarıklık ve kaşıntı",
+    "milkAllergyInfo2": "Karın ağrısı, bulantı, ishal",
+    "milkAllergyInfo3": "Öksürük, hırıltı",
+    "milkAllergyInfo4": "Nadiren anafilaksi",
+    "hazelnutAllergy": "Fındık Alerjisi:",
+    "hazelnutAllergyInfo1": "Ciltte döküntü ve kaşıntı",
+    "hazelnutAllergyInfo2": "Mide krampları, bulantı, ishal",
+    "hazelnutAllergyInfo3": "Nefes darlığı, hırıltı",
+    "hazelnutAllergyInfo4": "Şiddetli alerjik reaksiyon (anafilaksi)",
+    "sesameAllergy": "Susam Alerjisi:",
+    "sesameAllergyInfo1": "Kurdeşen, kızarıklık",
+    "sesameAllergyInfo2": "Karın ağrısı, bulantı, ishal",
+    "sesameAllergyInfo3": "Burun akıntısı, nefes darlığı",
+    "sesameAllergyInfo4": "Şiddetli alerjik reaksiyon (anafilaksi)"
 
 }
