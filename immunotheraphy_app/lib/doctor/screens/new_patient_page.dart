@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 import 'package:intl/intl.dart';
@@ -39,82 +40,89 @@ class _NewPatientPageState extends State<NewPatientPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register New Patient'),
-        backgroundColor: hexStringToColor("6495ED"),
+        title: const Text('Register New Patient'),
+        // backgroundColor: hexStringToColor("6495ED"),
+        surfaceTintColor: CupertinoColors.systemBackground,
       ),
-      body: Container(
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 20),
-                _blueTextField(
-                  AppLocalizations.of(context)!.name,
-                  Icons.person_outline,
-                  _nameTextController,
-                ),
-                const SizedBox(height: 20),
-                _blueTextField(
-                  AppLocalizations.of(context)!.surname,
-                  Icons.person_outline,
-                  _surnameTextController,
-                ),
-                const SizedBox(height: 20),
-                _allergyDropdown(),
-                const SizedBox(height: 20),
-                _blueTextField(
-                  AppLocalizations.of(context)!.phoneNumber,
-                  Icons.phone,
-                  _phoneNumberTextController,
-                ),
-                const SizedBox(height: 20),
-                _dateOfBirthField(context),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    FancyCheckbox(
-                      value: _hasAllergicRhinitis,
-                      onChanged: (value) {
-                        setState(() {
-                          _hasAllergicRhinitis = value!;
-                        });
-                      },
-                    ),
-                    SizedBox(width: 8),
-                    Text(AppLocalizations.of(context)!.hasRhinitis),
-                  ],
-                ),
-                SizedBox(height: 8),
-                Row(
-                  children: [
-                    FancyCheckbox(
-                      value: _hasAsthma,
-                      onChanged: (value) {
-                        setState(() {
-                          _hasAsthma = value!;
-                        });
-                      },
-                    ),
-                    SizedBox(width: 8),
-                    Text(AppLocalizations.of(context)!.hasAsthma),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    _registerPatient();
-                  },
-                  child: Text(AppLocalizations.of(context)!.register),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: hexStringToColor("6495ED"),
-                    foregroundColor: Colors.black,
-                    padding: EdgeInsets.symmetric(vertical: 16),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            color: CupertinoColors.systemBackground,
+          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 20),
+                  _blueTextField(
+                    AppLocalizations.of(context)!.name,
+                    Icons.person_outline,
+                    _nameTextController,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  _blueTextField(
+                    AppLocalizations.of(context)!.surname,
+                    Icons.person_outline,
+                    _surnameTextController,
+                  ),
+                  const SizedBox(height: 20),
+                  _allergyDropdown(),
+                  const SizedBox(height: 20),
+                  _blueTextField(
+                    AppLocalizations.of(context)!.phoneNumber,
+                    Icons.phone,
+                    _phoneNumberTextController,
+                  ),
+                  const SizedBox(height: 20),
+                  _dateOfBirthField(context),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      FancyCheckbox(
+                        value: _hasAllergicRhinitis,
+                        onChanged: (value) {
+                          setState(() {
+                            _hasAllergicRhinitis = value!;
+                          });
+                        },
+                      ),
+                      SizedBox(width: 8),
+                      Text(AppLocalizations.of(context)!.hasRhinitis),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      FancyCheckbox(
+                        value: _hasAsthma,
+                        onChanged: (value) {
+                          setState(() {
+                            _hasAsthma = value!;
+                          });
+                        },
+                      ),
+                      SizedBox(width: 8),
+                      Text(AppLocalizations.of(context)!.hasAsthma),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      _registerPatient();
+                    },
+                    child: Text(AppLocalizations.of(context)!.register),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: hexStringToColor("6495ED"),
+                      foregroundColor: Colors.black,
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

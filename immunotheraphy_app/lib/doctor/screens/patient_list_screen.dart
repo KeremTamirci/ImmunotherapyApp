@@ -1,6 +1,7 @@
 import 'dart:async'; // Import to use StreamSubscription
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/screens/patient_detail_page.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
@@ -31,9 +32,8 @@ class PatientListScreenState extends State<PatientListScreen> {
     String currentDoctorUID = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     // Subscribe to the patients stream and update the state
-    _patientsSubscription = _patientsFirestoreService
-        .getPatients()
-        .listen((List<Patient> fetchedPatients) {
+    _patientsSubscription = _patientsFirestoreService.getPatients().listen(
+        (List<Patient> fetchedPatients) {
       List<Patient> filteredPatients = fetchedPatients
           .where((patient) => patient.uid == currentDoctorUID)
           .toList();
@@ -66,6 +66,7 @@ class PatientListScreenState extends State<PatientListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.patientList),
+        surfaceTintColor: CupertinoColors.systemBackground,
       ),
       body: _isLoading
           ? const Center(
@@ -74,10 +75,12 @@ class PatientListScreenState extends State<PatientListScreen> {
           : patients.isEmpty
               ? Center(
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 24.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.0), // Rounded corners
+                      borderRadius:
+                          BorderRadius.circular(16.0), // Rounded corners
                       // boxShadow: const [
                       //   BoxShadow(
                       //     color: Colors.black26,
@@ -88,7 +91,7 @@ class PatientListScreenState extends State<PatientListScreen> {
                     ),
                     child: Text(
                       AppLocalizations.of(context)!.noPatientsFound,
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -98,6 +101,8 @@ class PatientListScreenState extends State<PatientListScreen> {
                   itemBuilder: (context, index) {
                     Patient patient = patients[index];
                     return Card(
+                      color: CupertinoColors.systemBackground,
+                      surfaceTintColor: CupertinoColors.systemBackground,
                       elevation: 3,
                       margin: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 16),
@@ -116,8 +121,8 @@ class PatientListScreenState extends State<PatientListScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(height: 4),
-                            Text(AppLocalizations.of(context)!.phoneNumber +
-                                ' ' + patient.phoneNumber),
+                            Text(
+                                '${AppLocalizations.of(context)!.phoneNumber} ${patient.phoneNumber}'),
                             const SizedBox(height: 2),
                             Text(
                                 '${AppLocalizations.of(context)!.birthDate} ${_formatDate(patient.birthDate)}'),
