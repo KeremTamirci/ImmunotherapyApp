@@ -59,10 +59,6 @@ class MilkLadderInfoSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Süt Merdiveni Hakkında",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
                     IconButton(
                       icon: const Icon(Icons.arrow_back_ios_rounded),
                       onPressed: () => Navigator.of(context).pop(),

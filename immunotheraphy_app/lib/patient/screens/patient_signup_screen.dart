@@ -109,25 +109,29 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
   }
 
   void _signUpPatient() async {
-    try {
-      // Sign up logic
-      // FirebaseAuth.instance.createUserWithEmailAndPassword...
-      // Navigate to HomeScreen after successful sign up
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => PatientAuthenticationScreen(
-                  otp: _otpTextController.text,
-                  phoneNumber: _phoneNumberTextController.text,
-                )),
-      );
-    } catch (e) {
-      print('Error signing up patient: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An error occurred. Please try again later.'),
+  try {
+    // Sign up logic
+    // FirebaseAuth.instance.createUserWithEmailAndPassword...
+    
+    // Navigate to HomeScreen after successful sign up and remove all routes until the new route
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PatientAuthenticationScreen(
+          otp: _otpTextController.text,
+          phoneNumber: _phoneNumberTextController.text,
         ),
-      );
-    }
+      ),
+      (_) => false, // Remove all routes
+    );
+  } catch (e) {
+    print('Error signing up patient: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An error occurred. Please try again later.'),
+      ),
+    );
   }
+}
+
 }
