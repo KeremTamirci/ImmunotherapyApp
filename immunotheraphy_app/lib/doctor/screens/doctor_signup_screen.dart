@@ -147,10 +147,10 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                             await _firebaseMessaging.getToken() ?? " ")
                         .then((_) {
                       print("User added to Firestore");
-                      Navigator.pushReplacement(
+                      Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const DoctorHomeScreen()),
+                        MaterialPageRoute(builder: (context) => const DoctorHomeScreen()),
+                        (_) => false,
                       );
                     }).catchError((error) {
                       print("Failed to add user to Firestore: $error");
