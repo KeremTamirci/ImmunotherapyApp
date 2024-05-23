@@ -125,10 +125,10 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                 }),
                 signUpOption(),
                 Padding(padding: EdgeInsets.fromLTRB(
-                  20,
-                  MediaQuery.of(context).size.height * 0.18,
-                  20,
-                  20, // Add bottom padding here
+                20,
+                MediaQuery.of(context).size.height * 0.18,
+                20,
+                20, // Add bottom padding here
                 ))
               ],
             ),

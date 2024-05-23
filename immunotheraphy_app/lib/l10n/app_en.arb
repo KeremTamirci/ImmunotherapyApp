@@ -15,7 +15,7 @@
     "@signIn":{
         "description": "Title for sign in button"
     },
-    "dontHaveAnAccount": "Don't have an account?",
+    "dontHaveAnAccount": "Don't have an account? ",
     "forgotPassword": "Forgot Password?",
     "signUp": "Sign Up",
     "phoneNumber": "Phone Number",
