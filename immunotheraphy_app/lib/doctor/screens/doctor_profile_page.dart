@@ -17,8 +17,6 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   late Future<void> _userDataFuture;
   late Map<String, dynamic> _doctorData = {};
   bool gotData = false;
-  final Text homeScreenTitle = const Text("Doctor Home Screen");
-  final Text logOutText = const Text("Log Out");
   final TextStyle style = const TextStyle(fontSize: 20);
 
   @override
@@ -67,26 +65,25 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm'),
-          content: const SingleChildScrollView(
+          title: Text(AppLocalizations.of(context)!.confirm),
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Are you sure you want to sign out?'),
+                Text(AppLocalizations.of(context)!.signOutSure),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Sign Out'),
+              child: Text(AppLocalizations.of(context)!.logOut),
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
-                  print("Signed Out");
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) => const ChoiceScreen()),
@@ -155,7 +152,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    child: logOutText,
+                    child: Text(AppLocalizations.of(context)!.logOut),
                     onPressed: () {
                       _confirmSignOut(context);
                     },

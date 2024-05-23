@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:immunotheraphy_app/patient/screens/form_page.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
+import 'package:immunotheraphy_app/reusable_widgets/warning_box.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
