@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, deprecated_member_use, file_names
 
 import 'package:accordion/controllers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -101,7 +102,10 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                             style: TextStyle(fontSize: 16),
                           ),
                           Card(
-                            elevation: 4,
+                            surfaceTintColor: CupertinoColors.systemBackground,
+                            color: CupertinoColors.systemGrey6,
+                            shadowColor: CupertinoColors.systemBackground,
+                            elevation: 1,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),

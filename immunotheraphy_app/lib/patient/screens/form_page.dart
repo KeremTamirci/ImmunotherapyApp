@@ -31,6 +31,7 @@ class FormPageState extends State<FormPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.dozGirisSayfasi),
+        surfaceTintColor: CupertinoColors.systemBackground,
       ),
       body: Stepper(
         // connectorColor: const MaterialStatePropertyAll(Color(0xff18c872)),
