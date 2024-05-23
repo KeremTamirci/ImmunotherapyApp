@@ -124,5 +124,6 @@
     "dosageAdded": "Dosage added successfully",
     "dosageAndSymptomPage": "Dosage and Symptom Page",
     "selectSymptom": "Select Symptom",
-    "saveDosage":"Save Dosage"
+    "saveDosage":"Save Dosage",
+    "noPatientsFound":" You currently have no recorded patients."
  }
