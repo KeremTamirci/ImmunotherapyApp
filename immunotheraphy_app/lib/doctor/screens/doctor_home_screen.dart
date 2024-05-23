@@ -39,7 +39,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page =  const PatientListScreen();
+        page = const PatientListScreen();
         break;
       case 1:
         page = const NewPatientPage();
@@ -58,9 +58,9 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
       ),
     );
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.doctorHomeScreen),
-      ),
+      // appBar: AppBar(
+      //   title: Text(AppLocalizations.of(context)!.doctorHomeScreen),
+      // ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
             // sets the background color of the `BottomNavigationBar`

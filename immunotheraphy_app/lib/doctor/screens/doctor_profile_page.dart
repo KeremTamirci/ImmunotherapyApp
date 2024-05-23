@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
 
 class DoctorProfilePage extends StatefulWidget {
@@ -101,67 +102,63 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: FutureBuilder(
-          future: _userDataFuture,
-          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const CircleAvatar(
-                    radius: 60,
-                    backgroundImage: NetworkImage(
-                        'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
+      child: FutureBuilder(
+        future: _userDataFuture,
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const CircleAvatar(
+                  radius: 60,
+                  backgroundImage: NetworkImage(
+                      'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
+                ),
+                const SizedBox(height: 20),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: _doctorData['first_name'] +
+                        ' ' +
+                        _doctorData['last_name'],
+                    style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
-                  const SizedBox(height: 20),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text:
-                          '${_doctorData['first_name'][0].toUpperCase()}${_doctorData['first_name'].substring(1)} ',
-                      style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: _doctorData['last_name'].toUpperCase(),
-                          style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'email: ${_user.email}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.phoneNumber}: ${_doctorData['phone_number']}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    child: Text(AppLocalizations.of(context)!.logOut),
-                    onPressed: () {
-                      _confirmSignOut(context);
-                    },
-                  ),
-                ],
-              );
-            }
-          },
-        ),
+                ),
+                const SizedBox(height: 10),
+                CupertinoList(dataPairs: [
+                  {'titleText': 'Email', 'textValue': _user.email},
+                  {
+                    'titleText': AppLocalizations.of(context)!.phoneNumber,
+                    'textValue': _doctorData['phone_number']
+                  }
+                ]),
+                // Text(
+                //   'email: ${_user.email}',
+                //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                // ),
+                // Text(
+                //   '${AppLocalizations.of(context)!.phoneNumber}: ${_doctorData['phone_number']}',
+                //   style: const TextStyle(fontSize: 20, color: Colors.black),
+                // ),ş
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  child: Text(AppLocalizations.of(context)!.logOut),
+                  onPressed: () {
+                    _confirmSignOut(context);
+                  },
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }
