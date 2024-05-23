@@ -130,5 +130,15 @@
     "confirmPassword": "Re-enter Password",
     "passwordMismatch": "Password missmatch, please try again!",
     "invalidToken": "You entered an invalid token!",
-    "registerNewPatient": "Register New Patient"
+    "registerNewPatient": "Register New Patient",
+    "aboutAnaphylaxis": "About Anaphylaxis",
+    "anaphylaxisTitle": "Anaphylaxis (Allergic Shock) Symptoms:",
+    "symptomsExplanation": "Depending on the severity of your symptom, review the following symptom list to understand if you are experiencing anaphylactic shock. In the case of anaphylactic shock, apply the Penepin injector and go to the hospital.",
+    "watchOnYoutube": "Watch on YouTube",
+    "skinSystem": "Skin System",
+    "skinSystemExplanation": "If it is in a small area, give allergy syrup or tablet, but if urticaria plaques are widespread, and if angioedema is on the tongue, administer adrenaline.",
+    "respiratorySystem": "Respiratory System",
+    "applyAdrenaline": "Apply Adrenaline Auto Injector",
+    "gastrointestinalSystem": "Gastointestinal System",
+    "cardiovascularSystem": "Cardiovascular System"
  }

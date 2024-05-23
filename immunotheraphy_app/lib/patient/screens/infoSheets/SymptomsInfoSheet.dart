@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:accordion/accordion.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SymptomsInfoSheet extends StatefulWidget {
   const SymptomsInfoSheet({super.key});
@@ -66,9 +67,9 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Anaflaksi Hakkında",
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.aboutAnaphylaxis,
+                          style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
@@ -82,11 +83,14 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const Center(
-                    child: Text(
-                      "Anafilaksi (Alerjik Şok) Semptomları:",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.anaphylaxisTitle,
+                        style: const TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -97,9 +101,9 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Semptomunuzun şiddetine göre anafilaktik şok geçirdiğinizi anlayabilmek için aşağıdaki semptom listesini inceleyin. Anafilaktik şok durumunda Penepin enjektörü uygulayın ve hastaneye gidin.",
-                            style: TextStyle(fontSize: 16),
+                          Text(
+                            AppLocalizations.of(context)!.symptomsExplanation,
+                            style: const TextStyle(fontSize: 16),
                           ),
                           Card(
                             surfaceTintColor: CupertinoColors.systemBackground,
@@ -128,7 +132,9 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                                         onPressed: _launchYouTubeVideo,
                                         icon: const Icon(
                                             Icons.ondemand_video_rounded),
-                                        label: const Text("Watch on YouTube"),
+                                        label: Text(
+                                            AppLocalizations.of(context)!
+                                                .watchOnYoutube),
                                       ),
                                     ],
                                   ),
@@ -171,8 +177,8 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       children: [
         AccordionSection(
           isOpen: false,
-          header: const Text('Deri Sistemi',
-              style: TextStyle(
+          header: Text(AppLocalizations.of(context)!.skinSystem,
+              style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
@@ -180,10 +186,10 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ...[
-                'Ürtiker',
-                'Anjiyo Ödem',
-                'Kaşıntı',
-                'Kızarıklık',
+                AppLocalizations.of(context)!.urtiker,
+                AppLocalizations.of(context)!.anjiyoOdem,
+                AppLocalizations.of(context)!.kasinti,
+                AppLocalizations.of(context)!.kizariklik,
               ].map<Widget>((item) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 20.0, top: 5.0),
@@ -199,16 +205,17 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                 );
               }),
               const SizedBox(height: 10),
-              const Padding(
-                  padding: EdgeInsets.only(left: 20.0, top: 5.0),
+              Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
                   child: Row(
                     children: [
-                      Icon(Icons.error_outline, size: 20, color: Colors.blue),
-                      SizedBox(width: 10),
+                      const Icon(Icons.error_outline,
+                          size: 20, color: Colors.blue),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'Küçük bir alanda ise alerji şurubu veya tableti veriniz ancak ürtiker plakları yaygın ise, anjiyo ödem dilde ise adrenalin yapınız',
-                          style: TextStyle(fontSize: 16),
+                          AppLocalizations.of(context)!.skinSystemExplanation,
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
                     ],
@@ -218,8 +225,8 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
         ),
         AccordionSection(
           isOpen: false,
-          header: const Text('Solunum Sistemi',
-              style: TextStyle(
+          header: Text(AppLocalizations.of(context)!.respiratorySystem,
+              style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
@@ -227,12 +234,12 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ...[
-                'Burun Akıntısı',
-                'Hapşırık',
-                'Öksürük',
-                'Hırıltı',
-                'Nefes Darlığı',
-                'Göğüs Ağrısı',
+                AppLocalizations.of(context)!.burunAkitmasi,
+                AppLocalizations.of(context)!.hapsirik,
+                AppLocalizations.of(context)!.oksuruk,
+                AppLocalizations.of(context)!.hirilti,
+                AppLocalizations.of(context)!.nefesDarligi,
+                AppLocalizations.of(context)!.gogusAgri,
               ].map<Widget>((symptom) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 20.0, top: 5.0),
@@ -248,16 +255,17 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                 );
               }),
               const SizedBox(height: 10),
-              const Padding(
-                  padding: EdgeInsets.only(left: 20.0, top: 5.0),
+              Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
                   child: Row(
                     children: [
-                      Icon(Icons.error_outline, size: 20, color: Colors.blue),
-                      SizedBox(width: 10),
+                      const Icon(Icons.error_outline,
+                          size: 20, color: Colors.blue),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'Adrenalin oto-enjektörü uygulayınız',
-                          style: TextStyle(fontSize: 16),
+                          AppLocalizations.of(context)!.applyAdrenaline,
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
                     ],
@@ -267,8 +275,8 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
         ),
         AccordionSection(
           isOpen: false,
-          header: const Text('Sindirim Sistemi',
-              style: TextStyle(
+          header: Text(AppLocalizations.of(context)!.gastrointestinalSystem,
+              style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
@@ -276,9 +284,9 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ...[
-                'Karın Ağrısı',
-                'Kusma',
-                'İshal',
+                AppLocalizations.of(context)!.karinAgri,
+                AppLocalizations.of(context)!.kusma,
+                AppLocalizations.of(context)!.ishal,
               ].map<Widget>((symptom) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 20.0, top: 5.0),
@@ -294,16 +302,17 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                 );
               }),
               const SizedBox(height: 10),
-              const Padding(
-                  padding: EdgeInsets.only(left: 20.0, top: 5.0),
+              Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
                   child: Row(
                     children: [
-                      Icon(Icons.error_outline, size: 20, color: Colors.blue),
-                      SizedBox(width: 10),
+                      const Icon(Icons.error_outline,
+                          size: 20, color: Colors.blue),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'Adrenalin oto-enjektörü uygulayınız',
-                          style: TextStyle(fontSize: 16),
+                          AppLocalizations.of(context)!.applyAdrenaline,
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
                     ],
@@ -313,8 +322,8 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
         ),
         AccordionSection(
           isOpen: false,
-          header: const Text('Kalp Sistemi',
-              style: TextStyle(
+          header: Text(AppLocalizations.of(context)!.cardiovascularSystem,
+              style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
@@ -322,10 +331,10 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ...[
-                'Kalbin Çok Hızlı Atımları',
-                'Tansiyon Düşmesi',
-                'Baygınlık Hissi',
-                'Bayılma',
+                AppLocalizations.of(context)!.kalbinCokHizliAtimlari,
+                AppLocalizations.of(context)!.tansiyonDusmesi,
+                AppLocalizations.of(context)!.bayginlikHissi,
+                AppLocalizations.of(context)!.bayilma,
               ].map((symptom) => Padding(
                     padding: const EdgeInsets.only(left: 20.0, top: 5.0),
                     child: Row(
@@ -339,16 +348,17 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                     ),
                   )),
               const SizedBox(height: 10),
-              const Padding(
-                  padding: EdgeInsets.only(left: 20.0, top: 5.0),
+              Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
                   child: Row(
                     children: [
-                      Icon(Icons.error_outline, size: 20, color: Colors.blue),
-                      SizedBox(width: 10),
+                      const Icon(Icons.error_outline,
+                          size: 20, color: Colors.blue),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'Adrenalin oto-enjektörü uygulayınız',
-                          style: TextStyle(fontSize: 16),
+                          AppLocalizations.of(context)!.applyAdrenaline,
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
                     ],

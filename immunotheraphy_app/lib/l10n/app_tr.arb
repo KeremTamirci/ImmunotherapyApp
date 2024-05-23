@@ -118,7 +118,17 @@
     "confirmPassword": "Şifrenizi Tekrar Girin",
     "passwordMismatch": "Şifreleriniz uyuşmuyor, tekrar deneyin!",
     "invalidToken": "Yanlış bir token girdiniz!",
-    "registerNewPatient": "Yeni Hasta Kaydı"
+    "registerNewPatient": "Yeni Hasta Kaydı",
+    "aboutAnaphylaxis": "Anafilaksi Hakkında",
+    "anaphylaxisTitle": "Anafilaksi (Alerjik Şok) Semptomları:",
+    "symptomsExplanation": "Semptomunuzun şiddetine göre anafilaktik şok geçirdiğinizi anlayabilmek için aşağıdaki semptom listesini inceleyin. Anafilaktik şok durumunda Penepin enjektörü uygulayın ve hastaneye gidin.",
+    "watchOnYoutube": "YouTube'da açın",
+    "skinSystem": "Deri Sistemi",
+    "skinSystemExplanation": "Küçük bir alanda ise alerji şurubu veya tableti veriniz ancak ürtiker plakları yaygın ise, anjiyo ödem dilde ise adrenalin yapınız",
+    "respiratorySystem": "Solunum Sistemi",
+    "applyAdrenaline": "Adrenalin oto-enjektörü uygulayınız",
+    "gastrointestinalSystem": "Sindirim Sistemi",
+    "cardiovascularSystem": "Kalp Sistemi"
 
 
 }
