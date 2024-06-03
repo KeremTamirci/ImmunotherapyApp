@@ -244,7 +244,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                           Row(
                             children: [
                               Text(
-                                AppLocalizations.of(context)!.dosageTime,
+                                AppLocalizations.of(context)!.symptomTime,
                                 style: const TextStyle(fontSize: 20),
                               ),
                               const SizedBox(width: 10),

@@ -140,5 +140,6 @@
     "respiratorySystem": "Respiratory System",
     "applyAdrenaline": "Apply Adrenaline Auto Injector",
     "gastrointestinalSystem": "Gastointestinal System",
-    "cardiovascularSystem": "Cardiovascular System"
+    "cardiovascularSystem": "Cardiovascular System",
+    "symptomTime": "Symptom time"
  }

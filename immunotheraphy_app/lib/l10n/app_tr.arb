@@ -128,7 +128,8 @@
     "respiratorySystem": "Solunum Sistemi",
     "applyAdrenaline": "Adrenalin oto-enjektörü uygulayınız",
     "gastrointestinalSystem": "Sindirim Sistemi",
-    "cardiovascularSystem": "Kalp Sistemi"
+    "cardiovascularSystem": "Kalp Sistemi",
+    "symptomTime": "Semptomun Saati"
 
 
 }

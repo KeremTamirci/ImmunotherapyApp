@@ -152,6 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 20),
                   const CircleAvatar(
                     radius: 60,
                     backgroundImage: NetworkImage(
