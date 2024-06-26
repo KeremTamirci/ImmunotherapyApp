@@ -177,11 +177,9 @@ class DoseIntakePageState extends State<DoseIntakePage>
       Map<String, dynamic> dosageDetails = {
         'dosage_date': _selectedTimeCupertino,
         'detail': 'Doz kaydı detayı',
-        // 'dosage_amount': _selectedItem, // Using the selected item directly
         'dosage_amount': double.tryParse(_textController.text),
         'is_hospital_dosage': _isHospitalDosage,
         'measure_metric': 'ml',
-        // Add any other fields you need for your dosage recording
       };
 
       await _databaseController.addDosageTime(dosageDetails);
