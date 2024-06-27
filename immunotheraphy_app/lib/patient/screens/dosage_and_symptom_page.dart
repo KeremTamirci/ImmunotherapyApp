@@ -86,8 +86,10 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                           icon: Icons.task_alt,
                           linearGradient: LinearGradient(
                             colors: [
-                              hexStringToColor("3DED97"),
-                              hexStringToColor("18C872")
+                              // hexStringToColor("3DED97"),
+                              // hexStringToColor("18C872")
+                              hexStringToColor("0F7A50"),
+                              hexStringToColor("065E44"),
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -309,56 +311,61 @@ class InformationBox extends StatelessWidget {
           // color: color,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            Icon(
-              icon,
-              size: MediaQuery.of(context).size.height * 0.08,
-              color: Colors.white,
-            ),
-            const SizedBox(height: 15),
-            Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width *
-                      0.35, // Set a maximum width for the text
-                ),
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center, // Center the text horizontally
-                  softWrap: true, // Enable text wrapping
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30, bottom: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // const SizedBox(height: 20),
+              Icon(
+                icon,
+                size: MediaQuery.of(context).size.height * 0.08,
+                color: Colors.white,
+              ),
+              // const SizedBox(height: 15),
+              const Spacer(),
+              Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width *
+                        0.35, // Set a maximum width for the text
+                  ),
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center, // Center the text horizontally
+                    softWrap: true, // Enable text wrapping
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 15),
-            isButtonActive
-                ? ElevatedButton(
-                    onPressed: null,
-                    style: const ButtonStyle(
-                      foregroundColor: MaterialStatePropertyAll(Colors.white),
-                    ),
-                    child: Text(
-                      AppLocalizations.of(context)!.start,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  )
-                : Container()
-            // const Text(
-            //   "Başla",
-            //   style: TextStyle(
-            //     color: Colors.white,
-            //     fontSize: 18,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-          ],
+              // const SizedBox(height: 15),
+              const Spacer(),
+              isButtonActive
+                  ? ElevatedButton(
+                      onPressed: null,
+                      style: const ButtonStyle(
+                        foregroundColor: MaterialStatePropertyAll(Colors.white),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.start,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    )
+                  : Container()
+              // const Text(
+              //   "Başla",
+              //   style: TextStyle(
+              //     color: Colors.white,
+              //     fontSize: 18,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );
