@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:immunotheraphy_app/patient/screens/form_page.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/reusable_widgets/warning_box.dart';
@@ -25,6 +28,9 @@ class DoseIntakePageState extends State<DoseIntakePage>
   DateTime _selectedTimeCupertino = DateTime.now();
   bool _showTime = false;
   bool _isHospitalDosage = false; // Initial value for hospital dosage
+  String _selectedWatering = '1/1';
+  final List<String> _wateringValues = ['1/1', '1/10', '1/100'];
+
   late DatabaseController _databaseController;
   // ignore: unused_field
   late User _user;
@@ -180,6 +186,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
         'dosage_amount': double.tryParse(_textController.text),
         'is_hospital_dosage': _isHospitalDosage,
         'measure_metric': 'ml',
+        //'sulandırma': _selectedWatering,
       };
 
       await _databaseController.addDosageTime(dosageDetails);
@@ -223,6 +230,41 @@ class DoseIntakePageState extends State<DoseIntakePage>
     }
   }
 
+  void _showActionSheet(BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: const Text('Watering'),
+        message: const Text('Select the ratio of water to dose'),
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            /// This parameter indicates the action would be a default
+            /// default behavior, turns the action's text to bold text.
+            onPressed: () {
+              Navigator.pop(context);
+              _selectedWatering = '1/1';
+            },
+            child: const Text('1/1'),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              _selectedWatering = '1/10';
+              Navigator.pop(context);
+            },
+            child: const Text('1/10'),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context);
+              _selectedWatering = '1/100';
+            },
+            child: const Text('1/100'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // return Scaffold(
@@ -251,47 +293,80 @@ class DoseIntakePageState extends State<DoseIntakePage>
           Container(
             // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             // width: 350,
-            height: 60,
+            height: 155,
             decoration: BoxDecoration(
               color: CupertinoColors.systemBackground,
               borderRadius: BorderRadius.circular(15),
             ),
-            child: TextField(
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-              ],
-              decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.dosageAmountMl,
-                hintStyle: const TextStyle(color: CupertinoColors.systemGrey),
-                // alignLabelWithHint: true,
-                // labelText: 'Doz miktarını giriniz',
-                border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    borderSide: BorderSide.none),
-                filled: true,
-                // fillColor: hexStringToColor("E8EDF2"),
-                fillColor: CupertinoColors.systemBackground,
-              ),
-              style: TextStyle(
-                color: hexStringToColor("4F7396"),
-                fontSize: 18,
-              ),
-              // Set the TextEditingController
-              controller: _textController,
-              // Inside the onChanged callback
-              onChanged: (String value) {
-                // Parse the input value to ensure it's numeric
-                String newValue = value.replaceAll(RegExp(r'[^0-9.]'), '');
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 350,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Sulandırma",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        const Spacer(),
+                        CupertinoButton(
+                            onPressed: () => _showActionSheet(context),
+                            child: Text(
+                              _selectedWatering,
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                      thickness: 0.5, color: CupertinoColors.systemGrey),
+                  TextField(
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                    ],
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.dosageAmountMl,
+                      hintStyle:
+                          const TextStyle(color: CupertinoColors.systemGrey),
+                      // alignLabelWithHint: true,
+                      // labelText: 'Doz miktarını giriniz',
+                      border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          borderSide: BorderSide.none),
+                      filled: true,
+                      // fillColor: hexStringToColor("E8EDF2"),
+                      fillColor: CupertinoColors.systemBackground,
+                    ),
+                    style: TextStyle(
+                      color: hexStringToColor("4F7396"),
+                      fontSize: 18,
+                    ),
+                    // Set the TextEditingController
+                    controller: _textController,
+                    // Inside the onChanged callback
+                    onChanged: (String value) {
+                      // Parse the input value to ensure it's numeric
+                      String newValue =
+                          value.replaceAll(RegExp(r'[^0-9.]'), '');
 
-                // Update the text field's value without triggering onChanged
-                _textController.value = _textController.value.copyWith(
-                  text: newValue,
-                  selection: TextSelection.collapsed(offset: newValue.length),
-                  composing: TextRange.empty,
-                );
-              },
+                      // Update the text field's value without triggering onChanged
+                      _textController.value = _textController.value.copyWith(
+                        text: newValue,
+                        selection:
+                            TextSelection.collapsed(offset: newValue.length),
+                        composing: TextRange.empty,
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 20),
