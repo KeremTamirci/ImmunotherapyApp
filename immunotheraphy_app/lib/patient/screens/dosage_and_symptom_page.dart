@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,6 +8,7 @@ import 'package:immunotheraphy_app/patient/screens/form_page.dart';
 import 'package:immunotheraphy_app/patient/screens/infoSheets/AllergyInfoSheet.dart';
 import 'package:immunotheraphy_app/patient/screens/infoSheets/MilkLadderInfoSheet.dart';
 import 'package:immunotheraphy_app/patient/screens/infoSheets/SymptomsInfoSheet.dart';
+import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -18,6 +20,45 @@ class DosageAndSymptomPage extends StatefulWidget {
 }
 
 class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
+  late DatabaseController _databaseController;
+  late User _user;
+  bool? _hasTakenDose;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserData();
+    _checkDosage();
+  }
+
+  Future<void> _checkDosage() async {
+    bool hasTakenDose = await hasTakenDosage();
+    setState(() {
+      _hasTakenDose = hasTakenDose;
+      _isLoading = false;
+    });
+  }
+
+  Future<bool> hasTakenDosage() async {
+    bool isLastDoseToday = await _databaseController.isLastDoseToday();
+    if (isLastDoseToday) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> _getUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _user = user;
+        _databaseController = DatabaseController(user.uid);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,27 +77,44 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  InformationBox(
-                    title: AppLocalizations.of(context)!.dosageEntry,
-                    onTap: () {
-                      print('Box 1 tapped');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FormPage(),
+                  _hasTakenDose == true
+                      ? InformationBox(
+                          title: "You have entered your dose for today!",
+                          onTap: () {
+                            print("Box 1 alternative version tapped");
+                          },
+                          icon: Icons.task_alt,
+                          linearGradient: LinearGradient(
+                            colors: [
+                              hexStringToColor("3DED97"),
+                              hexStringToColor("18C872")
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                          isButtonActive: false,
+                        )
+                      : InformationBox(
+                          title: AppLocalizations.of(context)!.dosageEntry,
+                          onTap: () {
+                            print('Box 1 tapped');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const FormPage(),
+                              ),
+                            );
+                          },
+                          icon: Icons.list,
+                          linearGradient: LinearGradient(
+                            colors: [
+                              hexStringToColor("3DED97"),
+                              hexStringToColor("18C872")
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
                         ),
-                      );
-                    },
-                    icon: Icons.list,
-                    linearGradient: LinearGradient(
-                      colors: [
-                        hexStringToColor("3DED97"),
-                        hexStringToColor("18C872")
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
                   InformationBox(
                     title: AppLocalizations.of(context)!.symptomEntry,
                     onTap: () {
@@ -227,6 +285,7 @@ class InformationBox extends StatelessWidget {
   // final Color color;
   final LinearGradient linearGradient;
   final void Function()? onTap;
+  final bool isButtonActive;
 
   const InformationBox({
     super.key,
@@ -235,6 +294,7 @@ class InformationBox extends StatelessWidget {
     // required this.color,
     required this.onTap,
     required this.linearGradient,
+    this.isButtonActive = true,
   });
 
   @override
@@ -259,25 +319,37 @@ class InformationBox extends StatelessWidget {
               color: Colors.white,
             ),
             const SizedBox(height: 15),
-            Text(
-              title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width *
+                      0.35, // Set a maximum width for the text
+                ),
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center, // Center the text horizontally
+                  softWrap: true, // Enable text wrapping
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 15),
-            ElevatedButton(
-              onPressed: null,
-              style: ButtonStyle(
-                foregroundColor: MaterialStatePropertyAll(Colors.white),
-              ),
-              child: Text(
-                AppLocalizations.of(context)!.start,
-                style: TextStyle(fontSize: 16),
-              ),
-            )
+            isButtonActive
+                ? ElevatedButton(
+                    onPressed: null,
+                    style: const ButtonStyle(
+                      foregroundColor: MaterialStatePropertyAll(Colors.white),
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context)!.start,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  )
+                : Container()
             // const Text(
             //   "Başla",
             //   style: TextStyle(
