@@ -89,6 +89,12 @@ class DatabaseController {
     }
   }
 
+  Future<bool> isAfterSeven() async {
+    DateTime now = DateTime.now();
+    // Check if the current hour is greater than or equal to 19 (7:00 PM)
+    return now.hour >= 19;
+  }
+
   // Method to add symptoms to the symptoms table
   Future<void> addSymptoms(List<Map<String, dynamic>> symptoms) async {
     try {

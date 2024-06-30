@@ -23,6 +23,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   late DatabaseController _databaseController;
   late User _user;
   bool? _hasTakenDose;
+  bool? _incorrectTime;
   bool _isLoading = true;
 
   @override
@@ -30,6 +31,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
     super.initState();
     _getUserData();
     _checkDosage();
+    _checkTime();
   }
 
   Future<void> _checkDosage() async {
@@ -40,9 +42,26 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
     });
   }
 
+  Future<void> _checkTime() async {
+    bool incorrectTime = await checkTime();
+    setState(() {
+      _incorrectTime = incorrectTime;
+      _isLoading = false;
+    });
+  }
+
   Future<bool> hasTakenDosage() async {
     bool isLastDoseToday = await _databaseController.isLastDoseToday();
     if (isLastDoseToday) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> checkTime() async {
+    bool isAfterSeven = await _databaseController.isAfterSeven();
+    if (isAfterSeven) {
       return true;
     } else {
       return false;
@@ -77,46 +96,65 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  _hasTakenDose == true
-                      ? InformationBox(
-                          title: "You have entered your dose for today!",
-                          onTap: () {
-                            print("Box 1 alternative version tapped");
-                          },
-                          icon: Icons.task_alt,
-                          linearGradient: LinearGradient(
-                            colors: [
-                              // hexStringToColor("3DED97"),
-                              // hexStringToColor("18C872")
-                              hexStringToColor("0F7A50"),
-                              hexStringToColor("065E44"),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
+                  if (_hasTakenDose == true)
+                    InformationBox(
+                      title: "You have entered your dose for today!",
+                      onTap: () {
+                        print("Box 1 alternative version tapped");
+                      },
+                      icon: Icons.task_alt,
+                      linearGradient: LinearGradient(
+                        colors: [
+                          // hexStringToColor("3DED97"),
+                          // hexStringToColor("18C872")
+                          hexStringToColor("0F7A50"),
+                          hexStringToColor("065E44"),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      isButtonActive: false,
+                    )
+                  else if (_incorrectTime == true)
+                    InformationBox(
+                      title:
+                          "It is past 19.00, you cannot take your dose for today!",
+                      onTap: () {
+                        print("Box 1 other alternative version tapped");
+                      },
+                      icon: Icons.block,
+                      linearGradient: LinearGradient(
+                        colors: [
+                          hexStringToColor("FFA500"), // Lighter orange
+                          hexStringToColor("CC8400"), // Darker orange
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      isButtonActive: false,
+                    )
+                  else
+                    InformationBox(
+                      title: AppLocalizations.of(context)!.dosageEntry,
+                      onTap: () {
+                        print('Box 1 tapped');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FormPage(),
                           ),
-                          isButtonActive: false,
-                        )
-                      : InformationBox(
-                          title: AppLocalizations.of(context)!.dosageEntry,
-                          onTap: () {
-                            print('Box 1 tapped');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const FormPage(),
-                              ),
-                            );
-                          },
-                          icon: Icons.list,
-                          linearGradient: LinearGradient(
-                            colors: [
-                              hexStringToColor("3DED97"),
-                              hexStringToColor("18C872")
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                        ),
+                        );
+                      },
+                      icon: Icons.list,
+                      linearGradient: LinearGradient(
+                        colors: [
+                          hexStringToColor("3DED97"),
+                          hexStringToColor("18C872")
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
                   InformationBox(
                     title: AppLocalizations.of(context)!.symptomEntry,
                     onTap: () {
