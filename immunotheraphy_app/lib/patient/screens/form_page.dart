@@ -6,13 +6,15 @@ import 'package:immunotheraphy_app/reusable_widgets/warning_box.dart';
 // import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class FormPage extends StatefulWidget {
-  const FormPage({super.key});
+  final bool? isAfterSeven;
+  const FormPage({super.key, required this.isAfterSeven});
 
   @override
   FormPageState createState() => FormPageState();
 }
 
 class FormPageState extends State<FormPage> {
+  bool _dialogShown = false;
   int _currentStep = 0;
   bool doseAllowed = false;
   final List<bool> checkedStateStep1 = [false, false, false];
@@ -28,6 +30,13 @@ class FormPageState extends State<FormPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isAfterSeven != null &&
+        widget.isAfterSeven == true &&
+        !_dialogShown) {
+      _dialogShown = true;
+      Future.delayed(Duration.zero, () => _showEnhancedAlertDialog(context));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.dozGirisSayfasi),
@@ -229,6 +238,78 @@ class FormPageState extends State<FormPage> {
       ),
     );
   }
+}
+
+void _showEnhancedAlertDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        title: const Row(
+          children: [
+            Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
+            SizedBox(width: 10),
+            Text(
+              'Important Notice',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 126, 6, 0),
+              ),
+            ),
+          ],
+        ),
+        content: const SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(
+                'It is currently past 19:00.',
+                style: TextStyle(fontSize: 20, color: Colors.black87),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'It is not recommended to take the dose after 19:00. You can consider skipping today\'s dose.',
+                style: TextStyle(fontSize: 20, color: Colors.black87),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+            style: const ButtonStyle(
+              textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18)),
+              minimumSize: MaterialStatePropertyAll(Size(70, 50)),
+              foregroundColor: MaterialStatePropertyAll(
+                Color.fromARGB(255, 126, 6, 0),
+              ),
+            ),
+            child: Text(AppLocalizations.of(context)!.geriDon),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            style: const ButtonStyle(
+                textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18)),
+                backgroundColor:
+                    MaterialStatePropertyAll(Color.fromARGB(255, 126, 6, 0)),
+                foregroundColor: MaterialStatePropertyAll(Colors.white),
+                minimumSize: MaterialStatePropertyAll(Size(70, 50))),
+            child: Text(AppLocalizations.of(context)!.ilerle),
+          ),
+        ],
+      );
+    },
+  );
 }
 
 class Step1Incomplete extends StatelessWidget {
