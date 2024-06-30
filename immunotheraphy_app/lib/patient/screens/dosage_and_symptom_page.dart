@@ -115,10 +115,10 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                       ),
                       isButtonActive: false,
                     )
-                  else if (_incorrectTime == true)
+                  else if (_incorrectTime == false)
                     InformationBox(
                       title:
-                          "It is past 19.00, you cannot take your dose for today!",
+                          "It is past 19.00, you cannot take your dose today!",
                       onTap: () {
                         print("Box 1 other alternative version tapped");
                       },
