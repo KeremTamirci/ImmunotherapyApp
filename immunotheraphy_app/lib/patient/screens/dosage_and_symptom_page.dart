@@ -121,8 +121,12 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                     builder: (context) =>
                                         FormPage(isAfterSeven: _incorrectTime),
                                   ),
-                                );
-                                // setState(() {});
+                                ).then((_) {
+                                  setState(() {
+                                    _hasTakenDose = true;
+                                    // _checkDosageandTime();
+                                  });
+                                });
                               },
                               icon: Icons.list,
                               linearGradient: (_incorrectTime == false)
