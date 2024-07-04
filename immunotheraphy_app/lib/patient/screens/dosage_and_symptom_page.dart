@@ -113,7 +113,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                         else
                           InformationBox(
                               title: AppLocalizations.of(context)!.dosageEntry,
-                              onTap: () {
+                              onTap: () async {
                                 print('Box 1 tapped');
                                 Navigator.push(
                                   context,
@@ -123,8 +123,8 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                   ),
                                 ).then((_) {
                                   setState(() {
-                                    _hasTakenDose = true;
-                                    // _checkDosageandTime();
+                                    // _hasTakenDose = true;
+                                    _checkDosageandTime();
                                   });
                                 });
                               },
