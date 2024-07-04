@@ -3,6 +3,7 @@
 import 'package:accordion/controllers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/patient/utils/animated_dropdown.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -220,8 +221,15 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                             )
                           ],
                         ),
+                        const Padding(
+                          padding: EdgeInsets.all(28.0),
+                          child: AnimatedDropdownExample(),
+                        ),
                         const SizedBox(height: 20),
-                        _buildAccordion(),
+                        ///////////////////////////////////////////////////////////
+                        // UNCOMMENT HERE FOR ACCORDION CODE
+                        // _buildAccordion(),
+                        ///////////////////////////////////////////////////////////
                         // const SizedBox(height: 10),
                       ],
                     ),
@@ -485,5 +493,213 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+}
+
+class AnimatedDropdownExample extends StatelessWidget {
+  const AnimatedDropdownExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        const Divider(thickness: 0.5, color: CupertinoColors.systemGrey),
+        const SizedBox(height: 10),
+        AnimatedDropdown(
+          title: AppLocalizations.of(context)!.skinSystem,
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...[
+                AppLocalizations.of(context)!.urtiker,
+                AppLocalizations.of(context)!.anjiyoOdem,
+                AppLocalizations.of(context)!.kasinti,
+                AppLocalizations.of(context)!.kizariklik,
+              ].map<Widget>((item) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.circle, size: 8),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          item,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.error_outline,
+                        size: 20, color: Color.fromARGB(255, 126, 6, 0)),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context)!.skinSystemExplanation,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Divider(thickness: 0.5, color: CupertinoColors.systemGrey),
+        const SizedBox(height: 10),
+        AnimatedDropdown(
+          title: AppLocalizations.of(context)!.respiratorySystem,
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...[
+                AppLocalizations.of(context)!.burunAkitmasi,
+                AppLocalizations.of(context)!.hapsirik,
+                AppLocalizations.of(context)!.oksuruk,
+                AppLocalizations.of(context)!.hirilti,
+                AppLocalizations.of(context)!.nefesDarligi,
+                AppLocalizations.of(context)!.gogusAgri,
+              ].map<Widget>((symptom) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.circle, size: 8),
+                      const SizedBox(width: 10),
+                      Expanded(
+                          child: Text(symptom,
+                              style: const TextStyle(fontSize: 16))),
+                    ],
+                  ),
+                );
+              }),
+              const SizedBox(height: 10),
+              Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error_outline,
+                          size: 20, color: Color.fromARGB(255, 126, 6, 0)),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          AppLocalizations.of(context)!.applyAdrenaline,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  )),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Divider(thickness: 0.5, color: CupertinoColors.systemGrey),
+        const SizedBox(height: 10),
+        AnimatedDropdown(
+          title: AppLocalizations.of(context)!.gastrointestinalSystem,
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...[
+                AppLocalizations.of(context)!.karinAgri,
+                AppLocalizations.of(context)!.kusma,
+                AppLocalizations.of(context)!.ishal,
+              ].map<Widget>((symptom) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.circle, size: 8),
+                      const SizedBox(width: 10),
+                      Expanded(
+                          child: Text(symptom,
+                              style: const TextStyle(fontSize: 16))),
+                    ],
+                  ),
+                );
+              }),
+              const SizedBox(height: 10),
+              Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error_outline,
+                          size: 20, color: Color.fromARGB(255, 126, 6, 0)),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          AppLocalizations.of(context)!.applyAdrenaline,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  )),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Divider(thickness: 0.5, color: CupertinoColors.systemGrey),
+        const SizedBox(height: 10),
+        AnimatedDropdown(
+          title: AppLocalizations.of(context)!.cardiovascularSystem,
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...[
+                AppLocalizations.of(context)!.kalbinCokHizliAtimlari,
+                AppLocalizations.of(context)!.tansiyonDusmesi,
+                AppLocalizations.of(context)!.bayginlikHissi,
+                AppLocalizations.of(context)!.bayilma,
+              ].map((symptom) => Padding(
+                    padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.circle, size: 8),
+                        const SizedBox(width: 10),
+                        Expanded(
+                            child: Text(symptom,
+                                style: const TextStyle(fontSize: 16))),
+                      ],
+                    ),
+                  )),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.error_outline,
+                        size: 20, color: Color.fromARGB(255, 126, 6, 0)),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context)!.applyAdrenaline,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Divider(thickness: 0.5, color: CupertinoColors.systemGrey),
+        const SizedBox(height: 10),
+
+        // AnimatedDropdown(
+        //   title: 'Another Dropdown',
+        //   content: 'This is another example of a dropdown.',
+        // ),
+      ],
+    );
   }
 }
