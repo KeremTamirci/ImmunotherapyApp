@@ -149,13 +149,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                  // const Spacer(),
                   const CircleAvatar(
                     radius: 60,
                     backgroundImage: NetworkImage(
                         'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
                   ),
-                  const SizedBox(height: 20),
+                  // const SizedBox(height: 20),
+                  const Spacer(),
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
@@ -177,7 +179,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       // ],
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 10),
+                  const Spacer(),
                   PatientInfoBox(
                       user: _user,
                       patientData: _patientData,
@@ -185,20 +188,36 @@ class _ProfilePageState extends State<ProfilePage> {
                   // const SizedBox(height: 30),
                   AdditionalInfoBox(patientData: _patientData),
                   //////////////////////////////////////////////////////////
-                  const SizedBox(height: 20),
+                  // const SizedBox(height: 20),
+                  const Spacer(),
                   // Button to change language
-                  ElevatedButton(
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     _showLanguageSelector(context);
+                  //   },
+                  //   child: const Text('Change Language/Dili Değiştir'),
+                  // ),
+                  DialogElevatedButton(
+                    "Change language/Dili değiştir",
                     onPressed: () {
                       _showLanguageSelector(context);
                     },
-                    child: const Text('Change Language/Dili Değiştir'),
                   ),
-                  ElevatedButton(
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     _confirmSignOut(context);
+                  //   },
+                  //   child: Text(AppLocalizations.of(context)!.logOut),
+                  // ),
+                  // const SizedBox(height: 20),
+                  const Spacer(),
+                  DialogElevatedButton(
+                    AppLocalizations.of(context)!.logOut,
                     onPressed: () {
                       _confirmSignOut(context);
                     },
-                    child: Text(AppLocalizations.of(context)!.logOut),
                   ),
+                  const Spacer(),
                 ],
               );
             }

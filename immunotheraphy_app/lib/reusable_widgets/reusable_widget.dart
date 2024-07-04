@@ -251,9 +251,14 @@ class CupertinoList extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
           child: CupertinoListTile(
-            title: Text(pair['titleText']!, style: TextStyle(fontSize: 20)),
-            additionalInfo:
-                Text(pair['textValue']!, style: TextStyle(fontSize: 20)),
+            title: Text(
+              pair['titleText']!,
+              style: TextStyle(fontSize: 18),
+            ),
+            additionalInfo: Text(
+              pair['textValue']!,
+              style: TextStyle(fontSize: 18),
+            ),
           ),
         );
       }).toList(),
