@@ -11,6 +11,7 @@ import 'package:immunotheraphy_app/patient/screens/infoSheets/SymptomsInfoSheet.
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class DosageAndSymptomPage extends StatefulWidget {
   const DosageAndSymptomPage({super.key});
@@ -71,6 +72,35 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
     }
   }
 
+  void _showExerciseWarning() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          surfaceTintColor: CupertinoColors.systemBackground,
+          title: const Row(
+            children: [
+              Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
+              SizedBox(width: 10),
+              DialogTitleText('Uyarı', color: Color.fromARGB(255, 126, 6, 0)),
+            ],
+          ),
+          // const DialogTitleText("Uyarı", color: Color.fromARGB(255, 126, 6, 0)),
+          content: const DialogText(
+              "Doz alımından sonra 2 saat boyunca ağır egzersiz yapmayınız."),
+          actions: <Widget>[
+            DialogTextButton(
+              AppLocalizations.of(context)!.confirm,
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,6 +156,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                     // _hasTakenDose = true;
                                     _checkDosageandTime();
                                   });
+                                  _showExerciseWarning();
                                 });
                               },
                               icon: Icons.list,
@@ -212,10 +243,6 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                   ],
                 ),
               ));
-  }
-
-  int getPatientDoseNumber() {
-    return 3;
   }
 }
 
