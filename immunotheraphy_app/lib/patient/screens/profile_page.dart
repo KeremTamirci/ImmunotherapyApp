@@ -102,17 +102,10 @@ class _ProfilePageState extends State<ProfilePage> {
         return AlertDialog(
           surfaceTintColor: CupertinoColors.systemBackground,
           title: DialogTitleText(AppLocalizations.of(context)!.confirm),
-          // Text(AppLocalizations.of(context)!.confirm,
-          //     style: const TextStyle(
-          //       fontSize: 22,
-          //       fontWeight: FontWeight.bold,
-          //     )),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 DialogText(AppLocalizations.of(context)!.signOutSure)
-                // Text(AppLocalizations.of(context)!.signOutSure,
-                //     style: const TextStyle(fontSize: 20)),
               ],
             ),
           ),
@@ -123,24 +116,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.of(context).pop();
               },
             ),
-            // TextButton(
-            //   style: const ButtonStyle(
-            //       textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18))),
-            //   child: Text(AppLocalizations.of(context)!.cancel),
-            //   onPressed: () {
-            //     Navigator.of(context).pop();
-            //   },
-            // ),
             DialogTextButton(
               AppLocalizations.of(context)!.logOut,
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => const ChoiceScreen()),
-                  // );
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) => const ChoiceScreen()),
@@ -149,26 +129,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 });
               },
             ),
-            // TextButton(
-            //   style: const ButtonStyle(
-            //       textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18))),
-            //   child: Text(AppLocalizations.of(context)!.logOut),
-            //   onPressed: () {
-            //     FirebaseAuth.instance.signOut().then((value) {
-            //       print("Signed Out");
-            //       // Navigator.pushReplacement(
-            //       //   context,
-            //       //   MaterialPageRoute(
-            //       //       builder: (context) => const ChoiceScreen()),
-            //       // );
-            //       Navigator.of(context).pushAndRemoveUntil(
-            //         MaterialPageRoute(
-            //             builder: (context) => const ChoiceScreen()),
-            //         (Route<dynamic> route) => false,
-            //       );
-            //     });
-            //   },
-            // ),
           ],
         );
       },
@@ -259,30 +219,6 @@ class _ProfilePageState extends State<ProfilePage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // RadioListTile(
-              //   title: const DialogText('English'),
-              //   value: 'en',
-              //   groupValue: selectedLanguage,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       selectedLanguage = value as String;
-              //     });
-              //     _saveLanguagePreference(selectedLanguage);
-              //     Navigator.of(context).pop();
-              //   },
-              // ),
-              // RadioListTile(
-              //   title: const DialogText('Türkçe'),
-              //   value: 'tr',
-              //   groupValue: selectedLanguage,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       selectedLanguage = value as String;
-              //     });
-              //     _saveLanguagePreference(selectedLanguage);
-              //     Navigator.of(context).pop();
-              //   },
-              // ),
               ListTile(
                 title: const DialogText('English'),
                 trailing: selectedLanguage == 'en'
