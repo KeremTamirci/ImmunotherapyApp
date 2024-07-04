@@ -110,24 +110,6 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                             ),
                             isButtonActive: false,
                           )
-                        // else if (_incorrectTime == false)
-                        //   InformationBox(
-                        //     title:
-                        //         "It is past 19.00, you cannot take your dose today!",
-                        //     onTap: () {
-                        //       print("Box 1 other alternative version tapped");
-                        //     },
-                        //     icon: Icons.block,
-                        //     linearGradient: LinearGradient(
-                        //       colors: [
-                        //         hexStringToColor("FFA500"), // Lighter orange
-                        //         hexStringToColor("CC8400"), // Darker orange
-                        //       ],
-                        //       begin: Alignment.topCenter,
-                        //       end: Alignment.bottomCenter,
-                        //     ),
-                        //     isButtonActive: false,
-                        //   )
                         else
                           InformationBox(
                               title: AppLocalizations.of(context)!.dosageEntry,
@@ -140,7 +122,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                         FormPage(isAfterSeven: _incorrectTime),
                                   ),
                                 );
-                                setState(() {});
+                                // setState(() {});
                               },
                               icon: Icons.list,
                               linearGradient: (_incorrectTime == false)
