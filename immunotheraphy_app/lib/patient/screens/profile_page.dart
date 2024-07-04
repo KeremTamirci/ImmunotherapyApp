@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -99,23 +100,39 @@ class _ProfilePageState extends State<ProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.confirm),
+          surfaceTintColor: CupertinoColors.systemBackground,
+          title: AlertTitleText(AppLocalizations.of(context)!.confirm),
+          // Text(AppLocalizations.of(context)!.confirm,
+          //     style: const TextStyle(
+          //       fontSize: 22,
+          //       fontWeight: FontWeight.bold,
+          //     )),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppLocalizations.of(context)!.signOutSure),
+                AlertText(AppLocalizations.of(context)!.signOutSure)
+                // Text(AppLocalizations.of(context)!.signOutSure,
+                //     style: const TextStyle(fontSize: 20)),
               ],
             ),
           ),
           actions: <Widget>[
-            TextButton(
-              child: Text(AppLocalizations.of(context)!.cancel),
+            AlertTextButton(
+              AppLocalizations.of(context)!.cancel,
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: Text(AppLocalizations.of(context)!.logOut),
+            // TextButton(
+            //   style: const ButtonStyle(
+            //       textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18))),
+            //   child: Text(AppLocalizations.of(context)!.cancel),
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            // ),
+            AlertTextButton(
+              AppLocalizations.of(context)!.logOut,
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");
@@ -132,6 +149,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 });
               },
             ),
+            // TextButton(
+            //   style: const ButtonStyle(
+            //       textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18))),
+            //   child: Text(AppLocalizations.of(context)!.logOut),
+            //   onPressed: () {
+            //     FirebaseAuth.instance.signOut().then((value) {
+            //       print("Signed Out");
+            //       // Navigator.pushReplacement(
+            //       //   context,
+            //       //   MaterialPageRoute(
+            //       //       builder: (context) => const ChoiceScreen()),
+            //       // );
+            //       Navigator.of(context).pushAndRemoveUntil(
+            //         MaterialPageRoute(
+            //             builder: (context) => const ChoiceScreen()),
+            //         (Route<dynamic> route) => false,
+            //       );
+            //     });
+            //   },
+            // ),
           ],
         );
       },

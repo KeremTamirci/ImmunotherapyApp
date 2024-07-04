@@ -156,6 +156,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          surfaceTintColor: CupertinoColors.systemBackground,
           title: Text(AppLocalizations.of(context)!.incorrectDosage),
           content: Text(AppLocalizations.of(context)!.incorrectDosageExpl),
           actions: <Widget>[

@@ -140,6 +140,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                         FormPage(isAfterSeven: _incorrectTime),
                                   ),
                                 );
+                                setState(() {});
                               },
                               icon: Icons.list,
                               linearGradient: (_incorrectTime == false)

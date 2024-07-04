@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:immunotheraphy_app/reusable_widgets/warning_box.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 // import 'package:immunotheraphy_app/utils/color_utils.dart';
 
 class FormPage extends StatefulWidget {
@@ -294,6 +295,14 @@ void _showEnhancedAlertDialog(BuildContext context) {
             ),
             child: Text(AppLocalizations.of(context)!.geriDon),
           ),
+          AlertTextButton(
+            AppLocalizations.of(context)!.geriDon,
+            textColor: const Color.fromARGB(255, 126, 6, 0),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+          ),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -306,6 +315,13 @@ void _showEnhancedAlertDialog(BuildContext context) {
                 minimumSize: MaterialStatePropertyAll(Size(70, 50))),
             child: Text(AppLocalizations.of(context)!.ilerle),
           ),
+          AlertElevatedButton(
+            AppLocalizations.of(context)!.ilerle,
+            backgroundColor: const Color.fromARGB(255, 126, 6, 0),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
         ],
       );
     },
