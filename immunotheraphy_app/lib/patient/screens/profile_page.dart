@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
@@ -157,30 +158,40 @@ class _ProfilePageState extends State<ProfilePage> {
                         'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
                   ),
                   // const SizedBox(height: 20),
-                  const Spacer(),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: _patientData['first_name'] +
-                          ' ' +
-                          _patientData['last_name'],
-                      style: const TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                      // children: <TextSpan>[
-                      //   TextSpan(
-                      //     text: ' ' + _patientData['last_name'],
-                      //     style: const TextStyle(
-                      //         fontSize: 28,
-                      //         fontWeight: FontWeight.bold,
-                      //         color: Colors.black),
-                      //   ),
-                      // ],
+                  // const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: _patientData['first_name'] +
+                            ' ' +
+                            _patientData['last_name'],
+                        style: const TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                        // children: <TextSpan>[
+                        //   TextSpan(
+                        //     text: ' ' + _patientData['last_name'],
+                        //     style: const TextStyle(
+                        //         fontSize: 28,
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Colors.black),
+                        //   ),
+                        // ],
+                      ),
                     ),
                   ),
                   // const SizedBox(height: 10),
-                  const Spacer(),
+                  // const Spacer(),
+                  MainTextButton(
+                    "Change language/Dili değiştir",
+                    onPressed: () {
+                      _showLanguageSelector(context);
+                    },
+                  ),
+                  // const Spacer(),
                   PatientInfoBox(
                       user: _user,
                       patientData: _patientData,
@@ -197,12 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   //   },
                   //   child: const Text('Change Language/Dili Değiştir'),
                   // ),
-                  DialogElevatedButton(
-                    "Change language/Dili değiştir",
-                    onPressed: () {
-                      _showLanguageSelector(context);
-                    },
-                  ),
+                  ///////////// BURADAYDI //////////////////
                   // ElevatedButton(
                   //   onPressed: () {
                   //     _confirmSignOut(context);
@@ -210,14 +216,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   //   child: Text(AppLocalizations.of(context)!.logOut),
                   // ),
                   // const SizedBox(height: 20),
-                  const Spacer(),
-                  DialogElevatedButton(
+                  // const Spacer(),
+                  // SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                  MainElevatedButton(
                     AppLocalizations.of(context)!.logOut,
                     onPressed: () {
                       _confirmSignOut(context);
                     },
                   ),
                   const Spacer(),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 ],
               );
             }

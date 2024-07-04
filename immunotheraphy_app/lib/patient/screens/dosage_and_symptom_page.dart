@@ -145,7 +145,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                               title: AppLocalizations.of(context)!.dosageEntry,
                               onTap: () async {
                                 print('Box 1 tapped');
-                                Navigator.push(
+                                final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
@@ -158,6 +158,9 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                   });
                                   _showExerciseWarning();
                                 });
+                                // if (result == true) {
+                                //   _showExerciseWarning();
+                                // }
                               },
                               icon: Icons.list,
                               linearGradient: (_incorrectTime == false)

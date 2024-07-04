@@ -202,7 +202,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
         duration: const Duration(seconds: 4),
       ),
     );
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   Future<void> _getUserData() async {
@@ -317,7 +317,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     children: [
                       Text(
                         AppLocalizations.of(context)!.dosageTime,
-                        style: const TextStyle(fontSize: 20),
+                        style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(width: 10),
                       // SizedBox(
@@ -343,7 +343,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                         child: Text(
                           '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
                           style: const TextStyle(
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                           ),
                         ),
                       ),
@@ -362,18 +362,18 @@ class DoseIntakePageState extends State<DoseIntakePage>
                                     thickness: 0.5,
                                     color: CupertinoColors.systemGrey),
                                 SizedBox(
-                                    height: 200,
-                                    child: CupertinoDatePicker(
-                                        mode: CupertinoDatePickerMode.time,
-                                        use24hFormat: true,
-                                        initialDateTime: _selectedTimeCupertino,
-                                        onDateTimeChanged:
-                                            (DateTime newDateTime) {
-                                          setState(() {
-                                            _selectedTimeCupertino =
-                                                newDateTime;
-                                          });
-                                        })),
+                                  height: 200,
+                                  child: CupertinoDatePicker(
+                                    mode: CupertinoDatePickerMode.time,
+                                    use24hFormat: true,
+                                    initialDateTime: _selectedTimeCupertino,
+                                    onDateTimeChanged: (DateTime newDateTime) {
+                                      setState(() {
+                                        _selectedTimeCupertino = newDateTime;
+                                      });
+                                    },
+                                  ),
+                                ),
                               ],
                             )
                           : null,
@@ -388,7 +388,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                       children: [
                         Text(
                           AppLocalizations.of(context)!.hospitalDosage,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         const Spacer(),
                         Checkbox(
