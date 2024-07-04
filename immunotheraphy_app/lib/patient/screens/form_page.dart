@@ -255,47 +255,52 @@ void _showEnhancedAlertDialog(BuildContext context) {
           children: [
             Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
             SizedBox(width: 10),
-            Text(
-              'Important Notice',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 126, 6, 0),
-              ),
-            ),
+            DialogTitleText('Important Notice',
+                color: Color.fromARGB(255, 126, 6, 0)),
+            // Text(
+            //   'Important Notice',
+            //   style: TextStyle(
+            //     fontSize: 22,
+            //     fontWeight: FontWeight.bold,
+            //     color: Color.fromARGB(255, 126, 6, 0),
+            //   ),
+            // ),
           ],
         ),
         content: const SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text(
-                'It is currently past 19:00.',
-                style: TextStyle(fontSize: 20, color: Colors.black87),
-              ),
+              DialogText('It is currently past 19:00.'),
+              // Text(
+              //   'It is currently past 19:00.',
+              //   style: TextStyle(fontSize: 20, color: Colors.black87),
+              // ),
               SizedBox(height: 10),
-              Text(
-                'It is not recommended to take the dose after 19:00. You can consider skipping today\'s dose.',
-                style: TextStyle(fontSize: 20, color: Colors.black87),
-              ),
+              DialogText(
+                  'It is not recommended to take the dose after 19:00. You can consider skipping today\'s dose.')
+              // Text(
+              //   'It is not recommended to take the dose after 19:00. You can consider skipping today\'s dose.',
+              //   style: TextStyle(fontSize: 20, color: Colors.black87),
+              // ),
             ],
           ),
         ),
         actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            },
-            style: const ButtonStyle(
-              textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18)),
-              minimumSize: MaterialStatePropertyAll(Size(70, 50)),
-              foregroundColor: MaterialStatePropertyAll(
-                Color.fromARGB(255, 126, 6, 0),
-              ),
-            ),
-            child: Text(AppLocalizations.of(context)!.geriDon),
-          ),
-          AlertTextButton(
+          // TextButton(
+          //   onPressed: () {
+          //     Navigator.of(context).pop();
+          //     Navigator.of(context).pop();
+          //   },
+          //   style: const ButtonStyle(
+          //     textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18)),
+          //     minimumSize: MaterialStatePropertyAll(Size(70, 50)),
+          //     foregroundColor: MaterialStatePropertyAll(
+          //       Color.fromARGB(255, 126, 6, 0),
+          //     ),
+          //   ),
+          //   child: Text(AppLocalizations.of(context)!.geriDon),
+          // ),
+          DialogTextButton(
             AppLocalizations.of(context)!.geriDon,
             textColor: const Color.fromARGB(255, 126, 6, 0),
             onPressed: () {
@@ -303,19 +308,19 @@ void _showEnhancedAlertDialog(BuildContext context) {
               Navigator.of(context).pop();
             },
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            style: const ButtonStyle(
-                textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18)),
-                backgroundColor:
-                    MaterialStatePropertyAll(Color.fromARGB(255, 126, 6, 0)),
-                foregroundColor: MaterialStatePropertyAll(Colors.white),
-                minimumSize: MaterialStatePropertyAll(Size(70, 50))),
-            child: Text(AppLocalizations.of(context)!.ilerle),
-          ),
-          AlertElevatedButton(
+          // ElevatedButton(
+          //   onPressed: () {
+          //     Navigator.of(context).pop();
+          //   },
+          //   style: const ButtonStyle(
+          //       textStyle: MaterialStatePropertyAll(TextStyle(fontSize: 18)),
+          //       backgroundColor:
+          //           MaterialStatePropertyAll(Color.fromARGB(255, 126, 6, 0)),
+          //       foregroundColor: MaterialStatePropertyAll(Colors.white),
+          //       minimumSize: MaterialStatePropertyAll(Size(70, 50))),
+          //   child: Text(AppLocalizations.of(context)!.ilerle),
+          // ),
+          DialogElevatedButton(
             AppLocalizations.of(context)!.ilerle,
             backgroundColor: const Color.fromARGB(255, 126, 6, 0),
             onPressed: () {

@@ -101,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           surfaceTintColor: CupertinoColors.systemBackground,
-          title: AlertTitleText(AppLocalizations.of(context)!.confirm),
+          title: DialogTitleText(AppLocalizations.of(context)!.confirm),
           // Text(AppLocalizations.of(context)!.confirm,
           //     style: const TextStyle(
           //       fontSize: 22,
@@ -110,14 +110,14 @@ class _ProfilePageState extends State<ProfilePage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                AlertText(AppLocalizations.of(context)!.signOutSure)
+                DialogText(AppLocalizations.of(context)!.signOutSure)
                 // Text(AppLocalizations.of(context)!.signOutSure,
                 //     style: const TextStyle(fontSize: 20)),
               ],
             ),
           ),
           actions: <Widget>[
-            AlertTextButton(
+            DialogTextButton(
               AppLocalizations.of(context)!.cancel,
               onPressed: () {
                 Navigator.of(context).pop();
@@ -131,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
             //     Navigator.of(context).pop();
             //   },
             // ),
-            AlertTextButton(
+            DialogTextButton(
               AppLocalizations.of(context)!.logOut,
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {

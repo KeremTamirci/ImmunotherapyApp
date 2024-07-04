@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 
-class AlertTitleText extends StatelessWidget {
+class DialogTitleText extends StatelessWidget {
   final String text;
   final Color? color;
 
   // Use a positional parameter for text
-  const AlertTitleText(
+  const DialogTitleText(
     this.text, {
     super.key,
     this.color,
@@ -26,12 +26,12 @@ class AlertTitleText extends StatelessWidget {
   }
 }
 
-class AlertText extends StatelessWidget {
+class DialogText extends StatelessWidget {
   final String text;
   final Color? color;
 
   // Use a positional parameter for text
-  const AlertText(
+  const DialogText(
     this.text, {
     super.key,
     this.color,
@@ -49,12 +49,12 @@ class AlertText extends StatelessWidget {
   }
 }
 
-class AlertTextButton extends StatelessWidget {
+class DialogTextButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final Color? textColor;
 
-  const AlertTextButton(
+  const DialogTextButton(
     this.text, {
     super.key,
     required this.onPressed,
@@ -76,13 +76,13 @@ class AlertTextButton extends StatelessWidget {
   }
 }
 
-class AlertElevatedButton extends StatelessWidget {
+class DialogElevatedButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final Color? backgroundColor;
   final Color? textColor;
 
-  const AlertElevatedButton(
+  const DialogElevatedButton(
     this.text, {
     super.key,
     required this.onPressed,
