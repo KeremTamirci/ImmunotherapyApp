@@ -67,7 +67,7 @@ class DialogTextButton extends StatelessWidget {
       style: ButtonStyle(
         textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 18)),
         foregroundColor: MaterialStatePropertyAll(
-          textColor ?? Colors.blue, // Default color is blue
+          textColor ?? const Color(0xff1a80e5), // Default color is blue
         ),
       ),
       onPressed: onPressed,

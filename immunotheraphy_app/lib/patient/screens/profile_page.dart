@@ -225,31 +225,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   // const SizedBox(height: 30),
                   AdditionalInfoBox(patientData: _patientData),
                   //////////////////////////////////////////////////////////
-                  // Text(
-                  //   'Email: ${_user.email}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.phoneNumber}: ${_patientData['phone_number']}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.hasRhinitis}: ${_patientData['has_allergic_rhinitis'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.hasAsthma}: ${_patientData['has_asthma'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.birthDate}: ${DateFormatHelper.formatDate(_patientData['birth_date'])}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.doctor}: ${_doctorData['first_name']} ${_doctorData['last_name']}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-
                   const SizedBox(height: 20),
                   // Button to change language
                   ElevatedButton(
@@ -279,29 +254,56 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Theme.of(context).dialogBackgroundColor,
-          title: const Text('Select Language/Dili Seçin'),
+          surfaceTintColor: CupertinoColors.systemBackground,
+          title: const DialogTitleText('Select Language/Dili Seçin'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RadioListTile(
-                title: const Text('English'),
-                value: 'en',
-                groupValue: selectedLanguage,
-                onChanged: (value) {
+              // RadioListTile(
+              //   title: const DialogText('English'),
+              //   value: 'en',
+              //   groupValue: selectedLanguage,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       selectedLanguage = value as String;
+              //     });
+              //     _saveLanguagePreference(selectedLanguage);
+              //     Navigator.of(context).pop();
+              //   },
+              // ),
+              // RadioListTile(
+              //   title: const DialogText('Türkçe'),
+              //   value: 'tr',
+              //   groupValue: selectedLanguage,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       selectedLanguage = value as String;
+              //     });
+              //     _saveLanguagePreference(selectedLanguage);
+              //     Navigator.of(context).pop();
+              //   },
+              // ),
+              ListTile(
+                title: const DialogText('English'),
+                trailing: selectedLanguage == 'en'
+                    ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                    : null,
+                onTap: () {
                   setState(() {
-                    selectedLanguage = value as String;
+                    selectedLanguage = 'en';
                   });
                   _saveLanguagePreference(selectedLanguage);
                   Navigator.of(context).pop();
                 },
               ),
-              RadioListTile(
-                title: const Text('Türkçe'),
-                value: 'tr',
-                groupValue: selectedLanguage,
-                onChanged: (value) {
+              ListTile(
+                title: const DialogText('Türkçe'),
+                trailing: selectedLanguage == 'tr'
+                    ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                    : null,
+                onTap: () {
                   setState(() {
-                    selectedLanguage = value as String;
+                    selectedLanguage = 'tr';
                   });
                   _saveLanguagePreference(selectedLanguage);
                   Navigator.of(context).pop();
