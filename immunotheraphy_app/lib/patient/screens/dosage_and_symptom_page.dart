@@ -151,16 +151,20 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                     builder: (context) =>
                                         FormPage(isAfterSeven: _incorrectTime),
                                   ),
-                                ).then((_) {
+                                );
+                                // .then((_) {
+                                //   setState(() {
+                                //     // _hasTakenDose = true;
+                                //     _checkDosageandTime();
+                                //   });
+                                //   _showExerciseWarning();
+                                // });
+                                if (result == true) {
                                   setState(() {
-                                    // _hasTakenDose = true;
                                     _checkDosageandTime();
                                   });
                                   _showExerciseWarning();
-                                });
-                                // if (result == true) {
-                                //   _showExerciseWarning();
-                                // }
+                                }
                               },
                               icon: Icons.list,
                               linearGradient: (_incorrectTime == false)
