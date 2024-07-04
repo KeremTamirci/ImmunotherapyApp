@@ -30,21 +30,14 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   void initState() {
     super.initState();
     _getUserData();
-    _checkDosage();
-    _checkTime();
+    _checkDosageandTime();
   }
 
-  Future<void> _checkDosage() async {
+  Future<void> _checkDosageandTime() async {
     bool hasTakenDose = await hasTakenDosage();
-    setState(() {
-      _hasTakenDose = hasTakenDose;
-      _isLoading = false;
-    });
-  }
-
-  Future<void> _checkTime() async {
     bool incorrectTime = await checkTime();
     setState(() {
+      _hasTakenDose = hasTakenDose;
       _incorrectTime = incorrectTime;
       _isLoading = false;
     });
