@@ -7,6 +7,7 @@ import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/reusable_widgets/warning_box.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class DoseIntakePage extends StatefulWidget {
   final bool warning;
@@ -156,14 +157,17 @@ class DoseIntakePageState extends State<DoseIntakePage>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.incorrectDosage),
-          content: Text(AppLocalizations.of(context)!.incorrectDosageExpl),
+          surfaceTintColor: CupertinoColors.systemBackground,
+          title: DialogTitleText(AppLocalizations.of(context)!.incorrectDosage,
+              color: const Color.fromARGB(255, 126, 6, 0)),
+          content:
+              DialogText(AppLocalizations.of(context)!.incorrectDosageExpl),
           actions: <Widget>[
-            TextButton(
+            DialogTextButton(
+              "OK",
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text("OK"),
             ),
           ],
         );

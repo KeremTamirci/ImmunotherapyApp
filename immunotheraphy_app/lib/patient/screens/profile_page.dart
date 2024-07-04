@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -99,31 +100,27 @@ class _ProfilePageState extends State<ProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.confirm),
+          surfaceTintColor: CupertinoColors.systemBackground,
+          title: DialogTitleText(AppLocalizations.of(context)!.confirm),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppLocalizations.of(context)!.signOutSure),
+                DialogText(AppLocalizations.of(context)!.signOutSure)
               ],
             ),
           ),
           actions: <Widget>[
-            TextButton(
-              child: Text(AppLocalizations.of(context)!.cancel),
+            DialogTextButton(
+              AppLocalizations.of(context)!.cancel,
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: Text(AppLocalizations.of(context)!.logOut),
+            DialogTextButton(
+              AppLocalizations.of(context)!.logOut,
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => const ChoiceScreen()),
-                  // );
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) => const ChoiceScreen()),
@@ -188,31 +185,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   // const SizedBox(height: 30),
                   AdditionalInfoBox(patientData: _patientData),
                   //////////////////////////////////////////////////////////
-                  // Text(
-                  //   'Email: ${_user.email}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.phoneNumber}: ${_patientData['phone_number']}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.hasRhinitis}: ${_patientData['has_allergic_rhinitis'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.hasAsthma}: ${_patientData['has_asthma'] ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.birthDate}: ${DateFormatHelper.formatDate(_patientData['birth_date'])}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-                  // Text(
-                  //   '${AppLocalizations.of(context)!.doctor}: ${_doctorData['first_name']} ${_doctorData['last_name']}',
-                  //   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  // ),
-
                   const SizedBox(height: 20),
                   // Button to change language
                   ElevatedButton(
@@ -242,29 +214,32 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Theme.of(context).dialogBackgroundColor,
-          title: const Text('Select Language/Dili Seçin'),
+          surfaceTintColor: CupertinoColors.systemBackground,
+          title: const DialogTitleText('Select Language/Dili Seçin'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RadioListTile(
-                title: const Text('English'),
-                value: 'en',
-                groupValue: selectedLanguage,
-                onChanged: (value) {
+              ListTile(
+                title: const DialogText('English'),
+                trailing: selectedLanguage == 'en'
+                    ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                    : null,
+                onTap: () {
                   setState(() {
-                    selectedLanguage = value as String;
+                    selectedLanguage = 'en';
                   });
                   _saveLanguagePreference(selectedLanguage);
                   Navigator.of(context).pop();
                 },
               ),
-              RadioListTile(
-                title: const Text('Türkçe'),
-                value: 'tr',
-                groupValue: selectedLanguage,
-                onChanged: (value) {
+              ListTile(
+                title: const DialogText('Türkçe'),
+                trailing: selectedLanguage == 'tr'
+                    ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                    : null,
+                onTap: () {
                   setState(() {
-                    selectedLanguage = value as String;
+                    selectedLanguage = 'tr';
                   });
                   _saveLanguagePreference(selectedLanguage);
                   Navigator.of(context).pop();

@@ -50,6 +50,51 @@ class DatabaseController {
     }
   }
 
+  Future<bool> isLastDoseToday() async {
+    CollectionReference dosageCollection = FirebaseFirestore.instance
+        .collection('Patients')
+        .doc(userId)
+        .collection('Dosage Recordings');
+    QuerySnapshot snapshot = await dosageCollection
+        .orderBy("dosage_date", descending: true)
+        .limit(1)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      var latestDose = snapshot.docs.first.data() as Map<String, dynamic>;
+      Timestamp dosageTimestamp = latestDose['dosage_date'] as Timestamp;
+      DateTime dosageDate = dosageTimestamp.toDate();
+
+      // Get today's date
+      DateTime today = DateTime.now();
+
+      // Compare dates without time
+      DateTime dosageDateWithoutTime =
+          DateTime(dosageDate.year, dosageDate.month, dosageDate.day);
+      DateTime todayWithoutTime = DateTime(today.year, today.month, today.day);
+
+      if (dosageDateWithoutTime.isAtSameMomentAs(todayWithoutTime)) {
+        print("The latest dosage was taken today.");
+        return true;
+      } else if (dosageDateWithoutTime.isBefore(todayWithoutTime)) {
+        print("The latest dosage was taken before today.");
+        return false;
+      } else {
+        print("The latest dosage is recorded for a future date.");
+        return false;
+      }
+    } else {
+      print('No dosage records found.');
+      return false;
+    }
+  }
+
+  Future<bool> isAfterSeven() async {
+    DateTime now = DateTime.now();
+    // Check if the current hour is greater than or equal to 19 (7:00 PM)
+    return now.hour >= 19;
+  }
+
   // Method to add symptoms to the symptoms table
   Future<void> addSymptoms(List<Map<String, dynamic>> symptoms) async {
     try {
