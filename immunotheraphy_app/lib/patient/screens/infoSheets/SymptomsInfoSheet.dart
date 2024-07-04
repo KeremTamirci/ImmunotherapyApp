@@ -42,6 +42,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       initialChildSize: 0.9,
       minChildSize: 0.4,
       maxChildSize: 0.9,
+      snap: true,
       expand: false,
       builder: (BuildContext context, ScrollController scrollController) {
         return ClipRRect(
@@ -173,10 +174,13 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
       sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
       sectionClosingHapticFeedback: SectionHapticFeedback.light,
+      scaleWhenAnimating: false,
+      scrollIntoViewOfItems: ScrollIntoViewOfItems.fast,
       disableScrolling: true,
       children: [
         AccordionSection(
           isOpen: false,
+          scrollIntoViewOfItems: ScrollIntoViewOfItems.fast,
           header: Text(AppLocalizations.of(context)!.skinSystem,
               style: const TextStyle(
                   fontSize: 22,
@@ -198,8 +202,11 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                       const Icon(Icons.circle, size: 8),
                       const SizedBox(width: 10),
                       Expanded(
-                          child:
-                              Text(item, style: const TextStyle(fontSize: 16))),
+                        child: Text(
+                          item,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
                     ],
                   ),
                 );
@@ -210,7 +217,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                   child: Row(
                     children: [
                       const Icon(Icons.error_outline,
-                          size: 20, color: Colors.blue),
+                          size: 20, color: Color.fromARGB(255, 126, 6, 0)),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
@@ -225,6 +232,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
         ),
         AccordionSection(
           isOpen: false,
+          scrollIntoViewOfItems: ScrollIntoViewOfItems.fast,
           header: Text(AppLocalizations.of(context)!.respiratorySystem,
               style: const TextStyle(
                   fontSize: 22,
@@ -260,7 +268,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                   child: Row(
                     children: [
                       const Icon(Icons.error_outline,
-                          size: 20, color: Colors.blue),
+                          size: 20, color: Color.fromARGB(255, 126, 6, 0)),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
@@ -275,6 +283,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
         ),
         AccordionSection(
           isOpen: false,
+          scrollIntoViewOfItems: ScrollIntoViewOfItems.fast,
           header: Text(AppLocalizations.of(context)!.gastrointestinalSystem,
               style: const TextStyle(
                   fontSize: 22,
@@ -307,7 +316,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                   child: Row(
                     children: [
                       const Icon(Icons.error_outline,
-                          size: 20, color: Colors.blue),
+                          size: 20, color: Color.fromARGB(255, 126, 6, 0)),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
@@ -322,6 +331,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
         ),
         AccordionSection(
           isOpen: false,
+          scrollIntoViewOfItems: ScrollIntoViewOfItems.fast,
           header: Text(AppLocalizations.of(context)!.cardiovascularSystem,
               style: const TextStyle(
                   fontSize: 22,
@@ -349,20 +359,21 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                   )),
               const SizedBox(height: 10),
               Padding(
-                  padding: const EdgeInsets.only(left: 20.0, top: 5.0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.error_outline,
-                          size: 20, color: Colors.blue),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          AppLocalizations.of(context)!.applyAdrenaline,
-                          style: const TextStyle(fontSize: 16),
-                        ),
+                padding: const EdgeInsets.only(left: 20.0, top: 5.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.error_outline,
+                        size: 20, color: Color.fromARGB(255, 126, 6, 0)),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context)!.applyAdrenaline,
+                        style: const TextStyle(fontSize: 16),
                       ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

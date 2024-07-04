@@ -217,11 +217,11 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                       child: Text(
                         AppLocalizations.of(context)!.informationalEntries,
                         style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                            fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
