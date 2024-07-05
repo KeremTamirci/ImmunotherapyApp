@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -408,11 +410,10 @@ class InformationBox extends StatelessWidget {
                     title,
                     textAlign: TextAlign.center, // Center the text horizontally
                     softWrap: true, // Enable text wrapping
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: Platform.isIOS ? 16 : 18,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
                     ),
                   ),
                 ),
