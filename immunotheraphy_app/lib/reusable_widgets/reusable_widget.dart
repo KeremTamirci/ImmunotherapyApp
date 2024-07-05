@@ -253,11 +253,11 @@ class CupertinoList extends StatelessWidget {
           child: CupertinoListTile(
             title: Text(
               pair['titleText']!,
-              style: TextStyle(fontSize: 18),
+              // style: TextStyle(fontSize: 18),
             ),
             additionalInfo: Text(
               pair['textValue']!,
-              style: TextStyle(fontSize: 18),
+              // style: TextStyle(fontSize: 18),
             ),
           ),
         );
