@@ -8,107 +8,116 @@ class MilkLadderInfoSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.9,
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-                // decoration: const BoxDecoration(
-                //   image: DecorationImage(
-                //     image: AssetImage("assets/images/sut_ana_resim.png"),
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.milkLadder,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        // color: Colors.white,
-                      ),
-                    ),
-                    const Spacer(),
-                    DialogTextButton(
-                      "Bitti",
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    // IconButton(
-                    //   icon: const Icon(Icons.arrow_back_ios_rounded),
-                    //   onPressed: () => Navigator.of(context).pop(),
-                    // ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return DraggableScrollableSheet(
+      initialChildSize: 0.9,
+      minChildSize: 0.5,
+      maxChildSize: 0.9,
+      snap: true,
+      expand: false,
+      builder: (BuildContext context, ScrollController scrollController) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.9,
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 8.0),
+                  // decoration: const BoxDecoration(
+                  //   image: DecorationImage(
+                  //     image: AssetImage("assets/images/sut_ana_resim.png"),
+                  //     fit: BoxFit.cover,
+                  //   ),
+                  // ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                        width: double.infinity,
-                        height: 200,
-                        child: Image(
-                          image: AssetImage("assets/images/sut_ana_resim.png"),
-                          fit: BoxFit.cover,
+                      Text(
+                        AppLocalizations.of(context)!.milkLadder,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          // color: Colors.white,
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 24.0),
-                        child: Text(
-                          "Süt Merdiveni",
-                          // textAlign: TextAlign.end,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      const Spacer(),
+                      DialogTextButton(
+                        "Bitti",
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
                       ),
-                      const SizedBox(height: 10),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 24.0),
-                        child: Text(
-                          "Aşağıdaki diagramda çeşitli süt ürünlerinin içerdiği süt proteini miktarlarını görüp karşılaştırabilirsiniz.",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: RotatedBox(
-                          quarterTurns: 0, // Rotates the image 90 degrees
-                          child: AspectRatio(
-                            aspectRatio:
-                                1.5, // Adjust the aspect ratio as needed
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Image.asset(
-                                  "assets/images/Süt_Merdiveni_İngilizce.png"),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
+                      // IconButton(
+                      //   icon: const Icon(Icons.arrow_back_ios_rounded),
+                      //   onPressed: () => Navigator.of(context).pop(),
+                      // ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          width: double.infinity,
+                          height: 200,
+                          child: Image(
+                            image:
+                                AssetImage("assets/images/sut_ana_resim.png"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Text(
+                            "Süt Merdiveni",
+                            // textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Text(
+                            "Aşağıdaki diagramda çeşitli süt ürünlerinin içerdiği süt proteini miktarlarını görüp karşılaştırabilirsiniz.",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: RotatedBox(
+                            quarterTurns: 0, // Rotates the image 90 degrees
+                            child: AspectRatio(
+                              aspectRatio:
+                                  1.5, // Adjust the aspect ratio as needed
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Image.asset(
+                                    "assets/images/Süt_Merdiveni_İngilizce.png"),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
