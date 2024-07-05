@@ -6,6 +6,7 @@ import 'package:immunotheraphy_app/doctor/screens/doctor_signup_screen.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class DoctorSignInScreen extends StatefulWidget {
   const DoctorSignInScreen({Key? key}) : super(key: key);
@@ -93,15 +94,16 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const Text("Error"),
-                          content:
-                              Text("An error occurred: ${error.toString()}"),
+                          title: const DialogTitleText("Error",
+                              color: Color.fromARGB(255, 126, 6, 0)),
+                          content: DialogText(
+                              "An error occurred: ${error.toString()}"),
                           actions: [
-                            TextButton(
+                            DialogTextButton(
+                              "OK",
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: const Text("OK"),
                             ),
                           ],
                         );

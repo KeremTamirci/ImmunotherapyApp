@@ -5,6 +5,7 @@ import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class DoctorProfilePage extends StatefulWidget {
   const DoctorProfilePage({super.key});
@@ -66,23 +67,23 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.confirm),
+          title: DialogTitleText(AppLocalizations.of(context)!.confirm),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppLocalizations.of(context)!.signOutSure),
+                DialogText(AppLocalizations.of(context)!.signOutSure),
               ],
             ),
           ),
           actions: <Widget>[
-            TextButton(
-              child: Text(AppLocalizations.of(context)!.cancel),
+            DialogTextButton(
+              AppLocalizations.of(context)!.cancel,
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: Text(AppLocalizations.of(context)!.logOut),
+            DialogTextButton(
+              AppLocalizations.of(context)!.logOut,
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   Navigator.of(context).pushAndRemoveUntil(
