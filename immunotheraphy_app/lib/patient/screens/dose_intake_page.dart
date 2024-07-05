@@ -400,17 +400,24 @@ class DoseIntakePageState extends State<DoseIntakePage>
                   const Divider(
                       thickness: 0.5, color: CupertinoColors.systemGrey),
                   const SizedBox(height: 20),
-                  ElevatedButton(
+                  MainElevatedButton(
+                    AppLocalizations.of(context)!.saveDosage,
                     onPressed: () {
                       _checkValue(0, 200);
                       // Navigator.pop(context);
                     },
-                    // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
-                    child: Text(
-                      AppLocalizations.of(context)!.saveDosage,
-                      style: const TextStyle(fontSize: 16.0),
-                    ),
                   ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     _checkValue(0, 200);
+                  //     // Navigator.pop(context);
+                  //   },
+                  //   // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
+                  //   child: Text(
+                  //     AppLocalizations.of(context)!.saveDosage,
+                  //     style: const TextStyle(fontSize: 16.0),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
