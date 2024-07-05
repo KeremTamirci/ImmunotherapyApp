@@ -42,7 +42,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
       initialChildSize: 0.9,
-      minChildSize: 0.9,
+      minChildSize: 0.8,
       maxChildSize: 0.9,
       snap: true,
       expand: false,
