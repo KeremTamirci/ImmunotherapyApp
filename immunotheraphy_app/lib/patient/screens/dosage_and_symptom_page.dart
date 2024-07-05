@@ -22,6 +22,7 @@ class DosageAndSymptomPage extends StatefulWidget {
 
 class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   late DatabaseController _databaseController;
+  // ignore: unused_field
   late User _user;
   bool? _hasTakenDose;
   bool? _incorrectTime = false;
@@ -323,7 +324,7 @@ class InfoCardWidget extends StatelessWidget {
                   height: description.length > 50 ? 100 : 80,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
+                        vertical: 12.0, horizontal: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -332,7 +333,7 @@ class InfoCardWidget extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(height: 5),
+                        // const SizedBox(height: 5),
                         Text(
                           description,
                           style: const TextStyle(fontSize: 16),

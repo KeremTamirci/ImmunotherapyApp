@@ -20,7 +20,6 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
   late DateTime _selectedDate;
   DateTime _selectedTimeCupertino = DateTime.now();
   late AnimationController _animationController;
-  late Animation<double> _animation;
   bool _showTime = false;
   List<String> _selectedSymptomTypes = [];
   String _symptomDetail = '';
@@ -35,10 +34,6 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _animation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(_animationController);
   }
 
   Future<void> _getUserData() async {

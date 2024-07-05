@@ -15,6 +15,7 @@ class DosePage extends StatefulWidget {
 
 class _DosePageState extends State<DosePage> {
   late List<DosageData> _dosageData = [];
+  // ignore: unused_field
   late User _user;
   late DatabaseController _databaseController;
 
@@ -81,7 +82,7 @@ class _DosePageState extends State<DosePage> {
                         title: AxisTitle(
                           text: AppLocalizations.of(context)!
                               .date, // Horizontal axis title
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -91,7 +92,7 @@ class _DosePageState extends State<DosePage> {
                         title: AxisTitle(
                           text: AppLocalizations.of(context)!
                               .dosageAmount, // Vertical axis title
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),

@@ -31,7 +31,6 @@ class DoseIntakePageState extends State<DoseIntakePage>
   late User _user;
 
   late AnimationController _animationController;
-  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -42,10 +41,6 @@ class DoseIntakePageState extends State<DoseIntakePage>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _animation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(_animationController);
     // CurvedAnimation(
     //   parent: _animationController,
     //   curve: Curves.easeInOut,
