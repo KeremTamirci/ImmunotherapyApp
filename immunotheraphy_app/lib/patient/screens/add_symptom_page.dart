@@ -4,6 +4,7 @@ import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class AddSymptomsPage extends StatefulWidget {
   const AddSymptomsPage({Key? key}) : super(key: key);
@@ -19,7 +20,6 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
   late DateTime _selectedDate;
   DateTime _selectedTimeCupertino = DateTime.now();
   late AnimationController _animationController;
-  late Animation<double> _animation;
   bool _showTime = false;
   List<String> _selectedSymptomTypes = [];
   String _symptomDetail = '';
@@ -34,10 +34,6 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _animation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(_animationController);
   }
 
   Future<void> _getUserData() async {
@@ -179,7 +175,8 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.only(
+                          top: 12.0, bottom: 12.0, left: 20.0, right: 20.0),
                       child: Column(
                         children: [
                           Row(
@@ -198,7 +195,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                                 child: RichText(
                                   text: TextSpan(
                                     style: const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         color: Colors.black), // Default style
                                     children: [
                                       TextSpan(
@@ -217,16 +214,19 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                             ],
                           ),
                           const SizedBox(height: 20),
-                          ElevatedButton(
-                              onPressed: _showSymptomTypePicker,
-                              style: ElevatedButton.styleFrom(
-                                  alignment: Alignment.centerLeft),
-                              child: Text(
-                                  AppLocalizations.of(context)!.selectSymptom)
-                              //Text(
-                              //  '${AppLocalizations.of(context)!.selected}: ${_selectedSymptomTypes.join(", ")}'
-                              //),
-                              ),
+                          // ElevatedButton(
+                          //     onPressed: _showSymptomTypePicker,
+                          //     style: ElevatedButton.styleFrom(
+                          //         alignment: Alignment.centerLeft),
+                          //     child: Text(
+                          //         AppLocalizations.of(context)!.selectSymptom)
+                          //     //Text(
+                          //     //  '${AppLocalizations.of(context)!.selected}: ${_selectedSymptomTypes.join(", ")}'
+                          //     //),
+                          //     ),
+                          MainElevatedButton(
+                              AppLocalizations.of(context)!.selectSymptom,
+                              onPressed: _showSymptomTypePicker)
                         ],
                       ),
                     ),
@@ -238,14 +238,15 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.only(
+                          top: 12.0, bottom: 12.0, left: 20.0, right: 20.0),
                       child: Column(
                         children: [
                           Row(
                             children: [
                               Text(
                                 AppLocalizations.of(context)!.symptomTime,
-                                style: const TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 18),
                               ),
                               const SizedBox(width: 10),
                               const Spacer(),
@@ -254,7 +255,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                                 child: Text(
                                   '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
                                   style: const TextStyle(
-                                    fontSize: 20.0,
+                                    fontSize: 18.0,
                                   ),
                                 ),
                               ),
@@ -272,20 +273,21 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                                             thickness: 0.5,
                                             color: CupertinoColors.systemGrey),
                                         SizedBox(
-                                            height: 200,
-                                            child: CupertinoDatePicker(
-                                                mode: CupertinoDatePickerMode
-                                                    .time,
-                                                use24hFormat: true,
-                                                initialDateTime:
-                                                    _selectedTimeCupertino,
-                                                onDateTimeChanged:
-                                                    (DateTime newDateTime) {
-                                                  setState(() {
-                                                    _selectedTimeCupertino =
-                                                        newDateTime;
-                                                  });
-                                                })),
+                                          height: 200,
+                                          child: CupertinoDatePicker(
+                                            mode: CupertinoDatePickerMode.time,
+                                            use24hFormat: true,
+                                            initialDateTime:
+                                                _selectedTimeCupertino,
+                                            onDateTimeChanged:
+                                                (DateTime newDateTime) {
+                                              setState(() {
+                                                _selectedTimeCupertino =
+                                                    newDateTime;
+                                              });
+                                            },
+                                          ),
+                                        ),
                                       ],
                                     )
                                   : null,
@@ -316,12 +318,11 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                               thickness: 0.5,
                               color: CupertinoColors.systemGrey),
                           const SizedBox(height: 10),
-                          ElevatedButton(
+                          MainElevatedButton(
+                            AppLocalizations.of(context)!.addSymptoms,
                             onPressed: () {
                               _addSymptoms();
                             },
-                            child:
-                                Text(AppLocalizations.of(context)!.addSymptoms),
                           ),
                           const SizedBox(height: 10),
                         ],

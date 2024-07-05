@@ -114,3 +114,75 @@ class DialogElevatedButton extends StatelessWidget {
     );
   }
 }
+
+class MainTextButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final Color? textColor;
+
+  const MainTextButton(
+    this.text, {
+    super.key,
+    required this.onPressed,
+    this.textColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+      child: TextButton(
+        style: ButtonStyle(
+          textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 16)),
+          foregroundColor: MaterialStatePropertyAll(
+            textColor ?? const Color(0xff1a80e5), // Default color is blue
+          ),
+        ),
+        onPressed: onPressed,
+        child: Text(text),
+      ),
+    );
+  }
+}
+
+class MainElevatedButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final Color? backgroundColor;
+  final Color? textColor;
+
+  const MainElevatedButton(
+    this.text, {
+    super.key,
+    required this.onPressed,
+    this.backgroundColor,
+    this.textColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Use the default ElevatedButton background color from the theme
+    final defaultBackgroundColor = Theme.of(context).colorScheme.primary;
+    const defaultTextColor = Colors.white;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 16)),
+          backgroundColor: MaterialStatePropertyAll(
+            backgroundColor ??
+                defaultBackgroundColor, // Use default if no background color is specified
+          ),
+          foregroundColor: MaterialStatePropertyAll(
+            textColor ??
+                defaultTextColor, // Use default if no text color is specified
+          ),
+          minimumSize: const MaterialStatePropertyAll(Size(70, 50)),
+        ),
+        onPressed: onPressed,
+        child: Text(text),
+      ),
+    );
+  }
+}

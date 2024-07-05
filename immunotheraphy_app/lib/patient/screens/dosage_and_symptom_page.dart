@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,7 @@ class DosageAndSymptomPage extends StatefulWidget {
 
 class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   late DatabaseController _databaseController;
+  // ignore: unused_field
   late User _user;
   bool? _hasTakenDose;
   bool? _incorrectTime = false;
@@ -112,6 +115,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
         body: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
+                // padding: EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -145,19 +149,26 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                               title: AppLocalizations.of(context)!.dosageEntry,
                               onTap: () async {
                                 print('Box 1 tapped');
-                                Navigator.push(
+                                final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         FormPage(isAfterSeven: _incorrectTime),
                                   ),
-                                ).then((_) {
+                                );
+                                // .then((_) {
+                                //   setState(() {
+                                //     // _hasTakenDose = true;
+                                //     _checkDosageandTime();
+                                //   });
+                                //   _showExerciseWarning();
+                                // });
+                                if (result == true) {
                                   setState(() {
-                                    // _hasTakenDose = true;
                                     _checkDosageandTime();
                                   });
                                   _showExerciseWarning();
-                                });
+                                }
                               },
                               icon: Icons.list,
                               linearGradient: (_incorrectTime == false)
@@ -206,15 +217,15 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                       height: 20,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16, left: 16),
+                      padding: const EdgeInsets.only(top: 12.0, left: 24.0),
                       child: Text(
                         AppLocalizations.of(context)!.informationalEntries,
                         style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                            fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -231,7 +242,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                             imagePath: "assets/images/sut_ana_resim.png",
                             cardNo: 1,
                           ),
-                          InfoCardWidget(
+                          const InfoCardWidget(
                             title: 'Alerjik Besinler',
                             description: "Yaygın besin alerjileri",
                             imagePath: "assets/images/armut_yiyen_adam.png",
@@ -282,11 +293,11 @@ class InfoCardWidget extends StatelessWidget {
                 builder: (context) {
                   switch (cardNo) {
                     case 0:
-                      return SymptomsInfoSheet();
+                      return const SymptomsInfoSheet();
                     case 1:
-                      return MilkLadderInfoSheet();
+                      return const MilkLadderInfoSheet();
                     case 2:
-                      return AllergyInfoSheet();
+                      return const AllergyInfoSheet();
                     default:
                       return Container(); // Return some default widget if cardNo doesn't match any case.
                   }
@@ -294,12 +305,17 @@ class InfoCardWidget extends StatelessWidget {
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
-            height: MediaQuery.of(context).size.height * 0.35,
+            // height: MediaQuery.of(context).size.height * 0.35,
+            height: title.length > 30
+                ? description.length > 50
+                    ? 330
+                    : 300
+                : 280,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  flex: 7,
+                SizedBox(
+                  height: 200,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -308,20 +324,22 @@ class InfoCardWidget extends StatelessWidget {
                       imagePath,
                       fit: BoxFit.cover,
                     ),
-                  ), // Replace YourImageWidget with your image widget
+                  ),
                 ),
-                Expanded(
-                  flex: description.length > 50 ? 5 : 3,
+                SizedBox(
+                  height: description.length > 50 ? 100 : 80,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           title,
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
+                        // const SizedBox(height: 5),
                         Text(
                           description,
                           style: const TextStyle(fontSize: 16),
@@ -362,7 +380,7 @@ class InformationBox extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.44,
+        width: MediaQuery.of(context).size.width * 0.42,
         height: MediaQuery.of(context).size.height * 0.25,
         decoration: BoxDecoration(
           gradient: linearGradient,
@@ -392,9 +410,9 @@ class InformationBox extends StatelessWidget {
                     title,
                     textAlign: TextAlign.center, // Center the text horizontally
                     softWrap: true, // Enable text wrapping
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: Platform.isIOS ? 16 : 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
