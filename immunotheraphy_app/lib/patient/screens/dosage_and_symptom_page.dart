@@ -214,7 +214,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                       height: 20,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16, left: 16),
+                      padding: const EdgeInsets.only(top: 12.0, left: 24.0),
                       child: Text(
                         AppLocalizations.of(context)!.informationalEntries,
                         style: const TextStyle(

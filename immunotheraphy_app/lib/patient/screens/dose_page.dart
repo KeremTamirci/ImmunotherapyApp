@@ -57,7 +57,7 @@ class _DosePageState extends State<DosePage> {
         title: Text(AppLocalizations.of(context)!.doseChart),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
