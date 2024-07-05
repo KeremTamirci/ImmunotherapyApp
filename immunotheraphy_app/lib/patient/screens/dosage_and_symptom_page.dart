@@ -112,6 +112,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
         body: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
+                // padding: EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -221,7 +222,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -238,7 +239,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                             imagePath: "assets/images/sut_ana_resim.png",
                             cardNo: 1,
                           ),
-                          InfoCardWidget(
+                          const InfoCardWidget(
                             title: 'Alerjik Besinler',
                             description: "Yaygın besin alerjileri",
                             imagePath: "assets/images/armut_yiyen_adam.png",
@@ -289,11 +290,11 @@ class InfoCardWidget extends StatelessWidget {
                 builder: (context) {
                   switch (cardNo) {
                     case 0:
-                      return SymptomsInfoSheet();
+                      return const SymptomsInfoSheet();
                     case 1:
-                      return MilkLadderInfoSheet();
+                      return const MilkLadderInfoSheet();
                     case 2:
-                      return AllergyInfoSheet();
+                      return const AllergyInfoSheet();
                     default:
                       return Container(); // Return some default widget if cardNo doesn't match any case.
                   }
@@ -301,12 +302,13 @@ class InfoCardWidget extends StatelessWidget {
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
-            height: MediaQuery.of(context).size.height * 0.35,
+            // height: MediaQuery.of(context).size.height * 0.35,
+            height: description.length > 50 ? 300 : 280,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  flex: 7,
+                SizedBox(
+                  height: 200,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -315,20 +317,22 @@ class InfoCardWidget extends StatelessWidget {
                       imagePath,
                       fit: BoxFit.cover,
                     ),
-                  ), // Replace YourImageWidget with your image widget
+                  ),
                 ),
-                Expanded(
-                  flex: description.length > 50 ? 5 : 3,
+                SizedBox(
+                  height: description.length > 50 ? 100 : 80,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           title,
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
+                        const SizedBox(height: 5),
                         Text(
                           description,
                           style: const TextStyle(fontSize: 16),
@@ -369,7 +373,7 @@ class InformationBox extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.44,
+        width: MediaQuery.of(context).size.width * 0.42,
         height: MediaQuery.of(context).size.height * 0.25,
         decoration: BoxDecoration(
           gradient: linearGradient,

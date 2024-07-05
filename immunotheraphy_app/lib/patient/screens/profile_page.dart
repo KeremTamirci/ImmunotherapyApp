@@ -160,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   // const SizedBox(height: 20),
                   // const Spacer(),
                   Padding(
-                    padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
+                    padding: const EdgeInsets.only(top: 12.0, bottom: 8.0),
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(

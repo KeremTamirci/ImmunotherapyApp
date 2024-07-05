@@ -42,7 +42,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
       initialChildSize: 0.9,
-      minChildSize: 0.4,
+      minChildSize: 0.5,
       maxChildSize: 0.9,
       snap: true,
       expand: false,
@@ -51,191 +51,203 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
           borderRadius: BorderRadius.circular(20.0),
           child: Container(
             color: Colors.white,
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    // color: Color(0xFF2196F3),
-                    padding: const EdgeInsets.all(16.0),
-                    // decoration: const BoxDecoration(
-                    //   image: DecorationImage(
-                    //     image: AssetImage("assets/images/kalp_atisi.png"),
-                    //     fit: BoxFit.cover,
-                    //   ),
-                    // ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.aboutAnaphylaxis,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            // color: Colors.white,
-                          ),
-                        ),
-                        // IconButton(
-                        //   icon: const Icon(
-                        //     Icons.arrow_back_ios_rounded,
-                        //     // color: Colors.white,
-                        //   ),
-                        //   onPressed: () => Navigator.of(context).pop(),
-                        // ),
-                        DialogTextButton(
-                          "Bitti",
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  // const SizedBox(height: 10),
-                  const SizedBox(
-                    width: double.infinity,
-                    height: 200,
-                    child: Image(
-                      image: AssetImage("assets/images/kalp_atisi.png"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 12.0),
-                    child: Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.anaphylaxisTitle,
+            child: Column(
+              children: [
+                Container(
+                  // height: 75,
+                  width: double.infinity,
+                  // color: Color(0xFF2196F3),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 8.0),
+                  // decoration: const BoxDecoration(
+                  //   image: DecorationImage(
+                  //     image: AssetImage("assets/images/kalp_atisi.png"),
+                  //     fit: BoxFit.cover,
+                  //   ),
+                  // ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.aboutAnaphylaxis,
                         style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          // color: Colors.white,
+                        ),
                       ),
-                    ),
+                      // IconButton(
+                      //   icon: const Icon(
+                      //     Icons.arrow_back_ios_rounded,
+                      //     // color: Colors.white,
+                      //   ),
+                      //   onPressed: () => Navigator.of(context).pop(),
+                      // ),
+                      DialogTextButton(
+                        "Bitti",
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
                   ),
-                  // const SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.topLeft,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: scrollController,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          child: Text(
-                            AppLocalizations.of(context)!.symptomsExplanation,
-                            style: const TextStyle(fontSize: 16),
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        // const SizedBox(height: 10),
+                        const SizedBox(
+                          width: double.infinity,
+                          height: 200,
+                          child: Image(
+                            image: AssetImage("assets/images/kalp_atisi.png"),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        // Card(
-                        //   surfaceTintColor: CupertinoColors.systemBackground,
-                        //   color: CupertinoColors.systemGrey6,
-                        //   shadowColor: CupertinoColors.systemBackground,
-                        //   elevation: 1,
-                        //   shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(15.0),
-                        //   ),
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.all(16.0),
-                        //     child: Column(
-                        //       crossAxisAlignment: CrossAxisAlignment.start,
-                        //       children: [
-                        //         Row(
-                        //           mainAxisAlignment:
-                        //               MainAxisAlignment.spaceBetween,
-                        //           children: [
-                        //             const Text(
-                        //               "Video:",
-                        //               style: TextStyle(
-                        //                   fontSize: 24,
-                        //                   fontWeight: FontWeight.bold),
-                        //             ),
-                        //             ElevatedButton.icon(
-                        //               onPressed: _launchYouTubeVideo,
-                        //               icon: const Icon(
-                        //                   Icons.ondemand_video_rounded),
-                        //               label: Text(
-                        //                   AppLocalizations.of(context)!
-                        //                       .watchOnYoutube),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //         const SizedBox(height: 10),
-                        //         YoutubePlayer(
-                        //           controller: _controller,
-                        //           bottomActions: [
-                        //             CurrentPosition(),
-                        //             ProgressBar(isExpanded: true),
-                        //           ],
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 24.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: YoutubePlayer(
-                                  controller: _controller,
-                                  bottomActions: [
-                                    CurrentPosition(),
-                                    ProgressBar(isExpanded: true),
-                                  ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24.0, vertical: 12.0),
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.anaphylaxisTitle,
+                              style: const TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        // const SizedBox(height: 10),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // const SizedBox(height: 20),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0),
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .symptomsExplanation,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 24.0),
-                              child: Row(
+                              // Card(
+                              //   surfaceTintColor: CupertinoColors.systemBackground,
+                              //   color: CupertinoColors.systemGrey6,
+                              //   shadowColor: CupertinoColors.systemBackground,
+                              //   elevation: 1,
+                              //   shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.circular(15.0),
+                              //   ),
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.all(16.0),
+                              //     child: Column(
+                              //       crossAxisAlignment: CrossAxisAlignment.start,
+                              //       children: [
+                              //         Row(
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.spaceBetween,
+                              //           children: [
+                              //             const Text(
+                              //               "Video:",
+                              //               style: TextStyle(
+                              //                   fontSize: 24,
+                              //                   fontWeight: FontWeight.bold),
+                              //             ),
+                              //             ElevatedButton.icon(
+                              //               onPressed: _launchYouTubeVideo,
+                              //               icon: const Icon(
+                              //                   Icons.ondemand_video_rounded),
+                              //               label: Text(
+                              //                   AppLocalizations.of(context)!
+                              //                       .watchOnYoutube),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //         const SizedBox(height: 10),
+                              //         YoutubePlayer(
+                              //           controller: _controller,
+                              //           bottomActions: [
+                              //             CurrentPosition(),
+                              //             ProgressBar(isExpanded: true),
+                              //           ],
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Spacer(),
-                                  ElevatedButton.icon(
-                                    onPressed: _launchYouTubeVideo,
-                                    style: const ButtonStyle(
-                                        surfaceTintColor:
-                                            MaterialStatePropertyAll(
-                                                CupertinoColors
-                                                    .systemBackground),
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                Color.fromARGB(255, 255, 0, 0)),
-                                        foregroundColor:
-                                            MaterialStatePropertyAll(
-                                                CupertinoColors.white)),
-                                    icon: const Icon(
-                                        Icons.ondemand_video_rounded),
-                                    label: Text(AppLocalizations.of(context)!
-                                        .watchOnYoutube),
+                                  const SizedBox(height: 20),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: YoutubePlayer(
+                                        controller: _controller,
+                                        bottomActions: [
+                                          CurrentPosition(),
+                                          ProgressBar(isExpanded: true),
+                                        ],
+                                      ),
+                                    ),
                                   ),
+                                  const SizedBox(height: 20),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24.0),
+                                    child: Row(
+                                      children: [
+                                        const Spacer(),
+                                        ElevatedButton.icon(
+                                          onPressed: _launchYouTubeVideo,
+                                          style: const ButtonStyle(
+                                              surfaceTintColor:
+                                                  MaterialStatePropertyAll(
+                                                      CupertinoColors
+                                                          .systemBackground),
+                                              backgroundColor:
+                                                  MaterialStatePropertyAll(
+                                                      Color.fromARGB(
+                                                          255, 255, 0, 0)),
+                                              foregroundColor:
+                                                  MaterialStatePropertyAll(
+                                                      CupertinoColors.white)),
+                                          icon: const Icon(
+                                              Icons.ondemand_video_rounded),
+                                          label: Text(
+                                              AppLocalizations.of(context)!
+                                                  .watchOnYoutube),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
-                            )
-                          ],
+                              const Padding(
+                                padding: EdgeInsets.all(28.0),
+                                child: AnimatedDropdownExample(),
+                              ),
+                              const SizedBox(height: 20),
+                              ///////////////////////////////////////////////////////////
+                              // UNCOMMENT HERE FOR ACCORDION CODE
+                              // _buildAccordion(),
+                              ///////////////////////////////////////////////////////////
+                              // const SizedBox(height: 10),
+                            ],
+                          ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(28.0),
-                          child: AnimatedDropdownExample(),
-                        ),
-                        const SizedBox(height: 20),
-                        ///////////////////////////////////////////////////////////
-                        // UNCOMMENT HERE FOR ACCORDION CODE
-                        // _buildAccordion(),
-                        ///////////////////////////////////////////////////////////
-                        // const SizedBox(height: 10),
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );

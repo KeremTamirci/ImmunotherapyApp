@@ -1,42 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Bottom Sheet Background Color')),
-        body: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: Colors.blueGrey,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-                ),
-                builder: (BuildContext context) {
-                  return SlidingUpPanel(
-                    borderRadius: BorderRadius.circular(20.0),
-                    maxHeight: MediaQuery.of(context).size.height * 0.9,
-                    minHeight: 0,
-                    panel: AllergyInfoSheet(),
-                  );
-                },
-              );
-            },
-            child: const Text('Show Bottom Sheet'),
-          ),
-        ),
-      ),
-    );
-  }
-}
+// import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AllergyInfoSheet extends StatelessWidget {
+  const AllergyInfoSheet({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -145,7 +112,8 @@ class AllergyInfoSheet extends StatelessWidget {
                       const Icon(Icons.circle, size: 8),
                       const SizedBox(width: 10),
                       Expanded(
-                        child: Text(symptom, style: const TextStyle(fontSize: 16)),
+                        child:
+                            Text(symptom, style: const TextStyle(fontSize: 16)),
                       ),
                     ],
                   ),
@@ -165,7 +133,8 @@ class AllergyInfoSheet extends StatelessWidget {
         return Dialog(
           child: Stack(
             children: [
-              Image.asset("assets/images/Süt_Merdiveni_İngilizce.png", fit: BoxFit.cover),
+              Image.asset("assets/images/Süt_Merdiveni_İngilizce.png",
+                  fit: BoxFit.cover),
               Positioned(
                 right: 0.0,
                 child: IconButton(
