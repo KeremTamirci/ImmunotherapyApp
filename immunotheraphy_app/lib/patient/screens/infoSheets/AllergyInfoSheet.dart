@@ -11,7 +11,7 @@ class AllergyInfoSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
       initialChildSize: 0.9,
-      minChildSize: 0.5,
+      minChildSize: 0.9,
       maxChildSize: 0.9,
       snap: true,
       expand: false,
