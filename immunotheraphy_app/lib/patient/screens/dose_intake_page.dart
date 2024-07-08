@@ -306,8 +306,8 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
-                          "Sulandırma",
+                        Text(
+                          AppLocalizations.of(context)!.watering,
                           style: TextStyle(fontSize: 20),
                         ),
                         const Spacer(),

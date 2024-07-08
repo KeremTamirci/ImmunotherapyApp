@@ -81,14 +81,14 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           surfaceTintColor: CupertinoColors.systemBackground,
-          title: const Row(
+          title: Row(
             children: [
               Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
               SizedBox(width: 10),
-              DialogTitleText('Uyarı', color: Color.fromARGB(255, 126, 6, 0)),
+              DialogTitleText(AppLocalizations.of(context)!.uyari,
+                  color: Color.fromARGB(255, 126, 6, 0)),
             ],
           ),
-          // const DialogTitleText("Uyarı", color: Color.fromARGB(255, 126, 6, 0)),
           content: DialogText(AppLocalizations.of(context)!.exerciseWarning),
           actions: <Widget>[
             DialogTextButton(
