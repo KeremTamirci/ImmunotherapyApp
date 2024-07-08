@@ -57,7 +57,7 @@ class AllergyInfoSheet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.milkLadder,
+                        AppLocalizations.of(context)!.allergicFoods,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -94,52 +94,59 @@ class AllergyInfoSheet extends StatelessWidget {
                             ),
                           ),
                           // const SizedBox(height: 10),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 24.0, vertical: 12.0),
                             child: Text(
-                              "Alerji Bilgileri",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.allergyInfo,
+                              style: const TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                           ),
                           // const SizedBox(height: 10),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 24.0, vertical: 12.0),
                             child: Text(
-                              "Aşağıda süt, fındık ve susam alerjileri hakkında bilgi bulabilirsiniz.",
-                              style: TextStyle(fontSize: 16),
+                              AppLocalizations.of(context)!.commonFoodAllergies,
+                              style: const TextStyle(fontSize: 16),
                             ),
                           ),
                           _buildCard(
                             context,
-                            "Süt Alerjisi",
+                            AppLocalizations.of(context)!.milkAllergy,
                             [
-                              'Ciltte kızarıklık ve kaşıntı',
-                              'Karın ağrısı, bulantı, ishal',
-                              'Öksürük, hırıltı',
-                              'Nadir durumlarda anafilaksi'
+                              AppLocalizations.of(context)!
+                                  .milkAllergySymptoms1,
+                              AppLocalizations.of(context)!
+                                  .milkAllergySymptoms2,
+                              AppLocalizations.of(context)!
+                                  .milkAllergySymptoms3,
+                              AppLocalizations.of(context)!.milkAllergySymptoms4
                             ],
                           ),
                           _buildCard(
                             context,
-                            "Fındık Alerjisi",
+                            AppLocalizations.of(context)!.nutAllergy,
                             [
-                              'Ciltte döküntü ve kaşıntı',
-                              'Mide krampları, bulantı, ishal',
-                              'Nefes darlığı, hırıltı',
-                              'Şiddetli alerjik reaksiyon (anafilaksi)'
+                              AppLocalizations.of(context)!.nutAllergySymptoms1,
+                              AppLocalizations.of(context)!.nutAllergySymptoms2,
+                              AppLocalizations.of(context)!.nutAllergySymptoms3,
+                              AppLocalizations.of(context)!.nutAllergySymptoms4
                             ],
                           ),
                           _buildCard(
                             context,
-                            "Susam Alerjisi",
+                            AppLocalizations.of(context)!.sesameAllergy,
                             [
-                              'Kurdeşen, kızarıklık',
-                              'Karın ağrısı, bulantı, ishal',
-                              'Burun akıntısı, nefes darlığı',
-                              'Şiddetli alerjik reaksiyon (anafilaksi)'
+                              AppLocalizations.of(context)!
+                                  .sesameAllergySymptoms1,
+                              AppLocalizations.of(context)!
+                                  .sesameAllergySymptoms2,
+                              AppLocalizations.of(context)!
+                                  .sesameAllergySymptoms3,
+                              AppLocalizations.of(context)!
+                                  .sesameAllergySymptoms4
                             ],
                           ),
                           const SizedBox(height: 20),
@@ -193,31 +200,6 @@ class AllergyInfoSheet extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  void _showImageDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: Stack(
-            children: [
-              Image.asset("assets/images/Süt_Merdiveni_İngilizce.png",
-                  fit: BoxFit.cover),
-              Positioned(
-                right: 0.0,
-                child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.black),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

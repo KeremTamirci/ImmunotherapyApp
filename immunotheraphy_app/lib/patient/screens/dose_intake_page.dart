@@ -185,7 +185,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
         'dosage_amount': double.tryParse(_textController.text),
         'is_hospital_dosage': _isHospitalDosage,
         'measure_metric': 'ml',
-        //'sulandırma': _selectedWatering,
+        'watering': _selectedWatering,
       };
 
       await _databaseController.addDosageTime(dosageDetails);
@@ -233,8 +233,8 @@ class DoseIntakePageState extends State<DoseIntakePage>
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
-        title: const Text('Watering'),
-        message: const Text('Select the ratio of water to dose'),
+        title: Text(AppLocalizations.of(context)!.watering),
+        message: Text(AppLocalizations.of(context)!.ratioOfWater),
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
             /// This parameter indicates the action would be a default

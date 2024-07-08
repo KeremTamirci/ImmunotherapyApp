@@ -74,23 +74,23 @@ class MilkLadderInfoSheet extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 24.0),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
                           child: Text(
-                            "Süt Merdiveni",
+                            AppLocalizations.of(context)!.milkLadder,
                             // textAlign: TextAlign.end,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                         const SizedBox(height: 10),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 24.0),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
                           child: Text(
-                            "Aşağıdaki diagramda çeşitli süt ürünlerinin içerdiği süt proteini miktarlarını görüp karşılaştırabilirsiniz.",
-                            style: TextStyle(fontSize: 16),
+                            AppLocalizations.of(context)!.milkLadderText,
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ),
                         Padding(
@@ -102,8 +102,11 @@ class MilkLadderInfoSheet extends StatelessWidget {
                                   1.5, // Adjust the aspect ratio as needed
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                child: Image.asset(
-                                    "assets/images/Süt_Merdiveni_İngilizce.png"),
+                                child: Image.asset(AppLocalizations.of(context)!
+                                            .milkLadder ==
+                                        "The Milk Ladder"
+                                    ? "assets/images/Süt_Merdiveni_İngilizce.png"
+                                    : "assets/images/sut_merdiveni.png"),
                               ),
                             ),
                           ),
