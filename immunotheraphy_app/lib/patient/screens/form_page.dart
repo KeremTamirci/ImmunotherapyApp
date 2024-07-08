@@ -251,12 +251,12 @@ void _showEnhancedAlertDialog(BuildContext context) {
         ),
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
-            SizedBox(width: 10),
-            DialogTitleText('Important Notice',
-                color: Color.fromARGB(255, 126, 6, 0)),
+            const Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
+            const SizedBox(width: 10),
+            DialogTitleText(AppLocalizations.of(context)!.importantNotice,
+                color: const Color.fromARGB(255, 126, 6, 0)),
             // Text(
             //   'Important Notice',
             //   style: TextStyle(
@@ -267,17 +267,16 @@ void _showEnhancedAlertDialog(BuildContext context) {
             // ),
           ],
         ),
-        content: const SingleChildScrollView(
+        content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              DialogText('It is currently past 19:00.'),
+              DialogText(AppLocalizations.of(context)!.importantNotice1),
               // Text(
               //   'It is currently past 19:00.',
               //   style: TextStyle(fontSize: 20, color: Colors.black87),
               // ),
-              SizedBox(height: 10),
-              DialogText(
-                  'It is not recommended to take the dose after 19:00. You can consider skipping today\'s dose.')
+              const SizedBox(height: 10),
+              DialogText((AppLocalizations.of(context)!.importantNotice2))
               // Text(
               //   'It is not recommended to take the dose after 19:00. You can consider skipping today\'s dose.',
               //   style: TextStyle(fontSize: 20, color: Colors.black87),

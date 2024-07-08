@@ -134,9 +134,17 @@ class _DosePageState extends State<DosePage> {
                       margin: const EdgeInsets.symmetric(vertical: 6.0),
                       child: ListTile(
                         title: Text(
-                            '${AppLocalizations.of(context)!.dosageAmount}: ${dosage[index].amount}'),
+                          '${AppLocalizations.of(context)!.dosageAmount}: ${dosage[index].amount}',
+                        ),
                         subtitle: Text(
-                            '${AppLocalizations.of(context)!.date}: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(dosage[index].date)}'),
+                          '${AppLocalizations.of(context)!.date}: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(dosage[index].date)}',
+                        ),
+                        trailing: dosage[index].watering != null &&
+                                dosage[index].watering!.isNotEmpty
+                            ? Text(
+                                '${AppLocalizations.of(context)!.watering}: ${dosage[index].watering}',
+                              )
+                            : null,
                       ),
                     );
                   },

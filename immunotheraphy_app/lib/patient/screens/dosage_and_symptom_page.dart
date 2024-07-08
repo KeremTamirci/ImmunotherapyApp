@@ -81,16 +81,15 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           surfaceTintColor: CupertinoColors.systemBackground,
-          title: const Row(
+          title: Row(
             children: [
               Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
               SizedBox(width: 10),
-              DialogTitleText('Uyarı', color: Color.fromARGB(255, 126, 6, 0)),
+              DialogTitleText(AppLocalizations.of(context)!.uyari,
+                  color: Color.fromARGB(255, 126, 6, 0)),
             ],
           ),
-          // const DialogTitleText("Uyarı", color: Color.fromARGB(255, 126, 6, 0)),
-          content: const DialogText(
-              "Doz alımından sonra 2 saat boyunca ağır egzersiz yapmayınız."),
+          content: DialogText(AppLocalizations.of(context)!.exerciseWarning),
           actions: <Widget>[
             DialogTextButton(
               AppLocalizations.of(context)!.confirm,
@@ -127,7 +126,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                       children: <Widget>[
                         if (_hasTakenDose == true)
                           InformationBox(
-                            title: "You have entered your dose for today!",
+                            title: AppLocalizations.of(context)!.doseComplete,
                             onTap: () {
                               print("Box 1 alternative version tapped");
                             },
@@ -242,9 +241,10 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                             imagePath: "assets/images/sut_ana_resim.png",
                             cardNo: 1,
                           ),
-                          const InfoCardWidget(
-                            title: 'Alerjik Besinler',
-                            description: "Yaygın besin alerjileri",
+                          InfoCardWidget(
+                            title: AppLocalizations.of(context)!.allergicFoods,
+                            description: AppLocalizations.of(context)!
+                                .commonFoodAllergies,
                             imagePath: "assets/images/armut_yiyen_adam.png",
                             cardNo: 2,
                           ),
