@@ -164,6 +164,9 @@
     "sesameAllergySymptoms2": "Stomach pain, nausea, diarrhea",
     "sesameAllergySymptoms3": "Runny nose, shortness of breath",
     "sesameAllergySymptoms4": "Severe allergic reaction (anaphylaxis)",
-    "milkLadderText": "In the diagram below you can compare the milk protein amounts of various products."
+    "milkLadderText": "In the diagram below you can compare the milk protein amounts of various products.",
+    "importantNotice": "Important Notice",
+    "importantNotice1": "'It is currently past 19:00.",
+    "importantNotice2": "It is not recommended to take the dose after 19:00. You can consider skipping today's dose."
 
 }

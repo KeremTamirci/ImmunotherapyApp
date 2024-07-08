@@ -256,6 +256,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     selectedLanguage = 'en';
                   });
                   _saveLanguagePreference(selectedLanguage);
+                  _showLanguageSnackbarEnglish();
                   Navigator.of(context).pop();
                 },
               ),
@@ -269,6 +270,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     selectedLanguage = 'tr';
                   });
                   _saveLanguagePreference(selectedLanguage);
+                  _showLanguageSnackbarTurkish();
                   Navigator.of(context).pop();
                 },
               ),
@@ -276,6 +278,25 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         );
       },
+    );
+  }
+
+  void _showLanguageSnackbarTurkish() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Dilin değişmesi için uygulamayı tamamen kapatıp açın'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _showLanguageSnackbarEnglish() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+            'For the change of language to take effect completely restart the application'),
+        duration: Duration(seconds: 2),
+      ),
     );
   }
 }
