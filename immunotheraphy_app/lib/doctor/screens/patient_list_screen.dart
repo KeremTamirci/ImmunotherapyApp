@@ -17,7 +17,8 @@ class PatientListScreen extends StatefulWidget {
 class PatientListScreenState extends State<PatientListScreen> {
   final PatientsFirestoreService _patientsFirestoreService =
       PatientsFirestoreService();
-  late List<Patient> patients = [];
+  late List<Patient> yourPatients = [];
+  late List<Patient> otherPatients = [];
   StreamSubscription<List<Patient>>? _patientsSubscription;
   bool _isLoading = true;
 
@@ -34,13 +35,18 @@ class PatientListScreenState extends State<PatientListScreen> {
     // Subscribe to the patients stream and update the state
     _patientsSubscription = _patientsFirestoreService.getPatients().listen(
         (List<Patient> fetchedPatients) {
-      List<Patient> filteredPatients = fetchedPatients
+      List<Patient> filteredYourPatients = fetchedPatients
           .where((patient) => patient.uid == currentDoctorUID)
+          .toList();
+
+      List<Patient> filteredOtherPatients = fetchedPatients
+          .where((patient) => patient.uid != currentDoctorUID)
           .toList();
 
       if (mounted) {
         setState(() {
-          patients = filteredPatients;
+          yourPatients = filteredYourPatients;
+          otherPatients = filteredOtherPatients;
           _isLoading = false;
         });
       }
@@ -72,7 +78,7 @@ class PatientListScreenState extends State<PatientListScreen> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : patients.isEmpty
+          : (yourPatients.isEmpty && otherPatients.isEmpty)
               ? Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -96,58 +102,93 @@ class PatientListScreenState extends State<PatientListScreen> {
                     ),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: patients.length,
-                  itemBuilder: (context, index) {
-                    Patient patient = patients[index];
-                    return Card(
-                      color: CupertinoColors.systemBackground,
-                      surfaceTintColor: CupertinoColors.systemBackground,
-                      elevation: 3,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 16),
-                      child: ListTile(
-                        leading: const IconTheme(
-                          data: IconThemeData(size: 36), // Adjust the size here
-                          child: Icon(Icons.person),
-                        ),
-                        title: Text(
-                          '${patient.firstName} ${patient.lastName}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 4),
-                            Text(
-                                '${AppLocalizations.of(context)!.phoneNumber} ${patient.phoneNumber}'),
-                            const SizedBox(height: 2),
-                            Text(
-                                '${AppLocalizations.of(context)!.birthDate} ${_formatDate(patient.birthDate)}'),
-                            const SizedBox(height: 2),
-                            Text(
-                                '${AppLocalizations.of(context)!.hasRhinitis}: ${patient.hasRhinits ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
-                            const SizedBox(height: 2),
-                            Text(
-                                '${AppLocalizations.of(context)!.hasAsthma}: ${patient.hasAsthma ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
-                          ],
-                        ),
-                        onTap: () {
-                          // Navigate to PatientDetailScreen and pass the selected patient
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PatientDetailScreen(patient: patient),
-                            ),
-                          );
-                        },
+              : ListView(
+                  children: [
+                    if (yourPatients.isNotEmpty)
+                      _buildPatientSection(
+                          context,
+                          AppLocalizations.of(context)!.yourPatients,
+                          yourPatients),
+                    if (otherPatients.isNotEmpty)
+                      _buildPatientSection(
+                          context,
+                          AppLocalizations.of(context)!.otherPatients,
+                          otherPatients),
+                  ],
+                ),
+    );
+  }
+
+  Widget _buildPatientSection(
+      BuildContext context, String title, List<Patient> patients) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: patients.length,
+            itemBuilder: (context, index) {
+              Patient patient = patients[index];
+              return Card(
+                color: CupertinoColors.systemBackground,
+                surfaceTintColor: CupertinoColors.systemBackground,
+                elevation: 3,
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                child: ListTile(
+                  leading: const IconTheme(
+                    data: IconThemeData(size: 36), // Adjust the size here
+                    child: Icon(Icons.person),
+                  ),
+                  title: Text(
+                    '${patient.firstName} ${patient.lastName}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 4),
+                      Text(
+                          '${AppLocalizations.of(context)!.phoneNumber} ${patient.phoneNumber}'),
+                      const SizedBox(height: 2),
+                      Text(
+                          '${AppLocalizations.of(context)!.birthDate} ${_formatDate(patient.birthDate)}'),
+                      const SizedBox(height: 2),
+                      Text(
+                          '${AppLocalizations.of(context)!.hasRhinitis}: ${patient.hasRhinits ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
+                      const SizedBox(height: 2),
+                      Text(
+                          '${AppLocalizations.of(context)!.hasAsthma}: ${patient.hasAsthma ? AppLocalizations.of(context)!.yes : AppLocalizations.of(context)!.no}'),
+                    ],
+                  ),
+                  onTap: () {
+                    // Navigate to PatientDetailScreen and pass the selected patient
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PatientDetailScreen(patient: patient),
                       ),
                     );
                   },
                 ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 

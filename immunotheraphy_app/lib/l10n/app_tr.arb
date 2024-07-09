@@ -155,7 +155,9 @@
     "milkLadderText": "Aşağıdaki diagramda çeşitli süt ürünlerinin içerdiği süt proteini miktarlarını görüp karşılaştırabilirsiniz.",
     "importantNotice": "Önemli Uyarı",
     "importantNotice1": "Saat 19:00'u geçmiş",
-    "importantNotice2": "Saat 19:00'dan sonra doz alınması önerilmiyor. Bugünün dozunu atlamayı düşünebilirsiniz."
+    "importantNotice2": "Saat 19:00'dan sonra doz alınması önerilmiyor. Bugünün dozunu atlamayı düşünebilirsiniz.",
+    "yourPatients": "Sizin Hastalarınız",
+    "otherPatients": "Diğer Hastalar"
 
 
 }
