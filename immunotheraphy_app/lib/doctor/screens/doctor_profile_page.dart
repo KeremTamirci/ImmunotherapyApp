@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/screens/choice_screen.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DoctorProfilePage extends StatefulWidget {
   const DoctorProfilePage({super.key});
@@ -20,11 +22,13 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
   late Map<String, dynamic> _doctorData = {};
   bool gotData = false;
   final TextStyle style = const TextStyle(fontSize: 20);
+  late String selectedLanguage = 'en'; // Default language
 
   @override
   void initState() {
     super.initState();
     _userDataFuture = _getUserData();
+    _loadLanguagePreference(); // Load language preference
   }
 
   Future<void> _getUserData() async {
@@ -37,6 +41,22 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
       }
       await _getDoctorData(user.uid);
     }
+  }
+
+  Future<void> _loadLanguagePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedLanguage = prefs.getString('preferredLanguage') ??
+          'en'; // Default language is English
+    });
+  }
+
+  Future<void> _saveLanguagePreference(String languageCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('preferredLanguage', languageCode);
+    setState(() {
+      selectedLanguage = languageCode;
+    });
   }
 
   Future<void> _getDoctorData(String doctorId) async {
@@ -134,6 +154,13 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 10),
+                MainTextButton(
+                  "Change language/Dili değiştir",
+                  onPressed: () {
+                    _showLanguageSelector(context);
+                  },
+                ),
+                const SizedBox(height: 10),
                 CupertinoList(dataPairs: [
                   {'titleText': 'Email', 'textValue': _user.email},
                   {
@@ -160,6 +187,71 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
             );
           }
         },
+      ),
+    );
+  }
+
+  void _showLanguageSelector(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).dialogBackgroundColor,
+          surfaceTintColor: CupertinoColors.systemBackground,
+          title: const DialogTitleText('Select Language/Dili Seçin'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: const DialogText('English'),
+                trailing: selectedLanguage == 'en'
+                    ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                    : null,
+                onTap: () {
+                  setState(() {
+                    selectedLanguage = 'en';
+                  });
+                  _saveLanguagePreference(selectedLanguage);
+                  _showLanguageSnackbarEnglish();
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: const DialogText('Türkçe'),
+                trailing: selectedLanguage == 'tr'
+                    ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                    : null,
+                onTap: () {
+                  setState(() {
+                    selectedLanguage = 'tr';
+                  });
+                  _saveLanguagePreference(selectedLanguage);
+                  _showLanguageSnackbarTurkish();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showLanguageSnackbarTurkish() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Dilin değişmesi için uygulamayı tamamen kapatıp açın'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _showLanguageSnackbarEnglish() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+            'For the change of language to take effect completely restart the application'),
+        duration: Duration(seconds: 2),
       ),
     );
   }
