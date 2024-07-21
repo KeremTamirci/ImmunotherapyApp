@@ -232,6 +232,18 @@ class FormPageState extends State<FormPage> {
                           });
                         },
                       ),
+                      CheckboxListTile(
+                        title: Text(
+                          "Ateş, Deride döküntü/kızarıklık/şişlik, Öksürük, Hırıltı vb. bulgularınız var mı?",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        value: checkedStateStep2[4],
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkedStateStep2[4] = newValue!;
+                          });
+                        },
+                      ),
                       const SizedBox(height: 20),
                     ],
                   )
