@@ -30,7 +30,6 @@ class DoseIntakePageState extends State<DoseIntakePage>
   bool _showTime = false;
   bool _isHospitalDosage = false; // Initial value for hospital dosage
   String _selectedWatering = '1/1';
-  final List<String> _wateringValues = ['1/1', '1/10', '1/100'];
 
   late DatabaseController _databaseController;
   // ignore: unused_field

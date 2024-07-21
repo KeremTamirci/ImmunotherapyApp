@@ -29,12 +29,14 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   bool? _hasTakenDose;
   bool? _incorrectTime = false;
   bool _isLoading = true;
+  bool? _hasAsthma;
 
   @override
   void initState() {
     super.initState();
     _getUserData();
     _checkDosageandTime();
+    checkAsthma();
   }
 
   Future<void> _checkDosageandTime() async {
@@ -63,6 +65,13 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
     } else {
       return false;
     }
+  }
+
+  Future<void> checkAsthma() async {
+    bool asthmaCheck = await _databaseController.hasAsthma();
+    setState(() {
+      _hasAsthma = asthmaCheck;
+    });
   }
 
   Future<void> _getUserData() async {
@@ -151,8 +160,10 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                 final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        FormPage(isAfterSeven: _incorrectTime),
+                                    builder: (context) => FormPage(
+                                      isAfterSeven: _incorrectTime,
+                                      hasAsthma: _hasAsthma,
+                                    ),
                                   ),
                                 );
                                 // .then((_) {
