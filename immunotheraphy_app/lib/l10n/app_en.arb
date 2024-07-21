@@ -145,6 +145,7 @@
     "watering": "Watering",
     "ratioOfWater": "Select the ratio of water to dose",
     "exerciseWarning": "Don't do heavy exercise for 2 hours after the dose.",
+    "bodyHeatWarning": "Don't engage in activities that increase your body temperature, such as running, taking a hot bath, sauna, or hammam and be aware of the danger of heatsroke",
     "doseComplete": "You have entered your dose for today!",
     "allergicFoods": "Major Food Allergens",
     "commonFoodAllergies": "Information on common food allergies",

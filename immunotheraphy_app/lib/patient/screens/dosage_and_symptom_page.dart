@@ -92,13 +92,22 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
           surfaceTintColor: CupertinoColors.systemBackground,
           title: Row(
             children: [
-              Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
-              SizedBox(width: 10),
+              const Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
+              const SizedBox(width: 10),
               DialogTitleText(AppLocalizations.of(context)!.uyari,
-                  color: Color.fromARGB(255, 126, 6, 0)),
+                  color: const Color.fromARGB(255, 126, 6, 0)),
             ],
           ),
-          content: DialogText(AppLocalizations.of(context)!.exerciseWarning),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DialogText(AppLocalizations.of(context)!.exerciseWarning),
+                const SizedBox(height: 20),
+                DialogText(AppLocalizations.of(context)!.bodyHeatWarning),
+              ],
+            ),
+          ),
           actions: <Widget>[
             DialogTextButton(
               AppLocalizations.of(context)!.confirm,
