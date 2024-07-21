@@ -20,15 +20,15 @@ class NewPatientPage extends StatefulWidget {
 class _NewPatientPageState extends State<NewPatientPage> {
   TextEditingController _nameTextController = TextEditingController();
   TextEditingController _surnameTextController = TextEditingController();
-  TextEditingController _allergyTextController = TextEditingController();
   TextEditingController _phoneNumberTextController = TextEditingController();
   TextEditingController _dateOfBirthController = TextEditingController();
 
   String? _selectedAllergy;
-  List<String> _allergies = ['Milk', 'Nuts'];
+  String? _selectedSubAllergy;
 
   bool _hasAllergicRhinitis = false;
   bool _hasAsthma = false;
+  bool _hasAtopicDermatitis = false;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference _patientsCollection =
@@ -38,10 +38,26 @@ class _NewPatientPageState extends State<NewPatientPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> _allergies = [
+      AppLocalizations.of(context)!.milk,
+      AppLocalizations.of(context)!.nuts,
+      AppLocalizations.of(context)!.sesame,
+      AppLocalizations.of(context)!.egg,
+      AppLocalizations.of(context)!.wheat,
+    ];
+
+    List<String> _pollenSubAllergies = [
+      AppLocalizations.of(context)!.almond,
+      AppLocalizations.of(context)!.walnut,
+      AppLocalizations.of(context)!.cashew,
+      AppLocalizations.of(context)!.pistachio,
+      AppLocalizations.of(context)!.hazelnut,
+      AppLocalizations.of(context)!.peanut,
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.registerNewPatient),
-        // backgroundColor: hexStringToColor("6495ED"),
         surfaceTintColor: CupertinoColors.systemBackground,
       ),
       body: Padding(
@@ -70,7 +86,11 @@ class _NewPatientPageState extends State<NewPatientPage> {
                     _surnameTextController,
                   ),
                   const SizedBox(height: 20),
-                  _allergyDropdown(),
+                  _allergyDropdown(_allergies),
+                  if (_selectedAllergy == AppLocalizations.of(context)!.nuts)
+                    const SizedBox(height: 20),
+                  if (_selectedAllergy == AppLocalizations.of(context)!.nuts)
+                    _subAllergyDropdown(_pollenSubAllergies),
                   const SizedBox(height: 20),
                   _blueTextField(
                     AppLocalizations.of(context)!.phoneNumber,
@@ -107,6 +127,21 @@ class _NewPatientPageState extends State<NewPatientPage> {
                       ),
                       SizedBox(width: 8),
                       Text(AppLocalizations.of(context)!.hasAsthma),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      FancyCheckbox(
+                        value: _hasAtopicDermatitis,
+                        onChanged: (value) {
+                          setState(() {
+                            _hasAtopicDermatitis = value!;
+                          });
+                        },
+                      ),
+                      SizedBox(width: 8),
+                      Text(AppLocalizations.of(context)!.hasAtopicDermatitis),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -157,7 +192,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
     );
   }
 
-  Widget _allergyDropdown() {
+  Widget _allergyDropdown(List<String> _allergies) {
     return Container(
       decoration: BoxDecoration(
         color: hexStringToColor("6495ED").withOpacity(0.1),
@@ -184,6 +219,40 @@ class _NewPatientPageState extends State<NewPatientPage> {
         onChanged: (newValue) {
           setState(() {
             _selectedAllergy = newValue as String?;
+            _selectedSubAllergy = null; // Reset the sub-allergy selection
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _subAllergyDropdown(List<String> _pollenSubAllergies) {
+    return Container(
+      decoration: BoxDecoration(
+        color: hexStringToColor("6495ED").withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          hintText: AppLocalizations.of(context)!.selectSubcategory,
+          hintStyle: TextStyle(color: hexStringToColor("6495ED")),
+          border: InputBorder.none,
+          prefixIcon: Icon(
+            Icons.arrow_right,
+            color: hexStringToColor("6495ED"),
+          ),
+        ),
+        value: _selectedSubAllergy,
+        items: _pollenSubAllergies.map((subAllergy) {
+          return DropdownMenuItem(
+            child: Text(subAllergy),
+            value: subAllergy,
+          );
+        }).toList(),
+        onChanged: (newValue) {
+          setState(() {
+            _selectedSubAllergy = newValue as String?;
           });
         },
       ),
@@ -238,7 +307,9 @@ class _NewPatientPageState extends State<NewPatientPage> {
           _surnameTextController.text.isEmpty ||
           _phoneNumberTextController.text.isEmpty ||
           _selectedDateOfBirth == null ||
-          _selectedAllergy == null) {
+          _selectedAllergy == null ||
+          (_selectedAllergy == AppLocalizations.of(context)!.nuts &&
+              _selectedSubAllergy == null)) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(AppLocalizations.of(context)!.pleaseFill),
@@ -270,8 +341,10 @@ class _NewPatientPageState extends State<NewPatientPage> {
             _dateOfBirthController.clear();
             setState(() {
               _selectedAllergy = null;
+              _selectedSubAllergy = null;
               _hasAllergicRhinitis = false;
               _hasAsthma = false;
+              _hasAtopicDermatitis = false;
             });
           });
         } catch (e) {

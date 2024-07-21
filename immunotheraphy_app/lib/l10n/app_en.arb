@@ -169,6 +169,18 @@
     "importantNotice1": "'It is currently past 19:00.",
     "importantNotice2": "It is not recommended to take the dose after 19:00. You can consider skipping today's dose.",
     "yourPatients": "Your Patients",
-    "otherPatients": "Other Patients"
+    "otherPatients": "Other Patients",
+    "sesame": "Sesame",
+    "egg": "Egg",
+    "wheat": "Wheat",
+    "almond": "Almond",
+    "walnut": "Walnut",
+    "cashew": "Cashew",
+    "pistachio": "Pistachio",
+    "hazelnut": "Hazelnut",
+    "peanut": "Peanut",
+    "selectSubcategory": "Select Subcategory",
+    "hasAtopicDermatitis": "Has Atopic Dermatitis"
+
 
 }

@@ -157,7 +157,18 @@
     "importantNotice1": "Saat 19:00'u geçmiş",
     "importantNotice2": "Saat 19:00'dan sonra doz alınması önerilmiyor. Bugünün dozunu atlamayı düşünebilirsiniz.",
     "yourPatients": "Sizin Hastalarınız",
-    "otherPatients": "Diğer Hastalar"
-
+    "otherPatients": "Diğer Hastalar",
+    "almond": "Badem",
+    "sesame": "Susam",
+    "egg": "Yumurta",
+    "wheat": "Buğday",
+    "almond": "Badem",
+    "walnut": "Ceviz",
+    "cashew": "Kaju",
+    "pistachio": "Antep Fıstığı",
+    "hazelnut": "Fındık",
+    "peanut": "Yer Fıstığı",
+    "selectSubcategory": "Alt Kategori Seç",
+    "hasAtopicDermatitis": "Atopik Dermatiti Var"
 
 }
