@@ -275,7 +275,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                             imagePath: "assets/images/kalp_atisi.png",
                             cardNo: 0,
                           ),
-                          InfoCardWidget(
+                          /*InfoCardWidget(
                             title: AppLocalizations.of(context)!.milkLadder,
                             description: AppLocalizations.of(context)!
                                 .milkLadderSubtitle,
@@ -289,6 +289,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                             imagePath: "assets/images/armut_yiyen_adam.png",
                             cardNo: 2,
                           ),
+                          */
                         ],
                       ),
                     ),
