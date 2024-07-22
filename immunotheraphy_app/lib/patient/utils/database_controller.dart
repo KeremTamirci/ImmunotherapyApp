@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
+import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 import 'dart:convert';
 
 import 'package:immunotheraphy_app/patient/utils/notification_handler.dart';
@@ -8,6 +9,24 @@ class DatabaseController {
   final String userId;
 
   DatabaseController(this.userId);
+
+  CollectionReference get _patientsCollection =>
+      FirebaseFirestore.instance.collection('Patients');
+
+  // Method to get patient data
+  Future<Patient> getPatientData() async {
+    try {
+      DocumentSnapshot doc = await _patientsCollection.doc(userId).get();
+      if (doc.exists) {
+        return Patient.fromFirestore(doc);
+      } else {
+        throw Exception("Patient not found");
+      }
+    } catch (e) {
+      print('Failed to get patient data: $e');
+      throw e;
+    }
+  }
 
   Future<void> addDosageTime(Map<String, dynamic> dosageDetails) async {
     try {

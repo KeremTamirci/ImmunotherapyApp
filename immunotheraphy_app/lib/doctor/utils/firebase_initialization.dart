@@ -55,8 +55,11 @@ class TempPatientsFirestoreService {
       String lastName,
       String phoneNumber,
       DateTime birthDate,
+      String gender,
+      String allergyType,
       bool hasRhinits,
       bool hasAsthma,
+      bool hasAtopicDermatitis,
       String uid,
       String otp) async {
     await _tempPatientsCollection.add({
@@ -65,8 +68,11 @@ class TempPatientsFirestoreService {
       'last_name': lastName,
       'phone_number': phoneNumber,
       'birth_date': birthDate,
+      'gender': gender,
+      'allergy_type': allergyType,
       'has_allergic_rhinitis': hasRhinits,
       'has_asthma': hasAsthma,
+      'has_atopic_dermatitis': hasAtopicDermatitis,
       'otp': otp
     });
   }
@@ -179,10 +185,13 @@ class SymptomData {
 class Patient {
   final String firstName;
   final String lastName;
+  final String gender;
   final String phoneNumber;
   final DateTime birthDate;
+  final String allergyType;
   final bool hasRhinits;
   final bool hasAsthma;
+  final bool hasAtopicDermatitis;
   final String uid;
   final String otp;
   final String patientId;
@@ -190,10 +199,13 @@ class Patient {
   Patient(
       {required this.firstName,
       required this.lastName,
+      required this.gender,
       required this.phoneNumber,
       required this.birthDate,
+      required this.allergyType,
       required this.hasRhinits,
       required this.hasAsthma,
+      required this.hasAtopicDermatitis,
       required this.uid,
       required this.otp,
       required this.patientId});
@@ -206,10 +218,13 @@ class Patient {
     return Patient(
         firstName: data['first_name'],
         lastName: data['last_name'],
+        gender: data['gender'],
         phoneNumber: data['phone_number'],
         birthDate: birthDate, // Assign the converted birthDate
+        allergyType: data['allergy_type'],
         hasRhinits: data['has_allergic_rhinitis'],
         hasAsthma: data['has_asthma'],
+        hasAtopicDermatitis: data['has_atopic_dermatitis'],
         uid: data['uid'],
         otp: data['otp'],
         patientId: data['patient_id']);
