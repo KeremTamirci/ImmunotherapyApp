@@ -8,7 +8,9 @@ import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class FormPage extends StatefulWidget {
   final bool? isAfterSeven;
-  const FormPage({super.key, required this.isAfterSeven});
+  final bool? hasAsthma;
+  const FormPage(
+      {super.key, required this.isAfterSeven, required this.hasAsthma});
 
   @override
   FormPageState createState() => FormPageState();
@@ -18,7 +20,7 @@ class FormPageState extends State<FormPage> {
   bool _dialogShown = false;
   int _currentStep = 0;
   bool doseAllowed = false;
-  final List<bool> checkedStateStep1 = [false, false, false];
+  List<bool> checkedStateStep1 = [false, false, false];
   final List<bool> checkedStateStep2 = [false, false, false, false, false];
 
   bool areAllCheckedStep1() {
@@ -36,6 +38,12 @@ class FormPageState extends State<FormPage> {
         !_dialogShown) {
       _dialogShown = true;
       Future.delayed(Duration.zero, () => _showEnhancedAlertDialog(context));
+    }
+
+    if (!widget.hasAsthma!) {
+      setState(() {
+        checkedStateStep1[2] = true;
+      });
     }
 
     return Scaffold(
@@ -148,18 +156,20 @@ class FormPageState extends State<FormPage> {
                       });
                     },
                   ),
-                  CheckboxListTile(
-                    title: Text(
-                      AppLocalizations.of(context)!.astimIlaci,
-                      style: const TextStyle(fontSize: 20),
+                  if (widget.hasAsthma!)
+                    CheckboxListTile(
+                      title: Text(
+                        AppLocalizations.of(context)!.astimIlaci,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      value: checkedStateStep1[2],
+                      onChanged: (newValue) {
+                        setState(() {
+                          checkedStateStep1[2] = newValue!;
+                        });
+                      },
                     ),
-                    value: checkedStateStep1[2],
-                    onChanged: (newValue) {
-                      setState(() {
-                        checkedStateStep1[2] = newValue!;
-                      });
-                    },
-                  ),
+
                   const SizedBox(height: 20),
                 ],
               ),
@@ -219,6 +229,18 @@ class FormPageState extends State<FormPage> {
                         onChanged: (newValue) {
                           setState(() {
                             checkedStateStep2[3] = newValue!;
+                          });
+                        },
+                      ),
+                      CheckboxListTile(
+                        title: Text(
+                          "Ateş, Deride döküntü/kızarıklık/şişlik, Öksürük, Hırıltı vb. bulgularınız var mı?",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        value: checkedStateStep2[4],
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkedStateStep2[4] = newValue!;
                           });
                         },
                       ),

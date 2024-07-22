@@ -116,6 +116,30 @@ class DatabaseController {
     return now.hour >= 19;
   }
 
+  //Function to check if current user has asthma
+  Future<bool> hasAsthma() async {
+    try {
+      DocumentSnapshot patientSnapshot = await FirebaseFirestore.instance
+          .collection('Patients')
+          .doc(userId)
+          .get();
+
+      if (patientSnapshot.exists) {
+        Map<String, dynamic> patientData =
+            patientSnapshot.data() as Map<String, dynamic>;
+
+        // Check if the 'has_asthma' field exists and is true
+        if (patientData.containsKey('has_asthma') &&
+            patientData['has_asthma'] == true) {
+          return true;
+        }
+      }
+    } catch (e) {
+      print('Error fetching patient data: $e');
+    }
+    return false;
+  }
+
   // Method to add symptoms to the symptoms table
   Future<void> addSymptoms(List<Map<String, dynamic>> symptoms) async {
     try {

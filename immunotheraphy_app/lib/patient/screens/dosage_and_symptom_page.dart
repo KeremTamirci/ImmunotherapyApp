@@ -29,12 +29,14 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
   bool? _hasTakenDose;
   bool? _incorrectTime = false;
   bool _isLoading = true;
+  bool? _hasAsthma;
 
   @override
   void initState() {
     super.initState();
     _getUserData();
     _checkDosageandTime();
+    checkAsthma();
   }
 
   Future<void> _checkDosageandTime() async {
@@ -65,6 +67,13 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
     }
   }
 
+  Future<void> checkAsthma() async {
+    bool asthmaCheck = await _databaseController.hasAsthma();
+    setState(() {
+      _hasAsthma = asthmaCheck;
+    });
+  }
+
   Future<void> _getUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -83,13 +92,22 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
           surfaceTintColor: CupertinoColors.systemBackground,
           title: Row(
             children: [
-              Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
-              SizedBox(width: 10),
+              const Icon(Icons.info, color: Color.fromARGB(255, 126, 6, 0)),
+              const SizedBox(width: 10),
               DialogTitleText(AppLocalizations.of(context)!.uyari,
-                  color: Color.fromARGB(255, 126, 6, 0)),
+                  color: const Color.fromARGB(255, 126, 6, 0)),
             ],
           ),
-          content: DialogText(AppLocalizations.of(context)!.exerciseWarning),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DialogText(AppLocalizations.of(context)!.exerciseWarning),
+                const SizedBox(height: 20),
+                DialogText(AppLocalizations.of(context)!.bodyHeatWarning),
+              ],
+            ),
+          ),
           actions: <Widget>[
             DialogTextButton(
               AppLocalizations.of(context)!.confirm,
@@ -151,8 +169,10 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                 final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        FormPage(isAfterSeven: _incorrectTime),
+                                    builder: (context) => FormPage(
+                                      isAfterSeven: _incorrectTime,
+                                      hasAsthma: _hasAsthma,
+                                    ),
                                   ),
                                 );
                                 // .then((_) {
