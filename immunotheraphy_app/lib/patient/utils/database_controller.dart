@@ -10,6 +10,24 @@ class DatabaseController {
 
   DatabaseController(this.userId);
 
+  CollectionReference get _patientsCollection =>
+      FirebaseFirestore.instance.collection('Patients');
+
+  // Method to get patient data
+  Future<Patient> getPatientData() async {
+    try {
+      DocumentSnapshot doc = await _patientsCollection.doc(userId).get();
+      if (doc.exists) {
+        return Patient.fromFirestore(doc);
+      } else {
+        throw Exception("Patient not found");
+      }
+    } catch (e) {
+      print('Failed to get patient data: $e');
+      throw e;
+    }
+  }
+
   Future<void> addDosageTime(Map<String, dynamic> dosageDetails) async {
     try {
       await FirebaseFirestore.instance

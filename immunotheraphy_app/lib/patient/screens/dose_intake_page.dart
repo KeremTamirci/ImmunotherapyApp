@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,8 @@ import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
 
+import '../../doctor/utils/firebase_initialization.dart';
+
 class DoseIntakePage extends StatefulWidget {
   final bool warning;
   const DoseIntakePage({super.key, required this.warning});
@@ -22,41 +23,68 @@ class DoseIntakePage extends StatefulWidget {
 
 class DoseIntakePageState extends State<DoseIntakePage>
     with SingleTickerProviderStateMixin {
-  // int _selectedItem = 10; // Initial value for dropdown
-  // String _numericValue = '';
   final TextEditingController _textController = TextEditingController();
-  TimeOfDay _selectedTime = TimeOfDay.now(); // Initial value for time picker
+  TimeOfDay _selectedTime = TimeOfDay.now();
   DateTime _selectedTimeCupertino = DateTime.now();
   bool _showTime = false;
-  bool _isHospitalDosage = false; // Initial value for hospital dosage
+  bool _isHospitalDosage = false;
   String _selectedWatering = '1/1';
   final List<String> _wateringValues = ['1/1', '1/10', '1/100'];
 
   late DatabaseController _databaseController;
-  // ignore: unused_field
   late User _user;
+
+  String _allergyType = '';
+  String _dosageUnit = 'mg'; // Default unit
 
   late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
-    _getUserData();
-
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    // CurvedAnimation(
-    //   parent: _animationController,
-    //   curve: Curves.easeInOut,
-    // );
+    _getUserData();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  Future<void> _getUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _user = user;
+        _databaseController = DatabaseController(user.uid);
+      });
+      await _fetchPatientData();
+    }
+  }
+
+  Future<void> _fetchPatientData() async {
+    try {
+      Patient patient = await _databaseController.getPatientData();
+      setState(() {
+        //_allergyType = patient.allergyType; // Adjust based on your field name
+        _allergyType = patient.allergyType;
+        _updateDosageUnit();
+      });
+    } catch (e) {
+      print('Failed to fetch patient data: $e');
+    }
+  }
+
+  void _updateDosageUnit() {
+    if (_allergyType == 'Milk' || _allergyType == 'Sesame') {
+      _dosageUnit = 'ml';
+    } else {
+      _dosageUnit = 'mg';
+    }
   }
 
   void _toggleDatePickerVisibility() {
@@ -70,18 +98,30 @@ class DoseIntakePageState extends State<DoseIntakePage>
     });
   }
 
-  // // Function to show the time picker
-  // void _showTimePicker() {
-  //   showMaterialTimePicker(
-  //     context: context,
-  //     selectedTime: _selectedTime,
-  //     onChanged: (time) {
-  //       setState(() {
-  //         _selectedTime = time;
-  //       });
-  //     },
-  //   );
-  // }
+  Future<void> _showTimePickerTest() async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      helpText: AppLocalizations.of(context)!.dosageTimeSelect,
+      initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.inputOnly,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: MediaQuery(
+              data:
+                  MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+              child: child!,
+            ),
+          ),
+        );
+      },
+    );
+    setState(() {
+      _selectedTime = pickedTime!;
+    });
+  }
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -90,14 +130,9 @@ class DoseIntakePageState extends State<DoseIntakePage>
         Container(
           height: 216,
           padding: const EdgeInsets.only(top: 6.0),
-          // The Bottom margin is provided to align the popup above the system
-          // navigation bar.
-          margin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          // Provide a background color for the popup.
+          margin:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           color: CupertinoColors.systemBackground.resolveFrom(context),
-          // Use a SafeArea widget to avoid system overlaps.
           child: SafeArea(
             top: false,
             child: child,
@@ -117,40 +152,6 @@ class DoseIntakePageState extends State<DoseIntakePage>
             }),
       ]),
     );
-  }
-
-  Future<void> _showTimePickerTest() async {
-    final TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      helpText: AppLocalizations.of(context)!.dosageTimeSelect,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.inputOnly,
-      builder: (BuildContext context, Widget? child) {
-        // We just wrap these environmental changes around the
-        // child in this builder so that we can apply the
-        // options selected above. In regular usage, this is
-        // rarely necessary, because the default values are
-        // usually used as-is.
-        return Theme(
-          data: Theme.of(context),
-          // .copyWith(
-          //   textTheme: const TextTheme(titleLarge: TextStyle(fontSize: 36)),
-          // )
-          child: Directionality(
-            textDirection: TextDirection.ltr,
-            child: MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-                alwaysUse24HourFormat: true,
-              ),
-              child: child!,
-            ),
-          ),
-        );
-      },
-    );
-    setState(() {
-      _selectedTime = pickedTime!;
-    });
   }
 
   void _showRangeAlert() {
@@ -176,7 +177,6 @@ class DoseIntakePageState extends State<DoseIntakePage>
     );
   }
 
-  // Function to save dosage information to Firestore
   void _saveDosageInfo() async {
     try {
       Map<String, dynamic> dosageDetails = {
@@ -184,7 +184,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
         'detail': 'Doz kaydı detayı',
         'dosage_amount': double.tryParse(_textController.text),
         'is_hospital_dosage': _isHospitalDosage,
-        'measure_metric': 'ml',
+        'measure_metric': _dosageUnit,
         'watering': _selectedWatering,
       };
 
@@ -192,11 +192,9 @@ class DoseIntakePageState extends State<DoseIntakePage>
       _showSuccessSnackbar();
     } catch (e) {
       print('Failed to save dosage information: $e');
-      // Handle error
     }
   }
 
-  // Function to show a snackbar indicating success
   void _showSuccessSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -207,22 +205,11 @@ class DoseIntakePageState extends State<DoseIntakePage>
     Navigator.pop(context, true);
   }
 
-  Future<void> _getUserData() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      setState(() {
-        _user = user;
-        _databaseController = DatabaseController(user.uid);
-      });
-    }
-  }
-
   Future<void> _checkValue(double minValue, double maxValue) async {
     double? value = double.tryParse(_textController.text);
     if (value == null) {
       _showRangeAlert();
     } else if (value < minValue || value > maxValue) {
-      // If the value is bigger than 200, show an alert dialog
       _showRangeAlert();
     } else {
       _saveDosageInfo();
@@ -230,45 +217,50 @@ class DoseIntakePageState extends State<DoseIntakePage>
   }
 
   void _showActionSheet(BuildContext context) {
-    showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoActionSheet(
-        title: Text(AppLocalizations.of(context)!.watering),
-        message: Text(AppLocalizations.of(context)!.ratioOfWater),
-        actions: <CupertinoActionSheetAction>[
-          CupertinoActionSheetAction(
-            /// This parameter indicates the action would be a default
-            /// default behavior, turns the action's text to bold text.
-            onPressed: () {
-              Navigator.pop(context);
-              _selectedWatering = '1/1';
-            },
-            child: const Text('1/1'),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              _selectedWatering = '1/10';
-              Navigator.pop(context);
-            },
-            child: const Text('1/10'),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              Navigator.pop(context);
-              _selectedWatering = '1/100';
-            },
-            child: const Text('1/100'),
-          ),
-        ],
-      ),
-    );
+    if (_allergyType == 'Egg' ||
+        _allergyType == 'Sesame' ||
+        _allergyType == 'Milk') {
+      showCupertinoModalPopup<void>(
+        context: context,
+        builder: (BuildContext context) => CupertinoActionSheet(
+          title: Text(AppLocalizations.of(context)!.watering),
+          message: Text(AppLocalizations.of(context)!.ratioOfWater),
+          actions: <CupertinoActionSheetAction>[
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  _selectedWatering = '1/1';
+                });
+              },
+              child: const Text('1/1'),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () {
+                setState(() {
+                  _selectedWatering = '1/10';
+                });
+                Navigator.pop(context);
+              },
+              child: const Text('1/10'),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () {
+                setState(() {
+                  _selectedWatering = '1/100';
+                });
+                Navigator.pop(context);
+              },
+              child: const Text('1/100'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    // appBar: AppBar(),
-    // body:
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -290,8 +282,6 @@ class DoseIntakePageState extends State<DoseIntakePage>
           ),
           const SizedBox(height: 10),
           Container(
-            // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            // width: 350,
             height: 155,
             decoration: BoxDecoration(
               color: CupertinoColors.systemBackground,
@@ -301,27 +291,31 @@ class DoseIntakePageState extends State<DoseIntakePage>
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  SizedBox(
-                    width: 350,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.watering,
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const Spacer(),
-                        CupertinoButton(
+                  if (_allergyType == 'Egg' ||
+                      _allergyType == 'Sesame' ||
+                      _allergyType == 'Milk')
+                    SizedBox(
+                      width: 350,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.watering,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          const Spacer(),
+                          CupertinoButton(
                             onPressed: () => _showActionSheet(context),
                             child: Text(
                               _selectedWatering,
                               style: const TextStyle(
                                 fontSize: 20.0,
                               ),
-                            )),
-                      ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   const Divider(
                       thickness: 0.5, color: CupertinoColors.systemGrey),
                   TextField(
@@ -331,25 +325,22 @@ class DoseIntakePageState extends State<DoseIntakePage>
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                     ],
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.dosageAmountMl,
+                      hintText: AppLocalizations.of(context)!.dosageAmount +
+                          ' ($_dosageUnit)',
                       hintStyle:
                           const TextStyle(color: CupertinoColors.systemGrey),
-                      // alignLabelWithHint: true,
-                      // labelText: 'Doz miktarını giriniz',
                       border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          borderSide: BorderSide.none),
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        borderSide: BorderSide.none,
+                      ),
                       filled: true,
-                      // fillColor: hexStringToColor("E8EDF2"),
                       fillColor: CupertinoColors.systemBackground,
                     ),
                     style: TextStyle(
                       color: hexStringToColor("4F7396"),
                       fontSize: 18,
                     ),
-                    // Set the TextEditingController
                     controller: _textController,
-                    // Inside the onChanged callback
                     onChanged: (String value) {
                       // Parse the input value to ensure it's numeric
                       String newValue =
@@ -369,12 +360,6 @@ class DoseIntakePageState extends State<DoseIntakePage>
             ),
           ),
           const SizedBox(height: 20),
-          // ElevatedButton(
-          //   // onPressed: _showTimePicker, // ESKİ HALİ BU
-          //   // onPressed: _showTimePickerTest,
-          //   onPressed: _showCupertinoTimePicker,
-          //   child: const Text('Select Time'),
-          // ),
           Container(
             decoration: const BoxDecoration(
                 color: CupertinoColors.systemBackground,
@@ -390,25 +375,8 @@ class DoseIntakePageState extends State<DoseIntakePage>
                         style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(width: 10),
-                      // SizedBox(
-                      //   width: 100,
-                      //   child:
                       const Spacer(),
                       CupertinoButton(
-                        // padding: const EdgeInsets.all(0),
-                        // color: CupertinoColors.systemGrey,
-                        // Display a CupertinoDatePicker in time picker mode.
-                        // onPressed: () => _showDialog(
-                        //   CupertinoDatePicker(
-                        //     initialDateTime: _selectedTimeCupertino,
-                        //     mode: CupertinoDatePickerMode.time,
-                        //     use24hFormat: true,
-                        //     // This is called when the user changes the time.
-                        //     onDateTimeChanged: (DateTime newTime) {
-                        //       setState(() => _selectedTimeCupertino = newTime);
-                        //     },
-                        //   ),
-                        // ),
                         onPressed: _toggleDatePickerVisibility,
                         child: Text(
                           '${_selectedTimeCupertino.hour}:${(_selectedTimeCupertino.minute < 10) ? "0" : ""}${_selectedTimeCupertino.minute}',
@@ -417,14 +385,12 @@ class DoseIntakePageState extends State<DoseIntakePage>
                           ),
                         ),
                       ),
-                      // ),
                     ],
                   ),
                   AnimatedSize(
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
                     child: SizedBox(
-                      // height: _showTime ? 232 : 0,
                       child: _showTime
                           ? Column(
                               children: [
@@ -454,7 +420,6 @@ class DoseIntakePageState extends State<DoseIntakePage>
                   SizedBox(
                     width: 350,
                     child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           AppLocalizations.of(context)!.hospitalDosage,
@@ -479,45 +444,14 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     AppLocalizations.of(context)!.saveDosage,
                     onPressed: () {
                       _checkValue(0, 200);
-                      // Navigator.pop(context);
                     },
                   ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     _checkValue(0, 200);
-                  //     // Navigator.pop(context);
-                  //   },
-                  //   // Navigator.pop(context); // Bunu çalıştırınca database'e eklemiyor.
-                  //   child: Text(
-                  //     AppLocalizations.of(context)!.saveDosage,
-                  //     style: const TextStyle(fontSize: 16.0),
-                  //   ),
-                  // ),
                 ],
               ),
             ),
           ),
-
-          // // Uncomment for apple style button
-          // const SizedBox(height: 20),
-          // Center(
-          //   child: Container(
-          //     width: double.infinity,
-          //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
-          //     child: CupertinoButton(
-          //         color: CupertinoColors.systemBackground,
-          //         onPressed: () {
-          //           _checkValue(0, 200);
-          //         },
-          //         child: const Text(
-          //           "Save Dosage Info",
-          //           style: TextStyle(color: CupertinoColors.activeBlue),
-          //         )),
-          //   ),
-          // ),
         ],
       ),
     );
-    // );
   }
 }
