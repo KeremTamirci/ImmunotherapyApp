@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_authentiaction_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
@@ -6,7 +7,6 @@ import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class PatientSignUpScreen extends StatefulWidget {
   const PatientSignUpScreen({Key? key}) : super(key: key);
@@ -26,28 +26,32 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title:  Text(
+        title: Text(
           AppLocalizations.of(context)!.signUp,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to the previous screen
+          },
         ),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              hexStringToColor("CB2B93"),
-              hexStringToColor("9546C4"),
-              hexStringToColor("5E61F4")
-            ],
+            colors: [Color(0xff1a80e5), Color(0xff2e5984)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 120, 20, 0),
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 20),
@@ -64,8 +68,32 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
                   true,
                   _otpTextController,
                 ),
+                const SizedBox(height: 30),
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(color: Colors.white),
+                    children: [
+                      TextSpan(
+                          text: AppLocalizations.of(context)!.byContinuing),
+                      TextSpan(
+                        text: AppLocalizations.of(context)!.termsOfUse,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            _openBottomSheet(
+                                AppLocalizations.of(context)!.termsOfService);
+                          },
+                      ),
+                      if (AppLocalizations.of(context)!.accept != "Accept")
+                        TextSpan(text: AppLocalizations.of(context)!.accept),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 20),
-                firebaseUIButton(context, AppLocalizations.of(context)!.signUp, () {
+                firebaseUIButton(context, AppLocalizations.of(context)!.signUp,
+                    () {
                   _checkPatientExists();
                 })
               ],
@@ -90,7 +118,7 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
       if (querySnapshot.docs.isEmpty) {
         // Patient with the same phone number and OTP exists
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Invalid entry.'),
           ),
         );
@@ -101,7 +129,7 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
     } catch (e) {
       print('Error checking patient: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('An error occurred. Please try again later.'),
         ),
       );
@@ -109,29 +137,51 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
   }
 
   void _signUpPatient() async {
-  try {
-    // Sign up logic
-    // FirebaseAuth.instance.createUserWithEmailAndPassword...
-    
-    // Navigate to HomeScreen after successful sign up and remove all routes until the new route
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PatientAuthenticationScreen(
-          otp: _otpTextController.text,
-          phoneNumber: _phoneNumberTextController.text,
+    try {
+      // Sign up logic
+      // FirebaseAuth.instance.createUserWithEmailAndPassword...
+
+      // Navigate to HomeScreen after successful sign up and remove all routes until the new route
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PatientAuthenticationScreen(
+            otp: _otpTextController.text,
+            phoneNumber: _phoneNumberTextController.text,
+          ),
         ),
-      ),
-      (_) => false, // Remove all routes
-    );
-  } catch (e) {
-    print('Error signing up patient: $e');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('An error occurred. Please try again later.'),
-      ),
+        (_) => false, // Remove all routes
+      );
+    } catch (e) {
+      print('Error signing up patient: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('An error occurred. Please try again later.'),
+        ),
+      );
+    }
+  }
+
+  void _openBottomSheet(String text) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.75,
+          width: MediaQuery.of(context).size.width * 0.9,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                text,
+                style: const TextStyle(fontSize: 16),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
-}
-
 }

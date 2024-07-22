@@ -187,7 +187,11 @@
     "male": "Male",
     "female": "Female",
     "gender": "Gender",
-    "dosageAmountMg": "Dosage Amount(mg)"
+    "dosageAmountMg": "Dosage Amount(mg)",
+    "termsOfService": "Dear patients, this phone application will help you regularly and daily record your treatment doses throughout the food allergy immunotherapy. By starting to use the application, you consent to the use of your laboratory and clinical information related to the illness in the scientific literature, provided that your identity information is kept confidential.",
+    "byContinuing": "By continuing you are accepting the ",
+    "termsOfUse": "Terms of Use",
+    "accept": "Accept"
 
 
 }

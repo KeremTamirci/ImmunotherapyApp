@@ -176,6 +176,9 @@
     "male": "Erkek",
     "female": "Kadın",
     "gender": "Cinsiyet",
-    "dosageAmountMg": "Doz Miktarı(mg)"
-
+    "dosageAmountMg": "Doz Miktarı(mg)",
+    "termsOfService": "Değerli hastalarımız bu telefon uygulaması besin alerjisi immünoterapisi boyunca tedavi dozlarınızı günlük düzenli bir şekilde kayıt etmenize yarayacaktır. Uygulamayı kullanmaya başlayarak kimlik bilgileriniz gizli tutulmak koşuluyla hastalıkla ilgili laboratuvar ve klinik bilgiler bilimsel literatüre kaynak sağlamak üzere kullanılmasına izin vermiş olursunuz.",
+    "byContinuing": "Uygulamayı kullanmaya devam ederek ",
+    "termsOfUse": "Kullanım Şartları'nı ",
+    "accept": "kabul etmiş olursunuz"
 }
