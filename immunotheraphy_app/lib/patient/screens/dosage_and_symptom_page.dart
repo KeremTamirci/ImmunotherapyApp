@@ -209,27 +209,48 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                       begin: Alignment.topCenter,
                                       end: Alignment.bottomCenter,
                                     )),
-                        InformationBox(
-                          title: AppLocalizations.of(context)!.symptomEntry,
-                          onTap: () {
-                            print('Box 2 tapped');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const AddSymptomsPage(),
-                              ),
-                            );
-                          },
-                          icon: Icons.sick,
-                          linearGradient: LinearGradient(
-                            colors: [
-                              hexStringToColor("3FA5FF"),
-                              hexStringToColor("1A80E5")
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
+                        if (_hasTakenDose == false)
+                          InformationBox(
+                            title: AppLocalizations.of(context)!
+                                .noSymptomBeforeDose,
+                            onTap: () {
+                              print("Box 2 alternative version tapped");
+                            },
+                            icon: Icons.warning_amber_rounded,
+                            linearGradient: LinearGradient(
+                              colors: [
+                                // hexStringToColor("3DED97"),
+                                // hexStringToColor("18C872")
+                                hexStringToColor("2E5984"),
+                                hexStringToColor("356697"),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            isButtonActive: false,
+                          )
+                        else
+                          InformationBox(
+                            title: AppLocalizations.of(context)!.symptomEntry,
+                            onTap: () {
+                              print('Box 2 tapped');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const AddSymptomsPage(),
+                                ),
+                              );
+                            },
+                            icon: Icons.sick,
+                            linearGradient: LinearGradient(
+                              colors: [
+                                hexStringToColor("3FA5FF"),
+                                hexStringToColor("1A80E5")
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                     const SizedBox(

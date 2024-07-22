@@ -135,6 +135,7 @@
     "exerciseWarning": "Doz alımından sonra 2 saat boyunca ağır egzersiz yapmayınız.",
     "bodyHeatWarning": "Vücut sıcaklığınızı artıracak koşu, sıcak banyo, sauna, hamam vb. bir aktivitede bulunmayınız ve güneş çarpmasına karşı dikkatli olunuz?",
     "doseComplete": "Bugünün doz alımını tamamladınız!",
+    "noSymptomBeforeDose": "Semptom girebilmek için önce dozunuzu almalısınız",
     "allergicFoods": "Gıda Alerjileri",
     "commonFoodAllergies": "Yaygın temel gıda alerjileri hakkında bilgi",
     "allergyInfo": "Alerji Bilgileri",
