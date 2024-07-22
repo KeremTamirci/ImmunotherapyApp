@@ -169,6 +169,10 @@
     "hazelnut": "Fındık",
     "peanut": "Yer Fıstığı",
     "selectSubcategory": "Alt Kategori Seç",
-    "hasAtopicDermatitis": "Atopik Dermatiti Var"
+    "hasAtopicDermatitis": "Atopik Dermatiti Var",
+    "male": "Erkek",
+    "female": "Kadın",
+    "gender": "Cinsiyet",
+    "dosageAmountMg": "Doz Miktarı(mg)"
 
 }

@@ -180,7 +180,11 @@
     "hazelnut": "Hazelnut",
     "peanut": "Peanut",
     "selectSubcategory": "Select Subcategory",
-    "hasAtopicDermatitis": "Has Atopic Dermatitis"
+    "hasAtopicDermatitis": "Has Atopic Dermatitis",
+    "male": "Male",
+    "female": "Female",
+    "gender": "Gender",
+    "dosageAmountMg": "Dosage Amount(mg)"
 
 
 }

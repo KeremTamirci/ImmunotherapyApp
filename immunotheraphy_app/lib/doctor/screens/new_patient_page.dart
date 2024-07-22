@@ -23,6 +23,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
   TextEditingController _phoneNumberTextController = TextEditingController();
   TextEditingController _dateOfBirthController = TextEditingController();
 
+  String? _selectedGender;
   String? _selectedAllergy;
   String? _selectedSubAllergy;
 
@@ -38,6 +39,11 @@ class _NewPatientPageState extends State<NewPatientPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> _genders = [
+      AppLocalizations.of(context)!.male,
+      AppLocalizations.of(context)!.female,
+    ];
+
     List<String> _allergies = [
       AppLocalizations.of(context)!.milk,
       AppLocalizations.of(context)!.nuts,
@@ -85,6 +91,8 @@ class _NewPatientPageState extends State<NewPatientPage> {
                     Icons.person_outline,
                     _surnameTextController,
                   ),
+                  const SizedBox(height: 20),
+                  _genderDropdown(_genders),
                   const SizedBox(height: 20),
                   _allergyDropdown(_allergies),
                   if (_selectedAllergy == AppLocalizations.of(context)!.nuts)
@@ -188,6 +196,39 @@ class _NewPatientPageState extends State<NewPatientPage> {
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         ),
+      ),
+    );
+  }
+
+  Widget _genderDropdown(List<String> _genders) {
+    return Container(
+      decoration: BoxDecoration(
+        color: hexStringToColor("6495ED").withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          hintText: AppLocalizations.of(context)!.gender,
+          hintStyle: TextStyle(color: hexStringToColor("6495ED")),
+          border: InputBorder.none,
+          prefixIcon: Icon(
+            Icons.wc,
+            color: hexStringToColor("6495ED"),
+          ),
+        ),
+        value: _selectedGender,
+        items: _genders.map((gender) {
+          return DropdownMenuItem(
+            child: Text(gender),
+            value: gender,
+          );
+        }).toList(),
+        onChanged: (newValue) {
+          setState(() {
+            _selectedGender = newValue as String?;
+          });
+        },
       ),
     );
   }
@@ -307,6 +348,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
           _surnameTextController.text.isEmpty ||
           _phoneNumberTextController.text.isEmpty ||
           _selectedDateOfBirth == null ||
+          _selectedGender == null ||
           _selectedAllergy == null ||
           (_selectedAllergy == AppLocalizations.of(context)!.nuts &&
               _selectedSubAllergy == null)) {
@@ -318,13 +360,24 @@ class _NewPatientPageState extends State<NewPatientPage> {
       } else {
         try {
           String otp = _generateOTP();
+          String allergyToSave;
+
+          if (_selectedAllergy == AppLocalizations.of(context)!.nuts) {
+            allergyToSave = _selectedSubAllergy!;
+          } else {
+            allergyToSave = _selectedAllergy!;
+          }
+
           await TempPatientsFirestoreService().addPatient(
             _nameTextController.text,
             _surnameTextController.text,
             _phoneNumberTextController.text,
             _selectedDateOfBirth!,
+            _selectedGender!,
+            allergyToSave,
             _hasAllergicRhinitis,
             _hasAsthma,
+            _hasAtopicDermatitis,
             currentUser.uid,
             otp,
           );
@@ -340,6 +393,7 @@ class _NewPatientPageState extends State<NewPatientPage> {
             _phoneNumberTextController.clear();
             _dateOfBirthController.clear();
             setState(() {
+              _selectedGender = null;
               _selectedAllergy = null;
               _selectedSubAllergy = null;
               _hasAllergicRhinitis = false;

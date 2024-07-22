@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
+import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 import 'dart:convert';
 
 import 'package:immunotheraphy_app/patient/utils/notification_handler.dart';
