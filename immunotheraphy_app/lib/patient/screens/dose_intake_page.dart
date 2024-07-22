@@ -282,7 +282,11 @@ class DoseIntakePageState extends State<DoseIntakePage>
           ),
           const SizedBox(height: 10),
           Container(
-            height: 155,
+            height: (_allergyType == 'Egg' ||
+                    _allergyType == 'Sesame' ||
+                    _allergyType == 'Milk')
+                ? 155
+                : 83,
             decoration: BoxDecoration(
               color: CupertinoColors.systemBackground,
               borderRadius: BorderRadius.circular(15),
@@ -316,8 +320,11 @@ class DoseIntakePageState extends State<DoseIntakePage>
                         ],
                       ),
                     ),
-                  const Divider(
-                      thickness: 0.5, color: CupertinoColors.systemGrey),
+                  if (_allergyType == 'Egg' ||
+                      _allergyType == 'Sesame' ||
+                      _allergyType == 'Milk')
+                    const Divider(
+                        thickness: 0.5, color: CupertinoColors.systemGrey),
                   TextField(
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),

@@ -84,7 +84,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       years--;
       months += 12;
     }
-
+    print(widget.patient.allergyType);
     return '$years ${AppLocalizations.of(context)!.yil} ${AppLocalizations.of(context)!.and} $days ${AppLocalizations.of(context)!.gun}';
   }
 
@@ -111,7 +111,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                     children: [
                       _buildDetailItem(
                           AppLocalizations.of(context)!.allergyType,
-                          AppLocalizations.of(context)!.milk,
+                          widget.patient.allergyType,
                           Icons.edit_note),
                       _buildDetailItem(
                           AppLocalizations.of(context)!.birthDate,
@@ -125,6 +125,14 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                           AppLocalizations.of(context)!.age,
                           _calculateAge(widget.patient.birthDate).toString(),
                           Icons.cake),
+                      _buildDetailItem(
+                        AppLocalizations.of(context)!.gender,
+                        widget.patient.gender == "Female" ||
+                                widget.patient.gender == "Male"
+                            ? AppLocalizations.of(context)!.female
+                            : AppLocalizations.of(context)!.male,
+                        Icons.person,
+                      ),
                       _buildDetailItem(
                           AppLocalizations.of(context)!.hasRhinitis,
                           widget.patient.hasRhinits
@@ -144,6 +152,13 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                                 .format(_lastDosageData!.date)
                             : "-",
                         Icons.vaccines,
+                      ),
+                      _buildDetailItem(
+                        AppLocalizations.of(context)!.atopicDermatitis,
+                        widget.patient.hasAtopicDermatitis
+                            ? AppLocalizations.of(context)!.yes
+                            : AppLocalizations.of(context)!.no,
+                        Icons.assessment_outlined,
                       ),
                       _buildDetailItem(
                         AppLocalizations.of(context)!.dosageAmount,
