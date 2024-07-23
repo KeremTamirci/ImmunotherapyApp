@@ -8,6 +8,8 @@ import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
 
+import 'infoSheets/SymptomsInfoPage.dart';
+
 class AddSymptomsPage extends StatefulWidget {
   const AddSymptomsPage({Key? key}) : super(key: key);
 
@@ -127,7 +129,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
       _showSuccessSnackbar();
       Navigator.pop(context);
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const SymptomsInfoSheet()));
+          MaterialPageRoute(builder: (context) => const SymptomsInfoPage()));
     } catch (e) {
       // Handle error
       print('Failed to add symptoms: $e');
