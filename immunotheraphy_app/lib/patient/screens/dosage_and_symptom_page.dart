@@ -348,11 +348,7 @@ class InfoCardWidget extends StatelessWidget {
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
             // height: MediaQuery.of(context).size.height * 0.35,
-            height: title.length > 30
-                ? description.length > 50
-                    ? 330
-                    : 300
-                : 280,
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

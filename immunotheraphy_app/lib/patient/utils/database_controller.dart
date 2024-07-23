@@ -154,7 +154,7 @@ class DatabaseController {
         print('Symptom added to Firestore for user $userId');
         print(symptomDetails);
       }
-      final DocumentSnapshot patientRecordings = await FirebaseFirestore
+      /*final DocumentSnapshot patientRecordings = await FirebaseFirestore
           .instance
           .collection('Patients')
           .doc(userId)
@@ -165,7 +165,9 @@ class DatabaseController {
           patientRecordings['last_name'];
 
       // ! Change this
+      
       await sendNotificationToDoctor(doctorId, patientName);
+      */
     } catch (e) {
       print('Failed to add symptoms to Firestore: $e');
       throw e;

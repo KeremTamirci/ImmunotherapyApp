@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:immunotheraphy_app/patient/screens/dosage_and_symptom_page.dart';
+import 'package:immunotheraphy_app/patient/screens/infoSheets/SymptomsInfoSheet.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
@@ -123,6 +125,9 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
 
       // Show success snackbar
       _showSuccessSnackbar();
+      Navigator.pop(context);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const SymptomsInfoSheet()));
     } catch (e) {
       // Handle error
       print('Failed to add symptoms: $e');
