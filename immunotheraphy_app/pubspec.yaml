@@ -52,7 +52,6 @@ dependencies:
   accordion: ^2.0.0
   simple_accordion: ^0.1.4
   http: ^1.2.1
-  googleapis: ^13.1.0
   googleapis_auth: ^1.6.0
   sliding_up_panel: ^2.0.0+1
 
