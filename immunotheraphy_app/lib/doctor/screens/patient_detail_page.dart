@@ -230,6 +230,8 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
 
   Widget _buildDetailItem(String label, String value, IconData icon) {
     return Card(
+      surfaceTintColor: CupertinoColors.systemBackground,
+      color: CupertinoColors.systemBackground,
       margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),

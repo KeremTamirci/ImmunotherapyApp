@@ -145,7 +145,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                   Icons.person,
                   size: 120,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -158,14 +158,14 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                         color: Colors.black),
                   ),
                 ),
-                const SizedBox(height: 10),
+                // const SizedBox(height: 10),
                 MainTextButton(
                   "Change language/Dili değiştir",
                   onPressed: () {
                     _showLanguageSelector(context);
                   },
                 ),
-                const SizedBox(height: 10),
+                // const SizedBox(height: 10),
                 CupertinoList(dataPairs: [
                   {'titleText': 'Email', 'textValue': _user.email},
                   {
