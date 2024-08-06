@@ -273,6 +273,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                             title: AppLocalizations.of(context)!.aboutSymptoms,
                             description: AppLocalizations.of(context)!.whatToDo,
                             imagePath: "assets/images/kalp_atisi.png",
+                            // imagePath: "assets/images/penepin.png",
                             cardNo: 0,
                           ),
                           /*InfoCardWidget(

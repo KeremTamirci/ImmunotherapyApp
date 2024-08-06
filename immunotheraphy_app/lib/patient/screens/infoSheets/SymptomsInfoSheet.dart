@@ -102,9 +102,10 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                         // const SizedBox(height: 10),
                         const SizedBox(
                           width: double.infinity,
-                          height: 200,
+                          // height: 200,
                           child: Image(
-                            image: AssetImage("assets/images/kalp_atisi.png"),
+                            image: AssetImage(
+                                "assets/images/penepin_upscaled.png"),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -180,58 +181,71 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
                               //     ),
                               //   ),
                               // ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 20),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 24.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: YoutubePlayer(
-                                        controller: _controller,
-                                        bottomActions: [
-                                          CurrentPosition(),
-                                          ProgressBar(isExpanded: true),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 24.0),
-                                    child: Row(
-                                      children: [
-                                        const Spacer(),
-                                        ElevatedButton.icon(
-                                          onPressed: _launchYouTubeVideo,
-                                          style: const ButtonStyle(
-                                              surfaceTintColor:
-                                                  MaterialStatePropertyAll(
-                                                      CupertinoColors
-                                                          .systemBackground),
-                                              backgroundColor:
-                                                  MaterialStatePropertyAll(
-                                                      Color.fromARGB(
-                                                          255, 255, 0, 0)),
-                                              foregroundColor:
-                                                  MaterialStatePropertyAll(
-                                                      CupertinoColors.white)),
-                                          icon: const Icon(
-                                              Icons.ondemand_video_rounded),
-                                          label: Text(
-                                              AppLocalizations.of(context)!
-                                                  .watchOnYoutube),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                              ///////////////////////////////////////////////////////
+                              // Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     const SizedBox(height: 20),
+                              //     Padding(
+                              //       padding: const EdgeInsets.symmetric(
+                              //           horizontal: 24.0),
+                              //       child: ClipRRect(
+                              //         borderRadius: BorderRadius.circular(15),
+                              //         child: YoutubePlayer(
+                              //           controller: _controller,
+                              //           bottomActions: [
+                              //             CurrentPosition(),
+                              //             ProgressBar(isExpanded: true),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     const SizedBox(height: 20),
+                              //     Padding(
+                              //       padding: const EdgeInsets.symmetric(
+                              //           horizontal: 24.0),
+                              //       child: Row(
+                              //         children: [
+                              //           const Spacer(),
+                              //           ElevatedButton.icon(
+                              //             onPressed: _launchYouTubeVideo,
+                              //             style: const ButtonStyle(
+                              //                 surfaceTintColor:
+                              //                     MaterialStatePropertyAll(
+                              //                         CupertinoColors
+                              //                             .systemBackground),
+                              //                 backgroundColor:
+                              //                     MaterialStatePropertyAll(
+                              //                         Color.fromARGB(
+                              //                             255, 255, 0, 0)),
+                              //                 foregroundColor:
+                              //                     MaterialStatePropertyAll(
+                              //                         CupertinoColors.white)),
+                              //             icon: const Icon(
+                              //                 Icons.ondemand_video_rounded),
+                              //             label: Text(
+                              //                 AppLocalizations.of(context)!
+                              //                     .watchOnYoutube),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     )
+                              //   ],
+                              // ),
+                              /////////////////////////////////////////////////////////////////
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 24.0, vertical: 8.0),
+                              //   child: Image.asset(
+                              //       'assets/images/penepin_upscaled.png'),
+                              // ),
                               const Padding(
-                                padding: EdgeInsets.all(28.0),
+                                padding: EdgeInsets.only(
+                                  left: 28.0,
+                                  right: 28.0,
+                                  top: 14.0,
+                                  bottom: 14.0,
+                                ),
                                 child: AnimatedDropdownExample(),
                               ),
                               const SizedBox(height: 20),
