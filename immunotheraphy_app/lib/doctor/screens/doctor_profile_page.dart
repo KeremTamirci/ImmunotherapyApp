@@ -193,6 +193,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                   onPressed: () {
                     _confirmSignOut(context);
                   },
+                  widthFactor: 0.9,
                 ),
               ],
             );

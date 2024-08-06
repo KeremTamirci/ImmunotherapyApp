@@ -150,6 +150,7 @@ class MainElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color? backgroundColor;
   final Color? textColor;
+  final double? widthFactor;
 
   const MainElevatedButton(
     this.text, {
@@ -157,6 +158,7 @@ class MainElevatedButton extends StatelessWidget {
     required this.onPressed,
     this.backgroundColor,
     this.textColor,
+    this.widthFactor,
   });
 
   @override
@@ -169,7 +171,7 @@ class MainElevatedButton extends StatelessWidget {
       padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
       // Remove this FractionallySizedBox if you want to make the buttons same as before
       child: FractionallySizedBox(
-        widthFactor: 0.9,
+        widthFactor: widthFactor ?? 1,
         child: ElevatedButton(
           style: ButtonStyle(
             textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 16)),

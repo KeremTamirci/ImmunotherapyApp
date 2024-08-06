@@ -228,6 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     onPressed: () {
                       _confirmSignOut(context);
                     },
+                    widthFactor: 0.9,
                   ),
                   const Spacer(),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
