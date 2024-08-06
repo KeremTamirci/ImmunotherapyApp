@@ -87,6 +87,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          surfaceTintColor: CupertinoColors.systemBackground,
           title: DialogTitleText(AppLocalizations.of(context)!.confirm),
           content: SingleChildScrollView(
             child: ListBody(
@@ -135,10 +136,14 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const CircleAvatar(
-                  radius: 60,
-                  backgroundImage: NetworkImage(
-                      'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
+                // const CircleAvatar(
+                //   radius: 60,
+                //   backgroundImage: NetworkImage(
+                //       'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
+                // ),
+                const Icon(
+                  Icons.person,
+                  size: 120,
                 ),
                 const SizedBox(height: 20),
                 RichText(
@@ -177,8 +182,14 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 //   style: const TextStyle(fontSize: 20, color: Colors.black),
                 // ),ş
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  child: Text(AppLocalizations.of(context)!.logOut),
+                // ElevatedButton(
+                //   child: Text(AppLocalizations.of(context)!.logOut),
+                //   onPressed: () {
+                //     _confirmSignOut(context);
+                //   },
+                // ),
+                MainElevatedButton(
+                  AppLocalizations.of(context)!.logOut,
                   onPressed: () {
                     _confirmSignOut(context);
                   },
