@@ -20,7 +20,7 @@ class WarningBox extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  //mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(
                       Icons.warning,
@@ -30,7 +30,7 @@ class WarningBox extends StatelessWidget {
                     Text(
                       AppLocalizations.of(context)!.uyari,
                       style: const TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                           // color: CupertinoColors.systemRed,
                           color: Color.fromARGB(255, 126, 6, 0),
                           fontWeight: FontWeight.bold),
@@ -41,7 +41,7 @@ class WarningBox extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.bulgulardaOneri,
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     // fontWeight: FontWeight.bold,
                     // color: CupertinoColors.systemRed
                   ),

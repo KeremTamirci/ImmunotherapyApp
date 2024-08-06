@@ -353,7 +353,7 @@ class InfoCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(
-                  height: 200,
+                  //height: 200,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -365,7 +365,7 @@ class InfoCardWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: description.length > 50 ? 100 : 80,
+                  // height: description.length > 50 ? 100 : 80,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 12.0, horizontal: 16.0),

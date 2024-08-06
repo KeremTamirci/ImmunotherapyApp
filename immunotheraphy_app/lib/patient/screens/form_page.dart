@@ -54,6 +54,7 @@ class FormPageState extends State<FormPage> {
       body: Stepper(
         // connectorColor: const MaterialStatePropertyAll(Color(0xff18c872)),
         type: StepperType.horizontal,
+        onStepTapped: (value) {},
         currentStep: _currentStep,
         onStepContinue: () {
           setState(() {
@@ -134,7 +135,7 @@ class FormPageState extends State<FormPage> {
                   CheckboxListTile(
                     title: Text(
                       AppLocalizations.of(context)!.karninizTokMu,
-                      style: const TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 18),
                     ),
                     // activeColor: Colors.blue,
                     value: checkedStateStep1[0],
@@ -147,7 +148,7 @@ class FormPageState extends State<FormPage> {
                   CheckboxListTile(
                     title: Text(
                       AppLocalizations.of(context)!.antihistaminDozu,
-                      style: const TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 18),
                     ),
                     value: checkedStateStep1[1],
                     onChanged: (newValue) {
@@ -160,7 +161,7 @@ class FormPageState extends State<FormPage> {
                     CheckboxListTile(
                       title: Text(
                         AppLocalizations.of(context)!.astimIlaci,
-                        style: const TextStyle(fontSize: 20),
+                        style: const TextStyle(fontSize: 18),
                       ),
                       value: checkedStateStep1[2],
                       onChanged: (newValue) {
@@ -169,7 +170,6 @@ class FormPageState extends State<FormPage> {
                         });
                       },
                     ),
-
                   const SizedBox(height: 20),
                 ],
               ),
@@ -187,7 +187,7 @@ class FormPageState extends State<FormPage> {
                       CheckboxListTile(
                         title: Text(
                           AppLocalizations.of(context)!.yolculuktaMisiniz,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         value: checkedStateStep2[0],
                         onChanged: (newValue) {
@@ -199,7 +199,7 @@ class FormPageState extends State<FormPage> {
                       CheckboxListTile(
                         title: Text(
                           AppLocalizations.of(context)!.agirEgzersiz,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         value: checkedStateStep2[1],
                         onChanged: (newValue) {
@@ -211,7 +211,7 @@ class FormPageState extends State<FormPage> {
                       CheckboxListTile(
                         title: Text(
                           AppLocalizations.of(context)!.yorgunHissediyor,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         value: checkedStateStep2[2],
                         onChanged: (newValue) {
@@ -223,7 +223,7 @@ class FormPageState extends State<FormPage> {
                       CheckboxListTile(
                         title: Text(
                           AppLocalizations.of(context)!.vucutSicakligi,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         value: checkedStateStep2[3],
                         onChanged: (newValue) {
@@ -235,7 +235,7 @@ class FormPageState extends State<FormPage> {
                       CheckboxListTile(
                         title: Text(
                           "Ateş, Deride döküntü/kızarıklık/şişlik, Öksürük, Hırıltı vb. bulgularınız var mı?",
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         value: checkedStateStep2[4],
                         onChanged: (newValue) {
@@ -366,7 +366,7 @@ class Step1Incomplete extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.dozAlimTamamlama,
-            style: const TextStyle(fontSize: 24),
+            style: const TextStyle(fontSize: 20),
           ),
           // SizedBox(height: 20),
         ],

@@ -249,7 +249,7 @@ class CupertinoList extends StatelessWidget {
       header: title != null ? Text(title!) : null,
       children: dataPairs.map((pair) {
         return Padding(
-          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+          padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
           child: CupertinoListTile(
             title: Text(
               pair['titleText']!,

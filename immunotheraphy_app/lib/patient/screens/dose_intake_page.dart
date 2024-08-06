@@ -281,17 +281,17 @@ class DoseIntakePageState extends State<DoseIntakePage>
           ),
           const SizedBox(height: 10),
           Container(
-            height: (_allergyType == 'Egg' ||
+/*            height: (_allergyType == 'Egg' ||
                     _allergyType == 'Sesame' ||
                     _allergyType == 'Milk')
                 ? 155
-                : 83,
+                : 83, */
             decoration: BoxDecoration(
               color: CupertinoColors.systemBackground,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: Column(
                 children: [
                   if (_allergyType == 'Egg' ||
@@ -344,7 +344,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     ),
                     style: TextStyle(
                       color: hexStringToColor("4F7396"),
-                      fontSize: 18,
+                      fontSize: 16,
                     ),
                     controller: _textController,
                     onChanged: (String value) {
@@ -371,16 +371,17 @@ class DoseIntakePageState extends State<DoseIntakePage>
                 color: CupertinoColors.systemBackground,
                 borderRadius: BorderRadius.all(Radius.circular(15))),
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
               child: Column(
                 children: [
                   Row(
                     children: [
                       Text(
                         AppLocalizations.of(context)!.dosageTime,
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 16),
                       ),
-                      const SizedBox(width: 10),
+                      //const SizedBox(width: 10),
                       const Spacer(),
                       CupertinoButton(
                         onPressed: _toggleDatePickerVisibility,
@@ -424,12 +425,12 @@ class DoseIntakePageState extends State<DoseIntakePage>
                   const Divider(
                       thickness: 0.5, color: CupertinoColors.systemGrey),
                   SizedBox(
-                    width: 350,
+                    //width: 350,
                     child: Row(
                       children: [
                         Text(
                           AppLocalizations.of(context)!.hospitalDosage,
-                          style: const TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 16),
                         ),
                         const Spacer(),
                         Checkbox(
@@ -445,13 +446,14 @@ class DoseIntakePageState extends State<DoseIntakePage>
                   ),
                   const Divider(
                       thickness: 0.5, color: CupertinoColors.systemGrey),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   MainElevatedButton(
                     AppLocalizations.of(context)!.saveDosage,
                     onPressed: () {
                       _checkValue(0, 200);
                     },
                   ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),

@@ -160,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   // const SizedBox(height: 20),
                   // const Spacer(),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 8.0),
+                    padding: const EdgeInsets.only(top: 12.0, bottom: 4.0),
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
@@ -168,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ' ' +
                             _patientData['last_name'],
                         style: const TextStyle(
-                            fontSize: 28,
+                            fontSize: 26,
                             fontWeight: FontWeight.bold,
                             color: Colors.black),
                         // children: <TextSpan>[
@@ -218,6 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   // const SizedBox(height: 20),
                   // const Spacer(),
                   // SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                  const SizedBox(height: 10),
                   MainElevatedButton(
                     AppLocalizations.of(context)!.logOut,
                     onPressed: () {

@@ -334,11 +334,12 @@ class _NewPatientPageState extends State<NewPatientPage> {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         _selectedDateOfBirth = picked;
         _dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(picked);
       });
+    }
   }
 
   void _registerPatient() async {
