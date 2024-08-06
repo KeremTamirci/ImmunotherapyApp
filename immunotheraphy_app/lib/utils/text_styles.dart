@@ -150,6 +150,7 @@ class MainElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color? backgroundColor;
   final Color? textColor;
+  final double? widthFactor;
 
   const MainElevatedButton(
     this.text, {
@@ -157,6 +158,7 @@ class MainElevatedButton extends StatelessWidget {
     required this.onPressed,
     this.backgroundColor,
     this.textColor,
+    this.widthFactor,
   });
 
   @override
@@ -167,21 +169,25 @@ class MainElevatedButton extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
-      child: ElevatedButton(
-        style: ButtonStyle(
-          textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 16)),
-          backgroundColor: MaterialStatePropertyAll(
-            backgroundColor ??
-                defaultBackgroundColor, // Use default if no background color is specified
+      // Remove this FractionallySizedBox if you want to make the buttons same as before
+      child: FractionallySizedBox(
+        widthFactor: widthFactor ?? 1,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 16)),
+            backgroundColor: MaterialStatePropertyAll(
+              backgroundColor ??
+                  defaultBackgroundColor, // Use default if no background color is specified
+            ),
+            foregroundColor: MaterialStatePropertyAll(
+              textColor ??
+                  defaultTextColor, // Use default if no text color is specified
+            ),
+            minimumSize: const MaterialStatePropertyAll(Size(70, 50)),
           ),
-          foregroundColor: MaterialStatePropertyAll(
-            textColor ??
-                defaultTextColor, // Use default if no text color is specified
-          ),
-          minimumSize: const MaterialStatePropertyAll(Size(70, 50)),
+          onPressed: onPressed,
+          child: Text(text),
         ),
-        onPressed: onPressed,
-        child: Text(text),
       ),
     );
   }

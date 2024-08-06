@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -159,11 +160,18 @@ class _NewPatientPageState extends State<NewPatientPage> {
                     },
                     child: Text(AppLocalizations.of(context)!.register),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: hexStringToColor("6495ED"),
+                      textStyle: const TextStyle(fontSize: 16),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(vertical: 16),
                     ),
                   ),
+                  // MainElevatedButton(
+                  //   AppLocalizations.of(context)!.register,
+                  //   onPressed: () {
+                  //     _registerPatient();
+                  //   },
+                  // )
                 ],
               ),
             ),
@@ -185,13 +193,13 @@ class _NewPatientPageState extends State<NewPatientPage> {
       ),
       child: TextField(
         controller: controller,
-        style: TextStyle(color: hexStringToColor("6495ED")),
+        // style: TextStyle(color: hexStringToColor("6495ED")),
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: TextStyle(color: hexStringToColor("6495ED")),
+          // hintStyle: TextStyle(color: hexStringToColor("6495ED")),
           prefixIcon: Icon(
             icon,
-            color: hexStringToColor("6495ED"),
+            // color: hexStringToColor("6495ED"),
           ),
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
@@ -210,11 +218,11 @@ class _NewPatientPageState extends State<NewPatientPage> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           hintText: AppLocalizations.of(context)!.gender,
-          hintStyle: TextStyle(color: hexStringToColor("6495ED")),
+          // hintStyle: TextStyle(color: hexStringToColor("6495ED")),
           border: InputBorder.none,
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.wc,
-            color: hexStringToColor("6495ED"),
+            // color: hexStringToColor("6495ED"),
           ),
         ),
         value: _selectedGender,
@@ -243,11 +251,11 @@ class _NewPatientPageState extends State<NewPatientPage> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           hintText: AppLocalizations.of(context)!.allergyType,
-          hintStyle: TextStyle(color: hexStringToColor("6495ED")),
+          // hintStyle: TextStyle(color: hexStringToColor("6495ED")),
           border: InputBorder.none,
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.info_outline,
-            color: hexStringToColor("6495ED"),
+            // color: hexStringToColor("6495ED"),
           ),
         ),
         value: _selectedAllergy,
@@ -277,11 +285,11 @@ class _NewPatientPageState extends State<NewPatientPage> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           hintText: AppLocalizations.of(context)!.selectSubcategory,
-          hintStyle: TextStyle(color: hexStringToColor("6495ED")),
+          // hintStyle: TextStyle(color: hexStringToColor("6495ED")),
           border: InputBorder.none,
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.arrow_right,
-            color: hexStringToColor("6495ED"),
+            // color: hexStringToColor("6495ED"),
           ),
         ),
         value: _selectedSubAllergy,
@@ -308,17 +316,17 @@ class _NewPatientPageState extends State<NewPatientPage> {
       ),
       child: TextFormField(
         controller: _dateOfBirthController,
-        style: TextStyle(color: hexStringToColor("6495ED")),
+        // style: TextStyle(color: hexStringToColor("6495ED")),
         readOnly: true,
         onTap: () {
           _selectDate(context);
         },
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.birthDate,
-          hintStyle: TextStyle(color: hexStringToColor("6495ED")),
-          prefixIcon: Icon(
+          // hintStyle: TextStyle(color: hexStringToColor("6495ED")),
+          prefixIcon: const Icon(
             Icons.calendar_today,
-            color: hexStringToColor("6495ED"),
+            // color: hexStringToColor("6495ED"),
           ),
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
@@ -446,10 +454,10 @@ class FancyCheckbox extends StatelessWidget {
     return Container(
       width: 28,
       height: 28,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: hexStringToColor("2E5984")),
-      ),
+      // decoration: BoxDecoration(
+      //   // shape: BoxShape.circle,
+      //   border: Border.all(color: hexStringToColor("2E5984")),
+      // ),
       child: Theme(
         data: ThemeData(
           unselectedWidgetColor: Colors.transparent,

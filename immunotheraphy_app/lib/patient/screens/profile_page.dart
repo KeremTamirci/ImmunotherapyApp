@@ -152,10 +152,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                   // const Spacer(),
-                  const CircleAvatar(
-                    radius: 60,
-                    backgroundImage: NetworkImage(
-                        'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
+                  // const CircleAvatar(
+                  //   radius: 60,
+                  //   backgroundImage: NetworkImage(
+                  //       'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
+                  // ),
+                  const Icon(
+                    Icons.person,
+                    size: 120,
                   ),
                   // const SizedBox(height: 20),
                   // const Spacer(),
@@ -224,6 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     onPressed: () {
                       _confirmSignOut(context);
                     },
+                    widthFactor: 0.9,
                   ),
                   const Spacer(),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),

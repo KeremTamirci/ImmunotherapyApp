@@ -87,6 +87,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          surfaceTintColor: CupertinoColors.systemBackground,
           title: DialogTitleText(AppLocalizations.of(context)!.confirm),
           content: SingleChildScrollView(
             child: ListBody(
@@ -135,12 +136,16 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const CircleAvatar(
-                  radius: 60,
-                  backgroundImage: NetworkImage(
-                      'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
+                // const CircleAvatar(
+                //   radius: 60,
+                //   backgroundImage: NetworkImage(
+                //       'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
+                // ),
+                const Icon(
+                  Icons.person,
+                  size: 120,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -153,14 +158,14 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                         color: Colors.black),
                   ),
                 ),
-                const SizedBox(height: 10),
+                // const SizedBox(height: 10),
                 MainTextButton(
                   "Change language/Dili değiştir",
                   onPressed: () {
                     _showLanguageSelector(context);
                   },
                 ),
-                const SizedBox(height: 10),
+                // const SizedBox(height: 10),
                 CupertinoList(dataPairs: [
                   {'titleText': 'Email', 'textValue': _user.email},
                   {
@@ -177,11 +182,18 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 //   style: const TextStyle(fontSize: 20, color: Colors.black),
                 // ),ş
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  child: Text(AppLocalizations.of(context)!.logOut),
+                // ElevatedButton(
+                //   child: Text(AppLocalizations.of(context)!.logOut),
+                //   onPressed: () {
+                //     _confirmSignOut(context);
+                //   },
+                // ),
+                MainElevatedButton(
+                  AppLocalizations.of(context)!.logOut,
                   onPressed: () {
                     _confirmSignOut(context);
                   },
+                  widthFactor: 0.9,
                 ),
               ],
             );
