@@ -21,7 +21,14 @@ class FormPageState extends State<FormPage> {
   int _currentStep = 0;
   bool doseAllowed = false;
   List<bool> checkedStateStep1 = [false, false, false];
-  final List<bool> checkedStateStep2 = [false, false, false, false, false];
+  final List<bool> checkedStateStep2 = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
 
   bool areAllCheckedStep1() {
     return checkedStateStep1.every((element) => element == true);
@@ -234,13 +241,26 @@ class FormPageState extends State<FormPage> {
                       ),
                       CheckboxListTile(
                         title: Text(
-                          "Ateş, Deride döküntü/kızarıklık/şişlik, Öksürük, Hırıltı vb. bulgularınız var mı?",
+                          AppLocalizations.of(context)!.formPage5,
                           style: const TextStyle(fontSize: 18),
                         ),
                         value: checkedStateStep2[4],
                         onChanged: (newValue) {
                           setState(() {
                             checkedStateStep2[4] = newValue!;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      CheckboxListTile(
+                        title: Text(
+                          AppLocalizations.of(context)!.formPage6,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        value: checkedStateStep2[5],
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkedStateStep2[5] = newValue!;
                           });
                         },
                       ),

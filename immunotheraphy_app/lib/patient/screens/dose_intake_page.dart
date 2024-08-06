@@ -28,7 +28,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
   DateTime _selectedTimeCupertino = DateTime.now();
   bool _showTime = false;
   bool _isHospitalDosage = false;
-  String _selectedWatering = '1/1';
+  String _selectedWatering = '';
 
   late DatabaseController _databaseController;
   late User _user;
@@ -184,8 +184,11 @@ class DoseIntakePageState extends State<DoseIntakePage>
         'dosage_amount': double.tryParse(_textController.text),
         'is_hospital_dosage': _isHospitalDosage,
         'measure_metric': _dosageUnit,
-        'watering': _selectedWatering,
       };
+
+      if (_selectedWatering.isNotEmpty) {
+        dosageDetails['watering'] = _selectedWatering;
+      }
 
       await _databaseController.addDosageTime(dosageDetails);
       _showSuccessSnackbar();

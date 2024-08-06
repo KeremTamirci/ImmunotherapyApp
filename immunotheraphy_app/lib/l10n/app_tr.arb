@@ -180,5 +180,8 @@
     "termsOfService": "Değerli hastalarımız, bu telefon uygulaması besin alerjisi immünoterapisi boyunca tedavi dozlarınızı günlük düzenli bir şekilde kayıt etmenize yarayacaktır. Uygulamayı kullanmaya başlayarak kimlik bilgileriniz gizli tutulmak koşuluyla hastalıkla ilgili laboratuvar ve klinik bilgiler bilimsel literatüre kaynak sağlamak üzere kullanılmasına izin vermiş olursunuz.",
     "byContinuing": "Uygulamayı kullanmaya devam ederek ",
     "termsOfUse": "Kullanım Şartları'nı ",
-    "accept": "kabul etmiş olursunuz"
+    "accept": "kabul etmiş olursunuz",
+    "formPage5": "Ateş, Deride döküntü/kızarıklık/şişlik, Öksürük, Hırıltı, Karın Ağrısı, Kusma, İshal  vb. bulgularınız var mı?",
+    "formPage6": "Ağız içi sorunlarınız var mı? (yara, diş çekimi) , Ya da Ateş düşürücü ilaç veya ağrı kesici aldınız mı?",
+    "invalidPassword": "Mail ya da Şifre Hatalı"
 }

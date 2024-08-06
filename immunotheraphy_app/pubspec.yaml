@@ -39,7 +39,6 @@ dependencies:
   firebase_messaging: ^14.8.0
   flutter_local_notifications: ^17.0.1
   intl: ^0.18.1
-  flutter_material_pickers: ^3.6.0
   cloud_firestore: ^4.17.1
   fl_chart: ^0.61.0
   syncfusion_flutter_charts: ^25.2.4

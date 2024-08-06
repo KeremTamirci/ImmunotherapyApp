@@ -97,7 +97,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                           title: const DialogTitleText("Error",
                               color: Color.fromARGB(255, 126, 6, 0)),
                           content: DialogText(
-                              "An error occurred: ${error.toString()}"),
+                              AppLocalizations.of(context)!.invalidPassword),
                           actions: [
                             DialogTextButton(
                               "OK",

@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/patient/screens/dosage_and_symptom_page.dart';
 import 'package:immunotheraphy_app/patient/screens/infoSheets/SymptomsInfoSheet.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:immunotheraphy_app/reusable_widgets/multi_select_dialog.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
-
 import 'infoSheets/SymptomsInfoPage.dart';
 
 class AddSymptomsPage extends StatefulWidget {
@@ -49,21 +48,6 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
     }
   }
 
-  Future<void> _showDatePicker() async {
-    showMaterialDatePicker(
-      context: context,
-      title: "Semptomun görüldüğü tarih",
-      selectedDate: _selectedDate,
-      onChanged: (date) {
-        setState(() {
-          _selectedDate = date;
-        });
-      },
-      firstDate: DateTime(2022),
-      lastDate: DateTime.now(),
-    );
-  }
-
   void _toggleDatePickerVisibility() {
     if (_showTime) {
       _animationController.reverse();
@@ -96,19 +80,21 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
       AppLocalizations.of(context)!.bayilma,
     ];
 
-    await showMaterialCheckboxPicker(
+    List<String>? selectedItems = await showDialog<List<String>>(
       context: context,
-      items: allSymptomTypes,
-      headerColor: Colors.blue,
-      backgroundColor: Colors.white,
-      title: AppLocalizations.of(context)!.selectSymptomType,
-      selectedItems: _selectedSymptomTypes,
-      onChanged: (List<String> value) {
-        setState(() {
-          _selectedSymptomTypes = value;
-        });
+      builder: (BuildContext context) {
+        return MultiSelectDialog(
+          items: allSymptomTypes,
+          initialSelectedItems: _selectedSymptomTypes,
+        );
       },
     );
+
+    if (selectedItems != null) {
+      setState(() {
+        _selectedSymptomTypes = selectedItems;
+      });
+    }
   }
 
   Future<void> _addSymptoms() async {
@@ -221,19 +207,10 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                             ],
                           ),
                           const SizedBox(height: 20),
-                          // ElevatedButton(
-                          //     onPressed: _showSymptomTypePicker,
-                          //     style: ElevatedButton.styleFrom(
-                          //         alignment: Alignment.centerLeft),
-                          //     child: Text(
-                          //         AppLocalizations.of(context)!.selectSymptom)
-                          //     //Text(
-                          //     //  '${AppLocalizations.of(context)!.selected}: ${_selectedSymptomTypes.join(", ")}'
-                          //     //),
-                          //     ),
                           MainElevatedButton(
-                              AppLocalizations.of(context)!.selectSymptom,
-                              onPressed: _showSymptomTypePicker)
+                            AppLocalizations.of(context)!.selectSymptom,
+                            onPressed: _showSymptomTypePicker,
+                          ),
                         ],
                       ),
                     ),
@@ -272,7 +249,6 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                             duration: const Duration(milliseconds: 500),
                             curve: Curves.easeInOut,
                             child: SizedBox(
-                              // height: _showTime ? 232 : 0,
                               child: _showTime
                                   ? Column(
                                       children: [

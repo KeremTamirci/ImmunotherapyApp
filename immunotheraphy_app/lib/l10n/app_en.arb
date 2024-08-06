@@ -191,7 +191,10 @@
     "termsOfService": "Dear patients, this phone application will help you regularly and daily record your treatment doses throughout the food allergy immunotherapy. By starting to use the application, you consent to the use of your laboratory and clinical information related to the illness in the scientific literature, provided that your identity information is kept confidential.",
     "byContinuing": "By continuing you are accepting the ",
     "termsOfUse": "Terms of Use",
-    "accept": "Accept"
+    "accept": "Accept",
+"formPage5": "Do you have any symptoms such as fever, rash/redness/swelling on the skin, cough, wheezing, abdominal pain, vomiting, diarrhea, etc.?",
+"formPage6": "Do you have any oral issues? (sores, tooth extraction), or have you taken any fever reducers or pain relievers?",
+    "invalidPassword":"Invalid Email or Password"
 
 
 }
