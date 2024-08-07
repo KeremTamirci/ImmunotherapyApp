@@ -42,6 +42,30 @@ class DatabaseController {
     }
   }
 
+  Future<void> deleteDosage(DateTime dosageDate) async {
+    try {
+      CollectionReference dosageCollection = FirebaseFirestore.instance
+          .collection('Patients')
+          .doc(userId)
+          .collection('Dosage Recordings');
+
+      // Find the document with the matching dosage_date
+      QuerySnapshot snapshot = await dosageCollection
+          .where('dosage_date', isEqualTo: Timestamp.fromDate(dosageDate))
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        await snapshot.docs.first.reference.delete();
+        print('Dosage data deleted for date: $dosageDate');
+      } else {
+        print('No matching dosage data found for date: $dosageDate');
+      }
+    } catch (e) {
+      print('Failed to delete dosage data: $e');
+      throw e;
+    }
+  }
+
   Future<List<DosageData>> getSortedDosageData() async {
     try {
       // Reference to the dosage collection for the current user

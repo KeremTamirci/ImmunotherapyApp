@@ -183,5 +183,6 @@
     "accept": "kabul etmiş olursunuz",
     "formPage5": "Ateş, Deride döküntü/kızarıklık/şişlik, Öksürük, Hırıltı, Karın Ağrısı, Kusma, İshal  vb. bulgularınız var mı?",
     "formPage6": "Ağız içi sorunlarınız var mı? (yara, diş çekimi) , Ya da Ateş düşürücü ilaç veya ağrı kesici aldınız mı?",
-    "invalidPassword": "Mail ya da Şifre Hatalı"
+    "invalidPassword": "Mail ya da Şifre Hatalı",
+    "dosageDeleted": "Doz başarıyla silinmiştir"
 }

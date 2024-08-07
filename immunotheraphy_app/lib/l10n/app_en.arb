@@ -192,9 +192,10 @@
     "byContinuing": "By continuing you are accepting the ",
     "termsOfUse": "Terms of Use",
     "accept": "Accept",
-"formPage5": "Do you have any symptoms such as fever, rash/redness/swelling on the skin, cough, wheezing, abdominal pain, vomiting, diarrhea, etc.?",
-"formPage6": "Do you have any oral issues? (sores, tooth extraction), or have you taken any fever reducers or pain relievers?",
-    "invalidPassword":"Invalid Email or Password"
+    "formPage5": "Do you have any symptoms such as fever, rash/redness/swelling on the skin, cough, wheezing, abdominal pain, vomiting, diarrhea, etc.?",
+    "formPage6": "Do you have any oral issues? (sores, tooth extraction), or have you taken any fever reducers or pain relievers?",
+    "invalidPassword":"Invalid Email or Password",
+    "dosageDeleted": "Dose deleted successfully"
 
 
 }
