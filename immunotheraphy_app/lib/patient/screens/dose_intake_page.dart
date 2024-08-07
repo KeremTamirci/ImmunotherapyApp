@@ -79,7 +79,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
   }
 
   void _updateDosageUnit() {
-    if (_allergyType == 'Milk' || _allergyType == 'Sesame') {
+    if (_allergyType == 'Sesame' ||
+        _allergyType == 'Milk' ||
+        _allergyType == 'Susam' ||
+        _allergyType == 'Süt') {
       _dosageUnit = 'ml';
     } else {
       _dosageUnit = 'mg';
@@ -318,13 +321,15 @@ class DoseIntakePageState extends State<DoseIntakePage>
                       _allergyType == 'Susam' ||
                       _allergyType == 'Süt')
                     SizedBox(
-                      width: 350,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!.watering,
-                            style: TextStyle(fontSize: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: Text(
+                              AppLocalizations.of(context)!.watering,
+                              style: TextStyle(fontSize: 16),
+                            ),
                           ),
                           const Spacer(),
                           CupertinoButton(
