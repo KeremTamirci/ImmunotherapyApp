@@ -126,7 +126,8 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                     );
                   }
                 }),
-                signUpOption()
+                signUpOption(),
+                const SizedBox(height: 10)
               ],
             ),
           ),

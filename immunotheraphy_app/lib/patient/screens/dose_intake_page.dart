@@ -28,7 +28,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
   DateTime _selectedTimeCupertino = DateTime.now();
   bool _showTime = false;
   bool _isHospitalDosage = false;
-  String _selectedWatering = '';
+  String _selectedWatering = '1/1';
 
   late DatabaseController _databaseController;
   late User _user;
@@ -181,12 +181,18 @@ class DoseIntakePageState extends State<DoseIntakePage>
       Map<String, dynamic> dosageDetails = {
         'dosage_date': _selectedTimeCupertino,
         'detail': 'Doz kaydı detayı',
-        'dosage_amount': double.tryParse(_textController.text),
+        'dosage_amount':
+            double.tryParse(_textController.text.replaceAll(',', '.')),
         'is_hospital_dosage': _isHospitalDosage,
         'measure_metric': _dosageUnit,
       };
 
-      if (_selectedWatering.isNotEmpty) {
+      if (_allergyType == 'Egg' ||
+          _allergyType == 'Sesame' ||
+          _allergyType == 'Milk' ||
+          _allergyType == 'Yumurta' ||
+          _allergyType == 'Susam' ||
+          _allergyType == 'Süt') {
         dosageDetails['watering'] = _selectedWatering;
       }
 
@@ -208,7 +214,12 @@ class DoseIntakePageState extends State<DoseIntakePage>
   }
 
   Future<void> _checkValue(double minValue, double maxValue) async {
-    double? value = double.tryParse(_textController.text);
+    String normalizedText = _textController.text.replaceAll(',', '.');
+    print(_textController.text);
+    print(normalizedText);
+    double? value = double.tryParse(normalizedText);
+
+    //double? value = double.tryParse(_textController.text);
     if (value == null) {
       _showRangeAlert();
     } else if (value < minValue || value > maxValue) {
@@ -221,7 +232,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
   void _showActionSheet(BuildContext context) {
     if (_allergyType == 'Egg' ||
         _allergyType == 'Sesame' ||
-        _allergyType == 'Milk') {
+        _allergyType == 'Milk' ||
+        _allergyType == 'Yumurta' ||
+        _allergyType == 'Susam' ||
+        _allergyType == 'Süt') {
       showCupertinoModalPopup<void>(
         context: context,
         builder: (BuildContext context) => CupertinoActionSheet(
@@ -299,7 +313,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
                 children: [
                   if (_allergyType == 'Egg' ||
                       _allergyType == 'Sesame' ||
-                      _allergyType == 'Milk')
+                      _allergyType == 'Milk' ||
+                      _allergyType == 'Yumurta' ||
+                      _allergyType == 'Susam' ||
+                      _allergyType == 'Süt')
                     SizedBox(
                       width: 350,
                       child: Row(
@@ -307,7 +324,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                         children: [
                           Text(
                             AppLocalizations.of(context)!.watering,
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 16),
                           ),
                           const Spacer(),
                           CupertinoButton(
@@ -315,7 +332,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                             child: Text(
                               _selectedWatering,
                               style: const TextStyle(
-                                fontSize: 20.0,
+                                fontSize: 18.0,
                               ),
                             ),
                           ),
@@ -324,14 +341,17 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     ),
                   if (_allergyType == 'Egg' ||
                       _allergyType == 'Sesame' ||
-                      _allergyType == 'Milk')
+                      _allergyType == 'Milk' ||
+                      _allergyType == 'Yumurta' ||
+                      _allergyType == 'Susam' ||
+                      _allergyType == 'Süt')
                     const Divider(
                         thickness: 0.5, color: CupertinoColors.systemGrey),
                   TextField(
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
                     ],
                     decoration: InputDecoration(
                       hintText: AppLocalizations.of(context)!.dosageAmount +
@@ -353,7 +373,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     onChanged: (String value) {
                       // Parse the input value to ensure it's numeric
                       String newValue =
-                          value.replaceAll(RegExp(r'[^0-9.]'), '');
+                          value.replaceAll(RegExp(r'[^0-9.,]'), '');
 
                       // Update the text field's value without triggering onChanged
                       _textController.value = _textController.value.copyWith(

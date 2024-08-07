@@ -60,9 +60,9 @@ class _SymptomsInfoPageState extends State<SymptomsInfoPage> {
           children: <Widget>[
             const SizedBox(
               width: double.infinity,
-              height: 200,
+              // height: 200,
               child: Image(
-                image: AssetImage("assets/images/kalp_atisi.png"),
+                image: AssetImage("assets/images/penepin_upscaled.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -84,7 +84,7 @@ class _SymptomsInfoPageState extends State<SymptomsInfoPage> {
                 style: const TextStyle(fontSize: 16),
               ),
             ),
-            Column(
+/*            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
@@ -125,7 +125,7 @@ class _SymptomsInfoPageState extends State<SymptomsInfoPage> {
                   ),
                 ),
               ],
-            ),
+            ), */
             const Padding(
               padding: EdgeInsets.all(28.0),
               child: AnimatedDropdownExample(),

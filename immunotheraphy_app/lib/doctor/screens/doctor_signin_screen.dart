@@ -111,7 +111,8 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                     );
                   }
                 }),
-                signUpOption()
+                signUpOption(),
+                const SizedBox(height: 10)
               ],
             ),
           ),
