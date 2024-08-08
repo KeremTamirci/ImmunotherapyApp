@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_home_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
-import 'package:immunotheraphy_app/utils/text_styles.dart';
+// import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class TermsOfServicePage extends StatefulWidget {
   const TermsOfServicePage({super.key});
