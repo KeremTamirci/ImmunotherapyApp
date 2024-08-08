@@ -69,22 +69,13 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
   String _calculateAge(DateTime birthDate) {
     DateTime today = DateTime.now();
 
-    int years = today.year - birthDate.year;
-    int months = today.month - birthDate.month;
-    int days = today.day - birthDate.day;
+    // Calculate the difference in days between today and the birth date
+    int totalDays = today.difference(birthDate).inDays;
 
-    if (days < 0) {
-      final previousMonth =
-          DateTime(today.year, today.month - 1, birthDate.day);
-      days = today.difference(previousMonth).inDays;
-      months--;
-    }
+    // Calculate years and remaining days
+    int years = totalDays ~/ 365; // Integer division to get the number of years
+    int days = totalDays % 365; // Remainder gives the remaining days
 
-    if (months < 0) {
-      years--;
-      months += 12;
-    }
-    print(widget.patient.allergyType);
     return '$years ${AppLocalizations.of(context)!.yil} ${AppLocalizations.of(context)!.and} $days ${AppLocalizations.of(context)!.gun}';
   }
 
@@ -128,7 +119,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                       _buildDetailItem(
                         AppLocalizations.of(context)!.gender,
                         widget.patient.gender == "Female" ||
-                                widget.patient.gender == "Male"
+                                widget.patient.gender == "Kadın"
                             ? AppLocalizations.of(context)!.female
                             : AppLocalizations.of(context)!.male,
                         Icons.person,
@@ -234,7 +225,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       color: CupertinoColors.systemBackground,
       margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+        padding: getResponsivePadding(context),
         child: Row(
           children: [
             Icon(icon, size: 24), // Add your desired icon here
@@ -499,5 +490,14 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
         ),
       ),
     );
+  }
+
+  EdgeInsets getResponsivePadding(BuildContext context) {
+    // Check if the device is an iPhone SE or any smaller screen device
+    final isSmallScreen = MediaQuery.of(context).size.height <= 667.0;
+
+    return isSmallScreen
+        ? const EdgeInsets.symmetric(vertical: 3.5, horizontal: 3.5)
+        : const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0);
   }
 }

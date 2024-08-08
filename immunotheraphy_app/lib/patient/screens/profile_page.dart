@@ -138,104 +138,78 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.height <= 667.0;
     return CupertinoPageScaffold(
-      child: Center(
-        child: FutureBuilder(
-          future: _getUserData(),
-          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-            if (!gotData) {
-              return const CircularProgressIndicator();
-            } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                  // const Spacer(),
-                  // const CircleAvatar(
-                  //   radius: 60,
-                  //   backgroundImage: NetworkImage(
-                  //       'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mm'),
-                  // ),
-                  const Icon(
-                    Icons.person,
-                    size: 120,
-                  ),
-                  // const SizedBox(height: 20),
-                  // const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 4.0),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: _patientData['first_name'] +
-                            ' ' +
-                            _patientData['last_name'],
-                        style: const TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                        // children: <TextSpan>[
-                        //   TextSpan(
-                        //     text: ' ' + _patientData['last_name'],
-                        //     style: const TextStyle(
-                        //         fontSize: 28,
-                        //         fontWeight: FontWeight.bold,
-                        //         color: Colors.black),
-                        //   ),
-                        // ],
+      child: SafeArea(
+        child: Center(
+          child: FutureBuilder(
+            future: _getUserData(),
+            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+              if (!gotData) {
+                return const CircularProgressIndicator();
+              } else {
+                return SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      !isSmallScreen
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.1),
+                                const Icon(
+                                  Icons.person,
+                                  size: 120,
+                                ),
+                              ],
+                            )
+                          : SizedBox
+                              .shrink(), // Use SizedBox.shrink() to occupy no space when not visible
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12.0, bottom: 4.0),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: _patientData['first_name'] +
+                                ' ' +
+                                _patientData['last_name'],
+                            style: const TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
                       ),
-                    ),
+                      MainTextButton(
+                        "Change language/Dili değiştir",
+                        onPressed: () {
+                          _showLanguageSelector(context);
+                        },
+                      ),
+                      PatientInfoBox(
+                          user: _user,
+                          patientData: _patientData,
+                          doctorData: _doctorData),
+                      AdditionalInfoBox(patientData: _patientData),
+                      const SizedBox(height: 10),
+                      MainElevatedButton(
+                        AppLocalizations.of(context)!.logOut,
+                        onPressed: () {
+                          _confirmSignOut(context);
+                        },
+                        widthFactor: 0.9,
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.05),
+                    ],
                   ),
-                  // const SizedBox(height: 10),
-                  // const Spacer(),
-                  MainTextButton(
-                    "Change language/Dili değiştir",
-                    onPressed: () {
-                      _showLanguageSelector(context);
-                    },
-                  ),
-                  // const Spacer(),
-                  PatientInfoBox(
-                      user: _user,
-                      patientData: _patientData,
-                      doctorData: _doctorData),
-                  // const SizedBox(height: 30),
-                  AdditionalInfoBox(patientData: _patientData),
-                  //////////////////////////////////////////////////////////
-                  // const SizedBox(height: 20),
-                  const Spacer(),
-                  // Button to change language
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     _showLanguageSelector(context);
-                  //   },
-                  //   child: const Text('Change Language/Dili Değiştir'),
-                  // ),
-                  ///////////// BURADAYDI //////////////////
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     _confirmSignOut(context);
-                  //   },
-                  //   child: Text(AppLocalizations.of(context)!.logOut),
-                  // ),
-                  // const SizedBox(height: 20),
-                  // const Spacer(),
-                  // SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                  const SizedBox(height: 10),
-                  MainElevatedButton(
-                    AppLocalizations.of(context)!.logOut,
-                    onPressed: () {
-                      _confirmSignOut(context);
-                    },
-                    widthFactor: 0.9,
-                  ),
-                  const Spacer(),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                ],
-              );
-            }
-          },
+                );
+              }
+            },
+          ),
         ),
       ),
     );

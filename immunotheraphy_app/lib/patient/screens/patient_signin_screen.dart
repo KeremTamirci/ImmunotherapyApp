@@ -24,6 +24,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorSchemeContext = Theme.of(context).colorScheme;
+    final isSmallScreen = MediaQuery.of(context).size.height <= 667.0;
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +60,11 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
           // controller: _scrollController,
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-                20, MediaQuery.of(context).size.height * 0.2, 20, 0),
+                20,
+                MediaQuery.of(context).size.height *
+                    (isSmallScreen ? 0.01 : 0.18),
+                20,
+                0),
             child: Column(
               children: <Widget>[
                 logoWidget("assets/images/patient_card_upscaled.png"),

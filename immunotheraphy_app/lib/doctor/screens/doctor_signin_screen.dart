@@ -20,6 +20,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
   TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.height <= 667.0;
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
@@ -46,7 +47,11 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-                20, MediaQuery.of(context).size.height * 0.2, 20, 0),
+                20,
+                MediaQuery.of(context).size.height *
+                    (isSmallScreen ? 0.01 : 0.18),
+                20,
+                0),
             child: Column(
               children: <Widget>[
                 logoWidget("assets/images/doctor_card_upscaled.png"),

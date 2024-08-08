@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:immunotheraphy_app/patient/screens/terms_of_service_page.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
@@ -122,7 +123,7 @@ class _PatientAuthenticationScreenState
             widget.otp, widget.phoneNumber, userCredential.user!.uid);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => PatientHomeScreen()),
+          MaterialPageRoute(builder: (context) => TermsOfServicePage()),
         );
       }
     } catch (e) {

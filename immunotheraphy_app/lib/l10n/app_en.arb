@@ -188,14 +188,17 @@
     "female": "Female",
     "gender": "Gender",
     "dosageAmountMg": "Dosage Amount(mg)",
-    "termsOfService": "Dear patients, this phone application will help you regularly and daily record your treatment doses throughout the food allergy immunotherapy. By starting to use the application, you consent to the use of your laboratory and clinical information related to the illness in the scientific literature, provided that your identity information is kept confidential.",
+    "termsOfService": "Dear patients, this phone application will help you regularly and daily record your treatment doses throughout the food allergy immunotherapy. If you consent to the use of your laboratory and clinical information related to the illness in the scientific literature, provided that your identity information is kept confidential select I accept if you don't consent select I don't accept.",
     "byContinuing": "By continuing you are accepting the ",
     "termsOfUse": "Terms of Use",
     "accept": "Accept",
     "formPage5": "Do you have any symptoms such as fever, rash/redness/swelling on the skin, cough, wheezing, abdominal pain, vomiting, diarrhea, etc.?",
     "formPage6": "Do you have any oral issues? (sores, tooth extraction), or have you taken any fever reducers or pain relievers?",
     "invalidPassword":"Invalid Email or Password",
-    "dosageDeleted": "Dose deleted successfully"
+    "dosageDeleted": "Dose deleted successfully",
+    "accept": "I accept",
+    "dontAccept": "I don't accept",
+    "approvalForm": "Approval Form"
 
 
 }

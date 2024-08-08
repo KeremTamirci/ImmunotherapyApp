@@ -416,11 +416,13 @@ class InformationBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.height <= 667.0;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.42,
-        height: MediaQuery.of(context).size.height * 0.25,
+        height:
+            MediaQuery.of(context).size.height * (isSmallScreen ? 0.30 : 0.25),
         decoration: BoxDecoration(
           gradient: linearGradient,
           // color: color,

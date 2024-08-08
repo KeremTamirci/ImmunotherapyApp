@@ -1,12 +1,9 @@
-import 'package:flutter/gestures.dart';
-import 'package:immunotheraphy_app/patient/screens/dose_intake_page.dart';
+import 'package:flutter/material.dart';
+import 'package:immunotheraphy_app/patient/screens/terms_of_service_page.dart'; // Import the new page
 import 'package:immunotheraphy_app/patient/screens/patient_authentiaction_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
-import 'package:immunotheraphy_app/screens/home_screen.dart';
-import 'package:immunotheraphy_app/utils/color_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PatientSignUpScreen extends StatefulWidget {
   const PatientSignUpScreen({Key? key}) : super(key: key);
@@ -69,33 +66,13 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
                   _otpTextController,
                 ),
                 const SizedBox(height: 30),
-                RichText(
-                  text: TextSpan(
-                    style: const TextStyle(color: Colors.white),
-                    children: [
-                      TextSpan(
-                          text: AppLocalizations.of(context)!.byContinuing),
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.termsOfUse,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            _openBottomSheet(
-                                AppLocalizations.of(context)!.termsOfService);
-                          },
-                      ),
-                      if (AppLocalizations.of(context)!.accept != "Accept")
-                        TextSpan(text: AppLocalizations.of(context)!.accept),
-                    ],
-                  ),
+                firebaseUIButton(
+                  context,
+                  AppLocalizations.of(context)!.signUp,
+                  () {
+                    _checkPatientExists();
+                  },
                 ),
-                const SizedBox(height: 20),
-                firebaseUIButton(context, AppLocalizations.of(context)!.signUp,
-                    () {
-                  _checkPatientExists();
-                })
               ],
             ),
           ),
@@ -116,14 +93,12 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
           .get();
 
       if (querySnapshot.docs.isEmpty) {
-        // Patient with the same phone number and OTP exists
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Invalid entry.'),
           ),
         );
       } else {
-        // No patient exists with the same phone number and OTP, proceed with sign up
         _signUpPatient();
       }
     } catch (e) {
@@ -138,10 +113,6 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
 
   void _signUpPatient() async {
     try {
-      // Sign up logic
-      // FirebaseAuth.instance.createUserWithEmailAndPassword...
-
-      // Navigate to HomeScreen after successful sign up and remove all routes until the new route
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -150,7 +121,7 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
             phoneNumber: _phoneNumberTextController.text,
           ),
         ),
-        (_) => false, // Remove all routes
+        (_) => false,
       );
     } catch (e) {
       print('Error signing up patient: $e');
@@ -160,28 +131,5 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
         ),
       );
     }
-  }
-
-  void _openBottomSheet(String text) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.75,
-          width: MediaQuery.of(context).size.width * 0.9,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                text,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 }

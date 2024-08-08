@@ -10,6 +10,15 @@ class ChoiceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Determine if the device has a small screen (e.g., iPhone SE)
+    final isSmallScreen = MediaQuery.of(context).size.height <= 667.0;
+
+    // Adjust the title font size based on the screen size
+    final double titleFontSize = isSmallScreen ? 22.0 : 26.0;
+
+    // Adjust the choice box size based on the screen size
+    final double choiceBoxSize = isSmallScreen ? 230.0 : 271.0;
+
     return Scaffold(
       appBar: AppBar(
         title: Padding(
@@ -19,9 +28,9 @@ class ChoiceScreen extends StatelessWidget {
             AppLocalizations.of(context)!.appTitle,
             maxLines: 3,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.black,
-              fontSize: 26,
+              fontSize: titleFontSize,
               fontWeight: FontWeight.bold,
               fontFamily: 'Inter',
             ),
@@ -45,14 +54,10 @@ class ChoiceScreen extends StatelessWidget {
                     builder: (context) => const PatientSignInScreen(),
                   ),
                 );
-                //Navigator.push(
-                //  context,
-                //  _createRoute("Hasta"),
-                //);
               },
               child: Container(
-                width: 271,
-                height: 271,
+                width: choiceBoxSize,
+                height: choiceBoxSize,
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: hexStringToColor("2E5984"),
@@ -68,25 +73,26 @@ class ChoiceScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Image.asset('assets/images/patient_card_upscaled.png',
-                        width: 175,
-                        height:
-                            175), // Replace 'assets/patient_image.png' with your actual image path
+                    Image.asset(
+                      'assets/images/patient_card_upscaled.png',
+                      width: choiceBoxSize * 0.65,
+                      height: choiceBoxSize * 0.65,
+                    ),
                     const SizedBox(height: 30),
                     Text(
                       AppLocalizations.of(context)!.patientSignIn,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20, // Set font size to 20 points
-                        fontWeight: FontWeight.bold, // Set font weight to bold
-                        fontFamily: 'Inter', // Set font family to Inter
+                        fontSize: isSmallScreen ? 18.0 : 20.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Inter',
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 50),
+            SizedBox(height: isSmallScreen ? 30 : 50),
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -95,17 +101,12 @@ class ChoiceScreen extends StatelessWidget {
                     builder: (context) => const DoctorSignInScreen(),
                   ),
                 );
-                //Navigator.push(
-                //  context,
-                //  _createRoute("Doktor"),
-                //);
               },
               child: Container(
-                width: 271,
-                height: 271,
+                width: choiceBoxSize,
+                height: choiceBoxSize,
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  // color: hexStringToColor("4E5166"),
                   color: hexStringToColor("2E5984"),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
@@ -113,24 +114,25 @@ class ChoiceScreen extends StatelessWidget {
                       color: Colors.black.withOpacity(0.3),
                       spreadRadius: 4,
                       blurRadius: 10,
-                      offset: const Offset(5, 5), // changes position of shadow
+                      offset: const Offset(5, 5),
                     )
                   ],
                 ),
                 child: Column(
                   children: [
-                    Image.asset('assets/images/doctor_card_upscaled.png',
-                        width: 175,
-                        height:
-                            175), // Replace 'assets/doctor_image.png' with your actual image path
-                    SizedBox(height: 30),
+                    Image.asset(
+                      'assets/images/doctor_card_upscaled.png',
+                      width: choiceBoxSize * 0.65,
+                      height: choiceBoxSize * 0.65,
+                    ),
+                    const SizedBox(height: 30),
                     Text(
                       AppLocalizations.of(context)!.doctorSignIn,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20, // Set font size to 20 points
-                        fontWeight: FontWeight.bold, // Set font weight to bold
-                        fontFamily: 'Inter', // Set font family to Inter
+                        fontSize: isSmallScreen ? 18.0 : 20.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Inter',
                       ),
                     ),
                   ],
