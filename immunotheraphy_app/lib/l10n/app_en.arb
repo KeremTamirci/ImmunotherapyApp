@@ -188,7 +188,7 @@
     "female": "Female",
     "gender": "Gender",
     "dosageAmountMg": "Dosage Amount(mg)",
-    "termsOfService": "Dear patients, this phone application will help you regularly and daily record your treatment doses throughout the food allergy immunotherapy. If you consent to the use of your laboratory and clinical information related to the illness in the scientific literature, provided that your identity information is kept confidential select I accept if you don't consent select I don't accept.",
+    "termsOfService": "Dear patients, \nthis phone application will help you record your treatment doses daily throughout the food allergy immunotherapy. If you consent to the use of your laboratory and clinical information related to the illness in the scientific literature, provided that your identity information is kept confidential, select 'I accept' if you don't consent, select 'I don't accept'.",
     "byContinuing": "By continuing you are accepting the ",
     "termsOfUse": "Terms of Use",
     "accept": "Accept",

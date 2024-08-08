@@ -5,6 +5,8 @@ import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class TermsOfServicePage extends StatefulWidget {
+  const TermsOfServicePage({super.key});
+
   @override
   _TermsOfServicePageState createState() => _TermsOfServicePageState();
 }
@@ -48,7 +50,8 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
                 padding: const EdgeInsets.all(20),
                 margin: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 100, 149, 237),
+                  // color: const Color.fromARGB(255, 100, 149, 237),
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
@@ -61,7 +64,7 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
                 ),
                 child: Text(
                   AppLocalizations.of(context)!.termsOfService,
-                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
                 ),
               ),
               RadioListTile<String>(
