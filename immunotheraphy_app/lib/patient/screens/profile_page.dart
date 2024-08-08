@@ -117,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.of(context).pop();
               },
             ),
-            DialogTextButton(
+            DialogElevatedButton(
               AppLocalizations.of(context)!.logOut,
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {

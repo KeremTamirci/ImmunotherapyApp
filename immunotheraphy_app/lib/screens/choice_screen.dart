@@ -68,7 +68,7 @@ class ChoiceScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Image.asset('assets/images/patient_card.png',
+                    Image.asset('assets/images/patient_card_upscaled.png',
                         width: 175,
                         height:
                             175), // Replace 'assets/patient_image.png' with your actual image path
@@ -119,7 +119,7 @@ class ChoiceScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Image.asset('assets/images/doctor_card.png',
+                    Image.asset('assets/images/doctor_card_upscaled.png',
                         width: 175,
                         height:
                             175), // Replace 'assets/doctor_image.png' with your actual image path

@@ -49,7 +49,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                 20, MediaQuery.of(context).size.height * 0.2, 20, 0),
             child: Column(
               children: <Widget>[
-                logoWidget("assets/images/doctor_card.png"),
+                logoWidget("assets/images/doctor_card_upscaled.png"),
                 const SizedBox(
                   height: 30,
                 ),

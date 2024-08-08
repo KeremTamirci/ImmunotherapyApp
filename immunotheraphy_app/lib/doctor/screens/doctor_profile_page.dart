@@ -103,7 +103,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                 Navigator.of(context).pop();
               },
             ),
-            DialogTextButton(
+            DialogElevatedButton(
               AppLocalizations.of(context)!.logOut,
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {

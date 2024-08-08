@@ -62,7 +62,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                 20, MediaQuery.of(context).size.height * 0.2, 20, 0),
             child: Column(
               children: <Widget>[
-                logoWidget("assets/images/patient_card.png"),
+                logoWidget("assets/images/patient_card_upscaled.png"),
                 const SizedBox(
                   height: 30,
                 ),
