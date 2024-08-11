@@ -184,8 +184,13 @@
     "formPage5": "Ateş, Deride döküntü/kızarıklık/şişlik, Öksürük, Hırıltı, Karın Ağrısı, Kusma, İshal  vb. bulgularınız var mı?",
     "formPage6": "Ağız içi sorunlarınız var mı? (yara, diş çekimi) , Ya da Ateş düşürücü ilaç veya ağrı kesici aldınız mı?",
     "invalidPassword": "Mail ya da Şifre Hatalı",
+    "error": "Hata",
     "dosageDeleted": "Doz başarıyla silinmiştir",
     "accept": "Onaylıyorum",
     "dontAccept": "Onaylamıyorum",
-    "approvalForm": "Veri Kullanımı İzin Formu"
+    "approvalForm": "Veri Kullanımı İzin Formu",
+    "cannotSignIn": "Giriş Yapılamadı",
+    "cannotSignInDoctor": "Bir doktor değilsiniz. Lütfen hasta girişini kullanınız.",
+    "cannotSignInPatient": "Bir hasta değilsiniz. Lütfen doktor girişini kullanınız.",
+    "tamam": "Tamam"
 }

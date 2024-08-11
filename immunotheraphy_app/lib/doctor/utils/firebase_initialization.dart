@@ -128,9 +128,11 @@ class PatientsFirestoreService {
       List<DosageData> dosageData = snapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return DosageData(
-            date: (data['dosage_date'] as Timestamp).toDate(),
-            amount: data['dosage_amount'] as double,
-            isHospital: data['is_hospital_dosage']);
+          date: (data['dosage_date'] as Timestamp).toDate(),
+          amount: data['dosage_amount'] as double,
+          isHospital: data['is_hospital_dosage'],
+          watering: data.containsKey('watering') ? data['watering'] : null,
+        );
       }).toList();
 
       return dosageData;
@@ -170,8 +172,12 @@ class DosageData {
   final DateTime date;
   final double amount;
   final bool isHospital;
+  final String? watering;
   DosageData(
-      {required this.date, required this.amount, required this.isHospital});
+      {required this.date,
+      required this.amount,
+      required this.isHospital,
+      this.watering});
 }
 
 class SymptomData {

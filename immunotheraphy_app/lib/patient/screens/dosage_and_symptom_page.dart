@@ -148,7 +148,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                             onTap: () {
                               print("Box 1 alternative version tapped");
                             },
-                            icon: Icons.task_alt,
+                            icon: Icons.task_alt_rounded,
                             linearGradient: LinearGradient(
                               colors: [
                                 // hexStringToColor("3DED97"),
@@ -189,7 +189,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                   _showExerciseWarning();
                                 }
                               },
-                              icon: Icons.list,
+                              icon: Icons.medication_liquid,
                               linearGradient: (_incorrectTime == false)
                                   ? LinearGradient(
                                       colors: [
@@ -241,7 +241,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                 ),
                               );
                             },
-                            icon: Icons.sick,
+                            icon: Icons.sick_rounded,
                             linearGradient: LinearGradient(
                               colors: [
                                 hexStringToColor("3FA5FF"),

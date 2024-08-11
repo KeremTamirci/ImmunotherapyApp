@@ -195,10 +195,15 @@
     "formPage5": "Do you have any symptoms such as fever, rash/redness/swelling on the skin, cough, wheezing, abdominal pain, vomiting, diarrhea, etc.?",
     "formPage6": "Do you have any oral issues? (sores, tooth extraction), or have you taken any fever reducers or pain relievers?",
     "invalidPassword":"Invalid Email or Password",
+    "error": "Error",
     "dosageDeleted": "Dose deleted successfully",
     "accept": "I accept",
     "dontAccept": "I don't accept",
-    "approvalForm": "Approval Form"
+    "approvalForm": "Approval Form",
+    "cannotSignIn": "Could not Sign In",
+    "cannotSignInDoctor": "You are not a doctor. Please use the patient sign in.",
+    "cannotSignInPatient": "You are not a patient. Please use the doctor sign in.",
+    "tamam": "OK"
 
 
 }

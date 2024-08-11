@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_home_screen.dart';
@@ -101,12 +102,34 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                             email: _emailTextController.text,
                             password: _passwordTextController.text);
                     // Sign-in successful, navigate to the next screen
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PatientHomeScreen()),
-                      (_) => false,
-                    );
+                    final user = userCredential.user;
+                    if (user != null) {
+                      final test_uid = user.uid;
+                      print('User UID: $test_uid');
+                      final firestore = FirebaseFirestore.instance;
+                      final docRef =
+                          firestore.collection('Patients').doc(test_uid);
+
+                      final docSnapshot = await docRef.get();
+
+                      if (docSnapshot.exists) {
+                        print('User exists in Patients collection');
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PatientHomeScreen()),
+                          (_) => false,
+                        );
+                      } else {
+                        print('User does not exist in Patients collection');
+                        await FirebaseAuth.instance.signOut();
+
+                        _emailTextController.clear();
+                        _passwordTextController.clear();
+
+                        _showNotAPatientDialog(context);
+                      }
+                    }
                   } catch (error) {
                     print("Error: ${error.toString()}");
                     // Handle the error gracefully, e.g., show a dialog or a snackbar
@@ -114,13 +137,15 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const DialogTitleText("Error",
-                              color: Color.fromARGB(255, 126, 6, 0)),
+                          surfaceTintColor: Colors.white,
+                          title: DialogTitleText(
+                              AppLocalizations.of(context)!.error,
+                              color: const Color.fromARGB(255, 126, 6, 0)),
                           content: DialogText(
                               AppLocalizations.of(context)!.invalidPassword),
                           actions: [
                             DialogTextButton(
-                              "OK",
+                              AppLocalizations.of(context)!.tamam,
                               onPressed: () {
                                 Navigator.pop(context);
                               },
@@ -138,6 +163,26 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showNotAPatientDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          surfaceTintColor: Colors.white,
+          title: DialogTitleText(AppLocalizations.of(context)!.cannotSignIn),
+          content:
+              DialogText(AppLocalizations.of(context)!.cannotSignInPatient),
+          actions: <Widget>[
+            DialogTextButton(AppLocalizations.of(context)!.tamam,
+                onPressed: () {
+              Navigator.of(context).pop();
+            })
+          ],
+        );
+      },
     );
   }
 
