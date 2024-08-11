@@ -189,7 +189,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
                                   _showExerciseWarning();
                                 }
                               },
-                              icon: Icons.list_rounded,
+                              icon: Icons.medication_liquid,
                               linearGradient: (_incorrectTime == false)
                                   ? LinearGradient(
                                       colors: [
