@@ -201,8 +201,8 @@
     "dontAccept": "I don't accept",
     "approvalForm": "Approval Form",
     "cannotSignIn": "Could not Sign In",
-    "cannotSignInDoctor": "You are not a doctor.",
-    "cannotSignInPatient": "You are not a patient.",
+    "cannotSignInDoctor": "You are not a doctor. Please use the patient sign in.",
+    "cannotSignInPatient": "You are not a patient. Please use the doctor sign in.",
     "tamam": "OK"
 
 

@@ -190,7 +190,7 @@
     "dontAccept": "Onaylamıyorum",
     "approvalForm": "Veri Kullanımı İzin Formu",
     "cannotSignIn": "Giriş Yapılamadı",
-    "cannotSignInDoctor": "Bir doktor değilsiniz.",
-    "cannotSignInPatient": "Bir hasta değilsiniz.",
+    "cannotSignInDoctor": "Bir doktor değilsiniz. Lütfen hasta girişini kullanınız.",
+    "cannotSignInPatient": "Bir hasta değilsiniz. Lütfen doktor girişini kullanınız.",
     "tamam": "Tamam"
 }
