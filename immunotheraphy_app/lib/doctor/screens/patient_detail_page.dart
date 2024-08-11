@@ -299,6 +299,12 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                               '${AppLocalizations.of(context)!.dosageAmount}: ${dosage[index].amount}'),
                           subtitle: Text(
                               '${AppLocalizations.of(context)!.date}: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(dosage[index].date)}'),
+                          trailing: dosage[index].watering != null &&
+                                  dosage[index].watering!.isNotEmpty
+                              ? Text(
+                                  '${AppLocalizations.of(context)!.watering}: ${dosage[index].watering}',
+                                )
+                              : null,
                         ),
                       );
                     },
