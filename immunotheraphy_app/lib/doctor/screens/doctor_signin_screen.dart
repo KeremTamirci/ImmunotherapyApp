@@ -157,8 +157,8 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           surfaceTintColor: Colors.white,
-          title: Text(AppLocalizations.of(context)!.cannotSignIn),
-          content: Text(AppLocalizations.of(context)!.cannotSignInDoctor),
+          title: DialogTitleText(AppLocalizations.of(context)!.cannotSignIn),
+          content: DialogText(AppLocalizations.of(context)!.cannotSignInDoctor),
           actions: <Widget>[
             DialogTextButton(AppLocalizations.of(context)!.tamam,
                 onPressed: () {
