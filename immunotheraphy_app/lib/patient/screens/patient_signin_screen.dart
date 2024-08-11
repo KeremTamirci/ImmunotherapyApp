@@ -96,6 +96,16 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                 firebaseUIButton(context, AppLocalizations.of(context)!.signIn,
                     () async {
                   try {
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // Prevents dismissing the dialog by tapping outside
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
                     // ignore: unused_local_variable
                     final userCredential = await FirebaseAuth.instance
                         .signInWithEmailAndPassword(
@@ -114,6 +124,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
 
                       if (docSnapshot.exists) {
                         print('User exists in Patients collection');
+                        Navigator.pop(context);
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
@@ -123,6 +134,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                       } else {
                         print('User does not exist in Patients collection');
                         await FirebaseAuth.instance.signOut();
+                        Navigator.pop(context);
 
                         _emailTextController.clear();
                         _passwordTextController.clear();
@@ -132,6 +144,7 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                     }
                   } catch (error) {
                     print("Error: ${error.toString()}");
+                    Navigator.pop(context);
                     // Handle the error gracefully, e.g., show a dialog or a snackbar
                     showDialog(
                       context: context,

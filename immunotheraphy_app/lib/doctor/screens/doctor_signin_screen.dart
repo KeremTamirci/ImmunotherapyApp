@@ -83,6 +83,16 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                 firebaseUIButton(context, AppLocalizations.of(context)!.signIn,
                     () async {
                   try {
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // Prevents dismissing the dialog by tapping outside
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
                     final userCredential = await FirebaseAuth.instance
                         .signInWithEmailAndPassword(
                             email: _emailTextController.text,
@@ -100,6 +110,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
 
                       if (docSnapshot.exists) {
                         print('User exists in Doctors collection');
+                        Navigator.pop(context);
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
@@ -108,6 +119,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                       } else {
                         print('User does not exist in Doctors collection');
                         await FirebaseAuth.instance.signOut();
+                        Navigator.pop(context);
 
                         _emailTextController.clear();
                         _passwordTextController.clear();
@@ -117,6 +129,7 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                     }
                   } catch (error) {
                     print("Error: ${error.toString()}");
+                    Navigator.pop(context);
                     // Handle the error gracefully, e.g., show a dialog or a snackbar
                     showDialog(
                       context: context,
