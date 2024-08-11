@@ -10,7 +10,6 @@ import 'package:immunotheraphy_app/patient/screens/profile_page.dart';
 import 'package:immunotheraphy_app/utils/color_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class PatientHomeScreen extends StatefulWidget {
   const PatientHomeScreen({super.key});
 
@@ -85,11 +84,11 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                 backgroundColor: Theme.of(context).colorScheme.background,
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: const Icon(Icons.home),
+                    icon: const Icon(Icons.home_rounded),
                     label: AppLocalizations.of(context)!.home,
                   ),
                   BottomNavigationBarItem(
-                    icon: const Icon(Icons.auto_graph),
+                    icon: const Icon(Icons.query_stats_rounded),
                     label: AppLocalizations.of(context)!.dosage,
                   ),
                   BottomNavigationBarItem(

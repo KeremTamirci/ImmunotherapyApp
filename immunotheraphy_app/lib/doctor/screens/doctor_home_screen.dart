@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_profile_page.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +68,9 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
             // sets the background color of the `BottomNavigationBar`
             ), // sets the inactive color of the `BottomNavigationBar`
         child: SizedBox(
-          height: 72,
+          height: Platform.isIOS
+              ? MediaQuery.of(context).size.height * 0.1
+              : MediaQuery.of(context).size.height * 0.08,
           child: Wrap(
             children: [
               BottomNavigationBar(
