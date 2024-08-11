@@ -63,7 +63,6 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
       // ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
-
             // sets the background color of the `BottomNavigationBar`
             ), // sets the inactive color of the `BottomNavigationBar`
         child: SizedBox(

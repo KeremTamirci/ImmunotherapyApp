@@ -41,9 +41,9 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.9,
+      initialChildSize: 0.92,
       minChildSize: 0.8,
-      maxChildSize: 0.9,
+      maxChildSize: 0.92,
       snap: true,
       expand: false,
       builder: (BuildContext context, ScrollController scrollController) {
