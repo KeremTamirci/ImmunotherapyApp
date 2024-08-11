@@ -145,17 +145,20 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                   Icons.person,
                   size: 120,
                 ),
-                const SizedBox(height: 10),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: _doctorData['first_name'] +
-                        ' ' +
-                        _doctorData['last_name'],
-                    style: const TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                // const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4.0),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: _doctorData['first_name'] +
+                          ' ' +
+                          _doctorData['last_name'],
+                      style: const TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
                   ),
                 ),
                 // const SizedBox(height: 10),
