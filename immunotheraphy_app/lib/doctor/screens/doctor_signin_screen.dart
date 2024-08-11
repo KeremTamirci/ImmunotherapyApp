@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_home_screen.dart';
@@ -87,11 +88,33 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                             email: _emailTextController.text,
                             password: _passwordTextController.text);
                     // Sign-in successful, navigate to the next screen
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DoctorHomeScreen()),
-                        (_) => false);
+                    final user = userCredential.user;
+                    if (user != null) {
+                      final test_uid = user.uid;
+                      print('User UID: $test_uid');
+                      final firestore = FirebaseFirestore.instance;
+                      final docRef =
+                          firestore.collection('Doctors').doc(test_uid);
+
+                      final docSnapshot = await docRef.get();
+
+                      if (docSnapshot.exists) {
+                        print('User exists in Doctors collection');
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DoctorHomeScreen()),
+                            (_) => false);
+                      } else {
+                        print('User does not exist in Doctors collection');
+                        await FirebaseAuth.instance.signOut();
+
+                        _emailTextController.clear();
+                        _passwordTextController.clear();
+
+                        _showNotADoctorDialog(context);
+                      }
+                    }
                   } catch (error) {
                     print("Error: ${error.toString()}");
                     // Handle the error gracefully, e.g., show a dialog or a snackbar
@@ -99,13 +122,15 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const DialogTitleText("Error",
-                              color: Color.fromARGB(255, 126, 6, 0)),
+                          surfaceTintColor: Colors.white,
+                          title: DialogTitleText(
+                              AppLocalizations.of(context)!.error,
+                              color: const Color.fromARGB(255, 126, 6, 0)),
                           content: DialogText(
                               AppLocalizations.of(context)!.invalidPassword),
                           actions: [
                             DialogTextButton(
-                              "OK",
+                              AppLocalizations.of(context)!.tamam,
                               onPressed: () {
                                 Navigator.pop(context);
                               },
@@ -123,6 +148,25 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showNotADoctorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          surfaceTintColor: Colors.white,
+          title: Text(AppLocalizations.of(context)!.cannotSignIn),
+          content: Text(AppLocalizations.of(context)!.cannotSignInDoctor),
+          actions: <Widget>[
+            DialogTextButton(AppLocalizations.of(context)!.tamam,
+                onPressed: () {
+              Navigator.of(context).pop();
+            })
+          ],
+        );
+      },
     );
   }
 
