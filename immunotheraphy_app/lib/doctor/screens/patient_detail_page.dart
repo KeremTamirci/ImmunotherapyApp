@@ -404,21 +404,28 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
               }
             },
             primaryXAxis: DateTimeAxis(
+              // plotOffset: 20, //This one and rangePadding are interchangeable
+              rangePadding: ChartRangePadding.additional,
+              labelAlignment: LabelAlignment.end,
+              // edgeLabelPlacement: EdgeLabelPlacement.hide,
+              // desiredIntervals: 4,
+              // intervalType: DateTimeIntervalType.auto,
+              labelIntersectAction: AxisLabelIntersectAction.rotate45,
+              maximumLabels: 6,
+              dateFormat: DateFormat.yMd(),
               title: AxisTitle(
-                text:
-                    AppLocalizations.of(context)!.date, // Horizontal axis title
+                text: AppLocalizations.of(context)!.date,
                 textStyle: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             primaryYAxis: NumericAxis(
               title: AxisTitle(
-                text: AppLocalizations.of(context)!
-                    .dosageAmount, // Vertical axis title
+                text: AppLocalizations.of(context)!.dosageAmount,
                 textStyle: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -437,21 +444,6 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                   shape: DataMarkerType.circle,
                   borderColor: Colors.blue,
                   color: Colors.blue,
-                ),
-              ),
-              LineSeries<DosageData, DateTime>(
-                dataSource:
-                    _dosageData.where((data) => data.isHospital).toList(),
-                xValueMapper: (DosageData data, _) => data.date,
-                yValueMapper: (DosageData data, _) => data.amount,
-                name: AppLocalizations.of(context)!.hospitalDoses,
-                opacity: 0,
-                color: Colors.red,
-                markerSettings: const MarkerSettings(
-                  isVisible: true,
-                  shape: DataMarkerType.circle,
-                  borderColor: Colors.red,
-                  color: Colors.red,
                 ),
               ),
             ],

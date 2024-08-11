@@ -86,6 +86,15 @@ class _DosePageState extends State<DosePage> {
                         }
                       },
                       primaryXAxis: DateTimeAxis(
+                        // plotOffset: 20, //This one and rangePadding are interchangeable
+                        rangePadding: ChartRangePadding.additional,
+                        labelAlignment: LabelAlignment.end,
+                        // edgeLabelPlacement: EdgeLabelPlacement.hide,
+                        // desiredIntervals: 4,
+                        // intervalType: DateTimeIntervalType.auto,
+                        labelIntersectAction: AxisLabelIntersectAction.rotate45,
+                        maximumLabels: 6,
+                        dateFormat: DateFormat.yMd(),
                         title: AxisTitle(
                           text: AppLocalizations.of(context)!.date,
                           textStyle: const TextStyle(
