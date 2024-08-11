@@ -69,12 +69,12 @@ class _NewPatientPageState extends State<NewPatientPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            color: CupertinoColors.systemBackground,
-          ),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              color: CupertinoColors.systemBackground,
+            ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -158,13 +158,13 @@ class _NewPatientPageState extends State<NewPatientPage> {
                     onPressed: () {
                       _registerPatient();
                     },
-                    child: Text(AppLocalizations.of(context)!.register),
                     style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 16),
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(vertical: 16),
                     ),
+                    child: Text(AppLocalizations.of(context)!.register),
                   ),
                   // MainElevatedButton(
                   //   AppLocalizations.of(context)!.register,

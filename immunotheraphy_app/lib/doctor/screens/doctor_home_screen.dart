@@ -74,11 +74,11 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                 backgroundColor: Theme.of(context).colorScheme.background,
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: const Icon(Icons.home),
+                    icon: const Icon(Icons.home_rounded),
                     label: AppLocalizations.of(context)!.home,
                   ),
                   BottomNavigationBarItem(
-                    icon: const Icon(Icons.sick),
+                    icon: const Icon(Icons.person_add_alt_1),
                     label: AppLocalizations.of(context)!.newPatient,
                   ),
                   BottomNavigationBarItem(
