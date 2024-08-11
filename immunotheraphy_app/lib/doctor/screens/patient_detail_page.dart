@@ -261,19 +261,24 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
   }
 
   void _showDosageChart() {
-    showDialog(
+    showModalBottomSheet(
       context: context,
+      isScrollControlled:
+          true, // This allows the bottom sheet to take more space
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.0),
+        ),
+      ),
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(20.0), // Set the desired radius here
-          ),
+        return FractionallySizedBox(
+          heightFactor: 0.92, // 90% of the screen height
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(
-                  20.0), // Ensure Container respects border radius
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20.0),
+              ),
             ),
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -285,6 +290,8 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                     itemBuilder: (context, index) {
                       final dosage = _dosageData.reversed.toList();
                       return Card(
+                        surfaceTintColor: Colors.white,
+                        // elevation: 0,
                         margin: const EdgeInsets.symmetric(
                             vertical: 8.0, horizontal: 16.0),
                         child: ListTile(
@@ -297,13 +304,13 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                     },
                   ),
                 ),
-                const SizedBox(height: 20), // Adds some space above the button
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(AppLocalizations.of(context)!.goBack),
-                ),
+                // const SizedBox(height: 20),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.of(context).pop();
+                //   },
+                //   child: Text(AppLocalizations.of(context)!.goBack),
+                // ),
               ],
             ),
           ),
@@ -313,31 +320,65 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
   }
 
   void _showSymptomsList() {
-    showDialog(
+    showModalBottomSheet(
       context: context,
+      isScrollControlled: true, // Allows the bottom sheet to take up more space
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.0),
+        ),
+      ),
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(20.0), // Set the desired radius here
-          ),
+        return FractionallySizedBox(
+          heightFactor: 0.92, // 90% of the screen height
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(
-                  20.0), // Ensure Container respects border radius
+            decoration: const BoxDecoration(
+              color: Colors.white, // Fully opaque background for the sheet
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20.0),
+              ),
             ),
-            padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Expanded(child: _buildSymptomsList()),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(AppLocalizations.of(context)!.goBack),
+                Container(
+                  height: 80,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20.0),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.symptoms,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      CupertinoButton(
+                        child: Text(AppLocalizations.of(context)!.geriDon),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  ),
                 ),
+                // Expanded ListView
+                Expanded(
+                  child: _buildSymptomsList(),
+                ),
+                // const SizedBox(height: 20),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.of(context).pop();
+                //   },
+                //   child: Text(AppLocalizations.of(context)!.goBack),
+                // ),
               ],
             ),
           ),
@@ -350,37 +391,41 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
     if (_symptomsData.isEmpty) {
       return Center(child: Text(AppLocalizations.of(context)!.noSymptoms));
     }
-    return ListView.builder(
-      itemCount: _symptomsData.length,
-      itemBuilder: (context, index) {
-        SymptomData symptom = _symptomsData[index];
-        return Card(
-          margin: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${AppLocalizations.of(context)!.symptomType}: ${symptom.type}',
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '${AppLocalizations.of(context)!.date}: ${DateFormat('dd.MM.yyyy HH:mm:ss').format(symptom.date)}',
-                  style: const TextStyle(fontSize: 14),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '${AppLocalizations.of(context)!.detail}: ${symptom.detail}',
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: ListView.builder(
+        itemCount: _symptomsData.length,
+        itemBuilder: (context, index) {
+          SymptomData symptom = _symptomsData[index];
+          return Card(
+            surfaceTintColor: Colors.white,
+            margin: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${AppLocalizations.of(context)!.symptomType}: ${symptom.type}',
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    '${AppLocalizations.of(context)!.date}: ${DateFormat('dd.MM.yyyy HH:mm:ss').format(symptom.date)}',
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    '${AppLocalizations.of(context)!.detail}: ${symptom.detail}',
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -388,13 +433,24 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          AppLocalizations.of(context)!.doseChart,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.doseChart,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            CupertinoButton(
+              child: Text(AppLocalizations.of(context)!.geriDon),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         ),
         const SizedBox(height: 10),
-        Container(
+        SizedBox(
           height: 300,
           child: SfCartesianChart(
             onMarkerRender: (MarkerRenderArgs args) {
