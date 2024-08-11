@@ -140,76 +140,73 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final isSmallScreen = MediaQuery.of(context).size.height <= 667.0;
     return CupertinoPageScaffold(
-      child: SafeArea(
-        child: Center(
-          child: FutureBuilder(
-            future: _getUserData(),
-            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-              if (!gotData) {
-                return const CircularProgressIndicator();
-              } else {
-                return SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      !isSmallScreen
-                          ? Column(
-                              children: [
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.1),
-                                const Icon(
-                                  Icons.person,
-                                  size: 120,
-                                ),
-                              ],
-                            )
-                          : SizedBox
-                              .shrink(), // Use SizedBox.shrink() to occupy no space when not visible
+      child: Center(
+        child: FutureBuilder(
+          future: _getUserData(),
+          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            if (!gotData) {
+              return const CircularProgressIndicator();
+            } else {
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    !isSmallScreen
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1),
+                              const Icon(
+                                Icons.person,
+                                size: 120,
+                              ),
+                            ],
+                          )
+                        : SizedBox
+                            .shrink(), // Use SizedBox.shrink() to occupy no space when not visible
 
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12.0, bottom: 4.0),
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            text: _patientData['first_name'] +
-                                ' ' +
-                                _patientData['last_name'],
-                            style: const TextStyle(
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12.0, bottom: 4.0),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: _patientData['first_name'] +
+                              ' ' +
+                              _patientData['last_name'],
+                          style: const TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                       ),
-                      MainTextButton(
-                        "Change language/Dili değiştir",
-                        onPressed: () {
-                          _showLanguageSelector(context);
-                        },
-                      ),
-                      PatientInfoBox(
-                          user: _user,
-                          patientData: _patientData,
-                          doctorData: _doctorData),
-                      AdditionalInfoBox(patientData: _patientData),
-                      const SizedBox(height: 10),
-                      MainElevatedButton(
-                        AppLocalizations.of(context)!.logOut,
-                        onPressed: () {
-                          _confirmSignOut(context);
-                        },
-                        widthFactor: 0.9,
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05),
-                    ],
-                  ),
-                );
-              }
-            },
-          ),
+                    ),
+                    MainTextButton(
+                      "Change language/Dili değiştir",
+                      onPressed: () {
+                        _showLanguageSelector(context);
+                      },
+                    ),
+                    PatientInfoBox(
+                        user: _user,
+                        patientData: _patientData,
+                        doctorData: _doctorData),
+                    AdditionalInfoBox(patientData: _patientData),
+                    const SizedBox(height: 10),
+                    MainElevatedButton(
+                      AppLocalizations.of(context)!.logOut,
+                      onPressed: () {
+                        _confirmSignOut(context);
+                      },
+                      widthFactor: 0.9,
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                  ],
+                ),
+              );
+            }
+          },
         ),
       ),
     );
