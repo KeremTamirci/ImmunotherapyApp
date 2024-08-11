@@ -293,7 +293,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                         surfaceTintColor: Colors.white,
                         // elevation: 0,
                         margin: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 16.0),
+                            vertical: 8.0, horizontal: 8.0),
                         child: ListTile(
                           title: Text(
                               '${AppLocalizations.of(context)!.dosageAmount}: ${dosage[index].amount}'),
@@ -361,7 +361,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
                       Text(
                         AppLocalizations.of(context)!.symptoms,
                         style: const TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -398,7 +398,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
       return Center(child: Text(AppLocalizations.of(context)!.noSymptoms));
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 18.0),
       child: ListView.builder(
         itemCount: _symptomsData.length,
         itemBuilder: (context, index) {
@@ -444,7 +444,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
           children: [
             Text(
               AppLocalizations.of(context)!.doseChart,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             CupertinoButton(
