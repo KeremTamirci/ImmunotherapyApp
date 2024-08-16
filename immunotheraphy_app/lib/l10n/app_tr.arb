@@ -192,5 +192,14 @@
     "cannotSignIn": "Giriş Yapılamadı",
     "cannotSignInDoctor": "Bir doktor değilsiniz. Lütfen hasta girişini kullanınız.",
     "cannotSignInPatient": "Bir hasta değilsiniz. Lütfen doktor girişini kullanınız.",
-    "tamam": "Tamam"
+    "tamam": "Tamam",
+    "disabled": "Kapalı",
+    "reminder": "Hatırlatma: İmmünoterapi dozununuzn zamanı geldi!",
+    "daily": "Bu sizin günlük doz hatırlatmanız.",
+    "reminderSettings": "Hatırlatma Ayarları",
+    "enableNotifications": "Bildirimleri Aç",
+    "reminderTime": "Hatırlatma Saati",
+    "selectTime": "Saat Seçin",
+    "savePreferences": "Tercihlerimi Kaydet",
+    "doseReminderTime": "Doz Hatırlatma Saati"
 }

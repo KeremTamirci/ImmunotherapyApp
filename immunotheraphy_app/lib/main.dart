@@ -19,6 +19,9 @@ import 'package:immunotheraphy_app/screens/language_selection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:timezone/data/latest.dart' as tz;
+
+import 'patient/utils/local_notification_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +29,8 @@ void main() async {
   await FirebaseApi().initNotifications();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? preferredLanguage = prefs.getString('preferredLanguage');
+  NotificationService().initNotification();
+  tz.initializeTimeZones();
 
   // If preferred language is not set, initialize it to the default locale (Turkish)
   if (preferredLanguage == null) {

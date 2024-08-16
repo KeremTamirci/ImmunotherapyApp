@@ -311,7 +311,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
               borderRadius: BorderRadius.circular(15),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Column(
                 children: [
                   if (_allergyType == 'Egg' ||
@@ -325,10 +325,10 @@ class DoseIntakePageState extends State<DoseIntakePage>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
                             child: Text(
                               AppLocalizations.of(context)!.watering,
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
                           ),
                           const Spacer(),
@@ -350,8 +350,11 @@ class DoseIntakePageState extends State<DoseIntakePage>
                       _allergyType == 'Yumurta' ||
                       _allergyType == 'Susam' ||
                       _allergyType == 'Süt')
-                    const Divider(
-                        thickness: 0.5, color: CupertinoColors.systemGrey),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: Divider(
+                          thickness: 0.5, color: CupertinoColors.systemGrey),
+                    ),
                   TextField(
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),

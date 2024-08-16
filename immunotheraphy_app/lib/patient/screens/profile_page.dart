@@ -25,6 +25,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextStyle style = const TextStyle(fontSize: 20);
   bool gotData = false;
   late String selectedLanguage = 'en'; // Default language
+  String _notificationTime = '-'; // Add this line
+  bool _notificationsEnabled = false;
 
   @override
   void initState() {
@@ -95,6 +97,25 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  Future<void> _loadNotificationData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? timeString = prefs.getString('selectedTime');
+
+    setState(() {
+      _notificationTime = timeString ?? '-';
+
+      _notificationsEnabled = prefs.getBool('notificationsEnabled') ?? false;
+    });
+  }
+
+  Future<void> _clearNotificationTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('selectedTime');
+    await prefs.remove("notificationsEnabled");
+
+    _loadNotificationData(); // Refresh notification time immediately
+  }
+
   Future<void> _confirmSignOut(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -119,7 +140,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             DialogElevatedButton(
               AppLocalizations.of(context)!.logOut,
-              onPressed: () {
+              onPressed: () async {
+                await _clearNotificationTime(); // Clear preferences before signing out
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");
                   Navigator.of(context).pushAndRemoveUntil(
@@ -142,67 +164,77 @@ class _ProfilePageState extends State<ProfilePage> {
     return CupertinoPageScaffold(
       child: Center(
         child: FutureBuilder(
-          future: _getUserData(),
+          future: Future.wait([
+            _getUserData(),
+            _loadNotificationData()
+          ]), // Ensure notification time is loaded
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
             if (!gotData) {
               return const CircularProgressIndicator();
             } else {
-              return SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    !isSmallScreen
-                        ? Column(
-                            children: [
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.1),
-                              const Icon(
-                                Icons.person,
-                                size: 120,
-                              ),
-                            ],
-                          )
-                        : SizedBox
-                            .shrink(), // Use SizedBox.shrink() to occupy no space when not visible
+              return CupertinoScrollbar(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      !isSmallScreen
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.1),
+                                const Icon(
+                                  Icons.person,
+                                  size: 120,
+                                ),
+                              ],
+                            )
+                          : SizedBox
+                              .shrink(), // Use SizedBox.shrink() to occupy no space when not visible
 
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0.0, bottom: 4.0),
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: _patientData['first_name'] +
-                              ' ' +
-                              _patientData['last_name'],
-                          style: const TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0, bottom: 4.0),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: _patientData['first_name'] +
+                                ' ' +
+                                _patientData['last_name'],
+                            style: const TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
                         ),
                       ),
-                    ),
-                    MainTextButton(
-                      "Change language/Dili değiştir",
-                      onPressed: () {
-                        _showLanguageSelector(context);
-                      },
-                    ),
-                    PatientInfoBox(
-                        user: _user,
-                        patientData: _patientData,
-                        doctorData: _doctorData),
-                    AdditionalInfoBox(patientData: _patientData),
-                    const SizedBox(height: 10),
-                    MainElevatedButton(
-                      AppLocalizations.of(context)!.logOut,
-                      onPressed: () {
-                        _confirmSignOut(context);
-                      },
-                      widthFactor: 0.9,
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                  ],
+                      MainTextButton(
+                        "Change language/Dili değiştir",
+                        onPressed: () {
+                          _showLanguageSelector(context);
+                        },
+                      ),
+                      PatientInfoBox(
+                          user: _user,
+                          patientData: _patientData,
+                          doctorData: _doctorData,
+                          notificationTime: _notificationsEnabled
+                              ? _notificationTime
+                              : AppLocalizations.of(context)!
+                                  .disabled), // Pass the notification time
+                      AdditionalInfoBox(patientData: _patientData),
+                      const SizedBox(height: 10),
+                      MainElevatedButton(
+                        AppLocalizations.of(context)!.logOut,
+                        onPressed: () {
+                          _confirmSignOut(context);
+                        },
+                        widthFactor: 0.9,
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.05),
+                    ],
+                  ),
                 ),
               );
             }
@@ -313,6 +345,7 @@ class PatientInfoBox extends StatelessWidget {
     required User user,
     required Map<String, dynamic> patientData,
     required Map<String, dynamic> doctorData,
+    required this.notificationTime,
   })  : _user = user,
         _patientData = patientData,
         _doctorData = doctorData;
@@ -320,6 +353,7 @@ class PatientInfoBox extends StatelessWidget {
   final User _user;
   final Map<String, dynamic> _patientData;
   final Map<String, dynamic> _doctorData;
+  final String notificationTime;
 
   @override
   Widget build(BuildContext context) {
@@ -339,6 +373,12 @@ class PatientInfoBox extends StatelessWidget {
             'titleText': AppLocalizations.of(context)!.doctor,
             'textValue':
                 '${_doctorData['first_name']} ${_doctorData['last_name']}'
+          },
+          {
+            'titleText': AppLocalizations.of(context)!.doseReminderTime,
+            'textValue':
+                notificationTime, // Use the notification time passed from ProfilePage
+            "hasChevron": "0"
           },
         ],
       ),
