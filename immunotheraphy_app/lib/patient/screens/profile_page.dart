@@ -25,6 +25,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextStyle style = const TextStyle(fontSize: 20);
   bool gotData = false;
   late String selectedLanguage = 'en'; // Default language
+  String _notificationTime = '-'; // Add this line
+  bool _notificationsEnabled = false;
 
   @override
   void initState() {
@@ -95,6 +97,25 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  Future<void> _loadNotificationData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? timeString = prefs.getString('selectedTime');
+
+    setState(() {
+      _notificationTime = timeString ?? '-';
+
+      _notificationsEnabled = prefs.getBool('notificationsEnabled') ?? false;
+    });
+  }
+
+  Future<void> _clearNotificationTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('selectedTime');
+    await prefs.remove("notificationsEnabled");
+
+    _loadNotificationData(); // Refresh notification time immediately
+  }
+
   Future<void> _confirmSignOut(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -119,7 +140,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             DialogElevatedButton(
               AppLocalizations.of(context)!.logOut,
-              onPressed: () {
+              onPressed: () async {
+                await _clearNotificationTime(); // Clear preferences before signing out
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");
                   Navigator.of(context).pushAndRemoveUntil(
@@ -142,7 +164,10 @@ class _ProfilePageState extends State<ProfilePage> {
     return CupertinoPageScaffold(
       child: Center(
         child: FutureBuilder(
-          future: _getUserData(),
+          future: Future.wait([
+            _getUserData(),
+            _loadNotificationData()
+          ]), // Ensure notification time is loaded
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
             if (!gotData) {
               return const CircularProgressIndicator();
@@ -192,8 +217,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       PatientInfoBox(
                           user: _user,
                           patientData: _patientData,
-                          doctorData: _doctorData),
-                      AdditionalInfoBox1(patientData: _patientData),
+                          doctorData: _doctorData,
+                          notificationTime: _notificationsEnabled
+                              ? _notificationTime
+                              : AppLocalizations.of(context)!
+                                  .disabled), // Pass the notification time
                       AdditionalInfoBox(patientData: _patientData),
                       const SizedBox(height: 10),
                       MainElevatedButton(
@@ -311,41 +339,13 @@ class AdditionalInfoBox extends StatelessWidget {
   }
 }
 
-class AdditionalInfoBox1 extends StatelessWidget {
-  const AdditionalInfoBox1({
-    super.key,
-    required Map<String, dynamic> patientData,
-  }) : _patientData = patientData;
-
-  final Map<String, dynamic> _patientData;
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoList(
-        // title: "Additional Information",
-        dataPairs: [
-          {
-            'titleText': AppLocalizations.of(context)!.hasRhinitis,
-            'textValue': _patientData['has_allergic_rhinitis']
-                ? AppLocalizations.of(context)!.yes
-                : AppLocalizations.of(context)!.no
-          },
-          {
-            'titleText': AppLocalizations.of(context)!.hasAsthma,
-            'textValue': _patientData['has_asthma']
-                ? AppLocalizations.of(context)!.yes
-                : AppLocalizations.of(context)!.no
-          },
-        ]);
-  }
-}
-
 class PatientInfoBox extends StatelessWidget {
   const PatientInfoBox({
     super.key,
     required User user,
     required Map<String, dynamic> patientData,
     required Map<String, dynamic> doctorData,
+    required this.notificationTime,
   })  : _user = user,
         _patientData = patientData,
         _doctorData = doctorData;
@@ -353,6 +353,7 @@ class PatientInfoBox extends StatelessWidget {
   final User _user;
   final Map<String, dynamic> _patientData;
   final Map<String, dynamic> _doctorData;
+  final String notificationTime;
 
   @override
   Widget build(BuildContext context) {
@@ -373,11 +374,12 @@ class PatientInfoBox extends StatelessWidget {
             'textValue':
                 '${_doctorData['first_name']} ${_doctorData['last_name']}'
           },
-          /* {
-            'titleText': "Doz Hatırlatma Saati",
-            'textValue': '17:05',
+          {
+            'titleText': AppLocalizations.of(context)!.doseReminderTime,
+            'textValue':
+                notificationTime, // Use the notification time passed from ProfilePage
             "hasChevron": "0"
-          },*/
+          },
         ],
       ),
     );

@@ -203,7 +203,16 @@
     "cannotSignIn": "Could not Sign In",
     "cannotSignInDoctor": "You are not a doctor. Please use the patient sign in.",
     "cannotSignInPatient": "You are not a patient. Please use the doctor sign in.",
-    "tamam": "OK"
+    "tamam": "OK",
+    "disabled": "Disabled",
+    "reminder": "Reminder: Time to take your Immunotherapy dose!",
+    "daily": "This is your daily dose reminder.",
+    "reminderSettings": "Reminder Settings",
+    "enableNotifications": "Enable Notifications",
+    "reminderTime": "Reminder Time",
+    "selectTime": "Select Time",
+    "savePreferences": "Save Preferences",
+    "doseReminderTime": "Dose Reminder Time"
 
 
 }

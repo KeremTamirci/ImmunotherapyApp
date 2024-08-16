@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/utils/local_notification_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationTestPage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _NotificationTestPageState extends State<NotificationTestPage> {
   void initState() {
     super.initState();
     _notificationService.initNotification();
+    _loadSavedTime();
   }
 
   Future<void> _selectTime(BuildContext context) async {
@@ -24,6 +26,30 @@ class _NotificationTestPageState extends State<NotificationTestPage> {
     if (picked != null && picked != selectedTime) {
       setState(() {
         selectedTime = picked;
+      });
+      await _saveSelectedTime(picked);
+    }
+  }
+
+  Future<void> _saveSelectedTime(TimeOfDay timeOfDay) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Ensure minute is always two digits
+    final String timeString =
+        '${timeOfDay.hour}:${timeOfDay.minute.toString().padLeft(2, '0')}';
+    await prefs.setString('selectedTime', timeString);
+    _loadSavedTime();
+  }
+
+  Future<void> _loadSavedTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? timeString = prefs.getString('selectedTime');
+    if (timeString != null) {
+      final parts = timeString.split(':');
+      final hour = int.parse(parts[0]);
+      final minute = int.parse(parts[1]);
+      setState(() {
+        selectedTime = TimeOfDay(hour: hour, minute: minute);
+        print(selectedTime);
       });
     }
   }
@@ -55,6 +81,7 @@ class _NotificationTestPageState extends State<NotificationTestPage> {
       );
 
       print("Scheduled for $scheduledDateTime");
+      Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please select a time first')),

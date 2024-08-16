@@ -3,6 +3,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:immunotheraphy_app/patient/notification_test.dart';
+
+import '../patient/screens/notification_page.dart';
 
 Image logoWidget(String imageName) {
   return Image.asset(
@@ -254,16 +257,18 @@ class CupertinoList extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
           child: CupertinoListTile(
-            title: Text(
-              pair['titleText']!,
-              // style: TextStyle(fontSize: 18),
-            ),
-            additionalInfo: Text(
-              pair['textValue']!,
-              // style: TextStyle(fontSize: 18),
-            ),
+            title: Text(pair['titleText']!),
+            additionalInfo: Text(pair['textValue']!),
             trailing:
                 pair['hasChevron'] == "0" ? CupertinoListTileChevron() : null,
+            onTap: pair['hasChevron'] == "0"
+                ? () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotificationPage()));
+                  }
+                : null,
           ),
         );
       }).toList(),

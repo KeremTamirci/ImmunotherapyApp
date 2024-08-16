@@ -57,4 +57,9 @@ class NotificationService {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
+
+  Future<void> disableNotifications(int id) async {
+    // Cancel the existing notification
+    await notificationsPlugin.cancel(id);
+  }
 }
