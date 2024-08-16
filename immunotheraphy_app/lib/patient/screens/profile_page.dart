@@ -147,62 +147,66 @@ class _ProfilePageState extends State<ProfilePage> {
             if (!gotData) {
               return const CircularProgressIndicator();
             } else {
-              return SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    !isSmallScreen
-                        ? Column(
-                            children: [
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.1),
-                              const Icon(
-                                Icons.person,
-                                size: 120,
-                              ),
-                            ],
-                          )
-                        : SizedBox
-                            .shrink(), // Use SizedBox.shrink() to occupy no space when not visible
+              return CupertinoScrollbar(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      !isSmallScreen
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.1),
+                                const Icon(
+                                  Icons.person,
+                                  size: 120,
+                                ),
+                              ],
+                            )
+                          : SizedBox
+                              .shrink(), // Use SizedBox.shrink() to occupy no space when not visible
 
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0.0, bottom: 4.0),
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: _patientData['first_name'] +
-                              ' ' +
-                              _patientData['last_name'],
-                          style: const TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0, bottom: 4.0),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: _patientData['first_name'] +
+                                ' ' +
+                                _patientData['last_name'],
+                            style: const TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
                         ),
                       ),
-                    ),
-                    MainTextButton(
-                      "Change language/Dili değiştir",
-                      onPressed: () {
-                        _showLanguageSelector(context);
-                      },
-                    ),
-                    PatientInfoBox(
-                        user: _user,
-                        patientData: _patientData,
-                        doctorData: _doctorData),
-                    AdditionalInfoBox(patientData: _patientData),
-                    const SizedBox(height: 10),
-                    MainElevatedButton(
-                      AppLocalizations.of(context)!.logOut,
-                      onPressed: () {
-                        _confirmSignOut(context);
-                      },
-                      widthFactor: 0.9,
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                  ],
+                      MainTextButton(
+                        "Change language/Dili değiştir",
+                        onPressed: () {
+                          _showLanguageSelector(context);
+                        },
+                      ),
+                      PatientInfoBox(
+                          user: _user,
+                          patientData: _patientData,
+                          doctorData: _doctorData),
+                      AdditionalInfoBox1(patientData: _patientData),
+                      AdditionalInfoBox(patientData: _patientData),
+                      const SizedBox(height: 10),
+                      MainElevatedButton(
+                        AppLocalizations.of(context)!.logOut,
+                        onPressed: () {
+                          _confirmSignOut(context);
+                        },
+                        widthFactor: 0.9,
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.05),
+                    ],
+                  ),
                 ),
               );
             }
@@ -307,6 +311,35 @@ class AdditionalInfoBox extends StatelessWidget {
   }
 }
 
+class AdditionalInfoBox1 extends StatelessWidget {
+  const AdditionalInfoBox1({
+    super.key,
+    required Map<String, dynamic> patientData,
+  }) : _patientData = patientData;
+
+  final Map<String, dynamic> _patientData;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoList(
+        // title: "Additional Information",
+        dataPairs: [
+          {
+            'titleText': AppLocalizations.of(context)!.hasRhinitis,
+            'textValue': _patientData['has_allergic_rhinitis']
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no
+          },
+          {
+            'titleText': AppLocalizations.of(context)!.hasAsthma,
+            'textValue': _patientData['has_asthma']
+                ? AppLocalizations.of(context)!.yes
+                : AppLocalizations.of(context)!.no
+          },
+        ]);
+  }
+}
+
 class PatientInfoBox extends StatelessWidget {
   const PatientInfoBox({
     super.key,
@@ -340,6 +373,11 @@ class PatientInfoBox extends StatelessWidget {
             'textValue':
                 '${_doctorData['first_name']} ${_doctorData['last_name']}'
           },
+          /* {
+            'titleText': "Doz Hatırlatma Saati",
+            'textValue': '17:05',
+            "hasChevron": "0"
+          },*/
         ],
       ),
     );

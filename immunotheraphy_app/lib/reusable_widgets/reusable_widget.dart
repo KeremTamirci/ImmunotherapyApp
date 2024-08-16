@@ -240,8 +240,10 @@ class DoseChart extends StatelessWidget {
 class CupertinoList extends StatelessWidget {
   final List<Map<String, String?>> dataPairs;
   final String? title;
+  final bool? hasTrailing;
 
-  const CupertinoList({super.key, required this.dataPairs, this.title});
+  const CupertinoList(
+      {super.key, required this.dataPairs, this.title, this.hasTrailing});
 
   @override
   Widget build(BuildContext context) {
@@ -260,6 +262,8 @@ class CupertinoList extends StatelessWidget {
               pair['textValue']!,
               // style: TextStyle(fontSize: 18),
             ),
+            trailing:
+                pair['hasChevron'] == "0" ? CupertinoListTileChevron() : null,
           ),
         );
       }).toList(),
