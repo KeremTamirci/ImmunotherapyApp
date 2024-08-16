@@ -32,16 +32,29 @@ class _NotificationTestPageState extends State<NotificationTestPage> {
     if (selectedTime != null) {
       DateTime now = DateTime.now();
 
-      // Notification 5 minutes before the scheduled time
-      DateTime fiveMinutesBefore = now.add(const Duration(seconds: 10));
-      if (fiveMinutesBefore.isAfter(now)) {
-        NotificationService().scheduleNotification(
-            id: 0,
-            title: 'Reminder: 1 minutes to immunotherapy!',
-            body: "title",
-            scheduledNotificationDateTime: fiveMinutesBefore);
-        print("scheduled for $fiveMinutesBefore");
+      // Get the current date and set the selected time
+      DateTime scheduledDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        selectedTime!.hour,
+        selectedTime!.minute,
+      );
+
+      // If the scheduled time is before now, schedule for the next day
+      if (scheduledDateTime.isBefore(now)) {
+        scheduledDateTime = scheduledDateTime.add(const Duration(days: 1));
       }
+
+      // Schedule the notification for the selected time
+      _notificationService.scheduleNotification(
+        id: 0,
+        title: 'Reminder: Time to take your medication!',
+        body: "This is your daily medication reminder.",
+        scheduledNotificationDateTime: scheduledDateTime,
+      );
+
+      print("Scheduled for $scheduledDateTime");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please select a time first')),

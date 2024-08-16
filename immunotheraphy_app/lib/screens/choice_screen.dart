@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:immunotheraphy_app/patient/notification_test.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_signin_screen.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_signin_screen.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
@@ -52,7 +51,7 @@ class ChoiceScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NotificationTestPage(),
+                    builder: (context) => const PatientSignInScreen(),
                   ),
                 );
               },
