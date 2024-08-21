@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:immunotheraphy_app/patient/utils/notification_handler.dart';
 
@@ -264,6 +265,21 @@ class DatabaseController {
 
         tempPatientData['patient_id'] =
             patientId; // Replace 'newField' and 'newValue' with your actual field name and value
+        String hospitalToken = tempPatientData['hospital_token'];
+        User? user = FirebaseAuth.instance.currentUser;
+
+        if (user != null) {
+          try {
+            await user.updateDisplayName(hospitalToken);
+            await user.reload(); // Refresh the user's info
+            user = FirebaseAuth.instance.currentUser; // Get the updated user
+            print('Display name updated to: ${user?.displayName}');
+          } catch (e) {
+            print('Failed to update display name: $e');
+          }
+        } else {
+          print('No user is signed in.');
+        }
 
         await patientsCollection.doc(patientId).set(tempPatientData);
 

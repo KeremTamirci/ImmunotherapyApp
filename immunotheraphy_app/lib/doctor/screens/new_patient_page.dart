@@ -378,18 +378,17 @@ class _NewPatientPageState extends State<NewPatientPage> {
           }
 
           await TempPatientsFirestoreService().addPatient(
-            _nameTextController.text,
-            _surnameTextController.text,
-            _phoneNumberTextController.text,
-            _selectedDateOfBirth!,
-            _selectedGender!,
-            allergyToSave,
-            _hasAllergicRhinitis,
-            _hasAsthma,
-            _hasAtopicDermatitis,
-            currentUser.uid,
-            otp,
-          );
+              _nameTextController.text,
+              _surnameTextController.text,
+              _phoneNumberTextController.text,
+              _selectedDateOfBirth!,
+              _selectedGender!,
+              allergyToSave,
+              _hasAllergicRhinitis,
+              _hasAsthma,
+              _hasAtopicDermatitis,
+              currentUser.uid,
+              otp);
           Navigator.push(
             context,
             MaterialPageRoute(

@@ -19,7 +19,8 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
   final TextEditingController _surnameTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
-  final TextEditingController _confirmPasswordTextController = TextEditingController();
+  final TextEditingController _confirmPasswordTextController =
+      TextEditingController();
   final TextEditingController _tokenTextController = TextEditingController();
   final TextEditingController _phoneTextController = TextEditingController();
 
@@ -117,7 +118,8 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                   if (password != confirmPassword) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(AppLocalizations.of(context)!.passwordMismatch),
+                        content: Text(
+                            AppLocalizations.of(context)!.passwordMismatch),
                       ),
                     );
                     return;
@@ -126,7 +128,8 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                   if (token != "KOC24") {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(AppLocalizations.of(context)!.invalidToken),
+                        content:
+                            Text(AppLocalizations.of(context)!.invalidToken),
                       ),
                     );
                     return;
@@ -140,16 +143,19 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                       .then((value) async {
                     _firestoreService
                         .addDoctor(
-                            _nameTextController.text,
-                            _surnameTextController.text,
-                            _phoneTextController.text,
-                            value.user!.uid,
-                            await _firebaseMessaging.getToken() ?? " ")
+                      _nameTextController.text,
+                      _surnameTextController.text,
+                      _phoneTextController.text,
+                      value.user!.uid,
+                      await _firebaseMessaging.getToken() ?? " ",
+                      _tokenTextController.text,
+                    )
                         .then((_) {
                       print("User added to Firestore");
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => const DoctorHomeScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => const DoctorHomeScreen()),
                         (_) => false,
                       );
                     }).catchError((error) {
