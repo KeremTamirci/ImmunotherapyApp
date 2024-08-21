@@ -118,8 +118,16 @@ class TempPatientsFirestoreService {
 }
 
 class PatientsFirestoreService {
-  final CollectionReference _patientsCollection =
-      FirebaseFirestore.instance.collection('Patients');
+  final String? hospitalToken;
+
+  final CollectionReference _patientsCollection = FirebaseFirestore.instance
+      .collection('Hospitals')
+      .doc("KOC24")
+      .collection('Patients');
+///////////////////
+  ///BUNU DA DÜZELTMEN LAZIM
+/////////////////
+  PatientsFirestoreService(this.hospitalToken);
 
   Future<void> addPatient(
       String firstName,
@@ -151,6 +159,8 @@ class PatientsFirestoreService {
     try {
       // Reference to the dosage collection for the current user
       CollectionReference dosageCollection = FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(userId)
           .collection('Dosage Recordings');
@@ -179,6 +189,8 @@ class PatientsFirestoreService {
   Future<List<SymptomData>> getSymptomsData(String userId) async {
     try {
       CollectionReference symptomsCollection = FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(userId)
           .collection('Symptom Recordings');

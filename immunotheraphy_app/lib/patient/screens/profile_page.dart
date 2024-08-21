@@ -41,13 +41,15 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         _user = user;
       });
-      await _getPatientData(user.uid);
+      await _getPatientData(user.uid, user.displayName);
     }
   }
 
-  Future<void> _getPatientData(String patientId) async {
+  Future<void> _getPatientData(String patientId, String? hospitalToken) async {
     try {
       DocumentSnapshot patientSnapshot = await FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(patientId)
           .get();

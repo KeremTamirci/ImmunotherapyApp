@@ -31,7 +31,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
   void initState() {
     super.initState();
     _getUserData();
-    _databaseController = DatabaseController(_user.uid);
+    _databaseController = DatabaseController(_user.uid, _user.displayName);
     _selectedDate = DateTime.now();
     _animationController = AnimationController(
       vsync: this,

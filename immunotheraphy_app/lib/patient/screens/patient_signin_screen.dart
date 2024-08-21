@@ -117,8 +117,11 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                       final test_uid = user.uid;
                       print('User UID: $test_uid');
                       final firestore = FirebaseFirestore.instance;
-                      final docRef =
-                          firestore.collection('Patients').doc(test_uid);
+                      final docRef = firestore
+                          .collection('Hospitals')
+                          .doc(user.displayName)
+                          .collection('Patients')
+                          .doc(test_uid);
 
                       final docSnapshot = await docRef.get();
 

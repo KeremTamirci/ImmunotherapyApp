@@ -79,7 +79,7 @@ class _DosageAndSymptomPageState extends State<DosageAndSymptomPage> {
     if (user != null) {
       setState(() {
         _user = user;
-        _databaseController = DatabaseController(user.uid);
+        _databaseController = DatabaseController(user.uid, user.displayName);
       });
     }
   }

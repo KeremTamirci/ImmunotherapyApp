@@ -20,8 +20,8 @@ class _PatientResetPasswordState extends State<PatientResetPassword> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title:  Text(
-         AppLocalizations.of(context)!.resetPassword,
+        title: Text(
+          AppLocalizations.of(context)!.resetPassword,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
@@ -42,12 +42,13 @@ class _PatientResetPasswordState extends State<PatientResetPassword> {
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField(AppLocalizations.of(context)!.enterEmail, Icons.person_outline, false,
-                    _emailTextController),
+                reusableTextField(AppLocalizations.of(context)!.enterEmail,
+                    Icons.person_outline, false, _emailTextController),
                 const SizedBox(
                   height: 20,
                 ),
-                firebaseUIButton(context, AppLocalizations.of(context)!.resetPassword, () {
+                firebaseUIButton(
+                    context, AppLocalizations.of(context)!.resetPassword, () {
                   FirebaseAuth.instance
                       .sendPasswordResetEmail(email: _emailTextController.text)
                       .then((value) => Navigator.of(context).pop());

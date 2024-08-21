@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
@@ -20,8 +21,9 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
   late List<DosageData> _dosageData = [];
   late List<SymptomData> _symptomsData = [];
   bool _loading = true;
-  late PatientsFirestoreService _databaseController =
-      PatientsFirestoreService();
+  final PatientsFirestoreService _databaseController =
+      PatientsFirestoreService("KOC24");
+  ////////////////buraya databaseden çekmen lazım
   DosageData? _lastDosageData;
 
   @override

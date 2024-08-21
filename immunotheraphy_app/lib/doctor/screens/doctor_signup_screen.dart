@@ -151,6 +151,8 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                       _tokenTextController.text,
                     )
                         .then((_) {
+                      _auth.currentUser
+                          ?.updateDisplayName(_tokenTextController.text);
                       print("User added to Firestore");
                       Navigator.pushAndRemoveUntil(
                         context,
