@@ -22,7 +22,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
   late List<SymptomData> _symptomsData = [];
   bool _loading = true;
   final PatientsFirestoreService _databaseController =
-      PatientsFirestoreService("KOC24");
+      PatientsFirestoreService();
   ////////////////buraya databaseden çekmen lazım
   DosageData? _lastDosageData;
 

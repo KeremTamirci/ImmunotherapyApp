@@ -16,8 +16,8 @@ class PatientListScreen extends StatefulWidget {
 
 class PatientListScreenState extends State<PatientListScreen> {
   final PatientsFirestoreService _patientsFirestoreService =
-      PatientsFirestoreService("KOC24");
-  ////////////////BUNU DATABASEDEN AL
+      PatientsFirestoreService();
+
   late List<Patient> yourPatients = [];
   late List<Patient> otherPatients = [];
   StreamSubscription<List<Patient>>? _patientsSubscription;

@@ -4,6 +4,7 @@ import 'package:immunotheraphy_app/patient/screens/patient_authentiaction_screen
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class PatientSignUpScreen extends StatefulWidget {
   const PatientSignUpScreen({Key? key}) : super(key: key);
@@ -66,13 +67,48 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
                   _otpTextController,
                 ),
                 const SizedBox(height: 30),
-                firebaseUIButton(
-                  context,
-                  AppLocalizations.of(context)!.signUp,
-                  () {
+                firebaseUIButton(context, AppLocalizations.of(context)!.signUp,
+                    () async {
+                  try {
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // Prevents dismissing the dialog by tapping outside
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
+                    // ignore: unused_local_variable
                     _checkPatientExists();
-                  },
-                ),
+                  } catch (error) {
+                    print("Error: ${error.toString()}");
+                    Navigator.pop(context);
+                    // Handle the error gracefully, e.g., show a dialog or a snackbar
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          surfaceTintColor: Colors.white,
+                          title: DialogTitleText(
+                              AppLocalizations.of(context)!.error,
+                              color: const Color.fromARGB(255, 126, 6, 0)),
+                          content: DialogText(
+                              AppLocalizations.of(context)!.invalidPassword),
+                          actions: [
+                            DialogTextButton(
+                              AppLocalizations.of(context)!.tamam,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                }),
               ],
             ),
           ),
@@ -125,6 +161,7 @@ class _PatientSignUpScreenState extends State<PatientSignUpScreen> {
       );
     } catch (e) {
       print('Error signing up patient: $e');
+      Navigator.pop(context); // Navigate back to the previous screen
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('An error occurred. Please try again later.'),

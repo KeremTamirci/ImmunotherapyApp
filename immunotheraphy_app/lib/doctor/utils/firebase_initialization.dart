@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DoctorsFirestoreService {
   final CollectionReference _doctorsCollection =
@@ -118,16 +119,12 @@ class TempPatientsFirestoreService {
 }
 
 class PatientsFirestoreService {
-  final String? hospitalToken;
+  User? user = FirebaseAuth.instance.currentUser;
 
   final CollectionReference _patientsCollection = FirebaseFirestore.instance
       .collection('Hospitals')
       .doc("KOC24")
       .collection('Patients');
-///////////////////
-  ///BUNU DA DÜZELTMEN LAZIM
-/////////////////
-  PatientsFirestoreService(this.hospitalToken);
 
   Future<void> addPatient(
       String firstName,
@@ -158,6 +155,8 @@ class PatientsFirestoreService {
   Future<List<DosageData>> getSortedDosageData(String userId) async {
     try {
       // Reference to the dosage collection for the current user
+      String? hospitalToken =
+          await DoctorsFirestoreService.getHospitalToken(user!.uid);
       CollectionReference dosageCollection = FirebaseFirestore.instance
           .collection('Hospitals')
           .doc(hospitalToken)
@@ -188,6 +187,8 @@ class PatientsFirestoreService {
 
   Future<List<SymptomData>> getSymptomsData(String userId) async {
     try {
+      String? hospitalToken =
+          await DoctorsFirestoreService.getHospitalToken(user!.uid);
       CollectionReference symptomsCollection = FirebaseFirestore.instance
           .collection('Hospitals')
           .doc(hospitalToken)

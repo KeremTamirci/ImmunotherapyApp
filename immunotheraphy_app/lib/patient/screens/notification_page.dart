@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/utils/local_notification_handler.dart';
+import 'package:immunotheraphy_app/utils/text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -141,74 +142,81 @@ class _NotificationPageState extends State<NotificationPage>
         middle: Text(AppLocalizations.of(context)!.reminderSettings),
       ),
       child: SafeArea(
-        child: CupertinoListSection.insetGrouped(
-          dividerMargin: -22.0,
+        child: Column(
           children: [
-            CupertinoListTile(
-              title: Text(AppLocalizations.of(context)!.enableNotifications),
-              trailing: CupertinoSwitch(
-                value: notificationsEnabled,
-                onChanged: (bool value) {
-                  setState(() {
-                    notificationsEnabled = value;
-                    _saveNotificationPreference(value);
-                  });
+            CupertinoListSection.insetGrouped(
+              dividerMargin: -22.0,
+              children: [
+                CupertinoListTile(
+                  title:
+                      Text(AppLocalizations.of(context)!.enableNotifications),
+                  trailing: CupertinoSwitch(
+                    value: notificationsEnabled,
+                    onChanged: (bool value) {
+                      setState(() {
+                        notificationsEnabled = value;
+                        _saveNotificationPreference(value);
+                      });
+                    },
+                  ),
+                ),
+                CupertinoListTile(
+                  title: Text(AppLocalizations.of(context)!.reminderTime),
+                  trailing: CupertinoButton(
+                    onPressed: () => _selectTime(context),
+                    child: Text(
+                      selectedTime == null
+                          ? AppLocalizations.of(context)!.selectTime
+                          : '${selectedTime!.format(context)}',
+                    ),
+                  ),
+                ),
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                  child: SizedBox(
+                    child: _showTime
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                height: 200,
+                                child: CupertinoDatePicker(
+                                  mode: CupertinoDatePickerMode.time,
+                                  use24hFormat: true,
+                                  initialDateTime: _selectedTimeCupertino,
+                                  onDateTimeChanged: (DateTime newDateTime) {
+                                    setState(() {
+                                      _selectedTimeCupertino = newDateTime;
+                                      selectedTime = TimeOfDay(
+                                        hour: newDateTime.hour,
+                                        minute: newDateTime.minute,
+                                      );
+                                    });
+                                    _saveSelectedTime(selectedTime!);
+                                  },
+                                ),
+                              ),
+                            ],
+                          )
+                        : null,
+                  ),
+                ),
+                //bunu uncommentleyip alttakini commentlersek cupertino buttona dönecek
+                /*CupertinoButton(
+                  onPressed: _scheduleNotification,
+                  child: Text(AppLocalizations.of(context)!.savePreferences),
+                ),*/
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: MainElevatedButton(
+                AppLocalizations.of(context)!.savePreferences,
+                onPressed: () {
+                  _scheduleNotification();
                 },
               ),
             ),
-            CupertinoListTile(
-              title: Text(AppLocalizations.of(context)!.reminderTime),
-              trailing: CupertinoButton(
-                onPressed: () => _selectTime(context),
-                child: Text(
-                  selectedTime == null
-                      ? AppLocalizations.of(context)!.selectTime
-                      : '${selectedTime!.format(context)}',
-                ),
-              ),
-            ),
-            AnimatedSize(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-              child: SizedBox(
-                child: _showTime
-                    ? Column(
-                        children: [
-                          SizedBox(
-                            height: 200,
-                            child: CupertinoDatePicker(
-                              mode: CupertinoDatePickerMode.time,
-                              use24hFormat: true,
-                              initialDateTime: _selectedTimeCupertino,
-                              onDateTimeChanged: (DateTime newDateTime) {
-                                setState(() {
-                                  _selectedTimeCupertino = newDateTime;
-                                  selectedTime = TimeOfDay(
-                                    hour: newDateTime.hour,
-                                    minute: newDateTime.minute,
-                                  );
-                                });
-                                _saveSelectedTime(selectedTime!);
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                    : null,
-              ),
-            ),
-            /* CupertinoListTile(
-              title: Text(AppLocalizations.of(context)!.savePreferences),
-              trailing: CupertinoButton(
-                onPressed: _scheduleNotification,
-                child: Text(AppLocalizations.of(context)!.save),
-              ),
-            ),*/
-
-            CupertinoButton(
-              onPressed: _scheduleNotification,
-              child: Text(AppLocalizations.of(context)!.savePreferences),
-            )
           ],
         ),
       ),
