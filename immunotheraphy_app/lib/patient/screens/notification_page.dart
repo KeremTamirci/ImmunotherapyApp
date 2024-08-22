@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationPage extends StatefulWidget {
+  const NotificationPage({super.key});
+
   @override
   _NotificationPageState createState() => _NotificationPageState();
 }
@@ -209,12 +211,13 @@ class _NotificationPageState extends State<NotificationPage>
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: MainElevatedButton(
                 AppLocalizations.of(context)!.savePreferences,
                 onPressed: () {
                   _scheduleNotification();
                 },
+                widthFactor: 0.9,
               ),
             ),
           ],
