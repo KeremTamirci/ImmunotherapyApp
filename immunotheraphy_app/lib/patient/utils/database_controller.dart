@@ -310,6 +310,18 @@ class DatabaseController {
       print('Failed to process temp patient record: $e');
     }
   }
+
+  Future<void> recordUserAgreement(bool agreement) async {
+    try {
+      await _patientsCollection.doc(userId).update({
+        'agreed_to_data_usage': agreement,
+      });
+      print('User agreement status updated successfully.');
+    } catch (e) {
+      print('Failed to record user agreement: $e');
+      throw e;
+    }
+  }
 }
 
 class DosageData {
