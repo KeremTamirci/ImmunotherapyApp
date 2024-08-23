@@ -321,27 +321,27 @@ class DoseIntakePageState extends State<DoseIntakePage>
                       _allergyType == 'Susam' ||
                       _allergyType == 'Süt')
                     SizedBox(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Text(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
                               AppLocalizations.of(context)!.watering,
                               style: const TextStyle(fontSize: 16),
                             ),
-                          ),
-                          const Spacer(),
-                          CupertinoButton(
-                            onPressed: () => _showActionSheet(context),
-                            child: Text(
-                              _selectedWatering,
-                              style: const TextStyle(
-                                fontSize: 18.0,
+                            const Spacer(),
+                            CupertinoButton(
+                              onPressed: () => _showActionSheet(context),
+                              child: Text(
+                                _selectedWatering,
+                                style: const TextStyle(
+                                  fontSize: 18.0,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   if (_allergyType == 'Egg' ||
@@ -353,7 +353,9 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Divider(
-                          thickness: 0.5, color: CupertinoColors.systemGrey),
+                          height: 1,
+                          thickness: 0.5,
+                          color: CupertinoColors.systemGrey),
                     ),
                   TextField(
                     keyboardType:
@@ -362,8 +364,8 @@ class DoseIntakePageState extends State<DoseIntakePage>
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
                     ],
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.dosageAmount +
-                          ' ($_dosageUnit)',
+                      hintText:
+                          '${AppLocalizations.of(context)!.dosageAmount} ($_dosageUnit)',
                       hintStyle:
                           const TextStyle(color: CupertinoColors.systemGrey),
                       border: const OutlineInputBorder(
@@ -374,6 +376,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                       fillColor: CupertinoColors.systemBackground,
                     ),
                     style: TextStyle(
+                      height: 1,
                       color: hexStringToColor("4F7396"),
                       fontSize: 16,
                     ),
@@ -403,7 +406,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                 borderRadius: BorderRadius.all(Radius.circular(15))),
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 2.0),
               child: Column(
                 children: [
                   Row(
@@ -433,6 +436,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                           ? Column(
                               children: [
                                 const Divider(
+                                    height: 1,
                                     thickness: 0.5,
                                     color: CupertinoColors.systemGrey),
                                 SizedBox(
@@ -454,40 +458,48 @@ class DoseIntakePageState extends State<DoseIntakePage>
                     ),
                   ),
                   const Divider(
-                      thickness: 0.5, color: CupertinoColors.systemGrey),
+                      height: 1,
+                      thickness: 0.5,
+                      color: CupertinoColors.systemGrey),
                   SizedBox(
                     //width: 350,
-                    child: Row(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.hospitalDosage,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        const Spacer(),
-                        Checkbox(
-                          value: _isHospitalDosage,
-                          onChanged: (newValue) {
-                            setState(() {
-                              _isHospitalDosage = newValue!;
-                            });
-                          },
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.hospitalDosage,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const Spacer(),
+                          Checkbox(
+                            value: _isHospitalDosage,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _isHospitalDosage = newValue!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  const Divider(
-                      thickness: 0.5, color: CupertinoColors.systemGrey),
-                  const SizedBox(height: 10),
-                  MainElevatedButton(
-                    AppLocalizations.of(context)!.saveDosage,
-                    onPressed: () {
-                      _checkValue(0, 200);
-                    },
-                  ),
-                  const SizedBox(height: 10),
+                  // const Divider(
+                  //     height: 1,
+                  //     thickness: 0.5,
+                  //     color: CupertinoColors.systemGrey),
+                  // const SizedBox(height: 10),
+                  // const SizedBox(height: 10),
                 ],
               ),
             ),
+          ),
+          const SizedBox(height: 20),
+          MainElevatedButton(
+            AppLocalizations.of(context)!.saveDosage,
+            onPressed: () {
+              _checkValue(0, 200);
+            },
           ),
         ],
       ),
