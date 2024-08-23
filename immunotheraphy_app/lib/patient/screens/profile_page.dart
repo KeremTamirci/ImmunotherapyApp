@@ -192,7 +192,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ],
                             )
-                          : SizedBox
+                          : const SizedBox
                               .shrink(), // Use SizedBox.shrink() to occupy no space when not visible
 
                       Padding(

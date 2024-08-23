@@ -230,7 +230,7 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                             children: [
                               Text(
                                 AppLocalizations.of(context)!.symptomTime,
-                                style: const TextStyle(fontSize: 18),
+                                style: const TextStyle(fontSize: 16),
                               ),
                               const SizedBox(width: 10),
                               const Spacer(),
@@ -297,20 +297,27 @@ class _AddSymptomsPageState extends State<AddSymptomsPage>
                             },
                           ),
                           const SizedBox(height: 10),
-                          const Divider(
-                              thickness: 0.5,
-                              color: CupertinoColors.systemGrey),
-                          const SizedBox(height: 10),
-                          MainElevatedButton(
-                            AppLocalizations.of(context)!.addSymptoms,
-                            onPressed: () {
-                              _addSymptoms();
-                            },
-                          ),
-                          const SizedBox(height: 10),
+                          // const Divider(
+                          //     thickness: 0.5,
+                          //     color: CupertinoColors.systemGrey),
+                          // const SizedBox(height: 10),
+                          // MainElevatedButton(
+                          //   AppLocalizations.of(context)!.addSymptoms,
+                          //   onPressed: () {
+                          //     _addSymptoms();
+                          //   },
+                          // ),
+                          // const SizedBox(height: 10),
                         ],
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 20),
+                  MainElevatedButton(
+                    AppLocalizations.of(context)!.addSymptoms,
+                    onPressed: () {
+                      _addSymptoms();
+                    },
                   ),
                 ],
               ),
