@@ -117,10 +117,16 @@ class _PatientSignInScreenState extends State<PatientSignInScreen> {
                       final test_uid = user.uid;
                       print('User UID: $test_uid');
                       final firestore = FirebaseFirestore.instance;
-                      final docRef =
-                          firestore.collection('Patients').doc(test_uid);
+                      final docRef = firestore
+                          .collection('Hospitals')
+                          .doc(
+                              "KOC24") //Hardd coded for now replace with (user.displayName)
+                          .collection('Patients')
+                          .doc(test_uid);
 
                       final docSnapshot = await docRef.get();
+                      await user.updateDisplayName(
+                          "KOC24"); //Hard coded replace with the actual token when new hospitals are added
 
                       if (docSnapshot.exists) {
                         print('User exists in Patients collection');

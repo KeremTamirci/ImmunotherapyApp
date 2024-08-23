@@ -132,6 +132,9 @@ class UserTypeChecker extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingScreen();
         } else if (snapshot.hasData) {
+          user.updateDisplayName(
+              "KOC24"); //Hard coded replace with the actual token when new hospitals are added
+
           if (snapshot.data!['isDoctor'] ?? false) {
             return const DoctorHomeScreen();
           } else if (snapshot.data!['isPatient'] ?? false) {

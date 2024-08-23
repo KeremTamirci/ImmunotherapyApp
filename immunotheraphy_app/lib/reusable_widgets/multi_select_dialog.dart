@@ -41,6 +41,7 @@ class _MultiSelectDialogState extends State<MultiSelectDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      surfaceTintColor: Colors.white,
       title: Text(AppLocalizations.of(context)!.selectSymptom),
       content: SingleChildScrollView(
         child: ListBody(

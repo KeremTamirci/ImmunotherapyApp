@@ -65,7 +65,7 @@ class DialogTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
-        textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 18)),
+        textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 16)),
         foregroundColor: MaterialStatePropertyAll(
           textColor ?? const Color(0xff1a80e5), // Default color is blue
         ),
@@ -98,7 +98,7 @@ class DialogElevatedButton extends StatelessWidget {
 
     return ElevatedButton(
       style: ButtonStyle(
-        textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 18)),
+        textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 16)),
         backgroundColor: MaterialStatePropertyAll(
           backgroundColor ??
               defaultBackgroundColor, // Use default if no background color is specified

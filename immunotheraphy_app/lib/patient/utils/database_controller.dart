@@ -2,16 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:immunotheraphy_app/doctor/utils/firebase_initialization.dart';
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:immunotheraphy_app/patient/utils/notification_handler.dart';
 
 class DatabaseController {
   final String userId;
+  final String? hospitalToken;
 
-  DatabaseController(this.userId);
+  DatabaseController(this.userId, this.hospitalToken);
 
-  CollectionReference get _patientsCollection =>
-      FirebaseFirestore.instance.collection('Patients');
+  CollectionReference get _patientsCollection => FirebaseFirestore.instance
+      .collection('Hospitals')
+      .doc(hospitalToken)
+      .collection('Patients');
 
   // Method to get patient data
   Future<Patient> getPatientData() async {
@@ -31,6 +35,8 @@ class DatabaseController {
   Future<void> addDosageTime(Map<String, dynamic> dosageDetails) async {
     try {
       await FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(userId)
           .collection('Dosage Recordings')
@@ -45,6 +51,8 @@ class DatabaseController {
   Future<void> deleteDosage(DateTime dosageDate) async {
     try {
       CollectionReference dosageCollection = FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(userId)
           .collection('Dosage Recordings');
@@ -70,6 +78,8 @@ class DatabaseController {
     try {
       // Reference to the dosage collection for the current user
       CollectionReference dosageCollection = FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(userId)
           .collection('Dosage Recordings');
@@ -97,6 +107,8 @@ class DatabaseController {
 
   Future<bool> isLastDoseToday() async {
     CollectionReference dosageCollection = FirebaseFirestore.instance
+        .collection('Hospitals')
+        .doc(hospitalToken)
         .collection('Patients')
         .doc(userId)
         .collection('Dosage Recordings');
@@ -144,6 +156,8 @@ class DatabaseController {
   Future<bool> hasAsthma() async {
     try {
       DocumentSnapshot patientSnapshot = await FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(userId)
           .get();
@@ -168,6 +182,8 @@ class DatabaseController {
   Future<void> addSymptoms(List<Map<String, dynamic>> symptoms) async {
     try {
       final CollectionReference symptomRecordings = FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(userId)
           .collection('Symptom Recordings');
@@ -259,11 +275,28 @@ class DatabaseController {
         Map<String, dynamic> tempPatientData =
             snapshot.docs.first.data() as Map<String, dynamic>;
 
-        CollectionReference patientsCollection =
-            FirebaseFirestore.instance.collection('Patients');
-
         tempPatientData['patient_id'] =
             patientId; // Replace 'newField' and 'newValue' with your actual field name and value
+        String hospitalToken = tempPatientData['hospital_token'];
+        User? user = FirebaseAuth.instance.currentUser;
+
+        if (user != null) {
+          try {
+            await user.updateDisplayName(hospitalToken);
+            await user.reload(); // Refresh the user's info
+            user = FirebaseAuth.instance.currentUser; // Get the updated user
+            print('Display name updated to: ${user?.displayName}');
+          } catch (e) {
+            print('Failed to update display name: $e');
+          }
+        } else {
+          print('No user is signed in.');
+        }
+
+        CollectionReference patientsCollection = FirebaseFirestore.instance
+            .collection('Hospitals')
+            .doc(hospitalToken)
+            .collection("Patients");
 
         await patientsCollection.doc(patientId).set(tempPatientData);
 
@@ -275,6 +308,18 @@ class DatabaseController {
       }
     } catch (e) {
       print('Failed to process temp patient record: $e');
+    }
+  }
+
+  Future<void> recordUserAgreement(bool agreement) async {
+    try {
+      await _patientsCollection.doc(userId).update({
+        'agreed_to_data_usage': agreement,
+      });
+      print('User agreement status updated successfully.');
+    } catch (e) {
+      print('Failed to record user agreement: $e');
+      throw e;
     }
   }
 }

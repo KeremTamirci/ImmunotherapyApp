@@ -1,23 +1,50 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DoctorsFirestoreService {
   final CollectionReference _doctorsCollection =
       FirebaseFirestore.instance.collection('Doctors');
 
   Future<void> addDoctor(String firstName, String lastName, String phoneNumber,
-      String uid, String appToken) async {
+      String uid, String appToken, String hospitalToken) async {
     await _doctorsCollection.doc(uid).set({
       'uid': uid,
       'first_name': firstName,
       'last_name': lastName,
       'phone_number': phoneNumber,
-      'app_token': appToken
+      'app_token': appToken,
+      'hospital_token': hospitalToken,
     });
   }
 
   Stream<List<Doctor>> getDoctors() {
     return _doctorsCollection.snapshots().map((snapshot) =>
         snapshot.docs.map((doc) => Doctor.fromFirestore(doc)).toList());
+  }
+
+  static Future<String> getHospitalToken(String doctorId) async {
+    final CollectionReference doctorsCollection =
+        FirebaseFirestore.instance.collection('Doctors');
+
+    try {
+      // Get the document by ID
+      DocumentSnapshot doctorSnapshot =
+          await doctorsCollection.doc(doctorId).get();
+
+      if (doctorSnapshot.exists) {
+        // Access the hospitalToken field
+        var hospitalToken = doctorSnapshot.get('hospital_token');
+
+        // Use the hospitalToken as needed
+        return hospitalToken;
+      } else {
+        print('Doctor with ID $doctorId does not exist.');
+        return "0";
+      }
+    } catch (e) {
+      print('Error retrieving hospital token: $e');
+      return "0";
+    }
   }
 }
 
@@ -27,22 +54,27 @@ class Doctor {
   final String phoneNumber;
   final String uid;
   final String appToken;
+  final String hospitalToken;
 
-  Doctor(
-      {required this.uid,
-      required this.firstName,
-      required this.lastName,
-      required this.phoneNumber,
-      required this.appToken});
+  Doctor({
+    required this.uid,
+    required this.firstName,
+    required this.lastName,
+    required this.phoneNumber,
+    required this.appToken,
+    required this.hospitalToken,
+  });
 
   factory Doctor.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
     return Doctor(
-        firstName: data['first_name'],
-        lastName: data['last_name'],
-        phoneNumber: data['phone_number'],
-        uid: data['uid'],
-        appToken: data['app_token']);
+      firstName: data['first_name'],
+      lastName: data['last_name'],
+      phoneNumber: data['phone_number'],
+      uid: data['uid'],
+      appToken: data['app_token'],
+      hospitalToken: data['hospital_token'],
+    );
   }
 }
 
@@ -51,17 +83,19 @@ class TempPatientsFirestoreService {
       FirebaseFirestore.instance.collection('Temp_Patients');
 
   Future<void> addPatient(
-      String firstName,
-      String lastName,
-      String phoneNumber,
-      DateTime birthDate,
-      String gender,
-      String allergyType,
-      bool hasRhinits,
-      bool hasAsthma,
-      bool hasAtopicDermatitis,
-      String uid,
-      String otp) async {
+    String firstName,
+    String lastName,
+    String phoneNumber,
+    DateTime birthDate,
+    String gender,
+    String allergyType,
+    bool hasRhinits,
+    bool hasAsthma,
+    bool hasAtopicDermatitis,
+    String uid,
+    String otp,
+  ) async {
+    String? hospitalToken = await DoctorsFirestoreService.getHospitalToken(uid);
     await _tempPatientsCollection.add({
       'uid': uid,
       'first_name': firstName,
@@ -73,7 +107,8 @@ class TempPatientsFirestoreService {
       'has_allergic_rhinitis': hasRhinits,
       'has_asthma': hasAsthma,
       'has_atopic_dermatitis': hasAtopicDermatitis,
-      'otp': otp
+      'otp': otp,
+      'hospital_token': hospitalToken,
     });
   }
 
@@ -84,8 +119,12 @@ class TempPatientsFirestoreService {
 }
 
 class PatientsFirestoreService {
-  final CollectionReference _patientsCollection =
-      FirebaseFirestore.instance.collection('Patients');
+  User? user = FirebaseAuth.instance.currentUser;
+
+  final CollectionReference _patientsCollection = FirebaseFirestore.instance
+      .collection('Hospitals')
+      .doc("KOC24")
+      .collection('Patients');
 
   Future<void> addPatient(
       String firstName,
@@ -116,7 +155,11 @@ class PatientsFirestoreService {
   Future<List<DosageData>> getSortedDosageData(String userId) async {
     try {
       // Reference to the dosage collection for the current user
+      String? hospitalToken =
+          await DoctorsFirestoreService.getHospitalToken(user!.uid);
       CollectionReference dosageCollection = FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(userId)
           .collection('Dosage Recordings');
@@ -144,7 +187,11 @@ class PatientsFirestoreService {
 
   Future<List<SymptomData>> getSymptomsData(String userId) async {
     try {
+      String? hospitalToken =
+          await DoctorsFirestoreService.getHospitalToken(user!.uid);
       CollectionReference symptomsCollection = FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc(hospitalToken)
           .collection('Patients')
           .doc(userId)
           .collection('Symptom Recordings');

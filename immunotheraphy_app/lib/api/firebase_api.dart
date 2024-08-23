@@ -11,7 +11,6 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print("Payload: ${message.data}");
 }
 
-
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
 
@@ -73,9 +72,16 @@ class FirebaseApi {
           .doc(userId)
           .get();
       DocumentSnapshot patientSnapshot = await FirebaseFirestore.instance
+          .collection('Hospitals')
+          .doc("KOC24") //Hardd coded for now replace with (user.displayName)
           .collection('Patients')
           .doc(userId)
           .get();
+
+      final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+      User? user = _firebaseAuth.currentUser;
+      user?.updateDisplayName(
+          "KOC24"); //Hard coded replace with the actual token when new hospitals are added
 
       final bool isDoctor = doctorSnapshot.exists;
       final bool isPatient = patientSnapshot.exists;

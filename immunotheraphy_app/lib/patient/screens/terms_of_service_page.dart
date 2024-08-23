@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:immunotheraphy_app/patient/screens/patient_home_screen.dart';
+import 'package:immunotheraphy_app/patient/utils/database_controller.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
-// import 'package:immunotheraphy_app/utils/text_styles.dart';
 
 class TermsOfServicePage extends StatefulWidget {
   const TermsOfServicePage({super.key});
@@ -13,6 +14,44 @@ class TermsOfServicePage extends StatefulWidget {
 
 class _TermsOfServicePageState extends State<TermsOfServicePage> {
   String? _agreementChoice;
+  late DatabaseController _databaseController;
+  late User _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserData();
+  }
+
+  Future<void> _getUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _user = user;
+        _databaseController = DatabaseController(user.uid, user.displayName);
+      });
+    }
+  }
+
+  void _submitAgreement() async {
+    if (_agreementChoice != null) {
+      bool isAgreed = _agreementChoice == 'agree';
+
+      try {
+        await _databaseController.recordUserAgreement(isAgreed);
+        // Navigate to the Patient Home Screen after recording agreement
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const PatientHomeScreen()),
+          (_) => false,
+        );
+      } catch (e) {
+        print('Error recording agreement: $e');
+      }
+    } else {
+      print('No agreement choice selected');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +67,7 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.pop(context); // Navigate back to the previous screen
+            Navigator.pop(context);
           },
         ),
       ),
@@ -50,7 +89,6 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
                 padding: const EdgeInsets.all(20),
                 margin: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  // color: const Color.fromARGB(255, 100, 149, 237),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
@@ -83,11 +121,8 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
                 },
                 fillColor: MaterialStateProperty.resolveWith<Color?>(
                   (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.selected)) {
-                      return Colors.white; // Color when selected
-                    }
-                    return Colors.white
-                        .withOpacity(0.5); // Color when not selected
+                    return Colors.white.withOpacity(
+                        states.contains(MaterialState.selected) ? 1 : 0.5);
                   },
                 ),
               ),
@@ -107,11 +142,8 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
                 },
                 fillColor: MaterialStateProperty.resolveWith<Color?>(
                   (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.selected)) {
-                      return Colors.white; // Color when selected
-                    }
-                    return Colors.white
-                        .withOpacity(0.5); // Color when not selected
+                    return Colors.white.withOpacity(
+                        states.contains(MaterialState.selected) ? 1 : 0.5);
                   },
                 ),
               ),
@@ -121,17 +153,10 @@ class _TermsOfServicePageState extends State<TermsOfServicePage> {
                 child: firebaseUIButton(
                   context,
                   AppLocalizations.of(context)!.ilerle,
-                  () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PatientHomeScreen()),
-                      (_) => false,
-                    );
-                  },
+                  _submitAgreement,
                 ),
               ),
-              const Spacer()
+              const Spacer(),
             ],
           ),
         ),
