@@ -311,7 +311,8 @@ class DoseIntakePageState extends State<DoseIntakePage>
               borderRadius: BorderRadius.circular(15),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 2.0, horizontal: 0.0),
               child: Column(
                 children: [
                   if (_allergyType == 'Egg' ||
@@ -322,7 +323,7 @@ class DoseIntakePageState extends State<DoseIntakePage>
                       _allergyType == 'Süt')
                     SizedBox(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: const EdgeInsets.only(left: 12, right: 4),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -405,8 +406,8 @@ class DoseIntakePageState extends State<DoseIntakePage>
                 color: CupertinoColors.systemBackground,
                 borderRadius: BorderRadius.all(Radius.circular(15))),
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 2.0),
+              padding: const EdgeInsets.only(
+                  left: 12.0, right: 4.0, top: 2.0, bottom: 2.0),
               child: Column(
                 children: [
                   Row(
@@ -435,10 +436,13 @@ class DoseIntakePageState extends State<DoseIntakePage>
                       child: _showTime
                           ? Column(
                               children: [
-                                const Divider(
-                                    height: 1,
-                                    thickness: 0.5,
-                                    color: CupertinoColors.systemGrey),
+                                const Padding(
+                                  padding: EdgeInsets.only(right: 8.0),
+                                  child: Divider(
+                                      height: 1,
+                                      thickness: 0.5,
+                                      color: CupertinoColors.systemGrey),
+                                ),
                                 SizedBox(
                                   height: 200,
                                   child: CupertinoDatePicker(
@@ -457,14 +461,18 @@ class DoseIntakePageState extends State<DoseIntakePage>
                           : null,
                     ),
                   ),
-                  const Divider(
-                      height: 1,
-                      thickness: 0.5,
-                      color: CupertinoColors.systemGrey),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: Divider(
+                        height: 1,
+                        thickness: 0.5,
+                        color: CupertinoColors.systemGrey),
+                  ),
                   SizedBox(
                     //width: 350,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2.0),
+                      padding: const EdgeInsets.only(
+                          top: 2.0, bottom: 2.0, right: 2.0),
                       child: Row(
                         children: [
                           Text(
