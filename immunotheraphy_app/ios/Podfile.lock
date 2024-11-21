@@ -11,19 +11,12 @@ PODS:
   - Firebase/Firestore (10.24.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.24.0)
-  - Firebase/Messaging (10.24.0):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (~> 10.24.0)
   - firebase_auth (4.19.0):
     - Firebase/Auth (= 10.24.0)
     - firebase_core
     - Flutter
   - firebase_core (2.30.1):
     - Firebase/CoreOnly (= 10.24.0)
-    - Flutter
-  - firebase_messaging (14.8.0):
-    - Firebase/Messaging (= 10.24.0)
-    - firebase_core
     - Flutter
   - FirebaseAppCheckInterop (10.25.0)
   - FirebaseAuth (10.24.0):
@@ -62,35 +55,10 @@ PODS:
     - FirebaseFirestoreGRPCCPPBinary (= 1.62.1)
     - leveldb-library (~> 1.22)
     - nanopb (< 2.30911.0, >= 2.30908.0)
-  - FirebaseInstallations (10.25.0):
-    - FirebaseCore (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/UserDefaults (~> 7.8)
-    - PromisesObjC (~> 2.1)
-  - FirebaseMessaging (10.24.0):
-    - FirebaseCore (~> 10.0)
-    - FirebaseInstallations (~> 10.0)
-    - GoogleDataTransport (~> 9.3)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/Reachability (~> 7.8)
-    - GoogleUtilities/UserDefaults (~> 7.8)
-    - nanopb (< 2.30911.0, >= 2.30908.0)
   - FirebaseSharedSwift (10.24.0)
   - Flutter (1.0.0)
-  - flutter_inappwebview_ios (0.0.1):
-    - Flutter
-    - flutter_inappwebview_ios/Core (= 0.0.1)
-    - OrderedSet (~> 5.0)
-  - flutter_inappwebview_ios/Core (0.0.1):
-    - Flutter
-    - OrderedSet (~> 5.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
-  - GoogleDataTransport (9.4.1):
-    - GoogleUtilities/Environment (~> 7.7)
-    - nanopb (< 2.30911.0, >= 2.30908.0)
-    - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/AppDelegateSwizzler (7.13.3):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -113,9 +81,6 @@ PODS:
   - GoogleUtilities/Reachability (7.13.3):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GoogleUtilities/UserDefaults (7.13.3):
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Privacy
   - GTMSessionFetcher/Core (3.4.1)
   - leveldb-library (1.22.5)
   - libphonenumber_plugin (0.0.1):
@@ -126,7 +91,6 @@ PODS:
     - nanopb/encode (= 2.30910.0)
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
-  - OrderedSet (5.0.0)
   - PhoneNumberKit (3.7.10):
     - PhoneNumberKit/PhoneNumberKitCore (= 3.7.10)
     - PhoneNumberKit/UIKit (= 3.7.10)
@@ -140,22 +104,17 @@ PODS:
     - FlutterMacOS
   - simple_accordion (0.0.1):
     - Flutter
-  - url_launcher_ios (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `10.24.0`)
   - Flutter (from `Flutter`)
-  - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - simple_accordion (from `.symlinks/plugins/simple_accordion/ios`)
-  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -171,15 +130,11 @@ SPEC REPOS:
     - FirebaseFirestoreGRPCCoreBinary
     - FirebaseFirestoreGRPCCPPBinary
     - FirebaseFirestoreInternalBinary
-    - FirebaseInstallations
-    - FirebaseMessaging
     - FirebaseSharedSwift
-    - GoogleDataTransport
     - GoogleUtilities
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
-    - OrderedSet
     - PhoneNumberKit
     - PromisesObjC
     - RecaptchaInterop
@@ -191,15 +146,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
-  firebase_messaging:
-    :path: ".symlinks/plugins/firebase_messaging/ios"
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
     :tag: 10.24.0
   Flutter:
     :path: Flutter
-  flutter_inappwebview_ios:
-    :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   libphonenumber_plugin:
@@ -208,8 +159,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   simple_accordion:
     :path: ".symlinks/plugins/simple_accordion/ios"
-  url_launcher_ios:
-    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 CHECKOUT OPTIONS:
   FirebaseFirestore:
@@ -221,7 +170,6 @@ SPEC CHECKSUMS:
   Firebase: 91fefd38712feb9186ea8996af6cbdef41473442
   firebase_auth: 13d6cc53b2a0de23f8ef576612da166280bd0498
   firebase_core: 7f1e1156934d0da3be260174812842df9420e4ab
-  firebase_messaging: 4007fcd94ba0ab8f819f1d9bd9fb6be93f1a2a56
   FirebaseAppCheckInterop: 5da5ce93e8797a215e3f677fb0654b74e736c8b8
   FirebaseAuth: 711d01cccefaf10035b3090a92956d0dd4f99088
   FirebaseCore: 11dc8a16dfb7c5e3c3f45ba0e191a33ac4f50894
@@ -234,26 +182,20 @@ SPEC CHECKSUMS:
   FirebaseFirestoreGRPCCoreBinary: 1243fc6604a52912694635f891916976924931ed
   FirebaseFirestoreGRPCCPPBinary: e447b3a7c060c0abfc4e2c9f6fb53bf7635ded66
   FirebaseFirestoreInternalBinary: 264bc7678c6df6581477b139a216f6b3340efb64
-  FirebaseInstallations: 91950fe859846fff0fbd296180909dd273103b09
-  FirebaseMessaging: 4d52717dd820707cc4eadec5eb981b4832ec8d5d
   FirebaseSharedSwift: 76e1529c32101d80e4f1ca2fba7c39d59f0a390a
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_inappwebview_ios: 97215cf7d4677db55df76782dbd2930c5e1c1ea0
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
-  GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
   libphonenumber_plugin: 48bf4078546377eedaab4aa54978cd0f6fa23072
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   PhoneNumberKit: 3d9a20cfe8ee68f35c2a3ae9474093133f72a8a1
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   simple_accordion: 11f82dd5ea75a4492eba2d0e4d5e9878cfa4132c
-  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
-PODFILE CHECKSUM: ba1102e4e83b975b588a701c59730ec2ec8e2ea0
+PODFILE CHECKSUM: d9d2fa5751496c3416e8a576d195cc173cfc5371
 
 COCOAPODS: 1.15.2

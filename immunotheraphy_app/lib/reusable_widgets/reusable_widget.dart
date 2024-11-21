@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
+//import 'package:fl_chart/fl_chart.dart';
 import 'package:immunotheraphy_app/patient/notification_test.dart';
 
 import '../patient/screens/notification_page.dart';
@@ -85,7 +85,7 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
     ),
   );
 }
-
+/*
 class DoseChart extends StatelessWidget {
   final List<double> doses;
   final List<String> dates;
@@ -239,6 +239,8 @@ class DoseChart extends StatelessWidget {
     );
   }
 }
+
+*/
 
 class CupertinoList extends StatelessWidget {
   final List<Map<String, String?>> dataPairs;

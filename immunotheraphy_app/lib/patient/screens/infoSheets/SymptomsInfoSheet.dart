@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/utils/animated_dropdown.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+//import 'package:url_launcher/url_launcher.dart';
 import 'package:accordion/accordion.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -18,14 +18,14 @@ class SymptomsInfoSheet extends StatefulWidget {
 }
 
 class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
-  late YoutubePlayerController _controller;
+  // late YoutubePlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-    _initializeYoutubePlayer();
+    // _initializeYoutubePlayer();
   }
-
+/*
   void _initializeYoutubePlayer() {
     const videoURL = "https://youtu.be/zHBrWm0faso?si=IX9Zu0vvoqfLT1LB";
     final videoID = YoutubePlayer.convertUrlToId(videoURL);
@@ -37,6 +37,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       ),
     );
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -505,7 +506,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       ),
     );
   }
-
+/*
   @override
   void dispose() {
     _controller.dispose();
@@ -520,6 +521,7 @@ class _SymptomsInfoSheetState extends State<SymptomsInfoSheet> {
       throw 'Could not launch $url';
     }
   }
+  */
 }
 
 class AnimatedDropdownExample extends StatelessWidget {

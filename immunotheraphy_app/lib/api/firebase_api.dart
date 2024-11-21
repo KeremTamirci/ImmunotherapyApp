@@ -1,18 +1,20 @@
 import 'dart:convert';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/*
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print("Title: ${message.notification?.title}");
   print("Body: ${message.notification?.body}");
   print("Payload: ${message.data}");
 }
+*/
 
 class FirebaseApi {
-  final _firebaseMessaging = FirebaseMessaging.instance;
+  //final _firebaseMessaging = FirebaseMessaging.instance;
 
   final _androidChannel = const AndroidNotificationChannel(
     'high_importance_channel',
@@ -22,6 +24,7 @@ class FirebaseApi {
   );
   final _localNotifications = FlutterLocalNotificationsPlugin();
 
+/*
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
@@ -64,6 +67,7 @@ class FirebaseApi {
       );
     });
   }
+  */
 
   Future<Map<String, dynamic>> getUserType(String userId) async {
     try {
@@ -93,6 +97,7 @@ class FirebaseApi {
     }
   }
 
+/*
   Future initLocalNotifications() async {
     const iOS = DarwinInitializationSettings();
     const android = AndroidInitializationSettings('@drawable/ic_launcher');
@@ -117,4 +122,5 @@ class FirebaseApi {
     if (message == null) return;
     return;
   }
+  */
 }

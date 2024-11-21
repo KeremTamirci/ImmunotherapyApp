@@ -26,7 +26,7 @@ import 'patient/utils/local_notification_handler.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseApi().initNotifications();
+  //await FirebaseApi().initNotifications();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? preferredLanguage = prefs.getString('preferredLanguage');
   NotificationService().initNotification();

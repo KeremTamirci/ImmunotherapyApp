@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/doctor/screens/doctor_home_screen.dart';
 import 'package:immunotheraphy_app/reusable_widgets/reusable_widget.dart';
@@ -24,7 +24,7 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
   final TextEditingController _tokenTextController = TextEditingController();
   final TextEditingController _phoneTextController = TextEditingController();
 
-  final _firebaseMessaging = FirebaseMessaging.instance;
+  //final _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final DoctorsFirestoreService _firestoreService = DoctorsFirestoreService();
 
@@ -147,7 +147,7 @@ class _DoctorSignUpScreenState extends State<DoctorSignUpScreen> {
                       _surnameTextController.text,
                       _phoneTextController.text,
                       value.user!.uid,
-                      await _firebaseMessaging.getToken() ?? " ",
+                      " ",
                       _tokenTextController.text,
                     )
                         .then((_) {

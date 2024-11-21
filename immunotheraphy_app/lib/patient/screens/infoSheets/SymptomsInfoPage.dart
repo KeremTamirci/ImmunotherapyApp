@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:immunotheraphy_app/patient/screens/infoSheets/SymptomsInfoSheet.dart';
 import 'package:immunotheraphy_app/patient/utils/animated_dropdown.dart';
 import 'package:immunotheraphy_app/utils/text_styles.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+//import 'package:url_launcher/url_launcher.dart';
 import 'package:accordion/accordion.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -19,14 +19,15 @@ class SymptomsInfoPage extends StatefulWidget {
 }
 
 class _SymptomsInfoPageState extends State<SymptomsInfoPage> {
-  late YoutubePlayerController _controller;
+  //late YoutubePlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-    _initializeYoutubePlayer();
+    // _initializeYoutubePlayer();
   }
 
+  /*
   void _initializeYoutubePlayer() {
     const videoURL = "https://youtu.be/zHBrWm0faso?si=IX9Zu0vvoqfLT1LB";
     final videoID = YoutubePlayer.convertUrlToId(videoURL);
@@ -37,7 +38,7 @@ class _SymptomsInfoPageState extends State<SymptomsInfoPage> {
         showLiveFullscreenButton: false,
       ),
     );
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +138,7 @@ class _SymptomsInfoPageState extends State<SymptomsInfoPage> {
       ),
     );
   }
-
+/*
   void _launchYouTubeVideo() async {
     const url = 'https://youtu.be/zHBrWm0faso?si=IX9Zu0vvoqfLT1LB';
     if (await canLaunch(url)) {
@@ -147,9 +148,11 @@ class _SymptomsInfoPageState extends State<SymptomsInfoPage> {
     }
   }
 
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+    */
 }
